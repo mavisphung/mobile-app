@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:hi_doctor_v2/app/modules/bottom_navbar/navbar_widget.dart';
 
 import '../../../common/storage/storage.dart';
 import '../../home/views/home_page.dart';
@@ -40,7 +41,7 @@ class _SplashPageState extends State<SplashPage> {
                 return _isLoggedWithToken == null
                     ? NoInternetWidget(_isRefresh)
                     : _isLoggedWithToken!
-                        ? const HomePage()
+                        ? NavBar()
                         : LoginPage();
               } else {
                 return LoginPage();

@@ -16,11 +16,12 @@ class LoginPage extends GetView<LoginController> {
   LoginPage({Key? key}) : super(key: key);
 
   void _submitLogin() async {
-    if (!_formKey.currentState!.validate()) return;
+    // if (!_formKey.currentState!.validate()) return;
 
     _formKey.currentState!.save();
 
-    await controller.login(_emailController.text, _passwordController.text);
+    // await controller.login(_emailController.text, _passwordController.text);
+    await controller.login('nguoibimatthegioi@gmail.com', '@Chihuy1100');
   }
 
   @override

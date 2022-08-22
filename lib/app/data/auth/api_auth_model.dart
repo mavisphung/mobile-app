@@ -27,6 +27,11 @@ class ResponseModel {
 
   factory ResponseModel.fromJson(Map<String, dynamic> source) =>
       ResponseModel._fromMap(source);
+
+  @override
+  String toString() {
+    return 'ResponseModel(isSuccess: $isSuccess, statusCode: $statusCode, message: $message, data: $data)';
+  }
 }
 
 class RequestLoginModel {
