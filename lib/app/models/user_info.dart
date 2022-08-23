@@ -76,7 +76,7 @@ class UserInfo {
       address: map['address'] as String,
       gender: map['gender'] as String,
       phoneNumber: map['phoneNumber'] as String,
-      avatar: map['avatar'] as String,
+      avatar: map['avatar'] ?? 'https://cuu-be.s3.amazonaws.com/cuu-be/2022/6/28/O2VWFV.png',
     );
   }
 

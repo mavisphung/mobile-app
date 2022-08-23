@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 import 'package:hi_doctor_v2/app/common/colors.dart';
+import 'package:hi_doctor_v2/app/models/user_info.dart';
+import 'package:hi_doctor_v2/app/modules/settings/controllers/settings_controller.dart';
 
 class UserProfile extends StatelessWidget {
-  UserProfile({
-    Key? key,
-  }) : super(key: key);
+  UserProfile({Key? key}) : super(key: key);
+  final SettingsController _settingsController = Get.find<SettingsController>();
 
   @override
   Widget build(BuildContext context) {
@@ -67,7 +69,8 @@ class UserProfile extends StatelessWidget {
           ),
           const Spacer(),
           GestureDetector(
-            onTap: () {
+            onTap: () async {
+              UserInfo? data = await _settingsController.getUserInfo();
               // Get.toNamed(Profile);
               print('edit');
             },

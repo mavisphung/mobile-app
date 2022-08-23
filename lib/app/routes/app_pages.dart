@@ -5,6 +5,7 @@ import 'package:hi_doctor_v2/app/modules/auth/views/splash_page.dart';
 import 'package:hi_doctor_v2/app/modules/bottom_navbar/bindings/navbar_binding.dart';
 import 'package:hi_doctor_v2/app/modules/bottom_navbar/navbar_widget.dart';
 import 'package:hi_doctor_v2/app/modules/history/history_page.dart';
+import 'package:hi_doctor_v2/app/modules/settings/widgets/user_profile_detail.dart';
 
 import '../modules/auth/bindings/login_binding.dart';
 import '../modules/auth/bindings/register_binding.dart';
@@ -39,13 +40,17 @@ abstract class AppPages {
       binding: RegisterBinding(),
     ),
     GetPage(
-      name: Routes.NAVBAR,
-      page: () => NavBar(),
+      name: Routes.NAVBAR, page: () => NavBar(),
       // binding: NavBarBinding(),
+      children: [],
     ),
     GetPage(
       name: Routes.HISTORY,
       page: () => HistoryPage(),
+    ),
+    GetPage(
+      name: Routes.PROFILE_DETAIL,
+      page: () => const UserProfileDetailPage(),
     ),
   ];
 }

@@ -54,9 +54,10 @@ class SettingsPage extends StatelessWidget {
     );
   }
 
-  void getUserInfo() async {
-    UserInfo? userInfo = await _controller.getUserInfo();
-    print(userInfo!.toString());
+  void getUserInfo() {
+    // UserInfo? userInfo = await _controller.getUserInfo();
+    // print(userInfo!.toString());
+    Get.toNamed(Routes.PROFILE_DETAIL);
   }
 
   @override
