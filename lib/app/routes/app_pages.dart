@@ -50,7 +50,7 @@ abstract class AppPages {
     ),
     GetPage(
       name: Routes.PROFILE_DETAIL,
-      page: () => const UserProfileDetailPage(),
+      page: () => UserProfileDetailPage(),
     ),
   ];
 }

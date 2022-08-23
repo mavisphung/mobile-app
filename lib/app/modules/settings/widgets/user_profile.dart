@@ -3,8 +3,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:hi_doctor_v2/app/common/colors.dart';
+import 'package:hi_doctor_v2/app/common/constants.dart';
 import 'package:hi_doctor_v2/app/models/user_info.dart';
 import 'package:hi_doctor_v2/app/modules/settings/controllers/settings_controller.dart';
+import 'package:hi_doctor_v2/app/routes/app_pages.dart';
 
 class UserProfile extends StatelessWidget {
   UserProfile({Key? key}) : super(key: key);
@@ -70,9 +72,10 @@ class UserProfile extends StatelessWidget {
           const Spacer(),
           GestureDetector(
             onTap: () async {
-              UserInfo? data = await _settingsController.getUserInfo();
+              UserInfo2 data = await _settingsController.getUserInfo();
               // Get.toNamed(Profile);
-              print('edit');
+              print(data);
+              Get.toNamed(Routes.PROFILE_DETAIL, arguments: {Constants.info: data});
             },
             child: SvgPicture.asset(
               'assets/images/ic_edit.svg',

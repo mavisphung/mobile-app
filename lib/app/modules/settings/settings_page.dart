@@ -102,7 +102,7 @@ class SettingsPage extends StatelessWidget {
                             svgAssetUrl: 'assets/images/ic_profile.svg',
                             title: 'My Account',
                             description: 'Make changes to your account',
-                            function: getUserInfo,
+                            function: () {},
                           ),
                           SizedBox(
                             height: 25.0.sp,

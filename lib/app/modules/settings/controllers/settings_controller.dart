@@ -20,15 +20,14 @@ class SettingsController extends GetxController {
     await Storage.clearStorage();
   }
 
-  Future<UserInfo?> getUserInfo() async {
+  Future<UserInfo2> getUserInfo() async {
     Response response = await _provider.getUserInfo();
-    UserInfo? data;
+    UserInfo2 data = UserInfo2();
     switch (response.statusCode) {
       case 200: // Success
       case 201:
         ResponseModel model = ResponseModel.fromJson(response.body);
-        print(model);
-        data = UserInfo.fromMap(model.data);
+        data = UserInfo2.fromMap(model.data);
         break;
       default:
         print('error ${response.statusCode!}');
