@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
 import '../../../models/user_info.dart';
-import '../../../routes/app_pages.dart';
+import '../../widgets/custom_appbar.dart';
 import '../../widgets/my_button_style.dart';
 import '../../widgets/my_input_decoration.dart';
 import '../controllers/register_controller.dart';
@@ -20,7 +20,6 @@ class _RegisterPageState extends State<RegisterPage> {
   final _controller = Get.put(RegisterController());
 
   var _currentStep = 0;
-  var _isPolicyAgreed = false;
   var _gender = 'MALE';
   bool? _isEmailDuplicated;
   final _formKey1 = GlobalKey<FormState>();
@@ -57,35 +56,18 @@ class _RegisterPageState extends State<RegisterPage> {
   }
 
   void _toggleIsPolicyAgreed() {
-    setState(() {
-      _isPolicyAgreed = !_isPolicyAgreed;
-    });
+    _controller.isPolicyAgreed.value = !_controller.isPolicyAgreed.value;
   }
 
-  void _activateAccount() async {
-    FocusScope.of(context).requestFocus(FocusNode());
+  void _activateAccount() {
     final otpFormKey = _controller.otpFormKey;
     otpFormKey.currentState!.save();
     if (!otpFormKey.currentState!.validate()) return;
-    var isActivated = await _controller.activateAccount(
-        _emailController.text, _controller.otpCode.value);
-    if (isActivated) {
-      Get.snackbar('Register success', 'Registration sucess');
-      Get.offAllNamed(Routes.LOGIN);
-    } else {
-      Get.snackbar('Verification failed',
-          'PIN ${_controller.otpCode.value} is incorrect');
-    }
+    _controller.activateAccount(_emailController.text, _controller.otpCode.value);
   }
 
   void _submitRegisterForm() async {
     if (!_checkForm(_formKey2)) return;
-    if (!_isPolicyAgreed) {
-      Get.defaultDialog(
-          title: 'Register Alert',
-          middleText: 'Please make sure you agreed with our policy.');
-      return;
-    }
     var isRegistrationSuccess = await _controller.register(
       _emailController.text,
       _passwordController.text,
@@ -105,8 +87,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
   void _checkEmail() async {
     if (!_checkForm(_formKey1)) return;
-    _isEmailDuplicated =
-        await _controller.checkEmailExisted(_emailController.text.trim());
+    _isEmailDuplicated = await _controller.checkEmailExisted(_emailController.text.trim());
     if (_isEmailDuplicated == false) {
       setState(() {
         _currentStep += 1;
@@ -118,9 +99,9 @@ class _RegisterPageState extends State<RegisterPage> {
   }
 
   bool _checkForm(GlobalKey<FormState> formKey) {
-    if (formKey.currentState!.validate()) return true;
+    if (!formKey.currentState!.validate()) return false;
     formKey.currentState!.save();
-    return false;
+    return true;
   }
 
   List<Step> getSteps() => [
@@ -132,9 +113,7 @@ class _RegisterPageState extends State<RegisterPage> {
           //     fit: BoxFit.fitWidth,
           //   ),
           // ),
-          title: _currentStep == 0
-              ? const Text('Register Account')
-              : const Text(''),
+          title: _currentStep == 0 ? const Text('Register Account') : const Text(''),
           isActive: _currentStep >= 0,
           state: _currentStep > 0 ? StepState.complete : StepState.indexed,
           content: Form(
@@ -157,8 +136,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       return null;
                     },
                     textInputAction: TextInputAction.next,
-                    onFieldSubmitted: (_) =>
-                        FocusScope.of(context).requestFocus(_passwordFocusNode),
+                    onFieldSubmitted: (_) => FocusScope.of(context).requestFocus(_passwordFocusNode),
                     controller: _emailController,
                     decoration: MyInputDecoration(labelText: 'Email'),
                   ),
@@ -179,8 +157,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     },
                     textInputAction: TextInputAction.next,
                     focusNode: _passwordFocusNode,
-                    onFieldSubmitted: (_) =>
-                        FocusScope.of(context).requestFocus(_confirmFocusNode),
+                    onFieldSubmitted: (_) => FocusScope.of(context).requestFocus(_confirmFocusNode),
                     controller: _passwordController,
                     decoration: MyInputDecoration(labelText: 'Password'),
                   ),
@@ -205,8 +182,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     focusNode: _confirmFocusNode,
                     onFieldSubmitted: (_) => _checkEmail(),
                     controller: _confirmController,
-                    decoration:
-                        MyInputDecoration(labelText: 'Confirm password'),
+                    decoration: MyInputDecoration(labelText: 'Confirm password'),
                   ),
                 ),
               ],
@@ -214,9 +190,7 @@ class _RegisterPageState extends State<RegisterPage> {
           ),
         ),
         Step(
-          title: _currentStep == 1
-              ? const Text('Complete Profile')
-              : const Text(''),
+          title: _currentStep == 1 ? const Text('Complete Profile') : const Text(''),
           isActive: _currentStep >= 1,
           state: _currentStep > 1 ? StepState.complete : StepState.indexed,
           content: Form(
@@ -232,16 +206,12 @@ class _RegisterPageState extends State<RegisterPage> {
                         height: _textFieldHeight,
                         child: TextFormField(
                           validator: (value) {
-                            return value == null || value.isEmpty
-                                ? 'Please enter First name'
-                                : null;
+                            return value == null || value.isEmpty ? 'Please enter First name' : null;
                           },
                           textInputAction: TextInputAction.next,
-                          onFieldSubmitted: (_) => FocusScope.of(context)
-                              .requestFocus(_lastNameFocusNode),
+                          onFieldSubmitted: (_) => FocusScope.of(context).requestFocus(_lastNameFocusNode),
                           controller: _firstNameController,
-                          decoration:
-                              MyInputDecoration(labelText: 'First name'),
+                          decoration: MyInputDecoration(labelText: 'First name'),
                         ),
                       ),
                     ),
@@ -254,14 +224,11 @@ class _RegisterPageState extends State<RegisterPage> {
                         height: _textFieldHeight,
                         child: TextFormField(
                           validator: (value) {
-                            return value == null || value.isEmpty
-                                ? 'Please enter Last name'
-                                : null;
+                            return value == null || value.isEmpty ? 'Please enter Last name' : null;
                           },
                           textInputAction: TextInputAction.next,
                           focusNode: _lastNameFocusNode,
-                          onFieldSubmitted: (_) => FocusScope.of(context)
-                              .requestFocus(_addressFocusNode),
+                          onFieldSubmitted: (_) => FocusScope.of(context).requestFocus(_addressFocusNode),
                           controller: _lastNameController,
                           decoration: MyInputDecoration(labelText: 'Last name'),
                         ),
@@ -274,14 +241,11 @@ class _RegisterPageState extends State<RegisterPage> {
                   height: _textFieldHeight,
                   child: TextFormField(
                     validator: (value) {
-                      return value == null || value.isEmpty
-                          ? 'Please enter Address'
-                          : null;
+                      return value == null || value.isEmpty ? 'Please enter Address' : null;
                     },
                     textInputAction: TextInputAction.next,
                     focusNode: _addressFocusNode,
-                    onFieldSubmitted: (_) => FocusScope.of(context)
-                        .requestFocus(_phoneNumberFocusNode),
+                    onFieldSubmitted: (_) => FocusScope.of(context).requestFocus(_phoneNumberFocusNode),
                     controller: _addressController,
                     decoration: MyInputDecoration(labelText: 'Address'),
                   ),
@@ -354,20 +318,21 @@ class _RegisterPageState extends State<RegisterPage> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(bottom: 12.0),
+                  padding: const EdgeInsets.only(top: 15.0, bottom: 20.0),
                   child: Row(
                     children: [
-                      Checkbox(
-                        fillColor: MaterialStateProperty.all(
-                            Theme.of(context).primaryColor),
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(3.0)),
-                        value: _isPolicyAgreed,
-                        onChanged: (_) => _toggleIsPolicyAgreed(),
-                      ),
-                      const Expanded(
-                        child: Text(
-                          'Creating an account means you\'re okay with our Terms of Service, Privacy Policy, and our default Notification Settings.',
+                      Obx(() => Checkbox(
+                            fillColor: MaterialStateProperty.all(Theme.of(context).primaryColor),
+                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(3.0)),
+                            value: _controller.isPolicyAgreed.value,
+                            onChanged: (_) => _toggleIsPolicyAgreed(),
+                          )),
+                      Expanded(
+                        child: InkWell(
+                          onTap: _toggleIsPolicyAgreed,
+                          child: Text(
+                            'policy_agree_msg'.tr,
+                          ),
                         ),
                       )
                     ],
@@ -378,9 +343,7 @@ class _RegisterPageState extends State<RegisterPage> {
           ),
         ),
         Step(
-          title: _currentStep == 2
-              ? const Text('OTP Verification')
-              : const Text(''),
+          title: _currentStep == 2 ? const Text('OTP Verification') : const Text(''),
           isActive: _currentStep == 2,
           state: _currentStep > 2 ? StepState.complete : StepState.indexed,
           content: _currentStep == 2
@@ -395,90 +358,46 @@ class _RegisterPageState extends State<RegisterPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        child: CustomScrollView(
-          controller: ScrollController(initialScrollOffset: 0),
-          physics: const BouncingScrollPhysics(),
-          scrollDirection: Axis.vertical,
-          slivers: [
-            SliverList(
-              delegate: SliverChildBuilderDelegate((ctx, c) {
-                return SizedBox(
-                  height: MediaQuery.of(ctx).size.height -
-                      MediaQuery.of(context).padding.bottom -
-                      MediaQuery.of(context).padding.top,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Stepper(
-                        type: StepperType.vertical,
-                        physics: const ScrollPhysics(),
-                        steps: getSteps(),
-                        currentStep: _currentStep,
-                        onStepContinue: () {
-                          if (_currentStep == 0) {
-                            _checkEmail();
-                          } else if (_currentStep == 1) {
-                            _submitRegisterForm();
-                          } else if (_currentStep == 2) {
-                            _activateAccount();
-                          }
-                        },
-                        onStepCancel: _currentStep == 0
-                            ? null
-                            : () => setState(() {
-                                  _currentStep -= 1;
-                                }),
-                        controlsBuilder: (ctx, controls) {
-                          return Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              _currentStep == 1
-                                  ? ElevatedButton(
-                                      onPressed: controls.onStepCancel,
-                                      style: MyButtonStyle(),
-                                      child: const Text('Back'),
-                                    )
-                                  : const SizedBox(),
-                              ElevatedButton(
-                                onPressed: controls.onStepContinue,
-                                style: MyButtonStyle(),
-                                child:
-                                    Text(_currentStep == 2 ? 'Verify' : 'Next'),
-                              ),
-                            ],
-                          );
-                        },
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(bottom: 22.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            const Text('Already have an account? '),
-                            InkWell(
-                              onTap: () {
-                                Get.offAllNamed(Routes.LOGIN);
-                              },
-                              child: const Text(
-                                'Sign In',
-                                textAlign: TextAlign.right,
-                                style: TextStyle(
-                                  // color: primaryColor,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                );
-              }, childCount: 1),
-            )
-          ],
-        ),
+      appBar: CustomAppbar('registration'.tr),
+      body: Stepper(
+        type: StepperType.horizontal,
+        physics: const BouncingScrollPhysics(),
+        elevation: 0,
+        steps: getSteps(),
+        currentStep: _currentStep,
+        onStepContinue: () {
+          if (_currentStep == 0) {
+            _checkEmail();
+          } else if (_currentStep == 1) {
+            _submitRegisterForm();
+          } else if (_currentStep == 2) {
+            _activateAccount();
+          }
+        },
+        onStepCancel: _currentStep == 0
+            ? null
+            : () => setState(() {
+                  _currentStep -= 1;
+                }),
+        controlsBuilder: (ctx, controls) {
+          return Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              _currentStep == 1
+                  ? ElevatedButton(
+                      onPressed: controls.onStepCancel,
+                      style: MyButtonStyle(),
+                      child: const Text('Back'),
+                    )
+                  : const SizedBox(),
+              ElevatedButton(
+                onPressed: controls.onStepContinue,
+                style: MyButtonStyle(),
+                child: Text(_currentStep == 2 ? 'Verify' : 'Next'),
+              ),
+            ],
+          );
+        },
       ),
     );
   }

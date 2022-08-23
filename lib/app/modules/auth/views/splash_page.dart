@@ -5,7 +5,7 @@ import '../../../common/storage/storage.dart';
 import '../../home/views/home_page.dart';
 import '../../widgets/no_internet_widget.dart';
 import '../controllers/login_controller.dart';
-import 'login_page.dart';
+import './login_page.dart';
 
 class SplashPage extends StatefulWidget {
   const SplashPage({Key? key}) : super(key: key);

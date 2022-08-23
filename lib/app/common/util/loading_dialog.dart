@@ -10,7 +10,7 @@ abstract class LoadingDialog {
   static CloseDialog _showLoadingDialog() {
     Get.printInfo(info: 'initialized loading');
     Utils.loadingDialog();
-    return Utils.closeDialog;
+    return Utils.closeLoadingDialog;
   }
 
   static void showLoadingDialog() {

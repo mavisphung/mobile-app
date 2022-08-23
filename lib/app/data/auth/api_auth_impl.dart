@@ -26,12 +26,10 @@ class ApiAuthImpl extends GetConnect with ApiAuth {
 
   @override
   Future<Response> postLogin(String email, String password) {
-    return Future.delayed(
-        const Duration(seconds: 7),
-        () => post(
-              '/login/',
-              RequestLoginModel(email: email, password: password).toJson(),
-            ));
+    return post(
+      '/login/',
+      RequestLoginModel(email: email, password: password).toJson(),
+    );
   }
 
   @override

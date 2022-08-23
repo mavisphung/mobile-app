@@ -5,7 +5,6 @@ import './app/common/util/initializer.dart';
 import './app/routes/app_pages.dart';
 import './app/modules/widgets/base_widget.dart';
 import './app/common/util/messages.dart';
-import './app/common/navigator_key.dart';
 
 void main() {
   Initializer.init(() {
@@ -25,7 +24,6 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      navigatorKey: navigatorKey,
       defaultTransition: Transition.cupertino,
       initialRoute: AppPages.INITIAL,
       getPages: AppPages.routes,

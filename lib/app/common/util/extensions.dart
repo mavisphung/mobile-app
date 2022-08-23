@@ -36,8 +36,7 @@ extension FutureExt<T> on Future<Response<T>> {
       final responseBody = ApiResponse.getResponse<T>(value);
       print('RESPONSE BODY: $responseBody');
       if (responseBody != null) {
-        final responseModel =
-            ResponseModel.fromJson(responseBody as Map<String, dynamic>);
+        final responseModel = ResponseModel.fromJson(responseBody as Map<String, dynamic>);
         return responseModel;
       }
       // _interface.update();
@@ -59,7 +58,7 @@ extension FutureExt<T> on Future<Response<T>> {
           // _retry(_interface, retryFunction);
         } else if (e.type == ErrorType.unauthorized) {
           if (e.message == 'AUTHENTICATION_FAILED') {
-            Utils.showBottomSnackbar('Wrong email or password');
+            Utils.showBottomSnackbar('login_failed_msg'.tr);
             return null;
           }
           Storage.clearStorage();

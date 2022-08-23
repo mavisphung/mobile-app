@@ -1,72 +1,76 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:hi_doctor_v2/app/common/navigator_key.dart';
 
 abstract class Utils {
-  // static void showDialog1(
-  //   String message, {
-  //   String title = 'Error',
-  //   bool success = false,
-  //   VoidCallback? onConfirm,
-  // }) {
-  //   Get.defaultDialog(
-  //     barrierDismissible: false,
-  //     onWillPop: () async {
-  //       Get.back();
-  //       return true;
-  //     },
-  //     title: success ? 'Success' : title,
-  //     content: Text(
-  //       message,
-  //       textAlign: TextAlign.justify,
-  //       maxLines: 6,
-  //       // style: AppTextStyle.semiBoldStyle.copyWith(
-  //       //   color: AppColors.mineShaft,
-  //       //   fontSize: Dimens.fontSize16,
-  //       // ),
-  //     ),
-  //     confirm: ElevatedButton(
-  //       onPressed: () {
-  //         onConfirm?.call();
-  //       },
-  //       child: const Text('Confirm'),
-  //     ),
-  //   );
-  // }
+  static void unfocus() {
+    FocusManager.instance.primaryFocus?.unfocus();
+  }
 
-  static void showAlertDialog(String message) {
-    showDialog(
-      context: navigatorKey.currentContext!,
+  static Future<bool> onWillPop() async {
+    unfocus();
+    return showConfirmDialog('exit_app_msg'.tr, title: 'close_app_alert'.tr) as bool? ?? false;
+  }
+
+  static Future<bool?> showConfirmDialog(
+    String message, {
+    String? title,
+    String cancelText = 'No',
+    String confirmText = 'Yes',
+  }) {
+    return showCupertinoDialog<bool>(
+      context: Get.overlayContext!,
+      barrierDismissible: false,
       builder: (ctx) {
         return CupertinoAlertDialog(
-          title: const Text('Alert'),
+          title: Text(title ?? 'alert'.tr),
           content: Text(message),
           actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.pop(ctx);
-              },
-              child: const Text('OK'),
-            )
+            CupertinoDialogAction(
+              onPressed: () => Navigator.pop(ctx, false),
+              child: Text(cancelText),
+            ),
+            CupertinoDialogAction(
+              onPressed: () => Navigator.pop(ctx, true),
+              child: Text(confirmText),
+            ),
           ],
         );
       },
     );
   }
 
-  static void closeDialog() {
-    if (Get.isDialogOpen == true) {
-      Get.back();
-    }
+  static void showAlertDialog(
+    String message, {
+    String? title,
+  }) {
+    showCupertinoDialog(
+      context: Get.overlayContext!,
+      barrierDismissible: false,
+      builder: (ctx) {
+        return CupertinoAlertDialog(
+          title: Text(title ?? 'alert'.tr),
+          content: Text(message),
+          actions: [
+            CupertinoDialogAction(
+              onPressed: () => Navigator.pop(ctx),
+              child: const Text('OK'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  static void closeLoadingDialog() {
+    Navigator.popUntil(Get.overlayContext!, (route) => !Get.isDialogOpen!);
   }
 
   static void loadingDialog() {
-    closeDialog();
+    closeLoadingDialog();
 
     Get.dialog(
       const Center(
-        child: CircularProgressIndicator(),
+        child: CupertinoActivityIndicator(),
       ),
       name: 'loadingDialog',
       barrierDismissible: false,
@@ -79,13 +83,26 @@ abstract class Utils {
     }
   }
 
+  static void showTopSnackbar(
+    String message, {
+    String? title,
+  }) {
+    closeSnackbar();
+
+    Get.snackbar(
+      title ?? 'Notification',
+      message,
+    );
+  }
+
   static void showBottomSnackbar(String message) {
     closeSnackbar();
 
     Get.rawSnackbar(
       message: message,
       borderRadius: 8.0,
-      margin: const EdgeInsets.all(10.0),
+      backgroundColor: CupertinoColors.darkBackgroundGray,
+      margin: const EdgeInsets.all(15.0),
     );
   }
 }

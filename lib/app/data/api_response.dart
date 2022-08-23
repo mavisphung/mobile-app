@@ -31,45 +31,51 @@ abstract class ApiResponse {
           return response.body;
         }
       } else {
+        print('NOT OK: ${response.body}');
         if (res['success'] == false && res['status'] == 400) {
           if (res['message'].toString() == 'INVALID_INPUT' &&
               !res['data']['user'][0].toString().contains('does not exist')) {
-            throw const ApiError(
+            throw ApiError(
               type: ErrorType.failedResponse,
-              error: 'Invalid Input',
+              error: 'invalid_input_msg'.tr,
             );
           }
-          print('NOT OK: ${response.body}');
           return response.body;
         } else if (status.isServerError) {
           print('SERVER ERROR');
           throw const ApiError();
         } else if (status.code == HttpStatus.requestTimeout) {
-          throw const ApiError(
+          throw ApiError(
             type: ErrorType.connectTimeout,
-            error: 'HttpStatus Connect Timeout',
+            error: 'con_time_out_msg'.tr,
           );
         } else if (response.unauthorized) {
+          if (res['message'] == 'AUTHENTICATION_FAILED') {
+            throw ApiError(
+              type: ErrorType.unauthorized,
+              error: res['message'],
+            );
+          }
           throw ApiError(
             type: ErrorType.unauthorized,
-            error: res['message']?.toString() ?? 'Unauthorized Error',
+            error: 'unauthorized_err_msg'.tr,
           );
         } else {
           throw ApiError(
             type: ErrorType.failedResponse,
-            error: res['message']?.toString() ?? 'Failed Response Error',
+            error: 'system_err_msg'.tr,
           );
         }
       }
     } on FormatException {
-      throw const ApiError(
+      throw ApiError(
         type: ErrorType.unknownError,
-        error: 'Format Exception',
+        error: 'format_err_msg'.tr,
       );
-    } on TimeoutException catch (e) {
+    } on TimeoutException {
       throw ApiError(
         type: ErrorType.connectTimeout,
-        error: e.message?.toString() ?? 'Connection Timeout',
+        error: 'con_time_out_msg'.tr,
       );
     }
     return null;
