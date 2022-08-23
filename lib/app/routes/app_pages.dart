@@ -2,6 +2,9 @@
 
 import 'package:get/get.dart';
 import 'package:hi_doctor_v2/app/modules/auth/views/splash_page.dart';
+import 'package:hi_doctor_v2/app/modules/bottom_navbar/bindings/navbar_binding.dart';
+import 'package:hi_doctor_v2/app/modules/bottom_navbar/navbar_widget.dart';
+import 'package:hi_doctor_v2/app/modules/history/history_page.dart';
 
 import '../modules/auth/bindings/login_binding.dart';
 import '../modules/auth/bindings/register_binding.dart';
@@ -34,6 +37,15 @@ abstract class AppPages {
       name: Routes.REGISTER,
       page: () => const RegisterPage(),
       binding: RegisterBinding(),
+    ),
+    GetPage(
+      name: Routes.NAVBAR,
+      page: () => NavBar(),
+      // binding: NavBarBinding(),
+    ),
+    GetPage(
+      name: Routes.HISTORY,
+      page: () => HistoryPage(),
     ),
   ];
 }

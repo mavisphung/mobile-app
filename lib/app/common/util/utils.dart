@@ -8,7 +8,7 @@ abstract class Utils {
 
   static Future<bool> onWillPop() async {
     unfocus();
-    return showConfirmDialog('exit_app_msg'.tr, title: 'close_app_alert'.tr) as bool? ?? false;
+    return await showConfirmDialog('exit_app_msg'.tr, title: 'close_app_alert'.tr) ?? false;
   }
 
   static Future<bool?> showConfirmDialog(

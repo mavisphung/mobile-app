@@ -26,10 +26,7 @@ class ApiAuthImpl extends GetConnect with ApiAuth {
 
   @override
   Future<Response> postLogin(String email, String password) {
-    return post(
-      '/login/',
-      RequestLoginModel(email: email, password: password).toJson(),
-    );
+    return post('/login/', RequestLoginModel(email: email, password: password).toJson());
   }
 
   @override
@@ -55,15 +52,8 @@ class ApiAuthImpl extends GetConnect with ApiAuth {
   }
 
   @override
-  Future<Response> postRegister(
-      String email,
-      String password,
-      String confirmPassword,
-      String firstName,
-      String lastName,
-      String phoneNumber,
-      String address,
-      String gender) {
+  Future<Response> postRegister(String email, String password, String confirmPassword, String firstName,
+      String lastName, String phoneNumber, String address, String gender) {
     return post(
       '/register/',
       RequestRegisterModel(

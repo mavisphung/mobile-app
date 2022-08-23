@@ -17,7 +17,8 @@ class LoginController extends GetxController {
     if (response != null && response.isSuccess == true && response.statusCode == 201) {
       await Storage.saveValue(CacheKey.TOKEN.name, response.data['accessToken']);
       await Storage.saveValue(CacheKey.IS_LOGGED.name, true);
-      Get.offNamed(Routes.HOME);
+
+      Get.offNamed(Routes.NAVBAR);
       Utils.showTopSnackbar('Login success');
     }
   }

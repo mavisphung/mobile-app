@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import './app/common/util/initializer.dart';
@@ -18,22 +19,28 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return GetMaterialApp(
-      title: 'Hi Doctor v2',
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      defaultTransition: Transition.cupertino,
-      initialRoute: AppPages.INITIAL,
-      getPages: AppPages.routes,
-      initialBinding: InitialBindings(),
-      builder: (_, child) => BaseWidget(
-        child: child ?? const SizedBox.shrink(),
-      ),
-      translations: Messages(),
-      locale: const Locale('en', 'US'),
-      fallbackLocale: const Locale('en', 'US'),
+    return ScreenUtilInit(
+      useInheritedMediaQuery: true,
+      designSize: const Size(375, 812),
+      builder: (_, __) {
+        return GetMaterialApp(
+          title: 'Hi Doctor v2',
+          debugShowCheckedModeBanner: false,
+          theme: ThemeData(
+            primarySwatch: Colors.blue,
+          ),
+          defaultTransition: Transition.cupertino,
+          initialRoute: AppPages.INITIAL,
+          getPages: AppPages.routes,
+          initialBinding: InitialBindings(),
+          builder: (_, child) => BaseWidget(
+            child: child ?? const SizedBox.shrink(),
+          ),
+          translations: Messages(),
+          locale: const Locale('en', 'US'),
+          fallbackLocale: const Locale('en', 'US'),
+        );
+      },
     );
   }
 }
