@@ -1,7 +1,23 @@
 abstract class Constants {
   static const String baseUrl = 'http://capstone-elb-1141242582.ap-southeast-1.elb.amazonaws.com';
+  static const String baseUrl2 = 'capstone-elb-1141242582.ap-southeast-1.elb.amazonaws.com';
   static const timeout = Duration(seconds: 5);
   static const userType = 'MEMBER';
   static const defaultAvatar = 'https://cuu-be.s3.amazonaws.com/cuu-be/2022/6/28/O2VWFV.png';
   static const info = 'info';
+}
+
+enum Gender { male, female, other }
+
+extension GenderExt on Gender {
+  String get value {
+    switch (this) {
+      case Gender.male:
+        return 'MALE';
+      case Gender.female:
+        return 'FEMALE';
+      default:
+        return 'OTHER';
+    }
+  }
 }

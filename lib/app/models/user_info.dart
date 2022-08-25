@@ -109,6 +109,28 @@ class UserInfo2 {
     this.avatar,
   });
 
+  UserInfo2 copyWith({
+    int? id,
+    String? email,
+    String? firstName,
+    String? lastName,
+    String? address,
+    String? gender,
+    String? phoneNumber,
+    String? avatar,
+  }) {
+    return UserInfo2(
+      id: id ?? this.id,
+      email: email ?? this.email,
+      firstName: firstName ?? this.firstName,
+      lastName: lastName ?? this.lastName,
+      address: address ?? this.address,
+      gender: gender ?? this.gender,
+      phoneNumber: phoneNumber ?? this.phoneNumber,
+      avatar: avatar ?? this.avatar,
+    );
+  }
+
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
       'id': id,

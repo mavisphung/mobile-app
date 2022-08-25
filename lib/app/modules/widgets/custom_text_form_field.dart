@@ -38,6 +38,7 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
           hintText: widget.hintText,
           labelText: widget.labelText,
         ),
+        keyboardType: widget.keyboardType,
       ),
     );
   }
