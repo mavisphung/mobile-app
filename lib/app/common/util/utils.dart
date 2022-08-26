@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hi_doctor_v2/app/common/navigator_key.dart';
+import 'package:intl/intl.dart';
 import 'package:mime/mime.dart';
 import 'package:http/http.dart' as http;
 
@@ -117,5 +118,10 @@ abstract class Utils {
     } catch (e) {
       throw 'Error while upload image to s3: $e';
     }
+  }
+
+  static String formatDateTime(DateTime date) {
+    final DateFormat formatter = DateFormat("yyyy-MM-dd HH:mm:ss");
+    return formatter.format(date);
   }
 }

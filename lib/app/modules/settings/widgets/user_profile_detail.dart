@@ -213,35 +213,6 @@ class UserProfileDetailPage extends StatelessWidget {
             ),
           ),
         );
-
-        Widget hiddenAppbar = NestedScrollView(
-          headerSliverBuilder: (context, innerBoxIsScrolled) {
-            return [
-              SliverAppBar(
-                centerTitle: true,
-                elevation: 0.0,
-                title: const Text(
-                  'User Profile',
-                  style: TextStyle(
-                    color: Colors.black,
-                  ),
-                ),
-                backgroundColor: Colors.transparent,
-                leading: GestureDetector(
-                  onTap: () {
-                    Get.back();
-                  },
-                  child: const Icon(
-                    Icons.arrow_back,
-                    color: Colors.black,
-                  ),
-                ),
-              ),
-            ];
-          },
-          body: Scaffold(),
-        );
-
         return normal;
       },
     );
