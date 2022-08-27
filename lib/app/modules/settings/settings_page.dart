@@ -1,69 +1,37 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:hi_doctor_v2/app/common/colors.dart';
-import 'package:hi_doctor_v2/app/models/user_info.dart';
-import 'package:hi_doctor_v2/app/modules/bottom_navbar/controllers/navbar_controller.dart';
-import 'package:hi_doctor_v2/app/modules/settings/controllers/settings_controller.dart';
-import 'package:hi_doctor_v2/app/modules/settings/widgets/user_profile.dart';
-import 'package:hi_doctor_v2/app/modules/settings/widgets/user_profile_item.dart';
-import 'package:hi_doctor_v2/app/routes/app_pages.dart';
+
+import '../../common/util/utils.dart';
+// import '../bottom_navbar/controllers/navbar_controller.dart';
+import './views/user_profile_item.dart';
+import './views/user_profile.dart';
+import './controllers/settings_controller.dart';
 
 enum SettingOption { myaccount, logout }
 
 class SettingsPage extends StatelessWidget {
   SettingsPage({Key? key}) : super(key: key);
   final SettingsController _controller = Get.put(SettingsController());
-  final NavBarController _navbarController = Get.find<NavBarController>();
+  // final NavBarController _navbarController = Get.find<NavBarController>();
 
-  void _showExitDialog() {
-    Get.dialog(
-      CupertinoAlertDialog(
-        title: const Text('Quit?'),
-        content: const Text('Do you really want to quit?'),
-        actions: [
-          CupertinoDialogAction(
-            child: Text(
-              'No',
-              style: TextStyle(
-                color: AppColor.primary,
-              ),
-            ),
-            onPressed: () {
-              Get.back();
-            },
-          ),
-          CupertinoDialogAction(
-            onPressed: () {
-              _controller.logout();
-              // _navbarController.changeTabIndex(0);
-              Get.offAllNamed(Routes.LOGIN);
-            },
-            child: Text(
-              'Yes',
-              style: TextStyle(
-                color: AppColor.primary,
-              ),
-            ),
-          ),
-        ],
-      ),
-      barrierDismissible: true,
-    );
+  void _logOut() async {
+    final confirmLogout = await Utils.showConfirmDialog('logout_confirm_msg'.tr);
+    if (confirmLogout ?? false) {
+      _controller.logOut();
+    }
   }
 
-  void getUserInfo() async {
-    UserInfo? userInfo = await _controller.getUserInfo();
-    print(userInfo!.toString());
+  void _getUserInfo() async {
+    await _controller.getUserInfo();
   }
 
   @override
   Widget build(BuildContext context) {
     return GetBuilder(
         init: _controller,
-        builder: (controller) {
+        builder: (_) {
           return Scaffold(
             appBar: AppBar(
               title: const Text(
@@ -78,7 +46,7 @@ class SettingsPage extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(horizontal: 16.0),
                 child: Column(
                   children: [
-                    UserProfile(),
+                    const UserProfile(),
                     Container(
                       margin: EdgeInsets.only(top: 22.0.sp),
                       decoration: BoxDecoration(
@@ -101,7 +69,7 @@ class SettingsPage extends StatelessWidget {
                             svgAssetUrl: 'assets/images/ic_profile.svg',
                             title: 'My Account',
                             description: 'Make changes to your account',
-                            function: getUserInfo,
+                            function: _getUserInfo,
                           ),
                           SizedBox(
                             height: 25.0.sp,
@@ -121,7 +89,7 @@ class SettingsPage extends StatelessWidget {
                             svgAssetUrl: 'assets/images/ic_logout.svg',
                             title: 'Log Out',
                             description: 'Quit the app',
-                            function: _showExitDialog,
+                            function: _logOut,
                           ),
                         ],
                       ),

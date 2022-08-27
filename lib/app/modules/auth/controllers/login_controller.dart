@@ -9,6 +9,8 @@ import '../../../routes/app_pages.dart';
 
 class LoginController extends GetxController {
   var isPasswordObscure = true.obs;
+  var isEmailFocused = false.obs;
+  var isPasswordFocused = false.obs;
   late final ApiAuth _apiAuth;
 
   Future<void> login(String email, String password) async {

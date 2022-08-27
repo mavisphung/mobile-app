@@ -14,7 +14,7 @@ class RegisterController extends GetxController {
   var isPolicyAgreed = false.obs;
 
   Future<bool?> checkEmailExisted(String email) async {
-    Utils.unfocus();
+    // Utils.unfocus();
     final response = await _apiAuth.postCheckEmailExisted(email).futureValue();
 
     if (response != null) {
@@ -39,7 +39,7 @@ class RegisterController extends GetxController {
     String address,
     String gender,
   ) async {
-    Utils.unfocus();
+    // Utils.unfocus();
     if (!isPolicyAgreed.value) {
       Utils.showAlertDialog(
         'policy_agree_need_msg'.tr,
@@ -78,6 +78,11 @@ class RegisterController extends GetxController {
         response.statusCode == 400 &&
         response.message == 'NO_MATCHED_CODE') {
       Utils.showBottomSnackbar('otp_incorrect_msg'.trParams({'code': otpCode.value}));
+    } else if (response != null &&
+        !response.isSuccess &&
+        response.statusCode == 400 &&
+        response.message == 'VERIFY_CODE_EXPIRED') {
+      Utils.showBottomSnackbar('otp_expired_msg'.tr);
     }
   }
 

@@ -1,14 +1,24 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
+import '../values/strings.dart';
+
 abstract class Utils {
-  static void unfocus() {
-    FocusManager.instance.primaryFocus?.unfocus();
+  static DateTime? currentBackPressTime;
+  static void unfocus({FocusNode? nextFocus}) {
+    nextFocus == null
+        ? FocusManager.instance.primaryFocus?.unfocus()
+        : FocusManager.instance.primaryFocus!.requestFocus(nextFocus);
   }
 
-  static Future<bool> onWillPop() async {
-    unfocus();
-    return await showConfirmDialog('exit_app_msg'.tr, title: 'close_app_alert'.tr) ?? false;
+  static Future<bool> onWillPop() {
+    DateTime now = DateTime.now();
+    if (currentBackPressTime == null || now.difference(currentBackPressTime!) > const Duration(seconds: 2)) {
+      currentBackPressTime = now;
+      Utils.showBottomSnackbar(Strings.exitAppAlert.tr);
+      return Future.value(false);
+    }
+    return Future.value(true);
   }
 
   static Future<bool?> showConfirmDialog(

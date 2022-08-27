@@ -6,6 +6,7 @@ import './app/common/util/initializer.dart';
 import './app/routes/app_pages.dart';
 import './app/modules/widgets/base_widget.dart';
 import './app/common/util/messages.dart';
+import './app/common/values/strings.dart';
 
 void main() {
   Initializer.init(() {
@@ -24,7 +25,7 @@ class MyApp extends StatelessWidget {
       designSize: const Size(375, 812),
       builder: (_, __) {
         return GetMaterialApp(
-          title: 'Hi Doctor v2',
+          title: Strings.appName,
           debugShowCheckedModeBanner: false,
           theme: ThemeData(
             primarySwatch: Colors.blue,

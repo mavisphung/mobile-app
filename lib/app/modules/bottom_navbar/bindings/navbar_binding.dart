@@ -1,7 +1,8 @@
 import 'package:get/get.dart';
-import 'package:hi_doctor_v2/app/modules/bottom_navbar/controllers/navbar_controller.dart';
-import 'package:hi_doctor_v2/app/modules/home/controllers/home_controller.dart';
-import 'package:hi_doctor_v2/app/modules/settings/controllers/settings_controller.dart';
+
+import '../../home/controllers/home_controller.dart';
+import '../../settings/controllers/settings_controller.dart';
+import '../controllers/navbar_controller.dart';
 
 class NavBarBinding extends Bindings {
   @override

@@ -1,11 +1,14 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:hi_doctor_v2/app/common/util/utils.dart';
 
+import '../../../common/util/validators.dart';
+import '../../../common/values/strings.dart';
 import '../../../models/user_info.dart';
-import '../../widgets/custom_appbar.dart';
+import '../../widgets/custom_appbar_widget.dart';
+import '../../widgets/custom_textfield_widget.dart';
 import '../../widgets/my_button_style.dart';
-import '../../widgets/my_input_decoration.dart';
 import '../controllers/register_controller.dart';
 import './otp_view.dart';
 
@@ -24,9 +27,10 @@ class _RegisterPageState extends State<RegisterPage> {
   bool? _isEmailDuplicated;
   final _formKey1 = GlobalKey<FormState>();
   final _formKey2 = GlobalKey<FormState>();
-  final _textFieldHeight = 100.0;
+  final _emailFocusNode = FocusNode();
   final _passwordFocusNode = FocusNode();
   final _confirmFocusNode = FocusNode();
+  final _firstNameFocusNode = FocusNode();
   final _lastNameFocusNode = FocusNode();
   final _phoneNumberFocusNode = FocusNode();
   final _addressFocusNode = FocusNode();
@@ -40,8 +44,10 @@ class _RegisterPageState extends State<RegisterPage> {
 
   @override
   void dispose() {
+    _emailFocusNode.dispose();
     _passwordFocusNode.dispose();
     _confirmFocusNode.dispose();
+    _firstNameFocusNode.dispose();
     _lastNameFocusNode.dispose();
     _phoneNumberFocusNode.dispose();
     _addressFocusNode.dispose();
@@ -68,6 +74,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
   void _submitRegisterForm() async {
     if (!_checkForm(_formKey2)) return;
+    Utils.unfocus(nextFocus: FocusNode());
     var isRegistrationSuccess = await _controller.register(
       _emailController.text,
       _passwordController.text,
@@ -86,6 +93,10 @@ class _RegisterPageState extends State<RegisterPage> {
   }
 
   void _checkEmail() async {
+    // Utils.unfocus(nextFocus: FocusNode());
+    // FocusScope.of(context).requestFocus(_firstNameFocusNode);
+    // Utils.unfocus();
+    FocusScope.of(context).requestFocus(_passwordFocusNode);
     if (!_checkForm(_formKey1)) return;
     _isEmailDuplicated = await _controller.checkEmailExisted(_emailController.text.trim());
     if (_isEmailDuplicated == false) {
@@ -121,69 +132,29 @@ class _RegisterPageState extends State<RegisterPage> {
             child: Column(
               children: [
                 const SizedBox(height: 8.0),
-                SizedBox(
-                  height: _textFieldHeight,
-                  child: TextFormField(
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Please enter email';
-                      } else if (!value.contains(RegExp(
-                          r'^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$'))) {
-                        return 'Please enter a valid email';
-                      } else if (_isEmailDuplicated ?? false) {
-                        return 'Email is duplicated';
-                      }
-                      return null;
-                    },
-                    textInputAction: TextInputAction.next,
-                    onFieldSubmitted: (_) => FocusScope.of(context).requestFocus(_passwordFocusNode),
-                    controller: _emailController,
-                    decoration: MyInputDecoration(labelText: 'Email'),
-                  ),
+                CustomTextFieldWidget(
+                  validator: (value) => Validators.validateEmail(value, _isEmailDuplicated ?? false),
+                  focusNode: _emailFocusNode,
+                  controller: _emailController,
+                  onFieldSubmitted: (_) => FocusScope.of(context).requestFocus(_passwordFocusNode),
+                  labelText: Strings.email.tr,
                 ),
-                SizedBox(
-                  height: _textFieldHeight,
-                  child: TextFormField(
-                    obscureText: true,
-                    enableSuggestions: false,
-                    autocorrect: false,
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Please enter password';
-                      } else if (value.length < 6) {
-                        return 'Password must has at least 6 characters';
-                      }
-                      return null;
-                    },
-                    textInputAction: TextInputAction.next,
-                    focusNode: _passwordFocusNode,
-                    onFieldSubmitted: (_) => FocusScope.of(context).requestFocus(_confirmFocusNode),
-                    controller: _passwordController,
-                    decoration: MyInputDecoration(labelText: 'Password'),
-                  ),
+                CustomTextFieldWidget(
+                  hasObscureIcon: true,
+                  validator: Validators.validatePassword,
+                  focusNode: _passwordFocusNode,
+                  controller: _passwordController,
+                  onFieldSubmitted: (_) => FocusScope.of(context).requestFocus(_confirmFocusNode),
+                  labelText: Strings.pasword.tr,
                 ),
-                SizedBox(
-                  height: _textFieldHeight,
-                  child: TextFormField(
-                    obscureText: true,
-                    enableSuggestions: false,
-                    autocorrect: false,
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Please enter confirm password';
-                      } else if (value.length < 6) {
-                        return 'Confirm password must has at least 6 characters';
-                      } else if (value != _passwordController.text) {
-                        return 'Confirm password is not matched';
-                      }
-                      return null;
-                    },
-                    textInputAction: TextInputAction.done,
-                    focusNode: _confirmFocusNode,
-                    onFieldSubmitted: (_) => _checkEmail(),
-                    controller: _confirmController,
-                    decoration: MyInputDecoration(labelText: 'Confirm password'),
-                  ),
+                CustomTextFieldWidget(
+                  hasObscureIcon: true,
+                  validator: (value) => Validators.validateConfirmPassword(value, _passwordController.text),
+                  textInputAction: TextInputAction.done,
+                  focusNode: _confirmFocusNode,
+                  controller: _confirmController,
+                  onFieldSubmitted: (_) => _checkEmail(),
+                  labelText: Strings.confirmPasword.tr,
                 ),
               ],
             ),
@@ -200,77 +171,45 @@ class _RegisterPageState extends State<RegisterPage> {
                 const SizedBox(height: 8.0),
                 Row(
                   children: [
-                    // First Name
                     Expanded(
-                      child: SizedBox(
-                        height: _textFieldHeight,
-                        child: TextFormField(
-                          validator: (value) {
-                            return value == null || value.isEmpty ? 'Please enter First name' : null;
-                          },
-                          textInputAction: TextInputAction.next,
-                          onFieldSubmitted: (_) => FocusScope.of(context).requestFocus(_lastNameFocusNode),
-                          controller: _firstNameController,
-                          decoration: MyInputDecoration(labelText: 'First name'),
-                        ),
+                      child: CustomTextFieldWidget(
+                        validator: Validators.validateEmpty,
+                        focusNode: _firstNameFocusNode,
+                        controller: _firstNameController,
+                        onFieldSubmitted: (_) => FocusScope.of(context).requestFocus(_lastNameFocusNode),
+                        labelText: Strings.firstName.tr,
                       ),
                     ),
                     const SizedBox(
                       width: 10.0,
                     ),
-                    // Last Name
                     Expanded(
-                      child: SizedBox(
-                        height: _textFieldHeight,
-                        child: TextFormField(
-                          validator: (value) {
-                            return value == null || value.isEmpty ? 'Please enter Last name' : null;
-                          },
-                          textInputAction: TextInputAction.next,
-                          focusNode: _lastNameFocusNode,
-                          onFieldSubmitted: (_) => FocusScope.of(context).requestFocus(_addressFocusNode),
-                          controller: _lastNameController,
-                          decoration: MyInputDecoration(labelText: 'Last name'),
-                        ),
+                      child: CustomTextFieldWidget(
+                        validator: Validators.validateEmpty,
+                        focusNode: _lastNameFocusNode,
+                        controller: _lastNameController,
+                        onFieldSubmitted: (_) => FocusScope.of(context).requestFocus(_addressFocusNode),
+                        labelText: Strings.lastName.tr,
                       ),
                     ),
                   ],
                 ),
-                // Address
-                SizedBox(
-                  height: _textFieldHeight,
-                  child: TextFormField(
-                    validator: (value) {
-                      return value == null || value.isEmpty ? 'Please enter Address' : null;
-                    },
-                    textInputAction: TextInputAction.next,
-                    focusNode: _addressFocusNode,
-                    onFieldSubmitted: (_) => FocusScope.of(context).requestFocus(_phoneNumberFocusNode),
-                    controller: _addressController,
-                    decoration: MyInputDecoration(labelText: 'Address'),
-                  ),
+                CustomTextFieldWidget(
+                  validator: Validators.validateEmpty,
+                  focusNode: _addressFocusNode,
+                  controller: _addressController,
+                  onFieldSubmitted: (_) => FocusScope.of(context).requestFocus(_phoneNumberFocusNode),
+                  labelText: Strings.address.tr,
                 ),
-                SizedBox(
-                  height: _textFieldHeight,
-                  child: TextFormField(
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Please enter Phone number';
-                      } else if (value.length != 10) {
-                        return 'Phone number must have 10 numbers';
-                      }
-                      return null;
-                    },
-                    inputFormatters: [
-                      FilteringTextInputFormatter.digitsOnly,
-                    ],
-                    keyboardType: TextInputType.number,
-                    textInputAction: TextInputAction.done,
-                    focusNode: _phoneNumberFocusNode,
-                    onFieldSubmitted: (_) => _submitRegisterForm(),
-                    controller: _phoneNumberController,
-                    decoration: MyInputDecoration(labelText: 'Phone number'),
-                  ),
+                CustomTextFieldWidget(
+                  validator: Validators.validatePhone,
+                  focusNode: _phoneNumberFocusNode,
+                  controller: _phoneNumberController,
+                  onFieldSubmitted: (_) => _submitRegisterForm(),
+                  labelText: Strings.phoneNumber.tr,
+                  textInputAction: TextInputAction.done,
+                  keyboardType: TextInputType.number,
+                  maxLength: 10,
                 ),
                 Container(
                   margin: const EdgeInsets.only(bottom: 15.0),
@@ -290,19 +229,19 @@ class _RegisterPageState extends State<RegisterPage> {
                     value: _gender,
                     isExpanded: true,
                     underline: Container(),
-                    hint: const Text('Gender'),
+                    hint: Text(Strings.gender.tr),
                     borderRadius: BorderRadius.circular(10.0),
                     items: UserGender.gender.value.map((item) {
-                      String label = 'Male';
+                      String label = Strings.male.tr;
                       switch (item) {
                         case 'MALE':
-                          label = 'Male';
+                          label = Strings.male.tr;
                           break;
                         case 'FEMALE':
-                          label = 'Female';
+                          label = Strings.female.tr;
                           break;
                         case 'OTHER':
-                          label = 'Other';
+                          label = Strings.other.tr;
                           break;
                       }
                       return DropdownMenuItem<String>(
@@ -311,9 +250,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       );
                     }).toList(),
                     onChanged: (value) {
-                      setState(() {
-                        _gender = value as String;
-                      });
+                      _gender = value ?? 'OTHER';
                     },
                   ),
                 ),
@@ -331,7 +268,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         child: InkWell(
                           onTap: _toggleIsPolicyAgreed,
                           child: Text(
-                            'policy_agree_msg'.tr,
+                            Strings.policyAgreementMsg.tr,
                           ),
                         ),
                       )
@@ -358,7 +295,7 @@ class _RegisterPageState extends State<RegisterPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppbar('registration'.tr),
+      appBar: CustomAppbarWidget(Strings.registration.tr),
       body: Stepper(
         type: StepperType.horizontal,
         physics: const BouncingScrollPhysics(),
@@ -387,13 +324,13 @@ class _RegisterPageState extends State<RegisterPage> {
                   ? ElevatedButton(
                       onPressed: controls.onStepCancel,
                       style: MyButtonStyle(),
-                      child: const Text('Back'),
+                      child: Text(Strings.back.tr),
                     )
                   : const SizedBox(),
               ElevatedButton(
                 onPressed: controls.onStepContinue,
                 style: MyButtonStyle(),
-                child: Text(_currentStep == 2 ? 'Verify' : 'Next'),
+                child: Text(_currentStep == 2 ? Strings.verify.tr : Strings.kContinue.tr),
               ),
             ],
           );

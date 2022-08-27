@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:hi_doctor_v2/app/common/colors.dart';
+
+import '../../../common/values/colors.dart';
 
 class UserProfile extends StatelessWidget {
-  UserProfile({
+  const UserProfile({
     Key? key,
   }) : super(key: key);
 
@@ -13,7 +14,7 @@ class UserProfile extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         // color: const Color(0xFF0601B4),
-        color: AppColor.primary,
+        color: AppColors.primary,
         boxShadow: [
           BoxShadow(
             color: Colors.black.withOpacity(0.25),
@@ -41,31 +42,36 @@ class UserProfile extends StatelessWidget {
           SizedBox(
             width: 13.0.sp,
           ),
-          Wrap(
-            // vertical thi dung spacing
-            spacing: 4,
-            // horizontal thi dung run spacing
-            // runSpacing: 100,
-            direction: Axis.vertical,
-            children: [
-              Text(
-                'Huy Phung',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 14.0.sp,
+          Expanded(
+            child: Wrap(
+              // vertical thi dung spacing
+              spacing: 4,
+              // horizontal thi dung run spacing
+              // runSpacing: 100,
+              direction: Axis.vertical,
+              children: [
+                Text(
+                  'Huy Phung',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 14.0.sp,
+                  ),
                 ),
-              ),
-              Text(
-                'nguoibimatthegioi@gmail.com',
-                style: TextStyle(
-                  color: const Color(0xFFD7D7D7),
-                  fontSize: 14.0.sp,
-                ),
-                overflow: TextOverflow.clip,
-              )
-            ],
+                FittedBox(
+                  fit: BoxFit.cover,
+                  child: Text(
+                    'nguoibimatthegioi@gmail.com',
+                    style: TextStyle(
+                      color: const Color(0xFFD7D7D7),
+                      fontSize: 14.0.sp,
+                    ),
+                    overflow: TextOverflow.clip,
+                  ),
+                )
+              ],
+            ),
           ),
-          const Spacer(),
+          // const Spacer(),
           GestureDetector(
             onTap: () {
               // Get.toNamed(Profile);
@@ -75,6 +81,7 @@ class UserProfile extends StatelessWidget {
               'assets/images/ic_edit.svg',
               width: 24.0.sp,
               height: 24.0.sp,
+              fit: BoxFit.fitWidth,
             ),
           ),
         ],

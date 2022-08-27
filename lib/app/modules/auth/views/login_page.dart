@@ -3,13 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../common/util/utils.dart';
+import '../../../common/util/validators.dart';
+import '../../../common/values/strings.dart';
 import '../../../routes/app_pages.dart';
+import '../../widgets/custom_textfield_widget.dart';
 import '../../widgets/my_button_style.dart';
-import '../../widgets/my_input_decoration.dart';
 import '../controllers/login_controller.dart';
 
 class LoginPage extends GetView<LoginController> {
   final _formKey = GlobalKey<FormState>();
+  final _emailFocusNode = FocusNode();
   final _passwordFocusNode = FocusNode();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
@@ -26,16 +29,15 @@ class LoginPage extends GetView<LoginController> {
 
   @override
   Widget build(BuildContext context) {
+    // initFocusNode();
     return WillPopScope(
-      onWillPop: () async {
-        return Utils.onWillPop();
-      },
+      onWillPop: Utils.onWillPop,
       child: Scaffold(
         body: SafeArea(
           child: Center(
             child: SingleChildScrollView(
               child: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 30.0),
+                padding: const EdgeInsets.symmetric(horizontal: 40.0),
                 child: Column(
                   children: [
                     Container(
@@ -68,60 +70,25 @@ class LoginPage extends GetView<LoginController> {
                       key: _formKey,
                       child: Column(
                         children: [
-                          SizedBox(
-                            height: 90.0,
-                            child: TextFormField(
-                              validator: (value) {
-                                if (value == null || value.isEmpty) {
-                                  return 'Please enter email';
-                                } else if (!value.contains(RegExp(
-                                    r'^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$'))) {
-                                  return 'Please enter a valid email';
-                                }
-                                return null;
-                              },
-                              textInputAction: TextInputAction.next,
-                              onFieldSubmitted: (_) => FocusScope.of(context).requestFocus(_passwordFocusNode),
-                              controller: _emailController,
-                              decoration: MyInputDecoration(
-                                  hintText: 'Email',
-                                  prefixIcon: const Icon(
-                                    CupertinoIcons.mail,
-                                  )),
+                          CustomTextFieldWidget(
+                            validator: (value) => Validators.validateEmail(value, false),
+                            focusNode: _emailFocusNode,
+                            controller: _emailController,
+                            onFieldSubmitted: (_) => FocusScope.of(context).requestFocus(_passwordFocusNode),
+                            hintText: Strings.email.tr,
+                            prefixIcon: const Icon(
+                              CupertinoIcons.mail,
                             ),
                           ),
-                          SizedBox(
-                            height: 90.0,
-                            child: Obx(() => TextFormField(
-                                  obscureText: controller.isPasswordObscure.value,
-                                  enableSuggestions: false,
-                                  autocorrect: false,
-                                  validator: (value) {
-                                    if (value == null || value.isEmpty) {
-                                      return 'Please enter password';
-                                    } else if (value.length < 6) {
-                                      return 'Password must has at least 6 characters';
-                                    }
-                                    return null;
-                                  },
-                                  textInputAction: TextInputAction.done,
-                                  focusNode: _passwordFocusNode,
-                                  onFieldSubmitted: (_) => _submitLogin(),
-                                  controller: _passwordController,
-                                  decoration: MyInputDecoration(
-                                    hintText: 'Password',
-                                    prefixIcon: const Icon(CupertinoIcons.lock),
-                                    suffixIcon: IconButton(
-                                      onPressed: () =>
-                                          controller.isPasswordObscure.value = !controller.isPasswordObscure.value,
-                                      icon: !controller.isPasswordObscure.value
-                                          ? const Icon(
-                                              CupertinoIcons.eye_slash,
-                                            )
-                                          : const Icon(CupertinoIcons.eye),
-                                    ),
-                                  ),
-                                )),
+                          CustomTextFieldWidget(
+                            hasObscureIcon: true,
+                            validator: Validators.validatePassword,
+                            textInputAction: TextInputAction.done,
+                            focusNode: _passwordFocusNode,
+                            controller: _passwordController,
+                            onFieldSubmitted: (_) => _submitLogin(),
+                            hintText: Strings.pasword.tr,
+                            prefixIcon: const Icon(CupertinoIcons.lock),
                           ),
                         ],
                       ),

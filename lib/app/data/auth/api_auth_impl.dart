@@ -34,8 +34,8 @@ class ApiAuthImpl extends GetConnect with ApiAuth {
     return get(
       '/cicd/',
       headers: {
-        "content-type": "application/json",
-        "accept": "application/json",
+        // "content-type": "application/json",
+        // "accept": "application/json",
         "Authorization": "Bearer $accessToken",
       },
     );

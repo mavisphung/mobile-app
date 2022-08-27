@@ -1,84 +1,101 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import '../controllers/register_controller.dart';
-import './otp_form.dart';
 
-class OtpView extends StatefulWidget {
+class OtpView extends StatelessWidget {
   final String email;
   final VoidCallback activateAccount;
   final RegisterController _registerController = Get.find();
-  OtpView({Key? key, required this.email, required this.activateAccount})
-      : super(key: key);
 
-  @override
-  State<OtpView> createState() => _OtpViewState();
-}
+  OtpView({
+    Key? key,
+    required this.email,
+    required this.activateAccount,
+  }) : super(key: key);
 
-class _OtpViewState extends State<OtpView> {
+  final _otpInputDecoration = InputDecoration(
+    contentPadding: EdgeInsets.symmetric(vertical: 15.sp),
+    enabledBorder: OutlineInputBorder(
+      borderSide: const BorderSide(color: Color(0xFFE0E0E0)),
+      borderRadius: BorderRadius.circular(10.0),
+    ),
+    border: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(10.0),
+    ),
+    filled: true,
+    fillColor: Colors.grey[100],
+  );
+
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 10.0),
-            child: Text(
-              'Enter OTP Code',
-              style: Theme.of(context).textTheme.headline6,
-            ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 10.0),
+          child: Text(
+            'Enter OTP Code',
+            style: Theme.of(context).textTheme.headline6,
           ),
-          const Text('We\'ve sent OTP code to your email:'),
-          Text(
-            widget.email,
+        ),
+        const Text('We\'ve sent OTP code to your email:'),
+        Text(
+          email,
+        ),
+        const SizedBox(
+          height: 40.0,
+        ),
+        Form(
+          key: _registerController.otpFormKey,
+          child: TextFormField(
+            validator: ((value) {
+              if (value == null || value.isEmpty) {
+                return '';
+              } else if (value.length < 6) {
+                return '';
+              }
+              return null;
+            }),
+            onSaved: (value) => _registerController.otpCode.value = value ?? '',
+            onFieldSubmitted: (_) => activateAccount(),
+            style: Theme.of(context).textTheme.headline6,
+            keyboardType: TextInputType.number,
+            textAlign: TextAlign.center,
+            inputFormatters: [
+              LengthLimitingTextInputFormatter(6),
+              FilteringTextInputFormatter.digitsOnly,
+            ],
+            decoration: _otpInputDecoration,
           ),
-          Container(
-            padding: const EdgeInsets.only(top: 40.0),
-            child: OtpForm(
-              activateAccount: widget.activateAccount,
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(bottom: 10.0),
-            child: Row(
-              children: [
-                // const Text('This code will be expired in '),
-                // TweenAnimationBuilder(
-                //   tween: IntTween(begin: 30, end: 0),
-                //   duration: const Duration(seconds: 30),
-                //   builder: (ctx, value, child) => Text(
-                //     value.toString().length == 1 ? '00:0$value' : '00:$value',
-                //     style: const TextStyle(color: Colors.amber),
-                //   ),
-                //   onEnd: () {},
-                // ),
-                const Text('Don\'t receive any code?'),
-                InkWell(
-                  onTap: () async {
-                    final isResented = await widget._registerController
-                        .resendOtp(widget.email);
-                    if (isResented) {
-                      setState(() {});
-                    }
-                  },
-                  child: Padding(
-                    padding: const EdgeInsets.all(5.0),
-                    child: Text(
-                      'Resend',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: Theme.of(context).primaryColor,
-                        fontWeight: FontWeight.bold,
-                      ),
+        ),
+        Padding(
+          padding: const EdgeInsets.only(bottom: 10.0),
+          child: Row(
+            children: [
+              const Text('Don\'t receive any code?'),
+              InkWell(
+                onTap: () async {
+                  await _registerController.resendOtp(email);
+                },
+                child: Padding(
+                  padding: const EdgeInsets.all(5.0),
+                  child: Text(
+                    'Resend',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: Theme.of(context).primaryColor,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
-                )
-              ],
-            ),
+                ),
+              )
+            ],
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

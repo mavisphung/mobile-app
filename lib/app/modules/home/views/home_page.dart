@@ -13,18 +13,65 @@ class HomePage extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Home'),
       ),
-      body: Center(
-          child: Column(
-        children: [
-          const Text('HOME'),
-          ElevatedButton(
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            const Text('HOME'),
+            ElevatedButton(
               onPressed: () async {
                 await Storage.clearStorage();
                 Get.offNamed(Routes.LOGIN);
               },
-              child: const Text('LOG OUT')),
-        ],
-      )),
+              child: const Text('LOG OUT'),
+            ),
+            Container(
+              height: 220,
+              width: double.infinity,
+              color: Colors.blue,
+            ),
+            Container(
+              height: 220,
+              width: double.infinity,
+              color: Colors.yellow,
+            ),
+            Container(
+              height: 220,
+              width: double.infinity,
+              color: Colors.red,
+            ),
+            Container(
+              height: 220,
+              width: double.infinity,
+              color: Colors.purple,
+            ),
+            Container(
+              height: 220,
+              width: double.infinity,
+              color: Colors.pink,
+            ),
+            Container(
+              height: 220,
+              width: double.infinity,
+              color: Colors.blue,
+            ),
+            Container(
+              height: 220,
+              width: double.infinity,
+              color: Colors.green,
+            ),
+            Container(
+              height: 220,
+              width: double.infinity,
+              color: Colors.orange,
+            ),
+            Container(
+              height: 220,
+              width: double.infinity,
+              color: Colors.cyan,
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
