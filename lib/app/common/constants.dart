@@ -22,3 +22,37 @@ extension GenderExt on Gender {
     }
   }
 }
+
+enum AppointmentType { all, online, offline }
+
+extension AppointmentTypeExt on AppointmentType {
+  String get value {
+    switch (this) {
+      case AppointmentType.online:
+        return 'ONLINE';
+      case AppointmentType.offline:
+        return 'OFFLINE';
+      default:
+        return 'ALL';
+    }
+  }
+}
+
+enum AppointmentStatus { all, pending, completed, cancelled, inProgress }
+
+extension AppointmentStatusExt on AppointmentStatus {
+  String get value {
+    switch (this) {
+      case AppointmentStatus.pending:
+        return 'PENDING';
+      case AppointmentStatus.completed:
+        return 'COMPLETED';
+      case AppointmentStatus.cancelled:
+        return 'CANCELLED';
+      case AppointmentStatus.inProgress:
+        return 'IN_PROGRESS';
+      default:
+        return 'ALL';
+    }
+  }
+}
