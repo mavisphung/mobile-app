@@ -11,6 +11,7 @@ import '../modules/bottom_navbar/nav_bar.dart';
 import '../modules/history/history_page.dart';
 import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_page.dart';
+import '../modules/search/views/search_page.dart';
 
 part './app_routes.dart';
 
@@ -39,12 +40,16 @@ abstract class AppPages {
     ),
     GetPage(
       name: Routes.NAVBAR,
-      page: () => NavBar(),
+      page: () => const NavBar(),
       // binding: NavBarBinding(),
     ),
     GetPage(
       name: Routes.HISTORY,
       page: () => const HistoryPage(),
+    ),
+    GetPage(
+      name: Routes.SEARCH,
+      page: () => const SearchPage(),
     ),
   ];
 }

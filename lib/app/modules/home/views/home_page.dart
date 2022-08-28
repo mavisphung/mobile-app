@@ -1,8 +1,8 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../../common/storage/storage.dart';
-import '../../../routes/app_pages.dart';
+import '../../../common/values/colors.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -11,63 +11,87 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Home'),
+        automaticallyImplyLeading: false,
+        // leading: Container(
+        //   width: ScreenUtil().screenWidth / 2,
+        //   color: Colors.amber,
+        // child: ListTile(
+        //   minLeadingWidth: 280.sp,
+        //   // leading: Container(
+        //   //   width: 53.0.sp,
+        //   //   height: 53.0.sp,
+        //   //   decoration: const BoxDecoration(
+        //   //     shape: BoxShape.circle,
+        //   //     image: DecorationImage(
+        //   //       image: NetworkImage('https://cuu-be.s3.amazonaws.com/cuu-be/2022/6/28/O2VWFV.png'),
+        //   //     ),
+        //   //   ),
+        //   // ),
+        //   title: const Text('Hi, Mi Mi'),
+        //   subtitle: const Text('How are you today?'),
+        // ),
+        // child: Text('HELOOOOODFKDSNFSNDFDLJFSFSMFKSDFKSFNS'),
+
+        // ),
+        title: SizedBox(
+          height: 100.sp,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              Container(
+                width: ScreenUtil().screenWidth / 2,
+                color: Colors.amber,
+                child: ListTile(
+                  // minLeadingWidth: 280.sp,
+                  leading: Container(
+                    width: 40.sp,
+                    height: 40.sp,
+                    decoration: const BoxDecoration(
+                      shape: BoxShape.circle,
+                      image: DecorationImage(
+                        image: NetworkImage('https://cuu-be.s3.amazonaws.com/cuu-be/2022/6/28/O2VWFV.png'),
+                      ),
+                    ),
+                  ),
+                  title: const Text('Hi, Mi Mi'),
+                  subtitle: const Text('How are you today?'),
+                ),
+              ),
+            ],
+          ),
+        ),
+        actions: [
+          IconButton(
+            onPressed: () {},
+            icon: const Icon(CupertinoIcons.search),
+          ),
+          IconButton(
+            onPressed: () {},
+            color: AppColors.hightLight,
+            icon: const Icon(CupertinoIcons.bell),
+          ),
+        ],
       ),
       body: SingleChildScrollView(
         child: Column(
           children: [
-            const Text('HOME'),
-            ElevatedButton(
-              onPressed: () async {
-                await Storage.clearStorage();
-                Get.offNamed(Routes.LOGIN);
-              },
-              child: const Text('LOG OUT'),
-            ),
-            Container(
-              height: 220,
-              width: double.infinity,
-              color: Colors.blue,
-            ),
-            Container(
-              height: 220,
-              width: double.infinity,
-              color: Colors.yellow,
-            ),
-            Container(
-              height: 220,
-              width: double.infinity,
-              color: Colors.red,
-            ),
-            Container(
-              height: 220,
-              width: double.infinity,
-              color: Colors.purple,
-            ),
-            Container(
-              height: 220,
-              width: double.infinity,
-              color: Colors.pink,
-            ),
-            Container(
-              height: 220,
-              width: double.infinity,
-              color: Colors.blue,
-            ),
-            Container(
-              height: 220,
-              width: double.infinity,
-              color: Colors.green,
-            ),
-            Container(
-              height: 220,
-              width: double.infinity,
-              color: Colors.orange,
-            ),
-            Container(
-              height: 220,
-              width: double.infinity,
-              color: Colors.cyan,
+            ListTile(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10.sp),
+              ),
+              leading: Container(
+                width: 53.0.sp,
+                height: 53.0.sp,
+                decoration: const BoxDecoration(
+                  shape: BoxShape.circle,
+                  image: DecorationImage(
+                    image: NetworkImage('https://cuu-be.s3.amazonaws.com/cuu-be/2022/6/28/O2VWFV.png'),
+                  ),
+                ),
+              ),
+              title: const Text('Dr.Lalalalalala'),
+              subtitle: const Text('Dental Specials'),
             ),
           ],
         ),

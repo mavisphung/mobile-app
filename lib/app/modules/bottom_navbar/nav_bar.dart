@@ -41,98 +41,94 @@ class _NavBarState extends State<NavBar> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    print('=================REBUILD==============');
     return GetBuilder<NavBarController>(
       builder: (_) => WillPopScope(
         onWillPop: Utils.onWillPop,
         child: Scaffold(
           body: SafeArea(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 15.0),
-              child: Stack(
-                children: [
-                  if (_controller.tabIndex == 0)
-                    SlideTransition(
-                      position: _animation,
-                      child: const HomePage(),
-                    ),
-                  if (_controller.tabIndex == 1)
-                    SlideTransition(
-                      position: _animation,
-                      child: const HistoryPage(),
-                    ),
-                  if (_controller.tabIndex == 2)
-                    SlideTransition(
-                      position: _animation,
-                      child: SettingsPage(),
-                    ),
-                  // IndexedStack(
-                  //   index: _controller.tabIndex,
-                  //   children: [
-                  //     const HomePage(),
-                  //     const HistoryPage(),
-                  //     SettingsPage(),
-                  //   ],
-                  // ),
-                  Positioned(
-                    bottom: 15,
-                    left: 0,
-                    right: 0,
-                    child: Stack(
-                      children: [
-                        CustomPaint(
-                          size: Size(size.width - 30, 80),
-                          painter: BNBCustomPainter(),
-                        ),
-                        Center(
-                          heightFactor: 0.7,
-                          child: FloatingActionButton(
-                            onPressed: () {},
-                            elevation: 3,
-                            backgroundColor: Colors.white,
-                            child: const Icon(
-                              Icons.shopping_cart,
-                              color: Colors.blue,
-                            ),
-                          ),
-                        ),
-                        Container(
-                          width: size.width,
-                          height: 80,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              _navBarItem(
-                                icon: CupertinoIcons.house,
-                                filledIcon: CupertinoIcons.house_fill,
-                                tabIndex: 0,
-                              ),
-                              _navBarItem(
-                                icon: CupertinoIcons.doc_text,
-                                filledIcon: CupertinoIcons.doc_text_fill,
-                                tabIndex: 0,
-                              ),
-                              SizedBox(
-                                width: size.width * 0.20,
-                              ),
-                              _navBarItem(
-                                icon: CupertinoIcons.bell,
-                                filledIcon: CupertinoIcons.bell_fill,
-                                tabIndex: 1,
-                              ),
-                              _navBarItem(
-                                icon: CupertinoIcons.person,
-                                filledIcon: CupertinoIcons.person_fill,
-                                tabIndex: 2,
-                              ),
-                            ],
-                          ),
-                        )
-                      ],
-                    ),
+            child: Stack(
+              children: [
+                if (_controller.tabIndex == 0)
+                  SlideTransition(
+                    position: _animation,
+                    child: const HomePage(),
                   ),
-                ],
-              ),
+                if (_controller.tabIndex == 1)
+                  SlideTransition(
+                    position: _animation,
+                    child: const HistoryPage(),
+                  ),
+                if (_controller.tabIndex == 2)
+                  SlideTransition(
+                    position: _animation,
+                    child: SettingsPage(),
+                  ),
+                // IndexedStack(
+                //   index: _controller.tabIndex,
+                //   children: [
+                //     const HomePage(),
+                //     const HistoryPage(),
+                //     SettingsPage(),
+                //   ],
+                // ),
+                Positioned(
+                  bottom: 15,
+                  left: 15,
+                  right: 15,
+                  child: Stack(
+                    children: [
+                      CustomPaint(
+                        size: Size(size.width - 30, 80),
+                        painter: BNBCustomPainter(),
+                      ),
+                      Center(
+                        heightFactor: 0.7,
+                        child: FloatingActionButton(
+                          onPressed: () {},
+                          elevation: 3,
+                          backgroundColor: Colors.white,
+                          child: const Icon(
+                            Icons.shopping_cart,
+                            color: Colors.blue,
+                          ),
+                        ),
+                      ),
+                      Container(
+                        width: size.width,
+                        height: 80,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            _navBarItem(
+                              icon: CupertinoIcons.house,
+                              filledIcon: CupertinoIcons.house_fill,
+                              tabIndex: 0,
+                            ),
+                            _navBarItem(
+                              icon: CupertinoIcons.doc_text,
+                              filledIcon: CupertinoIcons.doc_text_fill,
+                              tabIndex: 0,
+                            ),
+                            SizedBox(
+                              width: size.width * 0.20,
+                            ),
+                            _navBarItem(
+                              icon: CupertinoIcons.bell,
+                              filledIcon: CupertinoIcons.bell_fill,
+                              tabIndex: 1,
+                            ),
+                            _navBarItem(
+                              icon: CupertinoIcons.person,
+                              filledIcon: CupertinoIcons.person_fill,
+                              tabIndex: 2,
+                            ),
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+              ],
             ),
           ),
         ),
