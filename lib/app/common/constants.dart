@@ -37,6 +37,18 @@ extension AppointmentTypeExt on AppointmentType {
     }
   }
 }
+extension AppointmentTypeExt2 on AppointmentType {
+  String get label {
+    switch (this) {
+      case AppointmentType.online:
+        return 'Online';
+      case AppointmentType.offline:
+        return 'Offline';
+      default:
+        return 'All';
+    }
+  }
+}
 
 enum AppointmentStatus { all, pending, completed, cancelled, inProgress }
 
@@ -53,6 +65,22 @@ extension AppointmentStatusExt on AppointmentStatus {
         return 'IN_PROGRESS';
       default:
         return 'ALL';
+    }
+  }
+}
+extension AppointmentStatusExt2 on AppointmentStatus {
+  String get label {
+    switch (this) {
+      case AppointmentStatus.pending:
+        return 'Pending';
+      case AppointmentStatus.completed:
+        return 'Completed';
+      case AppointmentStatus.cancelled:
+        return 'Cancelled';
+      case AppointmentStatus.inProgress:
+        return 'In Progress';
+      default:
+        return 'All';
     }
   }
 }

@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:hi_doctor_v2/app/common/colors.dart';
+import 'package:hi_doctor_v2/app/common/constants.dart';
 import 'package:hi_doctor_v2/app/common/util/utils.dart';
 import 'package:hi_doctor_v2/app/models/appointment.dart';
 import 'package:hi_doctor_v2/app/modules/history/controllers/history_controller.dart';
@@ -214,8 +215,8 @@ class _HistoryPageState extends State<HistoryPage> {
                                       bookedAt: date,
                                       doctor: 5,
                                       checkInCode: '123456-5-6-3',
-                                      status: 'PENDING'.toLowerCase().capitalize,
-                                      type: 'ONLINE'.toLowerCase().capitalize,
+                                      status: AppointmentStatus.pending.label,
+                                      type: AppointmentType.offline.label,
                                     ),
                                   ),
                                   AppointmentTile(
@@ -223,8 +224,8 @@ class _HistoryPageState extends State<HistoryPage> {
                                       bookedAt: date,
                                       doctor: 5,
                                       checkInCode: '123456-5-6-3',
-                                      status: 'PENDING'.toLowerCase().capitalize,
-                                      type: 'ONLINE'.toLowerCase().capitalize,
+                                      status: AppointmentStatus.cancelled.label,
+                                      type: AppointmentType.online.label,
                                     ),
                                   ),
                                   AppointmentTile(
@@ -232,8 +233,8 @@ class _HistoryPageState extends State<HistoryPage> {
                                       bookedAt: date,
                                       doctor: 5,
                                       checkInCode: '123456-5-6-3',
-                                      status: 'PENDING'.toLowerCase().capitalize,
-                                      type: 'OFFLINE'.toLowerCase().capitalize,
+                                      status: AppointmentStatus.completed.label,
+                                      type: AppointmentType.offline.label,
                                     ),
                                   ),
                                   AppointmentTile(
@@ -241,8 +242,8 @@ class _HistoryPageState extends State<HistoryPage> {
                                       bookedAt: date,
                                       doctor: 5,
                                       checkInCode: '123456-5-6-3',
-                                      status: 'PENDING'.toLowerCase().capitalize,
-                                      type: 'ONLINE'.toLowerCase().capitalize,
+                                      status: AppointmentStatus.inProgress.label,
+                                      type: AppointmentType.offline.label,
                                     ),
                                   ),
                                   AppointmentTile(
@@ -250,8 +251,8 @@ class _HistoryPageState extends State<HistoryPage> {
                                       bookedAt: date,
                                       doctor: 5,
                                       checkInCode: '123456-5-6-3',
-                                      status: 'PENDING'.toLowerCase().capitalize,
-                                      type: 'ONLINE'.toLowerCase().capitalize,
+                                      status: AppointmentStatus.pending.label,
+                                      type: AppointmentType.offline.label,
                                     ),
                                   ),
                                 ],

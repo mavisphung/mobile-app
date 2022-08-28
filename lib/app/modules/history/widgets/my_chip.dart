@@ -29,10 +29,6 @@ class MyTypeChip extends StatefulWidget {
 }
 
 class _MyTypeChipState extends State<MyTypeChip> {
-  Map<bool, Widget> render = {
-    true: const Icon(Icons.close_sharp),
-    false: const SizedBox(),
-  };
   HistoryController historyController = Get.find<HistoryController>();
 
   @override
@@ -57,8 +53,6 @@ class _MyTypeChipState extends State<MyTypeChip> {
               widget.label,
               style: TextStyle(fontSize: 13.0.sp, color: widget.textColor),
             ),
-            const SizedBox(width: 3),
-            render[widget.isChosen]!,
           ],
         ),
       ),
@@ -92,10 +86,6 @@ class MyStatusChip extends StatefulWidget {
 }
 
 class _MyStatusChipState extends State<MyStatusChip> {
-  Map<bool, Widget> render = {
-    true: const Icon(Icons.close_sharp),
-    false: const SizedBox(),
-  };
   HistoryController historyController = Get.find<HistoryController>();
 
   @override
@@ -120,8 +110,6 @@ class _MyStatusChipState extends State<MyStatusChip> {
               widget.label,
               style: TextStyle(fontSize: 13.0.sp, color: widget.textColor),
             ),
-            const SizedBox(width: 3),
-            // render[widget.isChosen]!,
           ],
         ),
       ),

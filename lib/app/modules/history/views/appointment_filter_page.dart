@@ -94,7 +94,7 @@ class AppointmentFilterPage extends StatelessWidget {
                                 (e) => MyStatusChip(
                                   backgroundColor: AppColor.primary,
                                   isChosen: controller.selectedStatus == e,
-                                  label: e.value.toLowerCase().capitalize!,
+                                  label: e.label,
                                   value: e,
                                   textColor: controller.selectedStatus == e ? Colors.white : Colors.black,
                                 ),
