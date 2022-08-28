@@ -1,16 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:hi_doctor_v2/app/common/util/extensions.dart';
 import 'package:hi_doctor_v2/app/common/util/utils.dart';
 import 'package:hi_doctor_v2/app/common/values/colors.dart';
-import 'package:hi_doctor_v2/app/models/appointment.dart';
 import 'package:hi_doctor_v2/app/modules/history/controllers/history_controller.dart';
 import 'package:hi_doctor_v2/app/modules/history/controllers/tab_controller.dart';
-import 'package:hi_doctor_v2/app/modules/history/views/appointment_filter_page.dart';
 import 'package:hi_doctor_v2/app/modules/history/views/incoming_tab.dart';
-import 'package:hi_doctor_v2/app/modules/history/widgets/appointment_tile.dart';
 
 class HistoryPage extends StatefulWidget {
   const HistoryPage({Key? key}) : super(key: key);

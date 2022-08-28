@@ -29,10 +29,6 @@ class MyTypeChip extends StatefulWidget {
 }
 
 class _MyTypeChipState extends State<MyTypeChip> {
-  Map<bool, Widget> render = {
-    true: const Icon(Icons.close_sharp),
-    false: const SizedBox(),
-  };
   HistoryController historyController = Get.find<HistoryController>();
 
   @override
