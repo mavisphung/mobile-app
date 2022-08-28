@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:hi_doctor_v2/app/common/colors.dart';
 import 'package:hi_doctor_v2/app/common/constants.dart';
 import 'package:hi_doctor_v2/app/common/storage/storage.dart';
+import 'package:hi_doctor_v2/app/common/values/colors.dart';
 import 'package:hi_doctor_v2/app/models/user_info.dart';
 import 'package:hi_doctor_v2/app/modules/settings/controllers/settings_controller.dart';
 import 'package:hi_doctor_v2/app/routes/app_pages.dart';
@@ -21,7 +21,7 @@ class UserProfile extends StatelessWidget {
         return Container(
           decoration: BoxDecoration(
             // color: const Color(0xFF0601B4),
-            color: AppColor.primary,
+            color: AppColors.primary,
             boxShadow: [
               BoxShadow(
                 color: Colors.black.withOpacity(0.25),
@@ -78,7 +78,7 @@ class UserProfile extends StatelessWidget {
               const Spacer(),
               GestureDetector(
                 onTap: () async {
-                  UserInfo2 data = await _settingsController.getUserInfo();
+                  UserInfo2? data = await _settingsController.getUserInfo();
                   // Get.toNamed(Profile);
                   print(data);
                   Get.toNamed(Routes.PROFILE_DETAIL, arguments: {Constants.info: data});

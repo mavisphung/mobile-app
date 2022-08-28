@@ -1,39 +1,45 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:hi_doctor_v2/app/common/storage/storage.dart';
-import 'package:hi_doctor_v2/app/data/auth/api_auth_model.dart';
-import 'package:hi_doctor_v2/app/models/user_info.dart';
-import 'package:hi_doctor_v2/app/modules/settings/providers/settings_provider.dart';
+
+import '../../../common/storage/storage.dart';
+import '../../../common/util/extensions.dart';
+import '../../../data/settings/api_settings.dart';
+import '../../../data/settings/api_settings_impl.dart';
+import '../../../models/user_info.dart';
+import '../../../routes/app_pages.dart';
 
 class SettingsController extends GetxController {
   TextEditingController emailController = TextEditingController();
-  final SettingsProvider _provider = Get.put(SettingsProvider());
+  late final ApiSettings _apiSettings;
 
   @override
   void dispose() {
     emailController.dispose();
-    _provider.dispose();
     super.dispose();
   }
 
-  void logout() async {
+  void logOut() async {
     await Storage.clearStorage();
+    Get.offAllNamed(Routes.LOGIN);
   }
 
-  Future<UserInfo2> getUserInfo() async {
-    Response response = await _provider.getUserInfo();
-    UserInfo2 data = UserInfo2();
-    switch (response.statusCode) {
-      case 200: // Success
-      case 201:
-        ResponseModel model = ResponseModel.fromJson(response.body);
-        data = UserInfo2.fromMap(model.data);
-        break;
-      default:
-        print('error ${response.statusCode!}');
-        break;
-    }
+  Future<UserInfo2?> getUserInfo() async {
+    final accessToken = Storage.getValue<String>(CacheKey.TOKEN.name);
+    if (accessToken != null) {
+      final response = await _apiSettings.getUserInfo(accessToken).futureValue(showLoading: false);
 
-    return data;
+      if (response != null) {
+        if (response.isSuccess == true && response.statusCode == 201) {
+          return UserInfo2.fromMap(response.data);
+        }
+      }
+    }
+    return null;
+  }
+
+  @override
+  void onInit() {
+    _apiSettings = Get.put(ApiSettingsImpl());
+    super.onInit();
   }
 }

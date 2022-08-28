@@ -2,8 +2,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:hi_doctor_v2/app/common/colors.dart';
 import 'package:hi_doctor_v2/app/common/constants.dart';
+import 'package:hi_doctor_v2/app/common/values/colors.dart';
 import 'package:hi_doctor_v2/app/models/appointment.dart';
 
 class AppointmentTile extends StatelessWidget {
@@ -120,7 +120,7 @@ class AppointmentTile extends StatelessWidget {
                   TextSpan(
                     text: '${data.status}',
                     style: TextStyle(
-                      color: AppColor.primary,
+                      color: AppColors.primary,
                       fontSize: 14.0.sp,
                       fontWeight: FontWeight.w700,
                     ),

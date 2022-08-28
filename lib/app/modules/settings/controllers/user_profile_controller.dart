@@ -2,14 +2,13 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:hi_doctor_v2/app/common/colors.dart';
 import 'package:hi_doctor_v2/app/common/constants.dart';
 import 'package:hi_doctor_v2/app/common/storage/storage.dart';
 import 'package:hi_doctor_v2/app/common/util/utils.dart';
 import 'package:hi_doctor_v2/app/data/auth/api_auth_model.dart';
 import 'package:hi_doctor_v2/app/models/user_info.dart';
 import 'package:hi_doctor_v2/app/modules/settings/providers/settings_provider.dart';
-import 'package:hi_doctor_v2/app/modules/settings/widgets/user_profile_detail.dart';
+import 'package:hi_doctor_v2/app/modules/settings/views/user_profile_detail.dart';
 import 'package:image_picker/image_picker.dart';
 
 class UserProfileController extends GetxController {

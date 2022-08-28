@@ -26,13 +26,7 @@ class ApiAuthImpl extends GetConnect with ApiAuth {
 
   @override
   Future<Response> postLogin(String email, String password) {
-    return Future.delayed(
-      const Duration(seconds: 1),
-      () => post(
-        '/login/',
-        RequestLoginModel(email: email, password: password).toJson(),
-      ),
-    );
+    return post('/login/', RequestLoginModel(email: email, password: password).toJson());
   }
 
   @override
@@ -40,8 +34,8 @@ class ApiAuthImpl extends GetConnect with ApiAuth {
     return get(
       '/cicd/',
       headers: {
-        "content-type": "application/json",
-        "accept": "application/json",
+        // "content-type": "application/json",
+        // "accept": "application/json",
         "Authorization": "Bearer $accessToken",
       },
     );

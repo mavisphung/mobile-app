@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 import 'package:hi_doctor_v2/app/common/constants.dart';
+import 'package:hi_doctor_v2/app/common/util/extensions.dart';
 import 'package:hi_doctor_v2/app/modules/settings/controllers/user_profile_controller.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/custom_text_form_field.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/my_button_style.dart';

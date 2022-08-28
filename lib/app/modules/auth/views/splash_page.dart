@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:hi_doctor_v2/app/modules/bottom_navbar/navbar_widget.dart';
 
 import '../../../common/storage/storage.dart';
-import '../../home/views/home_page.dart';
+import '../../bottom_navbar/nav_bar.dart';
 import '../../widgets/no_internet_widget.dart';
 import '../controllers/login_controller.dart';
-import 'login_page.dart';
+import './login_page.dart';
 
 class SplashPage extends StatefulWidget {
   const SplashPage({Key? key}) : super(key: key);
@@ -25,7 +24,6 @@ class _SplashPageState extends State<SplashPage> {
 
   Future<bool> _initializeSettings() async {
     _isLoggedWithToken = await _controller.loginWithToken();
-    print('IS_LOGGED: ${Storage.getValue<bool>(CacheKey.IS_LOGGED.name)}');
     return Storage.getValue<bool>(CacheKey.IS_LOGGED.name) ?? false;
   }
 

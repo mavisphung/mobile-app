@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:hi_doctor_v2/app/common/colors.dart';
-import 'package:hi_doctor_v2/app/common/constants.dart';
+import 'package:hi_doctor_v2/app/common/values/colors.dart';
+import 'package:hi_doctor_v2/app/common/util/extensions.dart';
 import 'package:hi_doctor_v2/app/modules/history/controllers/history_controller.dart';
 import 'package:hi_doctor_v2/app/modules/history/widgets/my_chip.dart';
 
@@ -61,7 +61,7 @@ class AppointmentFilterPage extends StatelessWidget {
                                 (e) => MyTypeChip(
                                   backgroundColor: Colors.greenAccent[100]!,
                                   isChosen: controller.selectedType == e,
-                                  label: e.value.toLowerCase().capitalize!,
+                                  label: e.label,
                                   value: e,
                                 ),
                               )
@@ -92,9 +92,9 @@ class AppointmentFilterPage extends StatelessWidget {
                           children: historyControler.statuses
                               .map(
                                 (e) => MyStatusChip(
-                                  backgroundColor: AppColor.primary,
+                                  backgroundColor: AppColors.primary,
                                   isChosen: controller.selectedStatus == e,
-                                  label: e.value.toLowerCase().capitalize!,
+                                  label: e.label,
                                   value: e,
                                   textColor: controller.selectedStatus == e ? Colors.white : Colors.black,
                                 ),

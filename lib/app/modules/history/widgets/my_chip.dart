@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:hi_doctor_v2/app/common/constants.dart';
+import 'package:hi_doctor_v2/app/common/util/extensions.dart';
 import 'package:hi_doctor_v2/app/modules/history/controllers/history_controller.dart';
 
 class MyTypeChip extends StatefulWidget {
@@ -57,8 +57,6 @@ class _MyTypeChipState extends State<MyTypeChip> {
               widget.label,
               style: TextStyle(fontSize: 13.0.sp, color: widget.textColor),
             ),
-            const SizedBox(width: 3),
-            render[widget.isChosen]!,
           ],
         ),
       ),
@@ -92,10 +90,6 @@ class MyStatusChip extends StatefulWidget {
 }
 
 class _MyStatusChipState extends State<MyStatusChip> {
-  Map<bool, Widget> render = {
-    true: const Icon(Icons.close_sharp),
-    false: const SizedBox(),
-  };
   HistoryController historyController = Get.find<HistoryController>();
 
   @override
@@ -120,8 +114,6 @@ class _MyStatusChipState extends State<MyStatusChip> {
               widget.label,
               style: TextStyle(fontSize: 13.0.sp, color: widget.textColor),
             ),
-            const SizedBox(width: 3),
-            // render[widget.isChosen]!,
           ],
         ),
       ),

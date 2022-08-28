@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
 
 abstract class ApiAuth {
-  static ApiAuth get apiObj => Get.find();
+  // static ApiAuth get apiObj => Get.find();
 
   Future<Response> postLogin(String email, String password);
   Future<Response> postLoginWithToken(String accessToken);

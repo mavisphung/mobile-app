@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-// import 'package:get/get.dart';
 
 // import '../../data/api_retry_controller.dart';
 
@@ -25,6 +24,7 @@ class BaseWidget extends StatelessWidget {
       //     ],
       //   ),
       // ),
+
       child: child,
     );
   }

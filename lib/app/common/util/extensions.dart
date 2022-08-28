@@ -36,8 +36,7 @@ extension FutureExt<T> on Future<Response<T>> {
       final responseBody = ApiResponse.getResponse<T>(value);
       print('RESPONSE BODY: $responseBody');
       if (responseBody != null) {
-        final responseModel =
-            ResponseModel.fromJson(responseBody as Map<String, dynamic>);
+        final responseModel = ResponseModel.fromJson(responseBody as Map<String, dynamic>);
         return responseModel;
       }
       // _interface.update();
@@ -59,7 +58,7 @@ extension FutureExt<T> on Future<Response<T>> {
           // _retry(_interface, retryFunction);
         } else if (e.type == ErrorType.unauthorized) {
           if (e.message == 'AUTHENTICATION_FAILED') {
-            Utils.showBottomSnackbar('Wrong email or password');
+            Utils.showBottomSnackbar('login_failed_msg'.tr);
             return null;
           }
           Storage.clearStorage();
@@ -90,4 +89,83 @@ extension FutureExt<T> on Future<Response<T>> {
   //   _interface.retry = retryFunction;
   //   _interface.update();
   // }
+}
+
+enum Gender { male, female, other }
+
+extension GenderExt on Gender {
+  String get value {
+    switch (this) {
+      case Gender.male:
+        return 'MALE';
+      case Gender.female:
+        return 'FEMALE';
+      default:
+        return 'OTHER';
+    }
+  }
+}
+
+
+enum AppointmentType { all, online, offline }
+
+extension AppointmentTypeExt on AppointmentType {
+  String get value {
+    switch (this) {
+      case AppointmentType.online:
+        return 'ONLINE';
+      case AppointmentType.offline:
+        return 'OFFLINE';
+      default:
+        return 'ALL';
+    }
+  }
+}
+
+extension AppointmentTypeExt2 on AppointmentType {
+  String get label {
+    switch (this) {
+      case AppointmentType.online:
+        return 'Online';
+      case AppointmentType.offline:
+        return 'Offline';
+      default:
+        return 'all';
+    }
+  }
+}
+
+enum AppointmentStatus { all, pending, completed, cancelled, inProgress }
+
+extension AppointmentStatusExt on AppointmentStatus {
+  String get value {
+    switch (this) {
+      case AppointmentStatus.pending:
+        return 'PENDING';
+      case AppointmentStatus.completed:
+        return 'COMPLETED';
+      case AppointmentStatus.cancelled:
+        return 'CANCELLED';
+      case AppointmentStatus.inProgress:
+        return 'IN_PROGRESS';
+      default:
+        return 'ALL';
+    }
+  }
+}
+extension AppointmentStatusExt2 on AppointmentStatus {
+  String get label {
+    switch (this) {
+      case AppointmentStatus.pending:
+        return 'Pending';
+      case AppointmentStatus.completed:
+        return 'Completed';
+      case AppointmentStatus.cancelled:
+        return 'Cancelled';
+      case AppointmentStatus.inProgress:
+        return 'In Progress';
+      default:
+        return 'All';
+    }
+  }
 }
