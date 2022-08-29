@@ -23,7 +23,7 @@ class FinalNavBarPage extends StatelessWidget {
             child: IndexedStack(
               index: controller.tabIndex,
               children: [
-                const HomePage(),
+                HomePage(),
                 const HistoryPage(),
                 SettingsPage(),
                 // NewsPage(),

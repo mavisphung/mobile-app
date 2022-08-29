@@ -29,7 +29,6 @@ class Appointment {
     this.booker,
   });
 
-
   Appointment copyWith({
     int? id,
     String? bookedAt,

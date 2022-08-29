@@ -40,7 +40,7 @@ class _SplashPageState extends State<SplashPage> {
                 return _isLoggedWithToken == null
                     ? NoInternetWidget(_isRefresh)
                     : _isLoggedWithToken!
-                        ? FinalNavBarPage()
+                        ? NavBar()
                         : LoginPage();
               } else {
                 return LoginPage();

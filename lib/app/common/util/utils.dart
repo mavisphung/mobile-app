@@ -19,7 +19,7 @@ abstract class Utils {
 
   static Future<bool> onWillPop() {
     DateTime now = DateTime.now();
-    if (currentBackPressTime == null || now.difference(currentBackPressTime!) > const Duration(seconds: 2)) {
+    if (currentBackPressTime == null || now.difference(currentBackPressTime!) > const Duration(seconds: 1)) {
       currentBackPressTime = now;
       Utils.showBottomSnackbar(Strings.exitAppAlert.tr);
       return Future.value(false);

@@ -2,8 +2,6 @@
 
 import 'package:get/get.dart';
 import 'package:hi_doctor_v2/app/modules/auth/views/splash_page.dart';
-import 'package:hi_doctor_v2/app/modules/bottom_navbar/bindings/navbar_binding.dart';
-import 'package:hi_doctor_v2/app/modules/bottom_navbar/final_nav_bar.dart';
 import 'package:hi_doctor_v2/app/modules/history/history_page.dart';
 import 'package:hi_doctor_v2/app/modules/settings/views/user_profile_detail.dart';
 import '../modules/auth/bindings/login_binding.dart';
@@ -29,7 +27,7 @@ abstract class AppPages {
     ),
     GetPage(
       name: Routes.HOME,
-      page: () => const HomePage(),
+      page: () => HomePage(),
       binding: HomeBinding(),
     ),
     GetPage(
@@ -43,13 +41,12 @@ abstract class AppPages {
       binding: RegisterBinding(),
     ),
     GetPage(
-      name: Routes.NAVBAR, page: () => FinalNavBarPage(),
-      // binding: NavBarBinding(),
-      children: [],
+      name: Routes.NAVBAR,
+      page: () => NavBar(),
     ),
     GetPage(
       name: Routes.HISTORY,
-      page: () => HistoryPage(),
+      page: () => const HistoryPage(),
     ),
     GetPage(
       name: Routes.SEARCH,
