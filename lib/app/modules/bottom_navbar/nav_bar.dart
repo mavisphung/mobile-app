@@ -1,4 +1,3 @@
-import 'package:floating_bottom_bar/animated_bottom_navigation_bar.dart' as nav_bar;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -11,37 +10,35 @@ import '../history/history_page.dart';
 import '../home/views/home_page.dart';
 import '../settings/settings_page.dart';
 import './controllers/navbar_controller.dart';
+import './expandable_fab.dart';
 
-class NavBar extends StatefulWidget {
-  const NavBar({Key? key}) : super(key: key);
-
-  @override
-  State<NavBar> createState() => _NavBarState();
-}
-
-class _NavBarState extends State<NavBar> with TickerProviderStateMixin {
+class NavBar extends StatelessWidget {
   final NavBarController _controller = Get.put(NavBarController());
-  late AnimationController _animationController;
-  late Animation<Offset> _animation;
+// <<<<<<< HEAD
+//   late AnimationController _animationController;
+//   late Animation<Offset> _animation;
 
-  final _titleStyle = TextStyle(fontSize: 10.sp);
+//   final _titleStyle = TextStyle(fontSize: 10.sp);
 
-  @override
-  void initState() {
-    _letAnimate();
-    super.initState();
-  }
+//   @override
+//   void initState() {
+//     _letAnimate();
+//     super.initState();
+//   }
 
-  void _letAnimate() {
-    _animationController = AnimationController(
-      duration: const Duration(milliseconds: 2000),
-      vsync: this,
-    )..forward();
-    _animation = Tween<Offset>(
-      begin: const Offset(0.0, 0.1),
-      end: Offset.zero,
-    ).animate(_animationController);
-  }
+//   void _letAnimate() {
+//     _animationController = AnimationController(
+//       duration: const Duration(milliseconds: 2000),
+//       vsync: this,
+//     )..forward();
+//     _animation = Tween<Offset>(
+//       begin: const Offset(0.0, 0.1),
+//       end: Offset.zero,
+//     ).animate(_animationController);
+//   }
+// =======
+  NavBar({Key? key}) : super(key: key);
+// >>>>>>> 8925cd64f9e7389c9e95adfd7b6c3198fdcbd7e8
 
   @override
   Widget build(BuildContext context) {
@@ -51,87 +48,78 @@ class _NavBarState extends State<NavBar> with TickerProviderStateMixin {
         child: Scaffold(
           body: SafeArea(
             child: _controller.tabIndex == 0
-                ? SlideTransition(
-                    position: _animation,
-                    child: HomePage(),
-                  )
+                ? HomePage()
                 : _controller.tabIndex == 1
-                    ? SlideTransition(
-                        position: _animation,
-                        child: const HistoryPage(),
-                      )
-                    : SlideTransition(
-                        position: _animation,
-                        child: SettingsPage(),
-                      ),
+                    ? const HistoryPage()
+                    : SettingsPage(),
           ),
-          bottomNavigationBar: nav_bar.AnimatedBottomNavigationBar(
-            bottomBarItems: [
-              nav_bar.BottomBarItemsModel(
-                icon: const Icon(CupertinoIcons.house),
-                iconSelected: Icon(CupertinoIcons.house_fill, color: AppColors.primary),
-                title: Strings.home.tr,
-                titleStyle: _titleStyle,
-                dotColor: AppColors.primary,
-                onTap: () => _controller.changeTabIndex(0),
+          bottomNavigationBar: BottomNavigationBar(
+            unselectedItemColor: AppColors.black,
+            selectedItemColor: AppColors.primary,
+            currentIndex: _controller.tabIndex,
+            onTap: _controller.changeTabIndex,
+            showSelectedLabels: false,
+            showUnselectedLabels: false,
+            type: BottomNavigationBarType.fixed,
+            backgroundColor: AppColors.white,
+            elevation: 0,
+            items: [
+              _bottomNavigationBarItem(
+                icon: CupertinoIcons.home,
+                label: Strings.home.tr,
               ),
-              nav_bar.BottomBarItemsModel(
-                icon: const Icon(CupertinoIcons.calendar),
-                iconSelected: Icon(CupertinoIcons.calendar_today, color: AppColors.primary),
-                title: 'Scheldule',
-                titleStyle: _titleStyle,
-                dotColor: AppColors.primary,
-                onTap: () => _controller.changeTabIndex(1),
+              _bottomNavigationBarItem(
+                icon: CupertinoIcons.calendar,
+                label: 'Schedule',
               ),
-              nav_bar.BottomBarItemsModel(
-                icon: const Icon(CupertinoIcons.chat_bubble_2),
-                iconSelected: Icon(CupertinoIcons.chat_bubble_2_fill, color: AppColors.primary),
-                title: 'Notification',
-                titleStyle: _titleStyle,
-                dotColor: AppColors.primary,
-                onTap: () => _controller.changeTabIndex(1),
+              _bottomNavigationBarItem(
+                icon: CupertinoIcons.chat_bubble_2,
+                label: 'Message',
               ),
-              nav_bar.BottomBarItemsModel(
-                icon: const Icon(CupertinoIcons.person),
-                iconSelected: Icon(CupertinoIcons.person_fill, color: AppColors.primary),
-                title: 'Personal',
-                titleStyle: _titleStyle,
-                dotColor: AppColors.primary,
-                onTap: () => _controller.changeTabIndex(2),
+              _bottomNavigationBarItem(
+                icon: CupertinoIcons.person,
+                label: 'Personal',
               ),
             ],
-            bottomBarCenterModel: nav_bar.BottomBarCenterModel(
-              centerBackgroundColor: AppColors.primary,
-              centerIcon: nav_bar.FloatingCenterButton(
-                child: Icon(
-                  CupertinoIcons.add,
-                  color: AppColors.white,
+          ),
+          floatingActionButton: ExpandableFab(
+            distance: 80.sp,
+            children: [
+              ActionButton(
+                onPressed: () {},
+                icon: Image.asset(
+                  'assets/images/contract.png',
+                  fit: BoxFit.cover,
+                  color: Colors.white,
+                  width: 23.0,
+                  height: 23.0,
                 ),
               ),
-              centerIconChild: [
-                nav_bar.FloatingCenterButtonChild(
-                  child: Image.asset(
-                    'assets/images/contract.png',
-                    color: AppColors.white,
-                    width: 19.sp,
-                    height: 19.sp,
-                  ),
-                  onTap: () {},
+              ActionButton(
+                onPressed: () {},
+                icon: Image.asset(
+                  'assets/images/add_appointment.png',
+                  fit: BoxFit.cover,
+                  color: Colors.white,
+                  width: 23.0,
+                  height: 23.0,
                 ),
-                nav_bar.FloatingCenterButtonChild(
-                  child: Image.asset(
-                    'assets/images/add_appointment.png',
-                    color: AppColors.white,
-                    width: 18.sp,
-                    height: 18.sp,
-                  ),
-                  onTap: () {},
-                ),
-              ],
-            ),
+              ),
+              // ActionButton(
+              //   onPressed: () {},
+              //   icon: const Icon(Icons.videocam),
+              // ),
+            ],
           ),
         ),
       ),
+    );
+  }
+
+  BottomNavigationBarItem _bottomNavigationBarItem({required IconData icon, required String label}) {
+    return BottomNavigationBarItem(
+      icon: Icon(icon),
+      label: label,
     );
   }
 }

@@ -22,7 +22,7 @@ class UserProfileController extends GetxController {
   Rx<UserInfo2> _profile = UserInfo2().obs;
   Rx<Status> status = Status.init.obs;
 
-  SettingsProvider provider = Get.find<SettingsProvider>();
+  SettingsProvider provider = Get.put(SettingsProvider());
 
   late XFile? file;
   final ImagePicker _picker = ImagePicker();
