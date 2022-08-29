@@ -84,11 +84,13 @@ class _NavBarState extends State<NavBar> with TickerProviderStateMixin {
                       Center(
                         heightFactor: 0.7,
                         child: FloatingActionButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            
+                          },
                           elevation: 3,
                           backgroundColor: Colors.white,
                           child: const Icon(
-                            Icons.shopping_cart,
+                            Icons.add,
                             color: Colors.blue,
                           ),
                         ),

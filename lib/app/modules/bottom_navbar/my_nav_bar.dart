@@ -53,7 +53,7 @@ class NavBar extends StatelessWidget {
                             elevation: 3,
                             backgroundColor: Colors.white,
                             child: const Icon(
-                              Icons.shopping_cart,
+                              Icons.plus_one_sharp,
                               color: Colors.blue,
                             ),
                           ),
