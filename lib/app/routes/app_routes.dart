@@ -9,5 +9,6 @@ abstract class Routes {
   static const REGISTER = '/register';
   static const NAVBAR = '/navbar';
   static const HISTORY = '/history';
+  static const PROFILE_DETAIL = '/profileDetail';
   static const SEARCH = '/search';
 }

@@ -23,14 +23,14 @@ class SettingsController extends GetxController {
     Get.offAllNamed(Routes.LOGIN);
   }
 
-  Future<UserInfo?> getUserInfo() async {
+  Future<UserInfo2?> getUserInfo() async {
     final accessToken = Storage.getValue<String>(CacheKey.TOKEN.name);
     if (accessToken != null) {
       final response = await _apiSettings.getUserInfo(accessToken).futureValue(showLoading: false);
 
       if (response != null) {
         if (response.isSuccess == true && response.statusCode == 201) {
-          return UserInfo.fromMap(response.data);
+          return UserInfo2.fromMap(response.data);
         }
       }
     }

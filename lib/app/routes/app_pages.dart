@@ -1,7 +1,9 @@
 // ignore_for_file: constant_identifier_names
 
 import 'package:get/get.dart';
-
+import 'package:hi_doctor_v2/app/modules/auth/views/splash_page.dart';
+import 'package:hi_doctor_v2/app/modules/history/history_page.dart';
+import 'package:hi_doctor_v2/app/modules/settings/views/user_profile_detail.dart';
 import '../modules/auth/bindings/login_binding.dart';
 import '../modules/auth/bindings/register_binding.dart';
 import '../modules/auth/views/login_page.dart';
@@ -25,7 +27,7 @@ abstract class AppPages {
     ),
     GetPage(
       name: Routes.HOME,
-      page: () => const HomePage(),
+      page: () => HomePage(),
       binding: HomeBinding(),
     ),
     GetPage(
@@ -41,7 +43,6 @@ abstract class AppPages {
     GetPage(
       name: Routes.NAVBAR,
       page: () => const NavBar(),
-      // binding: NavBarBinding(),
     ),
     GetPage(
       name: Routes.HISTORY,
@@ -50,6 +51,10 @@ abstract class AppPages {
     GetPage(
       name: Routes.SEARCH,
       page: () => const SearchPage(),
+    ),
+    GetPage(
+      name: Routes.PROFILE_DETAIL,
+      page: () => UserProfileDetailPage(),
     ),
   ];
 }

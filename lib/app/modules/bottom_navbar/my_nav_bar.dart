@@ -25,7 +25,7 @@ class NavBar extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 15.0),
               child: Stack(
                 children: [
-                  if (_controller.tabIndex == 0) const HomePage(),
+                  if (_controller.tabIndex == 0) HomePage(),
                   if (_controller.tabIndex == 1) const HistoryPage(),
                   if (_controller.tabIndex == 2) SettingsPage(),
                   // IndexedStack(

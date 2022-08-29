@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:hi_doctor_v2/app/routes/app_pages.dart';
 
 import '../../common/util/utils.dart';
 // import '../bottom_navbar/controllers/navbar_controller.dart';
@@ -23,8 +24,10 @@ class SettingsPage extends StatelessWidget {
     }
   }
 
-  void _getUserInfo() async {
-    await _controller.getUserInfo();
+  void getUserInfo() {
+    // UserInfo? userInfo = await _controller.getUserInfo();
+    // print(userInfo!.toString());
+    Get.toNamed(Routes.PROFILE_DETAIL);
   }
 
   @override
@@ -46,7 +49,7 @@ class SettingsPage extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(horizontal: 16.0),
                 child: Column(
                   children: [
-                    const UserProfile(),
+                    UserProfile(),
                     Container(
                       margin: EdgeInsets.only(top: 22.0.sp),
                       decoration: BoxDecoration(
@@ -69,7 +72,7 @@ class SettingsPage extends StatelessWidget {
                             svgAssetUrl: 'assets/images/ic_profile.svg',
                             title: 'My Account',
                             description: 'Make changes to your account',
-                            function: _getUserInfo,
+                            function: () {},
                           ),
                           SizedBox(
                             height: 25.0.sp,
