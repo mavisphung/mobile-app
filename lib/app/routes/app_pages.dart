@@ -42,7 +42,7 @@ abstract class AppPages {
     ),
     GetPage(
       name: Routes.NAVBAR,
-      page: () => const NavBar(),
+      page: () => NavBar(),
     ),
     GetPage(
       name: Routes.HISTORY,

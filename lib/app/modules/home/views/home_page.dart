@@ -5,9 +5,11 @@ import 'package:get/get.dart';
 
 import '../../../common/values/colors.dart';
 import './reminder_card.dart';
+import './category_item.dart';
 
 class HomePage extends StatelessWidget {
   HomePage({Key? key}) : super(key: key);
+  final _categoriesList = CategoriesList;
 
   final _headlineTextStyle = TextStyle(
     fontSize: 17.sp,
@@ -26,7 +28,7 @@ class HomePage extends StatelessWidget {
                 alignment: Alignment.topCenter,
                 padding: EdgeInsets.all(20.sp),
                 decoration: BoxDecoration(
-                  color: AppColors.primary,
+                  color: Colors.transparent,
                   borderRadius: BorderRadius.only(
                     bottomLeft: Radius.circular(20.sp),
                     bottomRight: Radius.circular(20.sp),
@@ -57,11 +59,11 @@ class HomePage extends StatelessWidget {
                               children: [
                                 Text(
                                   'Hi, Mi Mi',
-                                  style: TextStyle(color: AppColors.white),
+                                  style: TextStyle(color: AppColors.black),
                                 ),
                                 Text(
                                   'How are you today?',
-                                  style: TextStyle(color: AppColors.white),
+                                  style: TextStyle(color: AppColors.black),
                                 ),
                               ],
                             ),
@@ -78,10 +80,28 @@ class HomePage extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        'Categories',
-                        style: _headlineTextStyle,
-                        textAlign: TextAlign.start,
+                      Padding(
+                        padding: EdgeInsets.symmetric(vertical: 15.sp),
+                        child: Text(
+                          'Categories',
+                          style: _headlineTextStyle,
+                          textAlign: TextAlign.start,
+                        ),
+                      ),
+                      SizedBox(
+                        height: 120.sp,
+                        child: ListView.separated(
+                          scrollDirection: Axis.horizontal,
+                          itemBuilder: (ctx, idx) => CategoryItem(
+                            label: _categoriesList[idx].label,
+                            image: _categoriesList[idx].image,
+                            doctorCounter: _categoriesList[idx].doctorCounter,
+                          ),
+                          separatorBuilder: (_, __) => SizedBox(
+                            width: 10.sp,
+                          ),
+                          itemCount: _categoriesList.length,
+                        ),
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -120,7 +140,7 @@ class HomePage extends StatelessWidget {
                   onPressed: () => Get.rawSnackbar(message: 'Noti'),
                   icon: Icon(
                     CupertinoIcons.bell_fill,
-                    color: AppColors.white,
+                    color: AppColors.primary,
                   ),
                 ),
               ),
@@ -137,11 +157,11 @@ class HomePage extends StatelessWidget {
                 delegate: CustomSearcDelegate(),
               ),
               decoration: InputDecoration(
-                fillColor: Colors.white,
+                fillColor: AppColors.grey,
                 filled: true,
                 hintText: 'Search a doctor or health issue',
                 suffixIcon: const Icon(CupertinoIcons.search),
-                // contentPadding: EdgeInsets.only(top: 15.sp, bottom: 15.sp, left: 18.sp, right: -18.sp),
+                contentPadding: EdgeInsets.symmetric(vertical: 15.sp, horizontal: 15.sp),
                 enabledBorder: OutlineInputBorder(
                   borderSide: BorderSide(color: AppColors.secondary),
                   borderRadius: BorderRadius.circular(10.0),
