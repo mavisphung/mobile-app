@@ -1,7 +1,9 @@
-import 'package:get/state_manager.dart';
-import 'package:hi_doctor_v2/app/common/constants.dart';
+import 'package:get/get.dart';
 import 'package:hi_doctor_v2/app/common/util/extensions.dart';
+import 'package:hi_doctor_v2/app/data/api_response.dart';
 import 'package:hi_doctor_v2/app/models/appointment.dart';
+import 'package:hi_doctor_v2/app/models/response.dart';
+import 'package:hi_doctor_v2/app/modules/history/data/api_history.dart';
 import 'package:hi_doctor_v2/app/modules/history/models/filter_model.dart';
 
 class HistoryController extends GetxController {
@@ -19,6 +21,8 @@ class HistoryController extends GetxController {
   RxBool isOnline = true.obs;
   Rx<AppointmentType> selectedTypeObx = AppointmentType.all.obs;
   Rx<AppointmentStatus> selectedStatusObx = AppointmentStatus.all.obs;
+
+  late ApiHistoryImpl apiHistory;
 
   void setFilterType(String type) {
     filterModel.value.type = type;
@@ -40,6 +44,20 @@ class HistoryController extends GetxController {
     update();
   }
 
+  void getUserAppointments() async {
+    Response result = await apiHistory.getUserAppointments();
+    String response = ApiResponse.getResponse(result);
+    ResponseModel2 model = ResponseModel2.fromJson(response);
+    incomingList.value = model.data;
+    print(incomingList.value);
+  }
+
+  @override
+  void onInit() {
+    super.onInit();
+    apiHistory = Get.put(ApiHistoryImpl());
+  }
+
   @override
   void dispose() {
     incomingList.close();
@@ -47,6 +65,7 @@ class HistoryController extends GetxController {
     filterModel.close();
     selectedTypeObx.close();
     selectedStatusObx.close();
+    apiHistory.dispose();
     super.dispose();
   }
 }

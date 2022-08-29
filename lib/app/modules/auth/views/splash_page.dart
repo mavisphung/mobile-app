@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:hi_doctor_v2/app/modules/bottom_navbar/final_nav_bar.dart';
 
 import '../../../common/storage/storage.dart';
 import '../../bottom_navbar/nav_bar.dart';
@@ -39,7 +40,7 @@ class _SplashPageState extends State<SplashPage> {
                 return _isLoggedWithToken == null
                     ? NoInternetWidget(_isRefresh)
                     : _isLoggedWithToken!
-                        ? NavBar()
+                        ? FinalNavBarPage()
                         : LoginPage();
               } else {
                 return LoginPage();

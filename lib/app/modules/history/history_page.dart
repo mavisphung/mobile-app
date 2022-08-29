@@ -93,7 +93,7 @@ class _HistoryPageState extends State<HistoryPage> {
                 body: TabBarView(
                   controller: tabx.controller,
                   children: [
-                    IncomingTab(date: Utils.formatDateTime(DateTime.now()).split(' ')[0]),
+                    IncomingTab(data: controller.incomingList),
                     Padding(
                       padding: EdgeInsets.symmetric(horizontal: 16.0.sp),
                       child: Column(

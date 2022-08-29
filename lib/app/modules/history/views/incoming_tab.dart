@@ -1,29 +1,34 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:hi_doctor_v2/app/common/util/extensions.dart';
 import 'package:hi_doctor_v2/app/models/appointment.dart';
+import 'package:hi_doctor_v2/app/modules/history/controllers/history_controller.dart';
 import 'package:hi_doctor_v2/app/modules/history/views/appointment_filter_page.dart';
 import 'package:hi_doctor_v2/app/modules/history/widgets/appointment_tile.dart';
 
 class IncomingTab extends StatefulWidget {
   IncomingTab({
     Key? key,
-    required this.date,
+    this.data,
   }) : super(key: key);
 
-  final String date;
+  HistoryController historyController = Get.find<HistoryController>();
+  final List<Appointment>? data;
 
   @override
   State<IncomingTab> createState() => _IncomingTabState();
 }
 
-class _IncomingTabState extends State<IncomingTab> with AutomaticKeepAliveClientMixin {
+class _IncomingTabState extends State<IncomingTab> {
+  @override
+  void initState() {
+    super.initState();
+    widget.historyController.getUserAppointments();
+  }
+
   @override
   Widget build(BuildContext context) {
-    super.build(context);
     return SingleChildScrollView(
       child: Padding(
         padding: EdgeInsets.symmetric(horizontal: 16.0.sp),
@@ -34,6 +39,12 @@ class _IncomingTabState extends State<IncomingTab> with AutomaticKeepAliveClient
             ),
             Row(
               children: [
+                ElevatedButton(
+                    onPressed: () {
+                      widget.historyController.getUserAppointments();
+                      print(widget.historyController.incomingList.value);
+                    },
+                    child: Text('Fetch')),
                 const Spacer(),
                 GestureDetector(
                   onTap: () {
@@ -79,51 +90,72 @@ class _IncomingTabState extends State<IncomingTab> with AutomaticKeepAliveClient
                 ),
               ],
             ),
-            AppointmentTile(
-              data: Appointment2(
-                bookedAt: widget.date,
-                doctor: 5,
-                checkInCode: '123456-5-6-3',
-                status: AppointmentStatus.pending.label,
-                type: AppointmentType.online.label,
-              ),
-            ),
-            AppointmentTile(
-              data: Appointment2(
-                bookedAt: widget.date,
-                doctor: 5,
-                checkInCode: '123456-5-6-3',
-                status: AppointmentStatus.pending.label,
-                type: AppointmentType.online.label,
-              ),
-            ),
-            AppointmentTile(
-              data: Appointment2(
-                bookedAt: widget.date,
-                doctor: 5,
-                checkInCode: '123456-5-6-3',
-                status: AppointmentStatus.pending.label,
-                type: AppointmentType.online.label,
-              ),
-            ),
-            AppointmentTile(
-              data: Appointment2(
-                bookedAt: widget.date,
-                doctor: 5,
-                checkInCode: '123456-5-6-3',
-                status: AppointmentStatus.pending.label,
-                type: AppointmentType.online.label,
-              ),
-            ),
-            AppointmentTile(
-              data: Appointment2(
-                bookedAt: widget.date,
-                doctor: 5,
-                checkInCode: '123456-5-6-3',
-                status: AppointmentStatus.pending.label,
-                type: AppointmentType.online.label,
-              ),
-            ),
+            if (widget.data == null || widget.data!.isEmpty)
+              const Center(
+                child: CircularProgressIndicator(),
+              )
+            else
+              ...widget.data!
+                  .map((e) => AppointmentTile(
+                        data: Appointment2(
+                          id: e.id,
+                        ),
+                      ))
+                  .toList(),
+            // widget.data == null || widget.data!.isEmpty
+            //   ? const CircularProgressIndicator()
+            //   : ...widget.data!
+            //       .map((e) => AppointmentTile(
+            //             data: Appointment2(
+            //               id: e.id,
+            //             ),
+            //           ))
+            //       .toList(),
+            // AppointmentTile(
+            //   data: Appointment2(
+            //     bookedAt: widget.date,
+            //     doctor: 5,
+            //     checkInCode: '123456-5-6-3',
+            //     status: AppointmentStatus.pending.label,
+            //     type: AppointmentType.online.label,
+            //   ),
+            // ),
+            // AppointmentTile(
+            //   data: Appointment2(
+            //     bookedAt: widget.date,
+            //     doctor: 5,
+            //     checkInCode: '123456-5-6-3',
+            //     status: AppointmentStatus.pending.label,
+            //     type: AppointmentType.online.label,
+            //   ),
+            // ),
+            // AppointmentTile(
+            //   data: Appointment2(
+            //     bookedAt: widget.date,
+            //     doctor: 5,
+            //     checkInCode: '123456-5-6-3',
+            //     status: AppointmentStatus.pending.label,
+            //     type: AppointmentType.online.label,
+            //   ),
+            // ),
+            // AppointmentTile(
+            //   data: Appointment2(
+            //     bookedAt: widget.date,
+            //     doctor: 5,
+            //     checkInCode: '123456-5-6-3',
+            //     status: AppointmentStatus.pending.label,
+            //     type: AppointmentType.online.label,
+            //   ),
+            // ),
+            // AppointmentTile(
+            //   data: Appointment2(
+            //     bookedAt: widget.date,
+            //     doctor: 5,
+            //     checkInCode: '123456-5-6-3',
+            //     status: AppointmentStatus.pending.label,
+            //     type: AppointmentType.online.label,
+            //   ),
+            // ),
           ],
         ),
       ),

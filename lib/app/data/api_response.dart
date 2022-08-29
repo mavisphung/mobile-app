@@ -22,11 +22,9 @@ abstract class ApiResponse {
     try {
       final res = jsonDecode(response.bodyString!);
 
-      print(
-          'STATUS CODE: ${response.statusCode}, ${res["success"]}, ${res["status"]}');
+      print('STATUS CODE: ${response.statusCode}, ${res["success"]}, ${res["status"]}');
       if (response.isOk) {
-        if (res['success'] == true &&
-            (res['status'] == 201 || res['status'] == 200)) {
+        if (res['success'] == true && (res['status'] == 201 || res['status'] == 200)) {
           print('OK: ${response.body}');
           return response.body;
         }
