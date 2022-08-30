@@ -17,11 +17,15 @@ class ApiHistoryImpl extends GetConnect {
     };
   }
 
-  Future<Response> getUserAppointments() {
+  Future<Response> getUserIncomingAppointments({int page = 1, int limit = 10}) {
     return get(
       '/user/me/appointments/',
       headers: headers,
-      query: {'status': AppointmentStatus.pending.value},
+      query: {
+        'status': AppointmentStatus.pending.value,
+        // 'page': page,
+        // 'limit': limit,
+      },
     );
   }
 }

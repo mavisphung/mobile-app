@@ -14,11 +14,11 @@ class HistoryPage extends StatefulWidget {
   State<HistoryPage> createState() => _HistoryPageState();
 }
 
-class _HistoryPageState extends State<HistoryPage> {
+class _HistoryPageState extends State<HistoryPage> with SingleTickerProviderStateMixin {
   final HistoryController _controller = Get.put(HistoryController());
   late final MyTabController tabx;
   var tabs = <Tab>[];
-
+  
   @override
   void initState() {
     super.initState();

@@ -169,3 +169,31 @@ extension AppointmentStatusExt2 on AppointmentStatus {
     }
   }
 }
+
+extension StringToEnum on String {
+  AppointmentType get enumType {
+    switch (this) {
+      case 'ONLINE':
+        return AppointmentType.online;
+      case 'OFFLINE':
+        return AppointmentType.offline;
+      default:
+        return AppointmentType.all;
+    }
+  }
+
+  AppointmentStatus get enumStatus {
+    switch (this) {
+      case 'PENDING':
+        return AppointmentStatus.pending;
+      case 'COMPLETED':
+        return AppointmentStatus.completed;
+      case 'CANCELLED':
+        return AppointmentStatus.cancelled;
+      case 'IN_PROGRESS':
+        return AppointmentStatus.inProgress;
+      default:
+        return AppointmentStatus.all;
+    }
+  }
+}
