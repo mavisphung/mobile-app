@@ -1,6 +1,7 @@
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
 
+// ignore: must_be_immutable
 class ExpandableFab extends StatefulWidget {
   const ExpandableFab({
     super.key,
@@ -12,6 +13,7 @@ class ExpandableFab extends StatefulWidget {
   final bool? initialOpen;
   final double distance;
   final List<Widget> children;
+  static late VoidCallback closeFab;
 
   @override
   State<ExpandableFab> createState() => _ExpandableFabState();
@@ -36,6 +38,7 @@ class _ExpandableFabState extends State<ExpandableFab> with SingleTickerProvider
       reverseCurve: Curves.easeOutQuad,
       parent: _controller,
     );
+    ExpandableFab.closeFab = _toggle;
   }
 
   @override

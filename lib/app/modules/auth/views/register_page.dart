@@ -141,6 +141,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 ),
                 CustomTextFieldWidget(
                   hasObscureIcon: true,
+                  hasClearIcon: false,
                   validator: Validators.validatePassword,
                   focusNode: _passwordFocusNode,
                   controller: _passwordController,
@@ -148,7 +149,9 @@ class _RegisterPageState extends State<RegisterPage> {
                   labelText: Strings.pasword.tr,
                 ),
                 CustomTextFieldWidget(
+                  // withAsterisk: false,
                   hasObscureIcon: true,
+                  hasClearIcon: false,
                   validator: (value) => Validators.validateConfirmPassword(value, _passwordController.text),
                   textInputAction: TextInputAction.done,
                   focusNode: _confirmFocusNode,

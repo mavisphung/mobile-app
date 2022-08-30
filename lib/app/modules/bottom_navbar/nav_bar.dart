@@ -16,76 +16,84 @@ class NavBar extends StatelessWidget {
   final NavBarController _controller = Get.put(NavBarController());
   NavBar({Key? key}) : super(key: key);
 
+  void _closeFab() => ExpandableFab.closeFab();
+
   @override
   Widget build(BuildContext context) {
     return GetBuilder<NavBarController>(
       builder: (_) => WillPopScope(
         onWillPop: Utils.onWillPop,
-        child: Scaffold(
-          body: SafeArea(
-            child: _controller.tabIndex == 0
-                ? HomePage()
-                : _controller.tabIndex == 1
-                    ? const HistoryPage()
-                    : SettingsPage(),
-          ),
-          bottomNavigationBar: BottomNavigationBar(
-            unselectedItemColor: AppColors.black,
-            selectedItemColor: AppColors.primary,
-            currentIndex: _controller.tabIndex,
-            onTap: _controller.changeTabIndex,
-            showSelectedLabels: false,
-            showUnselectedLabels: false,
-            type: BottomNavigationBarType.fixed,
-            backgroundColor: AppColors.white,
-            elevation: 0,
-            items: [
-              _bottomNavigationBarItem(
-                icon: CupertinoIcons.home,
-                label: Strings.home.tr,
-              ),
-              _bottomNavigationBarItem(
-                icon: CupertinoIcons.calendar,
-                label: 'Schedule',
-              ),
-              _bottomNavigationBarItem(
-                icon: CupertinoIcons.chat_bubble_2,
-                label: 'Message',
-              ),
-              _bottomNavigationBarItem(
-                icon: CupertinoIcons.person,
-                label: 'Personal',
-              ),
-            ],
-          ),
-          floatingActionButton: ExpandableFab(
-            distance: 80.sp,
-            children: [
-              ActionButton(
-                onPressed: () {},
-                icon: Image.asset(
-                  'assets/images/contract.png',
-                  fit: BoxFit.cover,
-                  color: Colors.white,
-                  width: 23.0,
-                  height: 23.0,
+        child: GestureDetector(
+          onTap: _closeFab,
+          child: Scaffold(
+            body: SafeArea(
+              child: _controller.tabIndex == 0
+                  ? HomePage()
+                  : _controller.tabIndex == 1
+                      ? const HistoryPage()
+                      : SettingsPage(),
+            ),
+            bottomNavigationBar: BottomNavigationBar(
+              unselectedItemColor: AppColors.black,
+              selectedItemColor: AppColors.primary,
+              currentIndex: _controller.tabIndex,
+              onTap: (index) {
+                _closeFab();
+                _controller.changeTabIndex(index);
+              },
+              showSelectedLabels: false,
+              showUnselectedLabels: false,
+              type: BottomNavigationBarType.fixed,
+              backgroundColor: AppColors.white,
+              elevation: 0,
+              items: [
+                _bottomNavigationBarItem(
+                  icon: CupertinoIcons.home,
+                  label: Strings.home.tr,
                 ),
-              ),
-              ActionButton(
-                onPressed: () {},
-                icon: Image.asset(
-                  'assets/images/add_appointment.png',
-                  fit: BoxFit.cover,
-                  color: Colors.white,
-                  width: 23.0,
-                  height: 23.0,
+                _bottomNavigationBarItem(
+                  icon: CupertinoIcons.calendar,
+                  label: 'Schedule',
                 ),
-              ),
-              // ActionButton(
-              //   onPressed: () {},
-              //   icon: const Icon(Icons.videocam),
-              // ),
-            ],
+                _bottomNavigationBarItem(
+                  icon: CupertinoIcons.chat_bubble_2,
+                  label: 'Message',
+                ),
+                _bottomNavigationBarItem(
+                  icon: CupertinoIcons.person,
+                  label: 'Personal',
+                ),
+              ],
+            ),
+            floatingActionButton: ExpandableFab(
+              distance: 80.sp,
+              children: [
+                ActionButton(
+                  onPressed: () {
+                    _closeFab();
+                  },
+                  icon: Image.asset(
+                    'assets/images/contract.png',
+                    fit: BoxFit.cover,
+                    color: Colors.white,
+                    width: 23.0,
+                    height: 23.0,
+                  ),
+                ),
+                ActionButton(
+                  onPressed: () {
+                    _closeFab();
+                  },
+                  icon: Image.asset(
+                    'assets/images/add_appointment.png',
+                    fit: BoxFit.cover,
+                    color: Colors.white,
+                    width: 23.0,
+                    height: 23.0,
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),

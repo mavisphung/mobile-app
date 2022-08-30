@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 
 import '../../../common/util/extensions.dart';
 import '../../../common/util/utils.dart';
+import '../../../common/values/strings.dart';
 import '../../../data/auth/api_auth.dart';
 import '../../../data/auth/api_auth_impl.dart';
 import '../../../routes/app_pages.dart';
@@ -42,8 +43,8 @@ class RegisterController extends GetxController {
     // Utils.unfocus();
     if (!isPolicyAgreed.value) {
       Utils.showAlertDialog(
-        'policy_agree_need_msg'.tr,
-        title: 'policy_agree_alert'.tr,
+        Strings.policyAgreementNeedMsg.tr,
+        title: Strings.policyAgreementAlert.tr,
       );
       return false;
     }
@@ -71,18 +72,18 @@ class RegisterController extends GetxController {
     final response = await _apiAuth.postActivateAccount(email, code).futureValue();
 
     if (response != null && response.isSuccess && response.statusCode == 201) {
-      Utils.showTopSnackbar('register_success_msg'.tr, title: 'register_success'.tr);
+      Utils.showTopSnackbar(Strings.registerSuccessMsg.tr, title: Strings.registerSuccess.tr);
       Get.offAllNamed(Routes.LOGIN);
     } else if (response != null &&
         !response.isSuccess &&
         response.statusCode == 400 &&
         response.message == 'NO_MATCHED_CODE') {
-      Utils.showBottomSnackbar('otp_incorrect_msg'.trParams({'code': otpCode.value}));
+      Utils.showBottomSnackbar(Strings.otpErrorMsg.trParams({'code': otpCode.value}));
     } else if (response != null &&
         !response.isSuccess &&
         response.statusCode == 400 &&
         response.message == 'VERIFY_CODE_EXPIRED') {
-      Utils.showBottomSnackbar('otp_expired_msg'.tr);
+      Utils.showBottomSnackbar(Strings.otpExpiredMsg.tr);
     }
   }
 

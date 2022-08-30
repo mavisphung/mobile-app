@@ -6,6 +6,7 @@ import 'package:hi_doctor_v2/app/routes/app_pages.dart';
 
 import '../../common/util/utils.dart';
 // import '../bottom_navbar/controllers/navbar_controller.dart';
+import '../../common/values/strings.dart';
 import './views/user_profile_item.dart';
 import './views/user_profile.dart';
 import './controllers/settings_controller.dart';
@@ -18,7 +19,7 @@ class SettingsPage extends StatelessWidget {
   // final NavBarController _navbarController = Get.find<NavBarController>();
 
   void _logOut() async {
-    final confirmLogout = await Utils.showConfirmDialog('logout_confirm_msg'.tr);
+    final confirmLogout = await Utils.showConfirmDialog(Strings.logoutConfirmMsg.tr);
     if (confirmLogout ?? false) {
       _controller.logOut();
     }

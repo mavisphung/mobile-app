@@ -71,6 +71,7 @@ class LoginPage extends GetView<LoginController> {
                       child: Column(
                         children: [
                           CustomTextFieldWidget(
+                            withAsterisk: false,
                             validator: (value) => Validators.validateEmail(value, false),
                             focusNode: _emailFocusNode,
                             controller: _emailController,
@@ -81,7 +82,9 @@ class LoginPage extends GetView<LoginController> {
                             ),
                           ),
                           CustomTextFieldWidget(
+                            withAsterisk: false,
                             hasObscureIcon: true,
+                            hasClearIcon: false,
                             validator: Validators.validatePassword,
                             textInputAction: TextInputAction.done,
                             focusNode: _passwordFocusNode,
