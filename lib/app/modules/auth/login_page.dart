@@ -2,13 +2,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../../common/util/utils.dart';
-import '../../../common/util/validators.dart';
-import '../../../common/values/strings.dart';
-import '../../../routes/app_pages.dart';
-import '../../widgets/custom_textfield_widget.dart';
-import '../../widgets/my_button_style.dart';
-import '../controllers/login_controller.dart';
+import '../../common/util/utils.dart';
+import '../../common/util/validators.dart';
+import '../../common/values/strings.dart';
+import '../../routes/app_pages.dart';
+import '../widgets/custom_textfield_widget.dart';
+import '../widgets/my_button_style.dart';
+import './controllers/login_controller.dart';
 
 class LoginPage extends GetView<LoginController> {
   final _formKey = GlobalKey<FormState>();

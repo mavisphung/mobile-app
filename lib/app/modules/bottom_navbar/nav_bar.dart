@@ -6,8 +6,8 @@ import 'package:get/get.dart';
 import '../../common/util/utils.dart';
 import '../../common/values/strings.dart';
 import '../../common/values/colors.dart';
-import '../history/history_page.dart';
-import '../home/views/home_page.dart';
+import '../appointment/appointment_page.dart';
+import '../home/home_page.dart';
 import '../settings/settings_page.dart';
 import './controllers/navbar_controller.dart';
 import './expandable_fab.dart';
@@ -16,7 +16,7 @@ class NavBar extends StatelessWidget {
   final NavBarController _controller = Get.put(NavBarController());
   NavBar({Key? key}) : super(key: key);
 
-  void _closeFab() => ExpandableFab.closeFab();
+  void _closeFab() => ExpandableFab.closeFab(false);
 
   @override
   Widget build(BuildContext context) {
@@ -30,17 +30,14 @@ class NavBar extends StatelessWidget {
               child: _controller.tabIndex == 0
                   ? HomePage()
                   : _controller.tabIndex == 1
-                      ? const HistoryPage()
+                      ? const AppoinmentPage()
                       : SettingsPage(),
             ),
             bottomNavigationBar: BottomNavigationBar(
               unselectedItemColor: AppColors.black,
               selectedItemColor: AppColors.primary,
               currentIndex: _controller.tabIndex,
-              onTap: (index) {
-                _closeFab();
-                _controller.changeTabIndex(index);
-              },
+              onTap: _controller.changeTabIndex,
               showSelectedLabels: false,
               showUnselectedLabels: false,
               type: BottomNavigationBarType.fixed,
@@ -52,7 +49,7 @@ class NavBar extends StatelessWidget {
                   label: Strings.home.tr,
                 ),
                 _bottomNavigationBarItem(
-                  icon: CupertinoIcons.calendar,
+                  icon: Icons.calendar_today,
                   label: 'Schedule',
                 ),
                 _bottomNavigationBarItem(
@@ -73,7 +70,7 @@ class NavBar extends StatelessWidget {
                     _closeFab();
                   },
                   icon: Image.asset(
-                    'assets/images/contract.png',
+                    'assets/images/navbar/contract.png',
                     fit: BoxFit.cover,
                     color: Colors.white,
                     width: 23.0,
@@ -85,7 +82,7 @@ class NavBar extends StatelessWidget {
                     _closeFab();
                   },
                   icon: Image.asset(
-                    'assets/images/add_appointment.png',
+                    'assets/images/navbar/add_appointment.png',
                     fit: BoxFit.cover,
                     color: Colors.white,
                     width: 23.0,

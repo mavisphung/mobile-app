@@ -13,7 +13,7 @@ class ExpandableFab extends StatefulWidget {
   final bool? initialOpen;
   final double distance;
   final List<Widget> children;
-  static late VoidCallback closeFab;
+  static late Function(bool isOpen) closeFab;
 
   @override
   State<ExpandableFab> createState() => _ExpandableFabState();
@@ -47,9 +47,9 @@ class _ExpandableFabState extends State<ExpandableFab> with SingleTickerProvider
     super.dispose();
   }
 
-  void _toggle() {
+  void _toggle(bool isOpen) {
     setState(() {
-      _open = !_open;
+      _open = isOpen;
       if (_open) {
         _controller.forward();
       } else {
@@ -83,7 +83,7 @@ class _ExpandableFabState extends State<ExpandableFab> with SingleTickerProvider
           clipBehavior: Clip.antiAlias,
           elevation: 4.0,
           child: InkWell(
-            onTap: _toggle,
+            onTap: () => _toggle(false),
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: Icon(
@@ -131,7 +131,7 @@ class _ExpandableFabState extends State<ExpandableFab> with SingleTickerProvider
           curve: const Interval(0.25, 1.0, curve: Curves.easeInOut),
           duration: const Duration(milliseconds: 250),
           child: FloatingActionButton(
-            onPressed: _toggle,
+            onPressed: () => _toggle(true),
             child: const Icon(Icons.add),
           ),
         ),

@@ -1,21 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:hi_doctor_v2/app/common/util/utils.dart';
-import 'package:hi_doctor_v2/app/common/values/colors.dart';
-import 'package:hi_doctor_v2/app/modules/history/controllers/history_controller.dart';
-import 'package:hi_doctor_v2/app/modules/history/controllers/tab_controller.dart';
-import 'package:hi_doctor_v2/app/modules/history/views/incoming_tab.dart';
 
-class HistoryPage extends StatefulWidget {
-  const HistoryPage({Key? key}) : super(key: key);
+import '../../common/util/utils.dart';
+import '../../common/values/colors.dart';
+import './controllers/tab_controller.dart';
+import './views/incoming_tab.dart';
+import './controllers/appointment_controller.dart';
+
+class AppoinmentPage extends StatefulWidget {
+  const AppoinmentPage({Key? key}) : super(key: key);
 
   @override
-  State<HistoryPage> createState() => _HistoryPageState();
+  State<AppoinmentPage> createState() => _AppoinmentPageState();
 }
 
-class _HistoryPageState extends State<HistoryPage> {
-  final HistoryController _controller = Get.put(HistoryController());
+class _AppoinmentPageState extends State<AppoinmentPage> {
+  final AppoinmentController _controller = Get.put(AppoinmentController());
   late final MyTabController tabx;
   var tabs = <Tab>[];
 
@@ -60,7 +61,7 @@ class _HistoryPageState extends State<HistoryPage> {
   Widget build(BuildContext context) {
     return GetBuilder(
       init: _controller,
-      builder: (HistoryController controller) {
+      builder: (AppoinmentController controller) {
         return Scaffold(
           body: DefaultTabController(
             length: 2,

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../../common/storage/storage.dart';
-import '../../bottom_navbar/nav_bar.dart';
-import '../../widgets/no_internet_widget.dart';
-import '../controllers/login_controller.dart';
+import '../../common/storage/storage.dart';
+import '../bottom_navbar/nav_bar.dart';
+import '../widgets/no_internet_widget.dart';
+import './controllers/login_controller.dart';
 import './login_page.dart';
 
 class SplashPage extends StatefulWidget {

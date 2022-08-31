@@ -1,16 +1,15 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hi_doctor_v2/app/common/util/utils.dart';
 
-import '../../../common/util/validators.dart';
-import '../../../common/values/strings.dart';
-import '../../../models/user_info.dart';
-import '../../widgets/custom_appbar_widget.dart';
-import '../../widgets/custom_textfield_widget.dart';
-import '../../widgets/my_button_style.dart';
-import '../controllers/register_controller.dart';
-import './otp_view.dart';
+import '../../common/util/validators.dart';
+import '../../common/values/strings.dart';
+import '../../models/user_info.dart';
+import '../widgets/custom_appbar_widget.dart';
+import '../widgets/custom_textfield_widget.dart';
+import '../widgets/my_button_style.dart';
+import './controllers/register_controller.dart';
+import './views/otp_view.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({Key? key}) : super(key: key);
