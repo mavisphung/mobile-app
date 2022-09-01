@@ -17,7 +17,7 @@ class UserProfile extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetBuilder(
       init: _settingsController,
-      builder: (controller) {
+      builder: (SettingsController controller) {
         return Container(
           decoration: BoxDecoration(
             // color: const Color(0xFF0601B4),
@@ -42,9 +42,7 @@ class UserProfile extends StatelessWidget {
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   image: DecorationImage(
-                    image: Storage.hasValue('avatar')
-                        ? NetworkImage(Storage.getValue<String>('avatar')!)
-                        : const NetworkImage('https://cuu-be.s3.amazonaws.com/cuu-be/2022/6/28/O2VWFV.png'),
+                    image: NetworkImage(controller.avatar.value),
                   ),
                 ),
               ),

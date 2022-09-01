@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:hi_doctor_v2/app/models/user_info.dart';
 
 import '../../../common/storage/storage.dart';
 import '../../../common/util/extensions.dart';

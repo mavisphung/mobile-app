@@ -5,6 +5,7 @@ import 'package:get_storage/get_storage.dart';
 enum CacheKey {
   TOKEN,
   IS_LOGGED,
+  USER,
 }
 
 abstract class Storage {

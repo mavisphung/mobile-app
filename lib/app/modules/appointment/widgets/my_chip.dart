@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:hi_doctor_v2/app/common/util/extensions.dart';
-import 'package:hi_doctor_v2/app/modules/history/controllers/history_controller.dart';
+
+import '../../../common/util/extensions.dart';
+import '../controllers/appointment_controller.dart';
 
 class MyTypeChip extends StatefulWidget {
   Color backgroundColor;
@@ -29,17 +30,17 @@ class MyTypeChip extends StatefulWidget {
 }
 
 class _MyTypeChipState extends State<MyTypeChip> {
-  HistoryController historyController = Get.find<HistoryController>();
+  AppointmentController appsController = Get.find<AppointmentController>();
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        historyController.setAppointmentType(widget.value);
+        appsController.setAppointmentType(widget.value);
         setState(() {
           widget.isChosen = !widget.isChosen;
         });
-        print(historyController.selectedType);
+        print(appsController.selectedType);
       },
       child: Chip(
         elevation: 5.0.sp,
@@ -86,17 +87,17 @@ class MyStatusChip extends StatefulWidget {
 }
 
 class _MyStatusChipState extends State<MyStatusChip> {
-  HistoryController historyController = Get.find<HistoryController>();
+  AppointmentController appsController = Get.find<AppointmentController>();
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        historyController.setAppointmentStatus(widget.value);
+        appsController.setAppointmentStatus(widget.value);
         setState(() {
           widget.isChosen = !widget.isChosen;
         });
-        print(historyController.selectedStatus);
+        print(appsController.selectedStatus);
       },
       child: Chip(
         elevation: 5.0.sp,

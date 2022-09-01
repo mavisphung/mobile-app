@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:hi_doctor_v2/app/modules/bottom_navbar/final_nav_bar.dart';
 
-import '../../../common/storage/storage.dart';
-import '../../bottom_navbar/nav_bar.dart';
-import '../../widgets/no_internet_widget.dart';
-import '../controllers/login_controller.dart';
+import '../../common/storage/storage.dart';
+import '../bottom_navbar/nav_bar.dart';
+import '../widgets/no_internet_widget.dart';
+import './controllers/login_controller.dart';
 import './login_page.dart';
 
 class SplashPage extends StatefulWidget {

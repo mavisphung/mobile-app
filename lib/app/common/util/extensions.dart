@@ -7,6 +7,7 @@ import '../../data/errors/api_error.dart';
 import '../../routes/app_pages.dart';
 import '../constants.dart';
 import '../storage/storage.dart';
+import '../values/strings.dart';
 import './loading_dialog.dart';
 import './utils.dart';
 
@@ -27,7 +28,7 @@ extension FutureExt<T> on Future<Response<T>> {
 
         throw ApiError(
           type: ErrorType.connectTimeout,
-          error: 'con_time_out_msg'.tr,
+          error: Strings.conTimeOutMsg.tr,
         );
       },
     ).then((value) {
@@ -58,7 +59,7 @@ extension FutureExt<T> on Future<Response<T>> {
           // _retry(_interface, retryFunction);
         } else if (e.type == ErrorType.unauthorized) {
           if (e.message == 'AUTHENTICATION_FAILED') {
-            Utils.showBottomSnackbar('login_failed_msg'.tr);
+            Utils.showBottomSnackbar(Strings.loginFailedMsg.tr);
             return null;
           }
           Storage.clearStorage();
@@ -106,7 +107,6 @@ extension GenderExt on Gender {
   }
 }
 
-
 enum AppointmentType { all, online, offline }
 
 extension AppointmentTypeExt on AppointmentType {
@@ -153,6 +153,7 @@ extension AppointmentStatusExt on AppointmentStatus {
     }
   }
 }
+
 extension AppointmentStatusExt2 on AppointmentStatus {
   String get label {
     switch (this) {

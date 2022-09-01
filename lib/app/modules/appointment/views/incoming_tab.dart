@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:hi_doctor_v2/app/models/appointment.dart';
-import 'package:hi_doctor_v2/app/modules/history/controllers/history_controller.dart';
-import 'package:hi_doctor_v2/app/modules/history/views/appointment_filter_page.dart';
-import 'package:hi_doctor_v2/app/modules/history/widgets/appointment_tile.dart';
+import 'package:hi_doctor_v2/app/modules/appointment/controllers/appointment_controller.dart';
+import 'package:hi_doctor_v2/app/modules/settings/views/user_profile_detail.dart';
+import '../../../common/util/extensions.dart';
+import '../../../models/appointment.dart';
+import '../widgets/appointment_tile.dart';
+import 'appointment_filter_page.dart';
 
 class IncomingTab extends StatefulWidget {
   IncomingTab({
@@ -13,7 +15,7 @@ class IncomingTab extends StatefulWidget {
     this.data,
   }) : super(key: key);
 
-  final HistoryController historyController = Get.find<HistoryController>();
+  final AppointmentController appsController = Get.find<AppointmentController>();
   final List<Appointment>? data;
 
   @override
@@ -32,8 +34,8 @@ class _IncomingTabState extends State<IncomingTab> with AutomaticKeepAliveClient
     super.build(context);
     return RefreshIndicator(
       onRefresh: () async {
-        widget.historyController.clearIncomingList();
-        widget.historyController.getUserIncomingAppointments();
+        widget.appsController.clearIncomingList();
+        widget.appsController.getUserIncomingAppointments();
       },
       child: SingleChildScrollView(
         child: Padding(
@@ -47,9 +49,9 @@ class _IncomingTabState extends State<IncomingTab> with AutomaticKeepAliveClient
                 children: [
                   ElevatedButton(
                     onPressed: () {
-                      // widget.historyController.getUserIncomingAppointments(page: 1, limit: 10);
-                      widget.historyController.clearList();
-                      // print(widget.historyController.incomingList.value);
+                      // widget.appsController.getUserIncomingAppointments(page: 1, limit: 10);
+                      widget.appsController.clearList();
+                      // print(widget.appsController.incomingList.value);
                     },
                     child: const Text('Clear'),
                   ),
@@ -99,7 +101,9 @@ class _IncomingTabState extends State<IncomingTab> with AutomaticKeepAliveClient
                 ],
               ),
               //--------------------------------------------------------
-              if (widget.data == null || widget.data!.isEmpty) ...[
+              if (widget.appsController.incomingTabStatus.value == Status.loading)
+                const CircularProgressIndicator()
+              else if (widget.data == null || widget.data!.isEmpty) ...[
                 Center(
                   heightFactor: 0.06.sw,
                   child: Column(

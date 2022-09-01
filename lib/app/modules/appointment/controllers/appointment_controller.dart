@@ -1,14 +1,15 @@
 import 'package:get/get.dart';
+import 'package:get/state_manager.dart';
 import 'package:hi_doctor_v2/app/common/util/extensions.dart';
 import 'package:hi_doctor_v2/app/data/api_response.dart';
 import 'package:hi_doctor_v2/app/models/appointment.dart';
 import 'package:hi_doctor_v2/app/models/response.dart';
-import 'package:hi_doctor_v2/app/modules/history/data/api_history.dart';
-import 'package:hi_doctor_v2/app/modules/history/models/filter_model.dart';
+import 'package:hi_doctor_v2/app/modules/appointment/data/api_appointment.dart';
+import 'package:hi_doctor_v2/app/modules/settings/views/user_profile_detail.dart';
 
-enum LoadingEvent { init, refresh, loadMore, nothing }
+import '../models/filter_model.dart';
 
-class HistoryController extends GetxController {
+class AppointmentController extends GetxController {
   RxList<Appointment> incomingList = <Appointment>[].obs;
   RxList<Appointment2> historyList = <Appointment2>[].obs;
   List<AppointmentType> types = AppointmentType.values;
@@ -23,8 +24,9 @@ class HistoryController extends GetxController {
   RxBool isOnline = true.obs;
   Rx<AppointmentType> selectedTypeObx = AppointmentType.all.obs;
   Rx<AppointmentStatus> selectedStatusObx = AppointmentStatus.all.obs;
+  Rx<Status> incomingTabStatus = Status.init.obs;
 
-  late ApiHistoryImpl apiHistory;
+  late ApiAppointmentImpl apiAppointment;
 
   void setFilterType(String type) {
     filterModel.value.type = type;
@@ -63,7 +65,9 @@ class HistoryController extends GetxController {
   }
 
   void getUserIncomingAppointments({int page = 1, int limit = 10}) async {
-    Response result = await apiHistory.getUserIncomingAppointments(page: page, limit: limit);
+    incomingTabStatus.value = Status.loading;
+    update();
+    Response result = await apiAppointment.getUserIncomingAppointments(page: page, limit: limit);
     var response = ApiResponse.getResponse(result);
     ResponseModel2 model = ResponseModel2.fromMap(response);
     var data = model.data as List<dynamic>;
@@ -80,13 +84,14 @@ class HistoryController extends GetxController {
       );
     }).toList();
     // print(incomingList.value);
+    incomingTabStatus.value = Status.success;
     update();
   }
 
   @override
   void onInit() {
     super.onInit();
-    apiHistory = Get.put(ApiHistoryImpl());
+    apiAppointment = Get.put(ApiAppointmentImpl());
     getUserIncomingAppointments(page: 1, limit: 10);
   }
 
@@ -97,7 +102,7 @@ class HistoryController extends GetxController {
     filterModel.close();
     selectedTypeObx.close();
     selectedStatusObx.close();
-    apiHistory.dispose();
+    apiAppointment.dispose();
     super.dispose();
   }
 }
