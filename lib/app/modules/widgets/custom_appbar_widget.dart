@@ -55,13 +55,13 @@ class CustomAppbarWidget extends PreferredSize {
               children: [
                 Icon(
                   CupertinoIcons.left_chevron,
-                  color: data.value ? AppColors.link : AppColors.black,
+                  color: data.value ? AppColors.link : Colors.black,
                   size: 18.sp,
                 ),
                 Text(
                   Strings.back.tr,
                   style: TextStyle(
-                    color: data.value ? AppColors.link : AppColors.black,
+                    color: data.value ? AppColors.link : Colors.black,
                     fontSize: 15.sp,
                   ),
                 ),
@@ -76,7 +76,7 @@ class CustomAppbarWidget extends PreferredSize {
           : Text(
               title!,
               style: TextStyle(
-                color: AppColors.black,
+                color: Colors.black,
                 fontSize: 14.sp,
               ),
             ),

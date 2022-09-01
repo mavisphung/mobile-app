@@ -1,8 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 
 import '../../common/values/colors.dart';
+import '../../common/values/strings.dart';
 import '../widgets/custom_icon_button.dart';
 import './views/reminder_card.dart';
 import './views/category_item.dart';
@@ -13,10 +15,19 @@ class HomePage extends StatelessWidget {
   final _categoriesList = categoriesList;
   final _doctorList = doctorList;
 
-  final _headlineTextStyle = TextStyle(
-    fontSize: 17.sp,
-    fontWeight: FontWeight.bold,
-  );
+  Widget _getTitle(String title) => Padding(
+        padding: EdgeInsets.only(
+          top: 20.sp,
+          bottom: 12.sp,
+        ),
+        child: Text(
+          title,
+          style: TextStyle(
+            fontSize: 17.sp,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+      );
 
   @override
   Widget build(BuildContext context) {
@@ -66,14 +77,7 @@ class HomePage extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Padding(
-                    padding: EdgeInsets.symmetric(vertical: 15.sp),
-                    child: Text(
-                      'Upcoming appointment',
-                      style: _headlineTextStyle,
-                      textAlign: TextAlign.start,
-                    ),
-                  ),
+                  _getTitle(Strings.upcomingAppointment.tr),
                   InkWell(
                     onTap: () {},
                     child: const Text(
@@ -84,14 +88,7 @@ class HomePage extends StatelessWidget {
                 ],
               ),
               const ReminderCard(),
-              Padding(
-                padding: EdgeInsets.symmetric(vertical: 15.sp),
-                child: Text(
-                  'Categories',
-                  style: _headlineTextStyle,
-                  textAlign: TextAlign.start,
-                ),
-              ),
+              _getTitle(Strings.category.tr),
               SizedBox(
                 // height: 120.sp,
                 child: GridView.builder(
@@ -110,14 +107,7 @@ class HomePage extends StatelessWidget {
                   itemCount: _categoriesList.length,
                 ),
               ),
-              Padding(
-                padding: EdgeInsets.symmetric(vertical: 15.sp),
-                child: Text(
-                  'Latest search doctor',
-                  style: _headlineTextStyle,
-                  textAlign: TextAlign.start,
-                ),
-              ),
+              _getTitle(Strings.latestSearchDoctor.tr),
               SizedBox(
                 height: 150.sp,
                 width: double.infinity,

@@ -15,7 +15,13 @@ abstract class Strings {
   static String get female => 'Female';
   static String get other => 'Other';
   static String get home => 'Home';
+  static String get appointment => 'Appointment';
+  static String get message => 'Message';
+  static String get personal => 'Personal';
   static String get policyAgreementMsg => 'Policy agreement msg';
+  static String get upcomingAppointment => 'Upcoming appointment';
+  static String get category => 'Categories';
+  static String get latestSearchDoctor => 'Latest search doctor';
 
   // Verb, Adjective
   static String get ok => 'Ok';
@@ -31,6 +37,7 @@ abstract class Strings {
   static String get registerSuccess => 'Register sucess';
   static String get exitAppAlert => 'Exit app alert';
   static String get policyAgreementAlert => 'Policy agreenment alert';
+  static String get seeAll => 'See all';
 
   // Information Message
   static String get registerSuccessMsg => 'Register success msg';

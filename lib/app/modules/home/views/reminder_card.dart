@@ -10,10 +10,6 @@ class ReminderCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () => Get.rawSnackbar(message: 'Card click'),
-      // splashColor: Colors.white,
-      highlightColor: Color.fromARGB(157, 155, 39, 176),
-      splashFactory: NoSplash.splashFactory,
-      borderRadius: BorderRadius.circular(10.sp),
       child: Ink(
         height: 150.sp,
         padding: EdgeInsets.all(12.sp),
@@ -68,9 +64,9 @@ class ReminderCard extends StatelessWidget {
               ),
               child: Row(
                 children: [
-                  Icon(
+                  const Icon(
                     CupertinoIcons.calendar,
-                    color: AppColors.white,
+                    color: Colors.white,
                   ),
                   Padding(
                     padding: EdgeInsets.only(left: 8.0.sp),
@@ -80,9 +76,9 @@ class ReminderCard extends StatelessWidget {
                     ),
                   ),
                   const Spacer(),
-                  Icon(
+                  const Icon(
                     CupertinoIcons.time,
-                    color: AppColors.white,
+                    color: Colors.white,
                   ),
                   Padding(
                     padding: EdgeInsets.only(left: 8.sp),
