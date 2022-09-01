@@ -23,8 +23,8 @@ class ApiHistoryImpl extends GetConnect {
       headers: headers,
       query: {
         'status': AppointmentStatus.pending.value,
-        // 'page': page,
-        // 'limit': limit,
+        'page': page.toString(),
+        'limit': limit.toString(),
       },
     );
   }
