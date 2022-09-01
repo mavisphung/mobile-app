@@ -22,8 +22,14 @@ class Messages extends Translations {
           Strings.female: 'Female',
           Strings.other: 'Other',
           Strings.home: 'Home',
+          Strings.appointment: 'Appointment',
+          Strings.message: 'Message',
+          Strings.personal: 'Personal',
           Strings.policyAgreementMsg:
               'Creating an account means you\'re agreed with our Terms of Service, Privacy Policy, and our default Notification Settings.',
+          Strings.upcomingAppointment: 'Upcoming appointment',
+          Strings.category: 'Categories',
+          Strings.latestSearchDoctor: 'Latest search doctors',
 
           // Verb, Adjective
           Strings.ok: 'Ok',
@@ -40,6 +46,7 @@ class Messages extends Translations {
           Strings.registerSuccess: 'Registration success',
           Strings.exitAppAlert: 'Press double back to exit app',
           Strings.policyAgreementAlert: 'Policy agreement Alert',
+          Strings.seeAll: 'See all',
 
           // Information Message
           Strings.registerSuccessMsg: 'Register your account successfully.',

@@ -34,14 +34,14 @@ class NavBar extends StatelessWidget {
                       : SettingsPage(),
             ),
             bottomNavigationBar: BottomNavigationBar(
-              unselectedItemColor: AppColors.black,
+              unselectedItemColor: AppColors.grey600,
               selectedItemColor: AppColors.primary,
               currentIndex: _controller.tabIndex,
               onTap: _controller.changeTabIndex,
               showSelectedLabels: false,
               showUnselectedLabels: false,
               type: BottomNavigationBarType.fixed,
-              backgroundColor: AppColors.white,
+              backgroundColor: Colors.white,
               elevation: 0,
               items: [
                 _bottomNavigationBarItem(
@@ -50,15 +50,16 @@ class NavBar extends StatelessWidget {
                 ),
                 _bottomNavigationBarItem(
                   icon: Icons.calendar_today,
-                  label: 'Schedule',
+                  label: Strings.appointment.tr,
+                  size: 16.sp,
                 ),
                 _bottomNavigationBarItem(
                   icon: CupertinoIcons.chat_bubble_2,
-                  label: 'Message',
+                  label: Strings.message.tr,
                 ),
                 _bottomNavigationBarItem(
                   icon: CupertinoIcons.person,
-                  label: 'Personal',
+                  label: Strings.personal.tr,
                 ),
               ],
             ),
@@ -97,9 +98,16 @@ class NavBar extends StatelessWidget {
     );
   }
 
-  BottomNavigationBarItem _bottomNavigationBarItem({required IconData icon, required String label}) {
+  BottomNavigationBarItem _bottomNavigationBarItem({
+    required IconData icon,
+    required String label,
+    double? size,
+  }) {
     return BottomNavigationBarItem(
-      icon: Icon(icon),
+      icon: Icon(
+        icon,
+        size: size,
+      ),
       label: label,
     );
   }
