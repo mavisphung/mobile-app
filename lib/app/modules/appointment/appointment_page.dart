@@ -67,38 +67,29 @@ class _AppoinmentPageState extends State<AppoinmentPage> with SingleTickerProvid
           body: DefaultTabController(
             length: 2,
             child: Scaffold(
-              body: NestedScrollView(
-                headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
-                  return <Widget>[
-                    SliverAppBar(
-                      title: const Text(
-                        "Appointments",
-                        style: TextStyle(
-                          color: Colors.black,
-                        ),
-                      ),
-                      floating: true,
-                      pinned: true,
-                      snap: true,
-                      bottom: TabBar(
-                        indicatorColor: AppColors.primary,
-                        labelColor: AppColors.primary,
-                        unselectedLabelColor: Colors.grey,
-                        controller: tabx.controller,
-                        tabs: tabx.tabs,
-                      ),
-                      backgroundColor: Colors.white,
-                      elevation: 0.0.sp,
-                    ),
-                  ];
-                },
-                body: TabBarView(
-                  controller: tabx.controller,
-                  children: [
-                    IncomingTab(data: controller.incomingList),
-                    HistoryTab(data: controller.historyList),
-                  ],
+              appBar: AppBar(
+                title: const Text(
+                  "Appointments",
+                  style: TextStyle(
+                    color: Colors.black,
+                  ),
                 ),
+                bottom: TabBar(
+                  indicatorColor: AppColors.primary,
+                  labelColor: AppColors.primary,
+                  unselectedLabelColor: Colors.grey,
+                  controller: tabx.controller,
+                  tabs: tabx.tabs,
+                ),
+                backgroundColor: Colors.white,
+                elevation: 0.0.sp,
+              ),
+              body: TabBarView(
+                controller: tabx.controller,
+                children: [
+                  IncomingTab(data: controller.incomingList),
+                  HistoryTab(data: controller.historyList),
+                ],
               ),
             ),
           ),

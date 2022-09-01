@@ -85,39 +85,39 @@ class _HistoryTabState extends State<HistoryTab> with AutomaticKeepAliveClientMi
                         ))
                     .toList(),
               // // ---------------------------------------------------------
-              AppointmentTile(
-                data: Appointment(
-                  doctor: {
-                    'firstName': 'AKA',
-                    'lastName': '47',
-                  },
-                  bookedAt: '2000-24-24 09:24:00',
-                  status: AppointmentStatus.completed.label,
-                  type: AppointmentType.online.label,
-                ),
-              ),
-              AppointmentTile(
-                data: Appointment(
-                  doctor: {
-                    'firstName': 'AKA',
-                    'lastName': '47',
-                  },
-                  bookedAt: '2000-24-24 09:24:00',
-                  status: AppointmentStatus.completed.label,
-                  type: AppointmentType.online.label,
-                ),
-              ),
-              AppointmentTile(
-                data: Appointment(
-                  doctor: {
-                    'firstName': 'AKA',
-                    'lastName': '47',
-                  },
-                  bookedAt: '2000-24-24 09:24:00',
-                  status: AppointmentStatus.completed.label,
-                  type: AppointmentType.online.label,
-                ),
-              ),
+              // AppointmentTile(
+              //   data: Appointment(
+              //     doctor: {
+              //       'firstName': 'AKA',
+              //       'lastName': '47',
+              //     },
+              //     bookedAt: '2000-24-24 09:24:00',
+              //     status: AppointmentStatus.completed.label,
+              //     type: AppointmentType.online.label,
+              //   ),
+              // ),
+              // AppointmentTile(
+              //   data: Appointment(
+              //     doctor: {
+              //       'firstName': 'AKA',
+              //       'lastName': '47',
+              //     },
+              //     bookedAt: '2000-24-24 09:24:00',
+              //     status: AppointmentStatus.completed.label,
+              //     type: AppointmentType.online.label,
+              //   ),
+              // ),
+              // AppointmentTile(
+              //   data: Appointment(
+              //     doctor: {
+              //       'firstName': 'AKA',
+              //       'lastName': '47',
+              //     },
+              //     bookedAt: '2000-24-24 09:24:00',
+              //     status: AppointmentStatus.completed.label,
+              //     type: AppointmentType.online.label,
+              //   ),
+              // ),
             ],
           ),
         ),
