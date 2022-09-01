@@ -198,3 +198,14 @@ extension StringToEnum on String {
     }
   }
 }
+
+extension DebugLog on String {
+  void debugLog(String title) {
+    return debugPrint(
+      '\n********************************** DebugLog **********************************\n'
+      ' $title: $this'
+      '\n********************************** DebugLog **********************************\n',
+      wrapWidth: 1024,
+    );
+  }
+}

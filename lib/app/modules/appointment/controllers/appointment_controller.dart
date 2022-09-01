@@ -1,5 +1,5 @@
+import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
-import 'package:get/state_manager.dart';
 import 'package:hi_doctor_v2/app/common/util/extensions.dart';
 import 'package:hi_doctor_v2/app/data/api_response.dart';
 import 'package:hi_doctor_v2/app/models/appointment.dart';
@@ -11,7 +11,7 @@ import '../models/filter_model.dart';
 
 class AppointmentController extends GetxController {
   RxList<Appointment> incomingList = <Appointment>[].obs;
-  RxList<Appointment2> historyList = <Appointment2>[].obs;
+  RxList<Appointment> historyList = <Appointment>[].obs;
   List<AppointmentType> types = AppointmentType.values;
   List<AppointmentStatus> statuses = AppointmentStatus.values;
 
@@ -25,6 +25,10 @@ class AppointmentController extends GetxController {
   Rx<AppointmentType> selectedTypeObx = AppointmentType.all.obs;
   Rx<AppointmentStatus> selectedStatusObx = AppointmentStatus.all.obs;
   Rx<Status> incomingTabStatus = Status.init.obs;
+  Rx<Status> historyTabStatus = Status.init.obs;
+  // scroll controller
+  late ScrollController incomingScrollController;
+  late ScrollController historyScrollController;
 
   late ApiAppointmentImpl apiAppointment;
 
@@ -65,6 +69,7 @@ class AppointmentController extends GetxController {
   }
 
   void getUserIncomingAppointments({int page = 1, int limit = 10}) async {
+    'loading incoming appointments'.debugLog('IncomingTab');
     incomingTabStatus.value = Status.loading;
     update();
     Response result = await apiAppointment.getUserIncomingAppointments(page: page, limit: limit);
@@ -88,11 +93,45 @@ class AppointmentController extends GetxController {
     update();
   }
 
+  void getUserHistoricalAppointments({int page = 1, int limit = 10}) async {
+    'loading historical appointments'.debugLog('HistoryTab');
+    historyTabStatus.value = Status.loading;
+    update();
+    Response result = await apiAppointment.getUserHistoricalAppointments(page: page, limit: limit);
+    var response = ApiResponse.getResponse(result);
+    ResponseModel2 model = ResponseModel2.fromMap(response);
+    var data = model.data as List<dynamic>;
+    historyList.value += data.map((e) {
+      // print(e['bookedAt']);
+      return Appointment(
+        beginAt: e['beginAt'],
+        id: e['id'],
+        status: e['status'],
+        type: e['type'],
+        doctor: e['doctor'],
+        checkInCode: e['checkInCode'],
+        bookedAt: e['bookedAt'],
+      );
+    }).toList();
+    // print(incomingList.value);
+    historyTabStatus.value = Status.success;
+    update();
+  }
+
   @override
   void onInit() {
     super.onInit();
+    incomingScrollController = ScrollController();
+    incomingScrollController.addListener(() {
+      'Scrolling...'.debugLog('incomingScrollController');
+    });
+    historyScrollController = ScrollController();
+    historyScrollController.addListener(() {
+      'Scrolling...'.debugLog('historyScrollController');
+    });
     apiAppointment = Get.put(ApiAppointmentImpl());
     getUserIncomingAppointments(page: 1, limit: 10);
+    getUserHistoricalAppointments(page: 1, limit: 10);
   }
 
   @override
@@ -100,6 +139,8 @@ class AppointmentController extends GetxController {
     incomingList.close();
     historyList.close();
     filterModel.close();
+    historyTabStatus.close();
+    incomingTabStatus.close();
     selectedTypeObx.close();
     selectedStatusObx.close();
     apiAppointment.dispose();

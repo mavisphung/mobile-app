@@ -17,7 +17,8 @@ class AppointmentTile extends StatelessWidget {
   Widget build(BuildContext context) {
     // print(data);
     return Container(
-      width: 1.sw,
+      // width: 1.sw,
+      width: double.infinity,
       margin: EdgeInsets.symmetric(vertical: 10.0.sp),
       // padding: EdgeInsets.symmetric(vertical: 10.0.sp),
       decoration: BoxDecoration(

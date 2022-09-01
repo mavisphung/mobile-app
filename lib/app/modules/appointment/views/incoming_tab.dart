@@ -9,6 +9,27 @@ import '../../../models/appointment.dart';
 import '../widgets/appointment_tile.dart';
 import 'appointment_filter_page.dart';
 
+class RefreshWidget extends StatefulWidget {
+  final Widget child;
+  final Future Function() onRefresh;
+
+  RefreshWidget({
+    Key? key,
+    required this.child,
+    required this.onRefresh,
+  }) : super(key: key);
+
+  @override
+  State<RefreshWidget> createState() => _RefreshWidgetState();
+}
+
+class _RefreshWidgetState extends State<RefreshWidget> {
+  @override
+  Widget build(BuildContext context) {
+    return Container();
+  }
+}
+
 class IncomingTab extends StatefulWidget {
   IncomingTab({
     Key? key,
@@ -23,11 +44,23 @@ class IncomingTab extends StatefulWidget {
 }
 
 class _IncomingTabState extends State<IncomingTab> with AutomaticKeepAliveClientMixin {
-
   @override
   void initState() {
     super.initState();
   }
+
+  Widget buildList() => widget.data!.isEmpty
+      ? Center(child: CircularProgressIndicator())
+      : RefreshIndicator(
+          onRefresh: () async {},
+          child: ListView.builder(
+            itemCount: widget.data!.length,
+            itemBuilder: (_, index) {
+              Appointment e = widget.data![index];
+              return AppointmentTile(data: e);
+            },
+          ),
+        );
 
   @override
   Widget build(BuildContext context) {

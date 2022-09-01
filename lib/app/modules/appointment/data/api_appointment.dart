@@ -12,6 +12,7 @@ class ApiAppointmentImpl extends GetConnect {
   void onInit() {
     super.onInit();
     httpClient.baseUrl = Constants.baseUrl;
+    httpClient.timeout = Constants.timeout;
   }
 
   Future<Response> getUserIncomingAppointments({int page = 1, int limit = 10}) {
@@ -22,7 +23,18 @@ class ApiAppointmentImpl extends GetConnect {
         'status': AppointmentStatus.pending.value,
         'page': page.toString(),
         'limit': limit.toString(),
-      }
+      },
+    );
+  }
+
+  Future<Response> getUserHistoricalAppointments({int page = 1, int limit = 10}) {
+    return get(
+      '/user/me/appointments/history/',
+      headers: headers,
+      query: {
+        'page': page.toString(),
+        'limit': limit.toString(),
+      },
     );
   }
 }
