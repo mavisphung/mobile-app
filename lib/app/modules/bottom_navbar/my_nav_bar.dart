@@ -1,10 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:hi_doctor_v2/app/modules/appointment/appointment_page.dart';
 
 import '../../common/util/utils.dart';
 import '../../common/values/colors.dart';
-import '../history/history_page.dart';
 import '../home/views/home_page.dart';
 import '../settings/settings_page.dart';
 import './controllers/navbar_controller.dart';
@@ -26,7 +26,7 @@ class NavBar extends StatelessWidget {
               child: Stack(
                 children: [
                   if (_controller.tabIndex == 0) HomePage(),
-                  if (_controller.tabIndex == 1) const HistoryPage(),
+                  if (_controller.tabIndex == 1) const AppoinmentPage(),
                   if (_controller.tabIndex == 2) SettingsPage(),
                   // IndexedStack(
                   //   index: _controller.tabIndex,

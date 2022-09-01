@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'package:get/get.dart';
 import 'package:get/get_connect/http/src/status/http_status.dart';
 
+import '../common/values/strings.dart';
 import './errors/api_error.dart';
 
 abstract class ApiResponse {
@@ -13,7 +14,7 @@ abstract class ApiResponse {
     if (status.connectionError) {
       throw ApiError(
         type: ErrorType.noConnection,
-        error: 'no_con_msg'.tr,
+        error: Strings.noConMsg.tr,
       );
     }
 
@@ -22,11 +23,9 @@ abstract class ApiResponse {
     try {
       final res = jsonDecode(response.bodyString!);
 
-      print(
-          'STATUS CODE: ${response.statusCode}, ${res["success"]}, ${res["status"]}');
+      print('STATUS CODE: ${response.statusCode}, ${res["success"]}, ${res["status"]}');
       if (response.isOk) {
-        if (res['success'] == true &&
-            (res['status'] == 201 || res['status'] == 200)) {
+        if (res['success'] == true && (res['status'] == 201 || res['status'] == 200)) {
           print('OK: ${response.body}');
           return response.body;
         }
@@ -37,7 +36,7 @@ abstract class ApiResponse {
               !res['data']['user'][0].toString().contains('does not exist')) {
             throw ApiError(
               type: ErrorType.failedResponse,
-              error: 'invalid_input_msg'.tr,
+              error: Strings.invalidInputMsg.tr,
             );
           }
           return response.body;
@@ -47,7 +46,7 @@ abstract class ApiResponse {
         } else if (status.code == HttpStatus.requestTimeout) {
           throw ApiError(
             type: ErrorType.connectTimeout,
-            error: 'con_time_out_msg'.tr,
+            error: Strings.conTimeOutMsg.tr,
           );
         } else if (response.unauthorized) {
           if (res['message'] == 'AUTHENTICATION_FAILED') {
@@ -58,24 +57,24 @@ abstract class ApiResponse {
           }
           throw ApiError(
             type: ErrorType.unauthorized,
-            error: 'unauthorized_err_msg'.tr,
+            error: Strings.unauthorizedErrMsg.tr,
           );
         } else {
           throw ApiError(
             type: ErrorType.failedResponse,
-            error: 'system_err_msg'.tr,
+            error: Strings.systemErrMsg.tr,
           );
         }
       }
     } on FormatException {
       throw ApiError(
         type: ErrorType.unknownError,
-        error: 'format_err_msg'.tr,
+        error: Strings.formatErrMsg.tr,
       );
     } on TimeoutException {
       throw ApiError(
         type: ErrorType.connectTimeout,
-        error: 'con_time_out_msg'.tr,
+        error: Strings.conTimeOutMsg.tr,
       );
     }
     return null;

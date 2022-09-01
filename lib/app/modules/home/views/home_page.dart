@@ -10,7 +10,7 @@ import './category_item.dart';
 
 class HomePage extends StatelessWidget {
   HomePage({Key? key}) : super(key: key);
-  final _categoriesList = CategoriesList;
+  final _categoriesList = categoriesList;
 
   final _headlineTextStyle = TextStyle(
     fontSize: 17.sp,

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:hi_doctor_v2/app/common/values/colors.dart';
 
 import '../../common/util/validators.dart';
 
@@ -10,8 +11,8 @@ class CustomTextFieldWidget extends StatelessWidget {
   final String? labelText, hintText, initialValue;
   final FocusNode focusNode;
   final TextEditingController controller;
-  final Widget? prefixIcon;
-  final bool readOnly, isDense, hasObscureIcon;
+  final Widget? prefixIcon, suffixIcon;
+  final bool readOnly, isDense, hasObscureIcon, hasClearIcon, withAsterisk;
   final bool? enabled;
   final TextInputType keyboardType;
   final TextInputAction textInputAction;
@@ -24,6 +25,10 @@ class CustomTextFieldWidget extends StatelessWidget {
   final InputDecoration? inputDecoration;
 
   final _hasText = false.obs;
+  final _asterisk = Text(
+    '*',
+    style: TextStyle(color: AppColors.error),
+  );
 
   CustomTextFieldWidget({
     Key? key,
@@ -33,10 +38,13 @@ class CustomTextFieldWidget extends StatelessWidget {
     required this.focusNode,
     required this.controller,
     this.prefixIcon,
+    this.suffixIcon,
     this.readOnly = false,
     this.isDense = true,
     this.enabled,
     this.hasObscureIcon = false,
+    this.hasClearIcon = true,
+    this.withAsterisk = true,
     this.keyboardType = TextInputType.text,
     this.textInputAction = TextInputAction.next,
     this.maxLength,
@@ -49,7 +57,11 @@ class CustomTextFieldWidget extends StatelessWidget {
     this.textStyle,
     this.textAlign = TextAlign.start,
     this.inputDecoration,
-  }) : super(key: key) {
+  })  : assert(
+            hasObscureIcon == false || hasClearIcon == false,
+            'Make sure hasClearIcon = false when hasObscureIcon = true and vice versa.\n'
+            'To allow only one of clear or obscure icon in the suffixIcon'),
+        super(key: key) {
     focusNode.addListener(() {
       if (focusNode.hasFocus) {
         _hasText.value = true;
@@ -64,10 +76,10 @@ class CustomTextFieldWidget extends StatelessWidget {
     return SizedBox(
       height: 100.sp,
       child: ObxValue<RxBool>(
-          (data) => TextFormField(
+          (isObscure) => TextFormField(
                 readOnly: readOnly,
                 enabled: enabled,
-                obscureText: data.value && hasObscureIcon,
+                obscureText: isObscure.value && hasObscureIcon,
                 enableSuggestions: !hasObscureIcon,
                 autocorrect: !hasObscureIcon,
                 validator: validator,
@@ -93,31 +105,47 @@ class CustomTextFieldWidget extends StatelessWidget {
                     : null,
                 decoration: inputDecoration ??
                     InputDecoration(
-                      labelText: labelText,
+                      label: withAsterisk
+                          ? RichText(
+                              text: TextSpan(
+                                text: labelText,
+                                style: DefaultTextStyle.of(context).style.copyWith(
+                                      fontSize: 16.sp,
+                                      color: Colors.blue,
+                                    ),
+                                children: [
+                                  TextSpan(
+                                    text: ' *',
+                                    style: TextStyle(color: AppColors.error),
+                                  ),
+                                ],
+                              ),
+                            )
+                          : Text(labelText ?? ''),
                       hintText: hintText,
                       isDense: isDense,
                       prefixIcon: prefixIcon,
-                      suffixIcon: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          ObxValue<RxBool>(
-                              (data) => Visibility(
-                                    visible: data.value,
-                                    child: IconButton(
-                                      onPressed: () => controller.clear(),
-                                      icon: const Icon(CupertinoIcons.xmark_circle),
-                                    ).noSplash(),
-                                  ),
-                              _hasText),
-                          if (hasObscureIcon)
-                            IconButton(
-                              onPressed: () => data.value = !data.value,
-                              icon: !data.value ? const Icon(CupertinoIcons.eye_slash) : const Icon(CupertinoIcons.eye),
-                            ).noSplash(),
-                        ],
-                      ),
+                      suffixIcon: suffixIcon ??
+                          (hasClearIcon
+                              ? ObxValue<RxBool>(
+                                  (data) => Visibility(
+                                        visible: data.value,
+                                        child: IconButton(
+                                          onPressed: () => controller.clear(),
+                                          icon: const Icon(CupertinoIcons.xmark_circle),
+                                        ).noSplash(),
+                                      ),
+                                  _hasText)
+                              : hasObscureIcon
+                                  ? IconButton(
+                                      onPressed: () => isObscure.value = !isObscure.value,
+                                      icon: !isObscure.value
+                                          ? const Icon(CupertinoIcons.eye_slash)
+                                          : const Icon(CupertinoIcons.eye),
+                                    ).noSplash()
+                                  : null),
                       contentPadding: EdgeInsets.only(top: 15.sp, bottom: 15.sp, left: 18.sp, right: -18.sp),
-                      floatingLabelBehavior: FloatingLabelBehavior.auto,
+                      floatingLabelBehavior: FloatingLabelBehavior.always,
                       enabledBorder: OutlineInputBorder(
                         borderSide: const BorderSide(color: Color(0xFFE0E0E0)),
                         borderRadius: BorderRadius.circular(10.0),

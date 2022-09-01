@@ -4,106 +4,78 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 class CategoryItem extends StatelessWidget {
   final String label;
   final String image;
-  final int doctorCounter;
 
   const CategoryItem({
     Key? key,
     required this.label,
     required this.image,
-    required this.doctorCounter,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: 75.sp,
-      height: 65.sp,
-      child: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(bottom: 8.0),
-            child: Image.asset(
-              image,
-              fit: BoxFit.cover,
-              width: 23.0,
-              height: 23.0,
-            ),
+    return InkWell(
+      onTap: () {},
+      child: Ink(
+        decoration: BoxDecoration(
+          color: Colors.grey[100],
+          borderRadius: BorderRadius.circular(10.sp),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Row(
+            // mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Image.asset(
+                image,
+                fit: BoxFit.cover,
+                width: 38.0,
+                height: 38.0,
+              ),
+              Expanded(
+                child: Padding(
+                  padding: EdgeInsets.only(
+                    left: 10.sp,
+                    top: 8.sp,
+                  ),
+                  child: Text(
+                    label,
+                    textAlign: TextAlign.start,
+                    overflow: TextOverflow.fade,
+                  ),
+                ),
+              ),
+            ],
           ),
-          SizedBox(
-            height: 35.sp,
-            child: Text(
-              label,
-              textAlign: TextAlign.center,
-              maxLines: 3,
-            ),
-          ),
-          Text(
-            '$doctorCounter doctors',
-            style: TextStyle(
-              color: Colors.grey,
-              fontSize: 12.sp,
-            ),
-          ),
-        ],
+        ),
       ),
     );
   }
 }
 
-List<CategoryItem> CategoriesList = [
+List<CategoryItem> categoriesList = [
   const CategoryItem(
-    label: 'Cardio Specialist',
-    image: 'assets/images/gg_ic.png',
-    doctorCounter: 5,
+    label: 'Cardiology',
+    image: 'assets/images/specs/cardio.png',
   ),
   const CategoryItem(
-    label: 'Heart issue',
-    image: 'assets/images/gg_ic.png',
-    doctorCounter: 5,
+    label: 'Pediatrics',
+    image: 'assets/images/specs/baby.png',
   ),
   const CategoryItem(
-    label: 'Dental care',
-    image: 'assets/images/gg_ic.png',
-    doctorCounter: 5,
+    label: 'Dentistry',
+    image: 'assets/images/specs/dental.png',
   ),
   const CategoryItem(
-    label: 'Hello',
-    image: 'assets/images/gg_ic.png',
-    doctorCounter: 5,
+    label: 'Pulmonology',
+    image: 'assets/images/specs/lung.png',
   ),
   const CategoryItem(
-    label: 'Hello',
-    image: 'assets/images/gg_ic.png',
-    doctorCounter: 5,
+    label: 'Physical therapy',
+    image: 'assets/images/specs/physical.png',
   ),
   const CategoryItem(
-    label: 'Hello',
-    image: 'assets/images/gg_ic.png',
-    doctorCounter: 5,
-  ),
-  const CategoryItem(
-    label: 'Hello',
-    image: 'assets/images/gg_ic.png',
-    doctorCounter: 5,
-  ),
-  const CategoryItem(
-    label: 'Hello',
-    image: 'assets/images/gg_ic.png',
-    doctorCounter: 5,
-  ),
-  const CategoryItem(
-    label: 'Hello',
-    image: 'assets/images/gg_ic.png',
-    doctorCounter: 5,
-  ),
-  const CategoryItem(
-    label: 'Hello',
-    image: 'assets/images/gg_ic.png',
-    doctorCounter: 5,
-  ),
-  const CategoryItem(
-    label: 'Hello',
-    image: 'assets/images/gg_ic.png',
-    doctorCounter: 5,
+    label: 'More',
+    image: 'assets/images/specs/more.png',
   ),
 ];

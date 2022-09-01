@@ -1,5 +1,7 @@
 import 'package:get/get.dart';
 
+import '../../common/values/strings.dart';
+
 enum ErrorType {
   // It occurs when the connection is timeout
   connectTimeout,
@@ -32,7 +34,7 @@ class ApiError implements Exception {
     this.error,
   });
 
-  String get message => (error?.toString() ?? 'unknown_err_msg'.tr);
+  String get message => (error?.toString() ?? Strings.unknownErrMsg.tr);
 
   @override
   String toString() {

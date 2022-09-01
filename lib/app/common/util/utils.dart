@@ -38,7 +38,7 @@ abstract class Utils {
       barrierDismissible: false,
       builder: (ctx) {
         return CupertinoAlertDialog(
-          title: Text(title ?? 'alert'.tr),
+          title: Text(title ?? Strings.alert.tr),
           content: Text(message),
           actions: [
             CupertinoDialogAction(
@@ -64,7 +64,7 @@ abstract class Utils {
       barrierDismissible: false,
       builder: (ctx) {
         return CupertinoAlertDialog(
-          title: Text(title ?? 'alert'.tr),
+          title: Text(title ?? Strings.alert.tr),
           content: Text(message),
           actions: [
             CupertinoDialogAction(

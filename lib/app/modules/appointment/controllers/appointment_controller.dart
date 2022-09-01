@@ -1,10 +1,10 @@
 import 'package:get/state_manager.dart';
-import 'package:hi_doctor_v2/app/common/constants.dart';
 import 'package:hi_doctor_v2/app/common/util/extensions.dart';
 import 'package:hi_doctor_v2/app/models/appointment.dart';
-import 'package:hi_doctor_v2/app/modules/history/models/filter_model.dart';
 
-class HistoryController extends GetxController {
+import '../models/filter_model.dart';
+
+class AppoinmentController extends GetxController {
   RxList<Appointment> incomingList = <Appointment>[].obs;
   RxList<Appointment> completedList = <Appointment>[].obs;
   List<AppointmentType> types = AppointmentType.values;

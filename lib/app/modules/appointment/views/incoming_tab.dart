@@ -1,15 +1,15 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:hi_doctor_v2/app/common/util/extensions.dart';
-import 'package:hi_doctor_v2/app/models/appointment.dart';
-import 'package:hi_doctor_v2/app/modules/history/views/appointment_filter_page.dart';
-import 'package:hi_doctor_v2/app/modules/history/widgets/appointment_tile.dart';
+
+import '../../../common/util/extensions.dart';
+import '../../../models/appointment.dart';
+import '../widgets/appointment_tile.dart';
+import 'appointment_filter_page.dart';
 
 class IncomingTab extends StatefulWidget {
-  IncomingTab({
+  const IncomingTab({
     Key? key,
     required this.date,
   }) : super(key: key);

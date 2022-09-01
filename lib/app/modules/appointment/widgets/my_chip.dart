@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:hi_doctor_v2/app/common/util/extensions.dart';
-import 'package:hi_doctor_v2/app/modules/history/controllers/history_controller.dart';
+
+import '../../../common/util/extensions.dart';
+import '../controllers/appointment_controller.dart';
 
 class MyTypeChip extends StatefulWidget {
   Color backgroundColor;
@@ -29,7 +30,7 @@ class MyTypeChip extends StatefulWidget {
 }
 
 class _MyTypeChipState extends State<MyTypeChip> {
-  HistoryController historyController = Get.find<HistoryController>();
+  AppoinmentController historyController = Get.find<AppoinmentController>();
 
   @override
   Widget build(BuildContext context) {
@@ -86,7 +87,7 @@ class MyStatusChip extends StatefulWidget {
 }
 
 class _MyStatusChipState extends State<MyStatusChip> {
-  HistoryController historyController = Get.find<HistoryController>();
+  AppoinmentController historyController = Get.find<AppoinmentController>();
 
   @override
   Widget build(BuildContext context) {
