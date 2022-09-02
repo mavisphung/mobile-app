@@ -38,6 +38,7 @@ class _HistoryTabState extends State<HistoryTab> with AutomaticKeepAliveClientMi
       }),
       child: SingleChildScrollView(
         // controller: widget.appsController.historyScrollController,
+        physics: const AlwaysScrollableScrollPhysics(),
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 16.0.sp),
           child: Column(
