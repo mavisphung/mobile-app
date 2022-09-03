@@ -9,6 +9,8 @@ import 'package:hi_doctor_v2/app/modules/settings/controllers/user_profile_contr
 import 'package:hi_doctor_v2/app/modules/widgets/custom_text_form_field.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/my_button_style.dart';
 
+import '../controllers/settings_controller.dart';
+
 enum Status { init, loading, success, fail }
 
 class UserProfileDetailPage extends StatelessWidget {
@@ -189,27 +191,28 @@ class UserProfileDetailPage extends StatelessWidget {
                             // -------------------------------------------
                             SizedBox(
                               width: 1.sw,
-                              child: ElevatedButton(
-                                style: MyButtonStyle(),
-                                child: _controller.status.value == Status.loading
-                                    ? SpinKitThreeBounce(
-                                        color: Colors.white,
-                                        size: 19.0.sp,
-                                      )
-                                    : Text(
-                                        'Update',
-                                        style: TextStyle(
-                                          fontSize: 17.0.sp,
-                                          fontWeight: FontWeight.bold,
-                                        ),
+                              child: ObxValue<Rx<Status>>(
+                                  (data) => ElevatedButton(
+                                        style: MyButtonStyle(),
+                                        child: data.value == Status.loading
+                                            ? SpinKitThreeBounce(
+                                                color: Colors.white,
+                                                size: 19.0.sp,
+                                              )
+                                            : Text(
+                                                'Update',
+                                                style: TextStyle(
+                                                  fontSize: 17.0.sp,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                              ),
+                                        onPressed: () async {
+                                          _controller.status.value != Status.loading
+                                              ? await _controller.updateProfile(Get.find<SettingsController>())
+                                              : null;
+                                        },
                                       ),
-                                onPressed: () async {
-                                  if (_controller.status.value != Status.loading) {
-                                    print('Update running');
-                                    _controller.updateProfile();
-                                  }
-                                },
-                              ),
+                                  _controller.status),
                             ),
                           ],
                         ),

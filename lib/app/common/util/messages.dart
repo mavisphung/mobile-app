@@ -50,6 +50,7 @@ class Messages extends Translations {
 
           // Information Message
           Strings.registerSuccessMsg: 'Register your account successfully.',
+          Strings.updateProfileMsg: 'Update your profile successfully.',
 
           // Alert Message
           Strings.policyAgreementNeedMsg: 'Please make sure you agreed with our policy.',

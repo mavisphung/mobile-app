@@ -41,6 +41,7 @@ abstract class Strings {
 
   // Information Message
   static String get registerSuccessMsg => 'Register success msg';
+  static String get updateProfileMsg => 'Update profile msg';
 
   // Alert Message
   static String get policyAgreementNeedMsg => 'Policy agreenment need msg';

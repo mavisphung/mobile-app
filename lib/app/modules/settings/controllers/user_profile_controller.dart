@@ -8,9 +8,12 @@ import 'package:hi_doctor_v2/app/common/util/extensions.dart';
 import 'package:hi_doctor_v2/app/common/util/utils.dart';
 import 'package:hi_doctor_v2/app/data/response_model.dart';
 import 'package:hi_doctor_v2/app/models/user_info.dart';
+import 'package:hi_doctor_v2/app/modules/settings/controllers/settings_controller.dart';
 import 'package:hi_doctor_v2/app/modules/settings/providers/api_settings_impl.dart';
 import 'package:hi_doctor_v2/app/modules/settings/views/user_profile_detail.dart';
 import 'package:image_picker/image_picker.dart';
+
+import '../../../common/values/strings.dart';
 
 class UserProfileController extends GetxController {
   Rx<TextEditingController> email = TextEditingController().obs;
@@ -126,7 +129,7 @@ class UserProfileController extends GetxController {
     }
   }
 
-  void updateProfile() async {
+  Future<void> updateProfile(SettingsController settingsController) async {
     // Update UI to prevent multiple taps
     status.value = Status.loading;
     update();
@@ -162,7 +165,12 @@ class UserProfileController extends GetxController {
         'avatar': _profile.value.avatar,
       };
       await Storage.saveValue(CacheKey.USER_INFO.name, userInfo);
-      Get.snackbar('Notice', 'Update profile succeed', backgroundColor: Colors.green);
+      settingsController.userInfo.value = info.copyWith(
+        id: oldData?['id'],
+        email: oldData?['email'],
+      );
+      Get.back();
+      Utils.showTopSnackbar(Strings.updateProfileMsg.tr, title: 'Notice');
     } else {
       Get.snackbar('Error ${response.statusCode}', 'Error while updating profile', backgroundColor: Colors.red);
       status.value = Status.fail;
