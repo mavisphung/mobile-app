@@ -20,6 +20,13 @@ class ApiSettingsImpl extends GetConnect with ApiSettings {
     httpClient.timeout = Constants.timeout;
   }
 
+  Future<Response> getProfile() {
+    return get(
+      '/user/me/',
+      headers: headers,
+    );
+  }
+
   @override
   Future<Response> getPresignedUrls(List<XFile> images) {
     Map<String, dynamic> body = {};

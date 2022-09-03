@@ -4,7 +4,7 @@ abstract class ApiAuth {
   // static ApiAuth get apiObj => Get.find();
 
   Future<Response> postLogin(String email, String password);
-  Future<Response> postLoginWithToken();
+  Future<Response> postLoginWithToken(String accessToken);
   Future<Response> postCheckEmailExisted(String email);
   Future<Response> postRegister(
     String email,

@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:hi_doctor_v2/app/common/constants.dart';
 
 import '../../../common/storage/storage.dart';
 import '../../../common/util/extensions.dart';
@@ -28,7 +29,7 @@ class LoginController extends GetxController {
         'address': response.data['address'],
         'phoneNumber': response.data['phoneNumber'],
         'gender': response.data['gender'],
-        'avatar': response.data['avatar'],
+        'avatar': response.data['avatar'] ?? Constants.defaultAvatar,
       };
       await Storage.saveValue(CacheKey.USER_INFO.name, userInfo);
 
@@ -38,27 +39,26 @@ class LoginController extends GetxController {
 
   Future<bool?> loginWithToken() async {
     final accessToken = Storage.getValue<String>(CacheKey.TOKEN.name);
-    if (accessToken != null) {
-      final response = await _apiAuth.postLoginWithToken().futureValue(showLoading: false);
+    if (accessToken == null) return false;
 
-      if (response != null) {
-        if (response.isSuccess == true && response.statusCode == 200) {
-          final userInfo = {
-            'id': response.data['id'],
-            'email': response.data['email'],
-            'firstName': response.data['firstName'],
-            'lastName': response.data['lastName'],
-            'address': response.data['address'],
-            'phoneNumber': response.data['phoneNumber'],
-            'gender': response.data['gender'],
-            'avatar': response.data['avatar'],
-          };
-          await Storage.saveValue(CacheKey.USER_INFO.name, userInfo);
+    final response = await _apiAuth.postLoginWithToken(accessToken).futureValue(showLoading: false);
 
-          return true;
-        } else {
-          return false;
-        }
+    if (response != null) {
+      if (response.isSuccess == true && response.statusCode == 200) {
+        final userInfo = {
+          'id': response.data['id'],
+          'email': response.data['email'],
+          'firstName': response.data['firstName'],
+          'lastName': response.data['lastName'],
+          'address': response.data['address'],
+          'phoneNumber': response.data['phoneNumber'],
+          'gender': response.data['gender'],
+          'avatar': response.data['avatar'] ?? Constants.defaultAvatar,
+        };
+        await Storage.saveValue(CacheKey.USER_INFO.name, userInfo);
+        return true;
+      } else {
+        return false;
       }
     }
     return null;

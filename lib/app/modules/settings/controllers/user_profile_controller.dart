@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hi_doctor_v2/app/common/constants.dart';
 import 'package:hi_doctor_v2/app/common/storage/storage.dart';
+import 'package:hi_doctor_v2/app/common/util/extensions.dart';
 import 'package:hi_doctor_v2/app/common/util/utils.dart';
 import 'package:hi_doctor_v2/app/data/response_model.dart';
 import 'package:hi_doctor_v2/app/models/user_info.dart';
@@ -19,38 +20,50 @@ class UserProfileController extends GetxController {
   Rx<TextEditingController> phoneNumber = TextEditingController().obs;
   Rx<TextEditingController> avatar = TextEditingController().obs;
   // Lack of gender
-  Rx<UserInfo2> _profile = UserInfo2().obs;
+  final _profile = UserInfo2().obs;
   Rx<Status> status = Status.init.obs;
 
-  final provider = Get.put(ApiSettingsImpl());
+  final _provider = Get.put(ApiSettingsImpl());
 
   late XFile? file;
   final ImagePicker _picker = ImagePicker();
 
-  _updateValue() {
+  UserInfo2 get profile => _profile.value;
+
+  _setInitialValue() {
     firstName.value.text = _profile.value.firstName!;
     lastName.value.text = _profile.value.lastName!;
     address.value.text = _profile.value.address!;
     phoneNumber.value.text = _profile.value.phoneNumber!;
   }
 
-  _setValue() {
-    _profile.value.firstName = firstName.value.text;
-    _profile.value.lastName = lastName.value.text;
-    _profile.value.address = address.value.text;
-    _profile.value.phoneNumber = phoneNumber.value.text;
+  Future<bool> getProfile() async {
+    final response = await _provider.getProfile().futureValue(showLoading: false);
+
+    if (response != null) {
+      if (response.isSuccess == true && response.statusCode == 200) {
+        _profile.value = UserInfo2(
+          id: response.data['id'],
+          email: response.data['email'],
+          firstName: response.data['firstName'],
+          lastName: response.data['lastName'],
+          address: response.data['address'],
+          phoneNumber: response.data['phoneNumber'],
+          gender: response.data['gender'],
+          avatar: response.data['avatar'] ?? Constants.defaultAvatar,
+        );
+        _setInitialValue();
+        return true;
+      }
+    }
+    return false;
   }
 
   @override
   void onInit() {
     super.onInit();
-    _profile.value = Get.arguments[Constants.info];
-    _updateValue();
     status.value = Status.init;
-    print('Profile: ${_profile.value}');
   }
-
-  UserInfo2 get profile => _profile.value;
 
   @override
   void dispose() {
@@ -94,7 +107,7 @@ class UserProfileController extends GetxController {
     }
     List<XFile> files = <XFile>[];
     files.add(file!);
-    var response = await provider.getPresignedUrls(files);
+    var response = await _provider.getPresignedUrls(files);
     if (response.isOk) {
       ResponseModel1 resModel = ResponseModel1.fromJson(response.body);
       String fileExt = file!.name.split('.')[1];
@@ -126,7 +139,7 @@ class UserProfileController extends GetxController {
       gender: _profile.value.gender,
       avatar: _profile.value.avatar,
     );
-    var response = await provider.updateProfile(info);
+    var response = await _provider.updateProfile(info);
     if (response.isOk) {
       _profile.value = _profile.value.copyWith(
         firstName: firstName.value.text,
