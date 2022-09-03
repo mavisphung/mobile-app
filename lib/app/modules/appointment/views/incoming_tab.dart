@@ -49,19 +49,6 @@ class _IncomingTabState extends State<IncomingTab> with AutomaticKeepAliveClient
     super.initState();
   }
 
-  Widget buildList() => widget.data!.isEmpty
-      ? Center(child: CircularProgressIndicator())
-      : RefreshIndicator(
-          onRefresh: () async {},
-          child: ListView.builder(
-            itemCount: widget.data!.length,
-            itemBuilder: (_, index) {
-              Appointment e = widget.data![index];
-              return AppointmentTile(data: e);
-            },
-          ),
-        );
-
   @override
   Widget build(BuildContext context) {
     super.build(context);
@@ -71,6 +58,7 @@ class _IncomingTabState extends State<IncomingTab> with AutomaticKeepAliveClient
         widget.appsController.getUserIncomingAppointments();
       },
       child: SingleChildScrollView(
+        physics: const AlwaysScrollableScrollPhysics(),
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 16.0.sp),
           child: Column(
@@ -82,9 +70,7 @@ class _IncomingTabState extends State<IncomingTab> with AutomaticKeepAliveClient
                 children: [
                   ElevatedButton(
                     onPressed: () {
-                      // widget.appsController.getUserIncomingAppointments(page: 1, limit: 10);
-                      widget.appsController.clearList();
-                      // print(widget.appsController.incomingList.value);
+                      widget.appsController.clearIncomingList();
                     },
                     child: const Text('Clear'),
                   ),
