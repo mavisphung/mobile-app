@@ -6,4 +6,8 @@ abstract class Constants {
   static const userType = 'MEMBER';
   static const defaultAvatar = 'https://cuu-be.s3.amazonaws.com/cuu-be/2022/6/28/O2VWFV.png';
   static const info = 'info';
+  static const currentPage = 'currentPage';
+  static const nextPage = 'nextPage';
+  static const previousPage = 'previousPage';
+  static const totalItems = 'totalItems';
 }

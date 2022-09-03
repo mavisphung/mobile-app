@@ -3,11 +3,11 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:hi_doctor_v2/app/modules/appointment/controllers/appointment_controller.dart';
 import 'package:hi_doctor_v2/app/modules/appointment/views/history_tab.dart';
+import 'package:hi_doctor_v2/app/modules/appointment/views/incoming_tab.dart';
+import 'package:hi_doctor_v2/app/modules/appointment/views/incoming_tab2.dart';
 
-import '../../common/util/utils.dart';
 import '../../common/values/colors.dart';
 import './controllers/tab_controller.dart';
-import './views/incoming_tab.dart';
 
 class AppoinmentPage extends StatefulWidget {
   const AppoinmentPage({Key? key}) : super(key: key);
@@ -87,8 +87,8 @@ class _AppoinmentPageState extends State<AppoinmentPage> with SingleTickerProvid
               body: TabBarView(
                 controller: tabx.controller,
                 children: [
-                  IncomingTab(data: controller.incomingList),
-                  HistoryTab(data: controller.historyList),
+                  IncomingTab(),
+                  HistoryTab(),
                 ],
               ),
             ),

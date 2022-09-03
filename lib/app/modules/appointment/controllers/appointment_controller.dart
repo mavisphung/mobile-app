@@ -10,7 +10,6 @@ import 'package:hi_doctor_v2/app/modules/settings/views/user_profile_detail.dart
 import '../models/filter_model.dart';
 
 class AppointmentController extends GetxController {
-  RxList<Appointment> incomingList = <Appointment>[].obs;
   RxList<Appointment> historyList = <Appointment>[].obs;
   List<AppointmentType> types = AppointmentType.values;
   List<AppointmentStatus> statuses = AppointmentStatus.values;
@@ -24,10 +23,8 @@ class AppointmentController extends GetxController {
   RxBool isOnline = true.obs;
   Rx<AppointmentType> selectedTypeObx = AppointmentType.all.obs;
   Rx<AppointmentStatus> selectedStatusObx = AppointmentStatus.all.obs;
-  Rx<Status> incomingTabStatus = Status.init.obs;
   Rx<Status> historyTabStatus = Status.init.obs;
   // scroll controller
-  late ScrollController incomingScrollController;
   late ScrollController historyScrollController;
 
   late ApiAppointmentImpl apiAppointment;
@@ -52,44 +49,9 @@ class AppointmentController extends GetxController {
     update();
   }
 
-  void clearList() {
-    incomingList.clear();
-    historyList.clear();
-    update();
-  }
-
-  void clearIncomingList() {
-    incomingList.clear();
-    update();
-  }
 
   void clearHistoryList() {
     historyList.clear();
-    update();
-  }
-
-  void getUserIncomingAppointments({int page = 1, int limit = 10}) async {
-    'loading incoming appointments'.debugLog('IncomingTab');
-    incomingTabStatus.value = Status.loading;
-    update();
-    Response result = await apiAppointment.getUserIncomingAppointments(page: page, limit: limit);
-    var response = ApiResponse.getResponse(result);
-    ResponseModel2 model = ResponseModel2.fromMap(response);
-    var data = model.data as List<dynamic>;
-    incomingList.value += data.map((e) {
-      // print(e['bookedAt']);
-      return Appointment(
-        beginAt: e['beginAt'],
-        id: e['id'],
-        status: e['status'],
-        type: e['type'],
-        doctor: e['doctor'],
-        checkInCode: e['checkInCode'],
-        bookedAt: e['bookedAt'],
-      );
-    }).toList();
-    // print(incomingList.value);
-    incomingTabStatus.value = Status.success;
     update();
   }
 
@@ -121,26 +83,19 @@ class AppointmentController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    incomingScrollController = ScrollController();
-    incomingScrollController.addListener(() {
-      'Scrolling...'.debugLog('incomingScrollController');
-    });
     historyScrollController = ScrollController();
     historyScrollController.addListener(() {
       'Scrolling...'.debugLog('historyScrollController');
     });
     apiAppointment = Get.put(ApiAppointmentImpl());
-    getUserIncomingAppointments(page: 1, limit: 10);
     getUserHistoricalAppointments(page: 1, limit: 10);
   }
 
   @override
   void dispose() {
-    incomingList.close();
     historyList.close();
     filterModel.close();
     historyTabStatus.close();
-    incomingTabStatus.close();
     selectedTypeObx.close();
     selectedStatusObx.close();
     apiAppointment.dispose();
