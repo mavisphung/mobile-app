@@ -2,28 +2,25 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:get/get.dart';
-import 'package:hi_doctor_v2/app/common/constants.dart';
-import 'package:hi_doctor_v2/app/common/storage/storage.dart';
-import 'package:hi_doctor_v2/app/models/user_info.dart';
 import 'package:image_picker/image_picker.dart';
 
-class SettingsProvider extends GetConnect {
+import '../../../common/constants.dart';
+import '../../../common/storage/storage.dart';
+import '../../../models/user_info.dart';
+import './api_settings.dart';
+
+class ApiSettingsImpl extends GetConnect with ApiSettings {
   Map<String, String> headers = {
-    'Authorization': 'Bearer ${Storage.getValue<String>(CacheKey.TOKEN.name)}'
+    'Authorization': 'Bearer ${Storage.getValue<String>(CacheKey.TOKEN.name)}',
   };
 
   @override
   void onInit() {
     httpClient.baseUrl = Constants.baseUrl;
+    httpClient.timeout = Constants.timeout;
   }
 
-  Future<Response> getUserInfo() {
-    return get(
-      '/user/me/',
-      headers: headers,
-    );
-  }
-
+  @override
   Future<Response> getPresignedUrls(List<XFile> images) {
     Map<String, dynamic> body = {};
     List<Map<String, dynamic>> list = images.map<Map<String, dynamic>>(
@@ -49,6 +46,7 @@ class SettingsProvider extends GetConnect {
     );
   }
 
+  @override
   Future<Response> updateProfile(UserInfo2 data) {
     return put(
       '/user/me/',

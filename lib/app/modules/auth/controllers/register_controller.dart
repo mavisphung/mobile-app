@@ -4,9 +4,9 @@ import 'package:get/get.dart';
 import '../../../common/util/extensions.dart';
 import '../../../common/util/utils.dart';
 import '../../../common/values/strings.dart';
-import '../../../data/auth/api_auth.dart';
-import '../../../data/auth/api_auth_impl.dart';
 import '../../../routes/app_pages.dart';
+import '../providers/api_auth.dart';
+import '../providers/api_auth_impl.dart';
 
 class RegisterController extends GetxController {
   late final ApiAuth _apiAuth;

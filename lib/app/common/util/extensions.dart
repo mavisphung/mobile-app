@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../data/api_response.dart';
-import '../../data/auth/api_auth_model.dart';
 import '../../data/errors/api_error.dart';
+import '../../data/response_model.dart';
 import '../../routes/app_pages.dart';
 import '../constants.dart';
 import '../storage/storage.dart';
@@ -12,7 +12,7 @@ import './loading_dialog.dart';
 import './utils.dart';
 
 extension FutureExt<T> on Future<Response<T>> {
-  Future<ResponseModel?> futureValue({
+  Future<ResponseModel1?> futureValue({
     Function(String? error)? onError,
     VoidCallback? retryFunction,
     bool showLoading = true,
@@ -37,8 +37,8 @@ extension FutureExt<T> on Future<Response<T>> {
       final responseBody = ApiResponse.getResponse<T>(value);
       print('RESPONSE BODY: $responseBody');
       if (responseBody != null) {
-        final responseModel = ResponseModel.fromJson(responseBody as Map<String, dynamic>);
-        return responseModel;
+        final responseModel1 = ResponseModel1.fromJson(responseBody as Map<String, dynamic>);
+        return responseModel1;
       }
       // _interface.update();
     }).catchError((e) {

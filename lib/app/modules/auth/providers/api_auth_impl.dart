@@ -2,9 +2,10 @@ import 'dart:convert';
 
 import 'package:get/get.dart';
 
-import '../../common/constants.dart';
+import '../../../common/constants.dart';
+import '../../../common/storage/storage.dart';
 import './api_auth.dart';
-import './api_auth_model.dart';
+import 'req_auth_model.dart';
 
 class ApiAuthImpl extends GetConnect with ApiAuth {
   @override
@@ -30,13 +31,11 @@ class ApiAuthImpl extends GetConnect with ApiAuth {
   }
 
   @override
-  Future<Response> postLoginWithToken(String accessToken) {
+  Future<Response> postLoginWithToken() {
     return get(
-      '/cicd/',
+      '/user/me/',
       headers: {
-        // "content-type": "application/json",
-        // "accept": "application/json",
-        "Authorization": "Bearer $accessToken",
+        'Authorization': 'Bearer ${Storage.getValue<String>(CacheKey.TOKEN.name)}',
       },
     );
   }

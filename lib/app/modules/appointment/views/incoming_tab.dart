@@ -13,7 +13,7 @@ class RefreshWidget extends StatefulWidget {
   final Widget child;
   final Future Function() onRefresh;
 
-  RefreshWidget({
+  const RefreshWidget({
     Key? key,
     required this.child,
     required this.onRefresh,

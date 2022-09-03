@@ -82,8 +82,7 @@ class UserInfo {
 
   String toJson() => json.encode(toMap());
 
-  factory UserInfo.fromJson(String source) =>
-      UserInfo.fromMap(json.decode(source) as Map<String, dynamic>);
+  factory UserInfo.fromJson(String source) => UserInfo.fromMap(json.decode(source) as Map<String, dynamic>);
 }
 
 class UserInfo2 {
@@ -91,7 +90,7 @@ class UserInfo2 {
   String? email;
   String? firstName;
   String? lastName;
-  String? type = Constants.userType;
+  String? type;
   String? address;
   String? gender;
   String? phoneNumber;
@@ -102,7 +101,7 @@ class UserInfo2 {
     this.email,
     this.firstName,
     this.lastName,
-    this.type,
+    this.type = Constants.userType,
     this.address,
     this.gender,
     this.phoneNumber,

@@ -5,9 +5,9 @@ import 'package:get/get.dart';
 import 'package:hi_doctor_v2/app/common/constants.dart';
 import 'package:hi_doctor_v2/app/common/storage/storage.dart';
 import 'package:hi_doctor_v2/app/common/util/utils.dart';
-import 'package:hi_doctor_v2/app/data/auth/api_auth_model.dart';
+import 'package:hi_doctor_v2/app/data/response_model.dart';
 import 'package:hi_doctor_v2/app/models/user_info.dart';
-import 'package:hi_doctor_v2/app/modules/settings/providers/settings_provider.dart';
+import 'package:hi_doctor_v2/app/modules/settings/providers/api_settings_impl.dart';
 import 'package:hi_doctor_v2/app/modules/settings/views/user_profile_detail.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -22,7 +22,7 @@ class UserProfileController extends GetxController {
   Rx<UserInfo2> _profile = UserInfo2().obs;
   Rx<Status> status = Status.init.obs;
 
-  SettingsProvider provider = Get.put(SettingsProvider());
+  final provider = Get.put(ApiSettingsImpl());
 
   late XFile? file;
   final ImagePicker _picker = ImagePicker();
@@ -96,7 +96,7 @@ class UserProfileController extends GetxController {
     files.add(file!);
     var response = await provider.getPresignedUrls(files);
     if (response.isOk) {
-      ResponseModel resModel = ResponseModel.fromJson(response.body);
+      ResponseModel1 resModel = ResponseModel1.fromJson(response.body);
       String fileExt = file!.name.split('.')[1];
       String fullUrl = resModel.data['urls'][0];
       String url = fullUrl.split('?')[0];
@@ -123,8 +123,8 @@ class UserProfileController extends GetxController {
       lastName: lastName.value.text,
       phoneNumber: phoneNumber.value.text,
       address: address.value.text,
-      avatar: _profile.value.avatar,
       gender: _profile.value.gender,
+      avatar: _profile.value.avatar,
     );
     var response = await provider.updateProfile(info);
     if (response.isOk) {
@@ -133,11 +133,22 @@ class UserProfileController extends GetxController {
         lastName: lastName.value.text,
         address: address.value.text,
         phoneNumber: phoneNumber.value.text,
-        avatar: _profile.value.avatar,
         gender: _profile.value.gender,
+        avatar: _profile.value.avatar,
       );
       status.value = Status.success;
-      Storage.saveValue('avatar', _profile.value.avatar);
+      final oldData = Storage.getValue<Map<String, dynamic>>(CacheKey.USER_INFO.name);
+      final userInfo = {
+        'id': oldData?['id'],
+        'email': oldData?['email'],
+        'firstName': firstName.value.text,
+        'lastName': lastName.value.text,
+        'address': address.value.text,
+        'phoneNumber': phoneNumber.value.text,
+        'gender': _profile.value.gender,
+        'avatar': _profile.value.avatar,
+      };
+      await Storage.saveValue(CacheKey.USER_INFO.name, userInfo);
       Get.snackbar('Notice', 'Update profile succeed', backgroundColor: Colors.green);
     } else {
       Get.snackbar('Error ${response.statusCode}', 'Error while updating profile', backgroundColor: Colors.red);
