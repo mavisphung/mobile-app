@@ -1,9 +1,7 @@
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
-import 'package:hi_doctor_v2/app/common/constants.dart';
 import 'package:hi_doctor_v2/app/common/util/extensions.dart';
 import 'package:hi_doctor_v2/app/modules/settings/controllers/user_profile_controller.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/custom_elevate_btn_widget.dart';
@@ -66,6 +64,7 @@ class UserProfileDetailPage extends StatelessWidget {
                                       shape: BoxShape.circle,
                                       image: DecorationImage(
                                         image: NetworkImage(_controller.profile.avatar!),
+                                        fit: BoxFit.cover,
                                       ),
                                     ),
                                     margin: EdgeInsets.symmetric(vertical: 21.0.sp),

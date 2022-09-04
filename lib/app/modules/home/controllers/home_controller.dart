@@ -3,6 +3,7 @@ import 'package:hi_doctor_v2/app/common/util/extensions.dart';
 import 'package:hi_doctor_v2/app/data/api_response.dart';
 import 'package:hi_doctor_v2/app/models/doctor.dart';
 import 'package:hi_doctor_v2/app/models/response.dart';
+import 'package:hi_doctor_v2/app/modules/home/data/api_doctor.dart';
 import 'package:hi_doctor_v2/app/modules/home/data/api_home.dart';
 
 class HomeController extends GetxController {
@@ -17,6 +18,7 @@ class HomeController extends GetxController {
   }
 
   void getDoctorList({int page = 1, int limit = 10}) async {
+    'Initializing data'.debugLog('HomeController');
     var result = await apiHome.getDoctorList(page: page, limit: limit);
     Map<String, dynamic> response = ApiResponse.getResponse(result);
     ResponseModel2 model = ResponseModel2.fromMap(response);
@@ -37,7 +39,10 @@ class HomeController extends GetxController {
           ),
         )
         .toList();
-    'Fetch doctor success'.debugLog('HomeController');
     update();
+  }
+
+  Future<RxList<Doctor>> getDoctors() async {
+    return doctorList;
   }
 }

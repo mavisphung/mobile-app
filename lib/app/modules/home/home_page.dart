@@ -2,8 +2,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:hi_doctor_v2/app/common/util/extensions.dart';
 import 'package:hi_doctor_v2/app/common/values/colors.dart';
 import 'package:hi_doctor_v2/app/common/values/strings.dart';
+import 'package:hi_doctor_v2/app/modules/home/controllers/doctor_controller.dart';
 import 'package:hi_doctor_v2/app/modules/home/controllers/home_controller.dart';
 import 'package:hi_doctor_v2/app/modules/home/views/category_item.dart';
 import 'package:hi_doctor_v2/app/modules/home/views/doctor_item.dart';
@@ -16,6 +18,7 @@ class HomePage extends StatelessWidget {
   final _doctorList = doctorList;
 
   final HomeController homeController = Get.put(HomeController());
+  final DoctorController doctorController = Get.put(DoctorController());
 
   Widget _getTitle(String title) => Padding(
         padding: EdgeInsets.only(
@@ -33,120 +36,127 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    homeController.getDoctorList();
-    return GetBuilder(
-      init: homeController,
-      builder: (HomeController controller) {
-        return Scaffold(
-          appBar: PreferredSize(
-            preferredSize: Size.fromHeight(40.sp),
-            child: AppBar(
-              backgroundColor: Colors.white,
-              elevation: 0.5,
-              actions: [
-                SizedBox(
-                  width: 40.sp,
-                  child: CustomIconButton(
-                    onPressed: () => showSearch(
-                      context: context,
-                      delegate: CustomSearcDelegate(),
-                    ),
-                    icon: Icon(
-                      CupertinoIcons.search,
-                      color: AppColors.primary,
-                    ),
-                  ),
+    return Scaffold(
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(40.sp),
+        child: AppBar(
+          backgroundColor: Colors.white,
+          elevation: 0.5,
+          actions: [
+            SizedBox(
+              width: 40.sp,
+              child: CustomIconButton(
+                onPressed: () => showSearch(
+                  context: context,
+                  delegate: CustomSearcDelegate(),
                 ),
-                Container(
-                  width: 40.sp,
-                  margin: EdgeInsets.only(right: 10.sp),
-                  child: CustomIconButton(
-                    onPressed: () {},
-                    icon: Icon(
-                      CupertinoIcons.bell_fill,
-                      color: AppColors.primary,
-                    ),
-                  ),
+                icon: Icon(
+                  CupertinoIcons.search,
+                  color: AppColors.primary,
                 ),
-              ],
-            ),
-          ),
-          body: SingleChildScrollView(
-            child: Padding(
-              padding: EdgeInsets.only(
-                left: 10.sp,
-                right: 10.sp,
               ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+            ),
+            Container(
+              width: 40.sp,
+              margin: EdgeInsets.only(right: 10.sp),
+              child: CustomIconButton(
+                onPressed: () {},
+                icon: Icon(
+                  CupertinoIcons.bell_fill,
+                  color: AppColors.primary,
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: EdgeInsets.only(
+            left: 10.sp,
+            right: 10.sp,
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      _getTitle(Strings.upcomingAppointment.tr),
-                      InkWell(
-                        onTap: () {},
-                        child: const Text(
-                          'See all',
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                        ),
-                      ),
-                    ],
-                  ),
-                  const ReminderCard(),
-                  _getTitle(Strings.category.tr),
-                  SizedBox(
-                    // height: 120.sp,
-                    child: GridView.builder(
-                      physics: const NeverScrollableScrollPhysics(),
-                      shrinkWrap: true,
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2,
-                        crossAxisSpacing: 10.sp,
-                        mainAxisSpacing: 10.sp,
-                        childAspectRatio: 2.5,
-                      ),
-                      itemBuilder: (_, index) => CategoryItem(
-                        label: _categoriesList[index].label,
-                        image: _categoriesList[index].image,
-                      ),
-                      itemCount: _categoriesList.length,
+                  _getTitle(Strings.upcomingAppointment.tr),
+                  InkWell(
+                    onTap: () {},
+                    child: const Text(
+                      'See all',
+                      style: TextStyle(fontWeight: FontWeight.bold),
                     ),
                   ),
-                  _getTitle(Strings.latestSearchDoctor.tr),
-                  SizedBox(
-                    height: 150.sp,
-                    width: double.infinity,
-                    child: ListView.builder(
-                      scrollDirection: Axis.horizontal,
-                      itemCount: _doctorList.length,
-                      itemBuilder: (_, index) {
-                        var doctor = _doctorList[index];
-                        if (index == 0) {
-                          var realDoctor = controller.doctorList[index];
-                          return DoctorItem2(
-                            doctor: realDoctor,
-                          );
-                        }
-                        return DoctorItem(
-                          fullName: doctor.fullName,
-                          service: doctor.service,
-                          experienceYears: doctor.experienceYears,
-                          rating: doctor.rating,
-                          reviewNumber: doctor.reviewNumber,
-                        );
-                      },
-                    ),
-                  ),
-                  SizedBox(
-                    height: 50.sp,
-                  )
                 ],
               ),
-            ),
+              const ReminderCard(),
+              _getTitle(Strings.category.tr),
+              SizedBox(
+                // height: 120.sp,
+                child: GridView.builder(
+                  physics: const NeverScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    crossAxisSpacing: 10.sp,
+                    mainAxisSpacing: 10.sp,
+                    childAspectRatio: 2.5,
+                  ),
+                  itemBuilder: (_, index) => CategoryItem(
+                    label: _categoriesList[index].label,
+                    image: _categoriesList[index].image,
+                  ),
+                  itemCount: _categoriesList.length,
+                ),
+              ),
+              _getTitle(Strings.latestSearchDoctor.tr),
+              FutureBuilder(
+                future: homeController.getDoctors(),
+                builder: (context, AsyncSnapshot snapshot) {
+                  if (snapshot.hasData) {
+                    return GetBuilder(
+                      init: homeController,
+                      builder: (_) {
+                        return SizedBox(
+                          height: 150.sp,
+                          width: double.infinity,
+                          child: ListView.builder(
+                            scrollDirection: Axis.horizontal,
+                            itemCount: homeController.doctorList.length,
+                            itemBuilder: (_, index) {
+                              var realDoctor = homeController.doctorList[index];
+                              // realDoctor.toJson().debugLog('Doctor');
+                              // 'Build again $index'.debugLog('DoctorList');
+                              return DoctorItem2(
+                                doctor: realDoctor,
+                              );
+                              // var doctor = _doctorList[index];
+                              // return DoctorItem(
+                              //   fullName: doctor.fullName,
+                              //   service: doctor.service,
+                              //   experienceYears: doctor.experienceYears,
+                              //   rating: doctor.rating,
+                              //   reviewNumber: doctor.reviewNumber,
+                              // );
+                            },
+                          ),
+                        );
+                      },
+                    );
+                  }
+                  return CircularProgressIndicator();
+                },
+              ),
+              SizedBox(
+                height: 50.sp,
+              ),
+            ],
           ),
-        );
-      },
+        ),
+      ),
     );
   }
 }
