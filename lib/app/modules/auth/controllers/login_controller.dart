@@ -10,26 +10,14 @@ import '../providers/api_auth.dart';
 import '../providers/api_auth_impl.dart';
 
 class LoginController extends GetxController {
-  final status = Status.init.obs;
+  final loginStatus = Status.init.obs;
   late final ApiAuth _apiAuth;
 
-  void setStatusLoading() {
-    status.value = Status.loading;
-  }
-
-  void setStatusSuccess() {
-    status.value = Status.success;
-  }
-
-  void setStatusFail() {
-    status.value = Status.fail;
-  }
-
   Future<void> login(String email, String password) async {
-    setStatusLoading();
     Utils.unfocus();
+    loginStatus.value = Status.loading;
     final response = await _apiAuth.postLogin(email, password).futureValue();
-    if (response != null && response.isSuccess == true && response.statusCode == 201) {
+    if (response != null && response.isSuccess == true && response.statusCode == Constants.successPostStatusCode) {
       await Storage.saveValue(CacheKey.TOKEN.name, response.data['accessToken']);
       await Storage.saveValue(CacheKey.IS_LOGGED.name, true);
 
@@ -45,21 +33,21 @@ class LoginController extends GetxController {
       };
       await Storage.saveValue(CacheKey.USER_INFO.name, userInfo);
 
-      setStatusSuccess();
       Get.offNamed(Routes.NAVBAR);
+      loginStatus.value = Status.success;
       return;
     }
-    setStatusFail();
+    loginStatus.value = Status.fail;
   }
 
   Future<bool?> loginWithToken() async {
     final accessToken = Storage.getValue<String>(CacheKey.TOKEN.name);
     if (accessToken == null) return false;
 
-    final response = await _apiAuth.postLoginWithToken(accessToken).futureValue(showLoading: false);
+    final response = await _apiAuth.getLoginWithToken(accessToken).futureValue();
 
     if (response != null) {
-      if (response.isSuccess == true && response.statusCode == 200) {
+      if (response.isSuccess == true && response.statusCode == Constants.successGetStatusCode) {
         final userInfo = {
           'id': response.data['id'],
           'email': response.data['email'],

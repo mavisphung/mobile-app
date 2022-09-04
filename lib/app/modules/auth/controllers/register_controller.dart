@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../common/constants.dart';
 import '../../../common/util/extensions.dart';
 import '../../../common/util/status.dart';
 import '../../../common/util/utils.dart';
@@ -11,39 +12,28 @@ import '../providers/api_auth_impl.dart';
 
 class RegisterController extends GetxController {
   late final ApiAuth _apiAuth;
-  final status = Status.init.obs;
+  final nextStatus = Status.init.obs;
   final otpFormKey = GlobalKey<FormState>();
   final isPolicyAgreed = false.obs;
   final otpCode = ''.obs;
 
-  void setStatusLoading() {
-    status.value = Status.loading;
-  }
-
-  void setStatusSuccess() {
-    status.value = Status.success;
-  }
-
-  void setStatusFail() {
-    status.value = Status.fail;
-  }
-
   Future<bool?> checkEmailExisted(String email) async {
-    setStatusLoading();
-    // Utils.unfocus();
+    Utils.unfocus();
+    nextStatus.value = Status.loading;
     final response = await _apiAuth.postCheckEmailExisted(email).futureValue();
 
     if (response != null) {
       if (response.isSuccess == false &&
           response.statusCode == 400 &&
           response.data['user'][0] == '$email does not exist') {
-        setStatusSuccess();
+        nextStatus.value = Status.success;
         return false;
-      } else if (response.isSuccess == true && response.statusCode == 201) {
-        setStatusFail();
+      } else if (response.isSuccess == true && response.statusCode == Constants.successPostStatusCode) {
+        nextStatus.value = Status.fail;
         return true;
       }
     }
+    nextStatus.value = Status.fail;
     return null;
   }
 
@@ -57,7 +47,7 @@ class RegisterController extends GetxController {
     String address,
     String gender,
   ) async {
-    // Utils.unfocus();
+    Utils.unfocus();
     if (!isPolicyAgreed.value) {
       Utils.showAlertDialog(
         Strings.policyAgreementNeedMsg.tr,
@@ -65,7 +55,7 @@ class RegisterController extends GetxController {
       );
       return false;
     }
-    setStatusLoading();
+    nextStatus.value = Status.loading;
     final response = await _apiAuth
         .postRegister(
           email,
@@ -79,22 +69,22 @@ class RegisterController extends GetxController {
         )
         .futureValue();
 
-    if (response != null && response.isSuccess == true && response.statusCode == 201) {
-      setStatusSuccess();
+    if (response != null && response.isSuccess == true && response.statusCode == Constants.successPostStatusCode) {
+      nextStatus.value = Status.success;
       return true;
     }
-    setStatusFail();
+    nextStatus.value = Status.fail;
     return false;
   }
 
   void activateAccount(String email, String code) async {
     Utils.unfocus();
-    setStatusLoading();
+    nextStatus.value = Status.loading;
     final response = await _apiAuth.postActivateAccount(email, code).futureValue();
 
-    if (response != null && response.isSuccess && response.statusCode == 201) {
+    if (response != null && response.isSuccess && response.statusCode == Constants.successPostStatusCode) {
       Utils.showTopSnackbar(Strings.registerSuccessMsg.tr, title: Strings.registerSuccess.tr);
-      setStatusSuccess();
+      nextStatus.value = Status.success;
       Get.offAllNamed(Routes.LOGIN);
     } else if (response != null &&
         !response.isSuccess &&
@@ -107,17 +97,15 @@ class RegisterController extends GetxController {
         response.message == 'VERIFY_CODE_EXPIRED') {
       Utils.showBottomSnackbar(Strings.otpExpiredMsg.tr);
     }
+    nextStatus.value = Status.fail;
   }
 
   Future<bool> resendOtp(String email) async {
-    setStatusLoading();
     final response = await _apiAuth.postResendOtp(email).futureValue();
 
-    if (response != null && response.isSuccess == true && response.statusCode == 201) {
-      setStatusSuccess();
+    if (response != null && response.isSuccess == true && response.statusCode == Constants.successPostStatusCode) {
       return true;
     }
-    setStatusFail();
     return false;
   }
 

@@ -74,7 +74,6 @@ class _RegisterPageState extends State<RegisterPage> {
 
   void _submitRegisterForm() async {
     if (!_checkForm(_formKey2)) return;
-    Utils.unfocus(nextFocus: FocusNode());
     var isRegistrationSuccess = await _controller.register(
       _emailController.text,
       _passwordController.text,
@@ -93,9 +92,6 @@ class _RegisterPageState extends State<RegisterPage> {
   }
 
   void _checkEmail() async {
-    // Utils.unfocus(nextFocus: FocusNode());
-    // FocusScope.of(context).requestFocus(_firstNameFocusNode);
-    // Utils.unfocus();
     FocusScope.of(context).requestFocus(_passwordFocusNode);
     if (!_checkForm(_formKey1)) return;
     _isEmailDuplicated = await _controller.checkEmailExisted(_emailController.text.trim());
@@ -314,23 +310,22 @@ class _RegisterPageState extends State<RegisterPage> {
             _activateAccount();
           }
         },
-        onStepCancel: _currentStep == 0
-            ? null
-            : () => setState(() {
-                  _currentStep -= 1;
-                }),
+        onStepCancel: () => setState(() {
+          _currentStep -= 1;
+        }),
         controlsBuilder: (ctx, controls) {
           return Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               _currentStep == 1
-                  ? ObxValue<Rx<Status>>(
-                      (data) => CustomElevatedButtonWidget(
-                            textChild: Strings.back.tr,
-                            status: data.value,
-                            onPressed: controls.onStepCancel!,
-                          ),
-                      _controller.status)
+                  ? CustomElevatedButtonWidget(
+                      textChild: Strings.back.tr,
+                      onPressed: () {
+                        if (_controller.nextStatus.value != Status.loading) {
+                          controls.onStepCancel!();
+                        }
+                      },
+                    )
                   : const SizedBox(),
               ObxValue<Rx<Status>>(
                   (data) => CustomElevatedButtonWidget(
@@ -338,7 +333,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         status: data.value,
                         onPressed: controls.onStepContinue!,
                       ),
-                  _controller.status)
+                  _controller.nextStatus)
             ],
           );
         },

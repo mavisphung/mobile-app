@@ -8,32 +8,25 @@ import '../../routes/app_pages.dart';
 import '../constants.dart';
 import '../storage/storage.dart';
 import '../values/strings.dart';
-import './loading_dialog.dart';
 import './utils.dart';
 
 extension FutureExt<T> on Future<Response<T>> {
   Future<ResponseModel1?> futureValue({
     Function(String? error)? onError,
     VoidCallback? retryFunction,
-    bool showLoading = true,
   }) async {
     // final _interface = Get.find<ApiInterfaceController>();
     // _interface.error = null;
-    if (showLoading) LoadingDialog.showLoadingDialog();
 
     return await timeout(
       Constants.timeout,
       onTimeout: () {
-        LoadingDialog.closeLoadingDialog();
-
         throw ApiError(
           type: ErrorType.connectTimeout,
           error: Strings.conTimeOutMsg.tr,
         );
       },
     ).then((value) {
-      LoadingDialog.closeLoadingDialog();
-
       final responseBody = ApiResponse.getResponse<T>(value);
       print('RESPONSE BODY: $responseBody');
       if (responseBody != null) {
@@ -42,8 +35,6 @@ extension FutureExt<T> on Future<Response<T>> {
       }
       // _interface.update();
     }).catchError((e) {
-      LoadingDialog.closeLoadingDialog();
-
       if (e == null) return null;
 
       final errorMessage = e is ApiError ? e.message : e.toString();

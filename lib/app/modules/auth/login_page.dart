@@ -30,7 +30,6 @@ class LoginPage extends GetView<LoginController> {
 
   @override
   Widget build(BuildContext context) {
-    // initFocusNode();
     return WillPopScope(
       onWillPop: Utils.onWillPop,
       child: Scaffold(
@@ -101,7 +100,9 @@ class LoginPage extends GetView<LoginController> {
                       padding: const EdgeInsets.only(bottom: 12.0),
                       alignment: Alignment.centerRight,
                       child: InkWell(
-                        onTap: () {},
+                        onTap: () {
+                          if (controller.loginStatus.value != Status.loading) {}
+                        },
                         child: const Text(
                           'Forgot password?',
                         ),
@@ -118,7 +119,7 @@ class LoginPage extends GetView<LoginController> {
                                 status: data.value,
                                 onPressed: _submitLogin,
                               ),
-                          controller.status),
+                          controller.loginStatus),
                     ),
                     Container(
                       width: double.infinity,
@@ -148,7 +149,9 @@ class LoginPage extends GetView<LoginController> {
                             ),
                           ),
                         ),
-                        onPressed: () {},
+                        onPressed: () {
+                          if (controller.loginStatus.value != Status.loading) {}
+                        },
                       ),
                     ),
                     Padding(
@@ -159,15 +162,16 @@ class LoginPage extends GetView<LoginController> {
                           const Text('Don\'t have an account yet?'),
                           InkWell(
                             onTap: () {
-                              Get.toNamed(Routes.REGISTER);
+                              if (controller.loginStatus.value != Status.loading) {
+                                Get.toNamed(Routes.REGISTER);
+                              }
                             },
-                            child: const Padding(
-                              padding: EdgeInsets.all(5.0),
+                            child: Padding(
+                              padding: const EdgeInsets.all(5.0),
                               child: Text(
-                                'Sign Up',
+                                Strings.signUp.tr,
                                 textAlign: TextAlign.right,
-                                style: TextStyle(
-                                  // color: primaryColor,
+                                style: const TextStyle(
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),

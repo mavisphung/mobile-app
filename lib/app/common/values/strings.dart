@@ -57,6 +57,7 @@ abstract class Strings {
   static String get confirmPassLengthtMsg => 'Confirm password length msg';
   static String get confirmPassNotMatchMsg => 'Confirm password not match msg';
   static String get enterValidPhone => 'Invalid phone';
+  static String get otpLengthMsg => 'Otp length alert';
 
   // Error Message
   static String get unknownErrMsg => 'Unknown error msg';

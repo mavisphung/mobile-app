@@ -8,13 +8,13 @@ import '../../common/util/status.dart';
 class CustomElevatedButtonWidget extends StatelessWidget {
   final String? textChild;
   final Widget? child;
-  final Status status;
+  final Status? status;
   final Function onPressed;
   const CustomElevatedButtonWidget({
     Key? key,
     this.textChild,
     this.child,
-    required this.status,
+    this.status = Status.init,
     required this.onPressed,
   })  : assert(
             textChild == null || child == null,
@@ -35,7 +35,7 @@ class CustomElevatedButtonWidget extends StatelessWidget {
       ),
       child: status == Status.loading
           ? SpinKitThreeBounce(
-              color: Colors.white,
+              color: Colors.white70,
               size: 20.sp,
             )
           : textChild != null

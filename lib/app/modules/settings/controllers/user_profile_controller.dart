@@ -41,10 +41,10 @@ class UserProfileController extends GetxController {
   }
 
   Future<bool> getProfile() async {
-    final response = await _provider.getProfile().futureValue(showLoading: false);
+    final response = await _provider.getProfile().futureValue();
 
     if (response != null) {
-      if (response.isSuccess == true && response.statusCode == 200) {
+      if (response.isSuccess == true && response.statusCode == Constants.successGetStatusCode) {
         _profile.value = UserInfo2(
           id: response.data['id'],
           email: response.data['email'],
