@@ -1,7 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
+import 'package:hi_doctor_v2/app/common/util/extensions.dart';
 import 'package:hi_doctor_v2/app/models/doctor.dart';
+import 'package:hi_doctor_v2/app/modules/home/controllers/home_controller.dart';
+import 'package:hi_doctor_v2/app/routes/app_pages.dart';
 
 class DoctorItem extends StatelessWidget {
   final String fullName;
@@ -146,10 +150,12 @@ List<DoctorItem> doctorList = [
 class DoctorItem2 extends StatelessWidget {
   final Doctor doctor;
 
-  const DoctorItem2({
+  DoctorItem2({
     Key? key,
     required this.doctor,
   }) : super(key: key);
+
+  final HomeController homeController = Get.find<HomeController>();
 
   @override
   Widget build(BuildContext context) {
@@ -157,7 +163,10 @@ class DoctorItem2 extends StatelessWidget {
       width: 250.sp,
       padding: EdgeInsets.only(right: 10.sp),
       child: InkWell(
-        onTap: () {},
+        onTap: () {
+          'Call api get doctor with id ${doctor.id}'.debugLog('Doctor instance');
+          Get.toNamed(Routes.DOCTOR_DETAIL, arguments: doctor);
+        },
         child: Ink(
           decoration: BoxDecoration(
             color: Colors.grey[100],

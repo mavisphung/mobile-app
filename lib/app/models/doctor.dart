@@ -14,7 +14,6 @@ class Doctor {
   double? experienceYears;
   String? gender;
 
-
   Doctor({
     this.id,
     this.email,
@@ -64,4 +63,9 @@ class Doctor {
   String toJson() => json.encode(toMap());
 
   factory Doctor.fromJson(String source) => Doctor.fromMap(json.decode(source) as Map<String, dynamic>);
+
+  @override
+  String toString() {
+    return 'Doctor(id: $id, email: $email, firstName: $firstName, lastName: $lastName, age: $age, dob: $dob, phoneNumber: $phoneNumber, isApproved: $isApproved, avatar: $avatar, experienceYears: $experienceYears, gender: $gender)';
+  }
 }

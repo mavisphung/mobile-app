@@ -45,9 +45,9 @@ class SettingsController extends GetxController {
   void onInit() {
     super.onInit();
     _apiSettings = Get.put(ApiSettingsImpl());
-    Map<String, dynamic> temp = Storage.getValue(CacheKey.USER.name) as Map<String, dynamic>;
-    // print('${temp.runtimeType}');
-    UserInfo2 userInfo = UserInfo2.fromMap(temp);
-    avatar.value = userInfo.avatar ?? Constants.defaultAvatar;
+    // Map<String, dynamic> temp = Storage.getValue(CacheKey.USER.name) as Map<String, dynamic>;
+    // // print('${temp.runtimeType}');
+    // UserInfo2 userInfo = UserInfo2.fromMap(temp);
+    avatar.value = Constants.defaultAvatar;
   }
 }

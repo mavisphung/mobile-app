@@ -60,6 +60,7 @@ class UserProfileDetailPage extends StatelessWidget {
                                   shape: BoxShape.circle,
                                   image: DecorationImage(
                                     image: NetworkImage(controller.profile.avatar!),
+                                    fit: BoxFit.cover,
                                   ),
                                 ),
                                 margin: EdgeInsets.symmetric(vertical: 21.0.sp),

@@ -1,6 +1,7 @@
 // ignore_for_file: constant_identifier_names
 
 import 'package:get/get.dart';
+import 'package:hi_doctor_v2/app/modules/home/views/doctor_detail_page.dart';
 import '../modules/appointment/appointment_page.dart';
 import '../modules/auth/bindings/login_binding.dart';
 import '../modules/auth/bindings/register_binding.dart';
@@ -26,7 +27,7 @@ abstract class AppPages {
     GetPage(
       name: Routes.HOME,
       page: () => HomePage(),
-      binding: HomeBinding(),
+      // binding: HomeBinding(),
     ),
     GetPage(
       name: Routes.LOGIN,
@@ -53,6 +54,10 @@ abstract class AppPages {
     GetPage(
       name: Routes.PROFILE_DETAIL,
       page: () => UserProfileDetailPage(),
+    ),
+    GetPage(
+      name: Routes.DOCTOR_DETAIL,
+      page: () => DoctorDetailPage(),
     ),
   ];
 }
