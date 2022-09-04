@@ -3,18 +3,30 @@ import 'package:hi_doctor_v2/app/common/constants.dart';
 
 import '../../../common/storage/storage.dart';
 import '../../../common/util/extensions.dart';
+import '../../../common/util/status.dart';
 import '../../../common/util/utils.dart';
 import '../../../routes/app_pages.dart';
 import '../providers/api_auth.dart';
 import '../providers/api_auth_impl.dart';
 
 class LoginController extends GetxController {
-  var isPasswordObscure = true.obs;
-  var isEmailFocused = false.obs;
-  var isPasswordFocused = false.obs;
+  final status = Status.init.obs;
   late final ApiAuth _apiAuth;
 
+  void setStatusLoading() {
+    status.value = Status.loading;
+  }
+
+  void setStatusSuccess() {
+    status.value = Status.success;
+  }
+
+  void setStatusFail() {
+    status.value = Status.fail;
+  }
+
   Future<void> login(String email, String password) async {
+    setStatusLoading();
     Utils.unfocus();
     final response = await _apiAuth.postLogin(email, password).futureValue();
     if (response != null && response.isSuccess == true && response.statusCode == 201) {
@@ -33,8 +45,11 @@ class LoginController extends GetxController {
       };
       await Storage.saveValue(CacheKey.USER_INFO.name, userInfo);
 
+      setStatusSuccess();
       Get.offNamed(Routes.NAVBAR);
+      return;
     }
+    setStatusFail();
   }
 
   Future<bool?> loginWithToken() async {

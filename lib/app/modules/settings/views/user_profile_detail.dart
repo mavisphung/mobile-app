@@ -6,12 +6,10 @@ import 'package:get/get.dart';
 import 'package:hi_doctor_v2/app/common/constants.dart';
 import 'package:hi_doctor_v2/app/common/util/extensions.dart';
 import 'package:hi_doctor_v2/app/modules/settings/controllers/user_profile_controller.dart';
+import 'package:hi_doctor_v2/app/modules/widgets/custom_elevate_btn_widget.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/custom_text_form_field.dart';
-import 'package:hi_doctor_v2/app/modules/widgets/my_button_style.dart';
-
+import '../../../common/util/status.dart';
 import '../controllers/settings_controller.dart';
-
-enum Status { init, loading, success, fail }
 
 class UserProfileDetailPage extends StatelessWidget {
   late final UserProfileController _controller;
@@ -192,25 +190,10 @@ class UserProfileDetailPage extends StatelessWidget {
                             SizedBox(
                               width: 1.sw,
                               child: ObxValue<Rx<Status>>(
-                                  (data) => ElevatedButton(
-                                        style: MyButtonStyle(),
-                                        child: data.value == Status.loading
-                                            ? SpinKitThreeBounce(
-                                                color: Colors.white,
-                                                size: 19.0.sp,
-                                              )
-                                            : Text(
-                                                'Update',
-                                                style: TextStyle(
-                                                  fontSize: 17.0.sp,
-                                                  fontWeight: FontWeight.bold,
-                                                ),
-                                              ),
-                                        onPressed: () async {
-                                          _controller.status.value != Status.loading
-                                              ? await _controller.updateProfile(Get.find<SettingsController>())
-                                              : null;
-                                        },
+                                  (data) => CustomElevatedButtonWidget(
+                                        textChild: 'Save profile',
+                                        status: data.value,
+                                        onPressed: () => _controller.updateProfile(Get.find<SettingsController>()),
                                       ),
                                   _controller.status),
                             ),

@@ -10,9 +10,9 @@ import 'package:hi_doctor_v2/app/data/response_model.dart';
 import 'package:hi_doctor_v2/app/models/user_info.dart';
 import 'package:hi_doctor_v2/app/modules/settings/controllers/settings_controller.dart';
 import 'package:hi_doctor_v2/app/modules/settings/providers/api_settings_impl.dart';
-import 'package:hi_doctor_v2/app/modules/settings/views/user_profile_detail.dart';
 import 'package:image_picker/image_picker.dart';
 
+import '../../../common/util/status.dart';
 import '../../../common/values/strings.dart';
 
 class UserProfileController extends GetxController {
@@ -24,7 +24,7 @@ class UserProfileController extends GetxController {
   Rx<TextEditingController> avatar = TextEditingController().obs;
   // Lack of gender
   final _profile = UserInfo2().obs;
-  Rx<Status> status = Status.init.obs;
+  final status = Status.init.obs;
 
   final _provider = Get.put(ApiSettingsImpl());
 
@@ -63,12 +63,6 @@ class UserProfileController extends GetxController {
   }
 
   @override
-  void onInit() {
-    super.onInit();
-    status.value = Status.init;
-  }
-
-  @override
   void dispose() {
     email.value.dispose();
     firstName.value.dispose();
@@ -93,14 +87,16 @@ class UserProfileController extends GetxController {
     return null;
   }
 
-  void isLoading() {
+  void setStatusLoading() {
     status.value = Status.loading;
-    update();
   }
 
-  void isSuccess() {
+  void setStatusSuccess() {
     status.value = Status.success;
-    update();
+  }
+
+  void setStatusFail() {
+    status.value = Status.fail;
   }
 
   void getImage() async {
@@ -131,8 +127,7 @@ class UserProfileController extends GetxController {
 
   Future<void> updateProfile(SettingsController settingsController) async {
     // Update UI to prevent multiple taps
-    status.value = Status.loading;
-    update();
+    setStatusLoading();
 
     UserInfo2 info = UserInfo2(
       firstName: firstName.value.text,
@@ -152,7 +147,7 @@ class UserProfileController extends GetxController {
         gender: _profile.value.gender,
         avatar: _profile.value.avatar,
       );
-      status.value = Status.success;
+
       final oldData = Storage.getValue<Map<String, dynamic>>(CacheKey.USER_INFO.name);
       final userInfo = {
         'id': oldData?['id'],
@@ -169,11 +164,12 @@ class UserProfileController extends GetxController {
         id: oldData?['id'],
         email: oldData?['email'],
       );
+      setStatusSuccess();
       Get.back();
       Utils.showTopSnackbar(Strings.updateProfileMsg.tr, title: 'Notice');
     } else {
       Get.snackbar('Error ${response.statusCode}', 'Error while updating profile', backgroundColor: Colors.red);
-      status.value = Status.fail;
+      setStatusFail();
     }
     update();
   }

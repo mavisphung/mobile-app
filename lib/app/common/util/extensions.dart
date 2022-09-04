@@ -107,6 +107,19 @@ extension GenderExt on Gender {
   }
 }
 
+extension GenderExt2 on Gender {
+  String get label {
+    switch (this) {
+      case Gender.male:
+        return 'Male';
+      case Gender.female:
+        return 'Female';
+      default:
+        return 'Other';
+    }
+  }
+}
+
 enum AppointmentType { all, online, offline }
 
 extension AppointmentTypeExt on AppointmentType {

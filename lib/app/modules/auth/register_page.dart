@@ -2,12 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hi_doctor_v2/app/common/util/utils.dart';
 
+import '../../common/util/status.dart';
 import '../../common/util/validators.dart';
 import '../../common/values/strings.dart';
 import '../../models/user_info.dart';
 import '../widgets/custom_appbar_widget.dart';
+import '../widgets/custom_elevate_btn_widget.dart';
 import '../widgets/custom_textfield_widget.dart';
-import '../widgets/my_button_style.dart';
 import './controllers/register_controller.dart';
 import './views/otp_view.dart';
 
@@ -323,17 +324,21 @@ class _RegisterPageState extends State<RegisterPage> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               _currentStep == 1
-                  ? ElevatedButton(
-                      onPressed: controls.onStepCancel,
-                      style: MyButtonStyle(),
-                      child: Text(Strings.back.tr),
-                    )
+                  ? ObxValue<Rx<Status>>(
+                      (data) => CustomElevatedButtonWidget(
+                            textChild: Strings.back.tr,
+                            status: data.value,
+                            onPressed: controls.onStepCancel!,
+                          ),
+                      _controller.status)
                   : const SizedBox(),
-              ElevatedButton(
-                onPressed: controls.onStepContinue,
-                style: MyButtonStyle(),
-                child: Text(_currentStep == 2 ? Strings.verify.tr : Strings.kContinue.tr),
-              ),
+              ObxValue<Rx<Status>>(
+                  (data) => CustomElevatedButtonWidget(
+                        textChild: _currentStep == 2 ? Strings.verify.tr : Strings.kContinue.tr,
+                        status: data.value,
+                        onPressed: controls.onStepContinue!,
+                      ),
+                  _controller.status)
             ],
           );
         },

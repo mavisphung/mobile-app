@@ -2,12 +2,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../common/util/status.dart';
 import '../../common/util/utils.dart';
 import '../../common/util/validators.dart';
 import '../../common/values/strings.dart';
 import '../../routes/app_pages.dart';
+import '../widgets/custom_elevate_btn_widget.dart';
 import '../widgets/custom_textfield_widget.dart';
-import '../widgets/my_button_style.dart';
 import './controllers/login_controller.dart';
 
 class LoginPage extends GetView<LoginController> {
@@ -111,14 +112,13 @@ class LoginPage extends GetView<LoginController> {
                       margin: const EdgeInsets.only(
                         bottom: 10.0,
                       ),
-                      child: ElevatedButton(
-                        style: MyButtonStyle(),
-                        onPressed: _submitLogin,
-                        child: const Text(
-                          'Login',
-                          style: TextStyle(fontSize: 17.0),
-                        ),
-                      ),
+                      child: ObxValue<Rx<Status>>(
+                          (data) => CustomElevatedButtonWidget(
+                                textChild: Strings.login.tr,
+                                status: data.value,
+                                onPressed: _submitLogin,
+                              ),
+                          controller.status),
                     ),
                     Container(
                       width: double.infinity,
