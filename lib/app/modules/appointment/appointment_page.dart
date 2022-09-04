@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 import 'package:hi_doctor_v2/app/modules/appointment/controllers/appointment_controller.dart';
 import 'package:hi_doctor_v2/app/modules/appointment/views/history_tab.dart';
 import 'package:hi_doctor_v2/app/modules/appointment/views/incoming_tab.dart';
-import 'package:hi_doctor_v2/app/modules/appointment/views/incoming_tab2.dart';
 
 import '../../common/values/colors.dart';
 import './controllers/tab_controller.dart';

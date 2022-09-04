@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:hi_doctor_v2/app/common/util/utils.dart';
 
 import '../../common/util/status.dart';
 import '../../common/util/validators.dart';

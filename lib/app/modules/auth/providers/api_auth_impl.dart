@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:get/get.dart';
 
 import '../../../common/constants.dart';
-import '../../../common/storage/storage.dart';
 import './api_auth.dart';
 import './req_auth_model.dart';
 
