@@ -8,4 +8,6 @@ class AppColors {
   static Color get hightLight => const Color(0xCAFFFFFF);
   static Color get error => Colors.red;
   static Color get grey600 => Colors.grey[600] ?? Colors.grey;
+  static Color get bottomSheet => const Color(0xFFD9E5FF);
+  
 }

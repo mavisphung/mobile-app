@@ -75,6 +75,8 @@ class _AppoinmentPageState extends State<AppoinmentPage> with SingleTickerProvid
                   ),
                 ),
                 bottom: TabBar(
+                  labelPadding: EdgeInsets.symmetric(horizontal: 12.0.sp),
+                  padding: EdgeInsets.symmetric(horizontal: 12.0.sp),
                   indicatorColor: AppColors.primary,
                   labelColor: AppColors.primary,
                   unselectedLabelColor: Colors.grey,
