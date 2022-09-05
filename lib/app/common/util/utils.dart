@@ -11,15 +11,11 @@ import '../values/strings.dart';
 
 abstract class Utils {
   static DateTime? currentBackPressTime;
-  static void unfocus({FocusNode? nextFocus}) {
-    nextFocus == null
-        ? FocusManager.instance.primaryFocus?.unfocus()
-        : FocusManager.instance.primaryFocus!.requestFocus(nextFocus);
-  }
+  static void unfocus() => FocusManager.instance.primaryFocus?.unfocus();
 
   static Future<bool> onWillPop() {
     DateTime now = DateTime.now();
-    if (currentBackPressTime == null || now.difference(currentBackPressTime!) > const Duration(seconds: 1)) {
+    if (currentBackPressTime == null || now.difference(currentBackPressTime!) > const Duration(milliseconds: 500)) {
       currentBackPressTime = now;
       Utils.showBottomSnackbar(Strings.exitAppAlert.tr);
       return Future.value(false);
@@ -74,22 +70,6 @@ abstract class Utils {
           ],
         );
       },
-    );
-  }
-
-  static void closeLoadingDialog() {
-    Navigator.popUntil(Get.overlayContext!, (route) => !Get.isDialogOpen!);
-  }
-
-  static void loadingDialog() {
-    closeLoadingDialog();
-
-    Get.dialog(
-      const Center(
-        child: CupertinoActivityIndicator(),
-      ),
-      name: 'loadingDialog',
-      barrierDismissible: false,
     );
   }
 

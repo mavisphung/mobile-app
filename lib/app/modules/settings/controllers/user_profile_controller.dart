@@ -4,12 +4,16 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hi_doctor_v2/app/common/constants.dart';
 import 'package:hi_doctor_v2/app/common/storage/storage.dart';
+import 'package:hi_doctor_v2/app/common/util/extensions.dart';
 import 'package:hi_doctor_v2/app/common/util/utils.dart';
-import 'package:hi_doctor_v2/app/data/auth/api_auth_model.dart';
+import 'package:hi_doctor_v2/app/data/response_model.dart';
 import 'package:hi_doctor_v2/app/models/user_info.dart';
-import 'package:hi_doctor_v2/app/modules/settings/providers/settings_provider.dart';
-import 'package:hi_doctor_v2/app/modules/settings/views/user_profile_detail.dart';
+import 'package:hi_doctor_v2/app/modules/settings/controllers/settings_controller.dart';
+import 'package:hi_doctor_v2/app/modules/settings/providers/api_settings_impl.dart';
 import 'package:image_picker/image_picker.dart';
+
+import '../../../common/util/status.dart';
+import '../../../common/values/strings.dart';
 
 class UserProfileController extends GetxController {
   Rx<TextEditingController> email = TextEditingController().obs;
@@ -19,38 +23,44 @@ class UserProfileController extends GetxController {
   Rx<TextEditingController> phoneNumber = TextEditingController().obs;
   Rx<TextEditingController> avatar = TextEditingController().obs;
   // Lack of gender
-  Rx<UserInfo2> _profile = UserInfo2().obs;
-  Rx<Status> status = Status.init.obs;
+  final _profile = UserInfo2().obs;
+  final status = Status.init.obs;
 
-  SettingsProvider provider = Get.put(SettingsProvider());
+  final _provider = Get.put(ApiSettingsImpl());
 
   late XFile? file;
   final ImagePicker _picker = ImagePicker();
 
-  _updateValue() {
+  UserInfo2 get profile => _profile.value;
+
+  _setInitialValue() {
     firstName.value.text = _profile.value.firstName!;
     lastName.value.text = _profile.value.lastName!;
     address.value.text = _profile.value.address!;
     phoneNumber.value.text = _profile.value.phoneNumber!;
   }
 
-  _setValue() {
-    _profile.value.firstName = firstName.value.text;
-    _profile.value.lastName = lastName.value.text;
-    _profile.value.address = address.value.text;
-    _profile.value.phoneNumber = phoneNumber.value.text;
-  }
+  Future<bool> getProfile() async {
+    final response = await _provider.getProfile().futureValue();
 
-  @override
-  void onInit() {
-    super.onInit();
-    _profile.value = Get.arguments[Constants.info];
-    _updateValue();
-    status.value = Status.init;
-    print('Profile: ${_profile.value}');
+    if (response != null) {
+      if (response.isSuccess == true && response.statusCode == Constants.successGetStatusCode) {
+        _profile.value = UserInfo2(
+          id: response.data['id'],
+          email: response.data['email'],
+          firstName: response.data['firstName'],
+          lastName: response.data['lastName'],
+          address: response.data['address'],
+          phoneNumber: response.data['phoneNumber'],
+          gender: response.data['gender'],
+          avatar: response.data['avatar'] ?? Constants.defaultAvatar,
+        );
+        _setInitialValue();
+        return true;
+      }
+    }
+    return false;
   }
-
-  UserInfo2 get profile => _profile.value;
 
   @override
   void dispose() {
@@ -77,14 +87,16 @@ class UserProfileController extends GetxController {
     return null;
   }
 
-  void isLoading() {
+  void setStatusLoading() {
     status.value = Status.loading;
-    update();
   }
 
-  void isSuccess() {
+  void setStatusSuccess() {
     status.value = Status.success;
-    update();
+  }
+
+  void setStatusFail() {
+    status.value = Status.fail;
   }
 
   void getImage() async {
@@ -94,9 +106,9 @@ class UserProfileController extends GetxController {
     }
     List<XFile> files = <XFile>[];
     files.add(file!);
-    var response = await provider.getPresignedUrls(files);
+    var response = await _provider.getPresignedUrls(files);
     if (response.isOk) {
-      ResponseModel resModel = ResponseModel.fromJson(response.body);
+      ResponseModel1 resModel = ResponseModel1.fromJson(response.body);
       String fileExt = file!.name.split('.')[1];
       String fullUrl = resModel.data['urls'][0];
       String url = fullUrl.split('?')[0];
@@ -113,35 +125,51 @@ class UserProfileController extends GetxController {
     }
   }
 
-  void updateProfile() async {
+  Future<void> updateProfile(SettingsController settingsController) async {
     // Update UI to prevent multiple taps
-    status.value = Status.loading;
-    update();
+    setStatusLoading();
 
     UserInfo2 info = UserInfo2(
       firstName: firstName.value.text,
       lastName: lastName.value.text,
       phoneNumber: phoneNumber.value.text,
       address: address.value.text,
-      avatar: _profile.value.avatar,
       gender: _profile.value.gender,
+      avatar: _profile.value.avatar,
     );
-    var response = await provider.updateProfile(info);
+    var response = await _provider.updateProfile(info);
     if (response.isOk) {
       _profile.value = _profile.value.copyWith(
         firstName: firstName.value.text,
         lastName: lastName.value.text,
         address: address.value.text,
         phoneNumber: phoneNumber.value.text,
-        avatar: _profile.value.avatar,
         gender: _profile.value.gender,
+        avatar: _profile.value.avatar,
       );
-      status.value = Status.success;
-      Storage.saveValue('avatar', _profile.value.avatar);
-      Get.snackbar('Notice', 'Update profile succeed', backgroundColor: Colors.green);
+
+      final oldData = Storage.getValue<Map<String, dynamic>>(CacheKey.USER_INFO.name);
+      final userInfo = {
+        'id': oldData?['id'],
+        'email': oldData?['email'],
+        'firstName': firstName.value.text,
+        'lastName': lastName.value.text,
+        'address': address.value.text,
+        'phoneNumber': phoneNumber.value.text,
+        'gender': _profile.value.gender,
+        'avatar': _profile.value.avatar,
+      };
+      await Storage.saveValue(CacheKey.USER_INFO.name, userInfo);
+      settingsController.userInfo.value = info.copyWith(
+        id: oldData?['id'],
+        email: oldData?['email'],
+      );
+      setStatusSuccess();
+      Get.back();
+      Utils.showTopSnackbar(Strings.updateProfileMsg.tr, title: 'Notice');
     } else {
       Get.snackbar('Error ${response.statusCode}', 'Error while updating profile', backgroundColor: Colors.red);
-      status.value = Status.fail;
+      setStatusFail();
     }
     update();
   }

@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'package:get/get.dart';
 import 'package:get/get_connect/http/src/status/http_status.dart';
 
+import '../common/constants.dart';
 import '../common/values/strings.dart';
 import './errors/api_error.dart';
 
@@ -25,7 +26,8 @@ abstract class ApiResponse {
 
       print('STATUS CODE: ${response.statusCode}, ${res["success"]}, ${res["status"]}');
       if (response.isOk) {
-        if (res['success'] == true && (res['status'] == 201 || res['status'] == 200)) {
+        if (res['success'] == true &&
+            (res['status'] == Constants.successPostStatusCode || res['status'] == Constants.successGetStatusCode)) {
           print('OK: ${response.body}');
           return response.body;
         }

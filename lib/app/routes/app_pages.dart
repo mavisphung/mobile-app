@@ -9,7 +9,6 @@ import '../modules/auth/login_page.dart';
 import '../modules/auth/register_page.dart';
 import '../modules/auth/splash_page.dart';
 import '../modules/bottom_navbar/nav_bar.dart';
-import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/home_page.dart';
 import '../modules/search/views/search_page.dart';
 import '../modules/settings/views/user_profile_detail.dart';
