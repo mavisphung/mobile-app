@@ -5,8 +5,8 @@ import 'package:hi_doctor_v2/app/data/api_response.dart';
 import 'package:hi_doctor_v2/app/models/appointment.dart';
 import 'package:hi_doctor_v2/app/models/response.dart';
 import 'package:hi_doctor_v2/app/modules/appointment/data/api_appointment.dart';
-import 'package:hi_doctor_v2/app/modules/settings/views/user_profile_detail.dart';
 
+import '../../../common/util/status.dart';
 import '../models/filter_model.dart';
 
 class AppointmentController extends GetxController {
@@ -48,7 +48,6 @@ class AppointmentController extends GetxController {
     selectedStatusObx.value = status;
     update();
   }
-
 
   void clearHistoryList() {
     historyList.clear();

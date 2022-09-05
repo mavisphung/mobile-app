@@ -26,8 +26,6 @@ class ResponseModel2 {
     this.data,
   });
 
-  
-
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
       'success': success,

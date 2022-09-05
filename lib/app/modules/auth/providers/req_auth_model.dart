@@ -1,38 +1,6 @@
 import 'dart:convert';
 
-import '../../common/constants.dart';
-
-// ignore_for_file: public_member_api_docs, sort_constructors_first
-class ResponseModel {
-  final bool isSuccess;
-  final int statusCode;
-  final String message;
-  Map<String, dynamic> data;
-
-  ResponseModel({
-    required this.isSuccess,
-    required this.statusCode,
-    required this.message,
-    required this.data,
-  });
-
-  factory ResponseModel._fromMap(Map<String, dynamic> map) {
-    return ResponseModel(
-      isSuccess: map['success'] as bool,
-      statusCode: map['status'] as int,
-      message: map['message'] as String,
-      data: Map<String, dynamic>.from((map['data'] as Map<String, dynamic>)),
-    );
-  }
-
-  factory ResponseModel.fromJson(Map<String, dynamic> source) =>
-      ResponseModel._fromMap(source);
-
-  @override
-  String toString() {
-    return 'ResponseModel(isSuccess: $isSuccess, statusCode: $statusCode, message: $message, data: $data)';
-  }
-}
+import '../../../common/constants.dart';
 
 class RequestLoginModel {
   final String email;

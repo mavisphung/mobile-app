@@ -25,10 +25,6 @@ class CustomTextFieldWidget extends StatelessWidget {
   final InputDecoration? inputDecoration;
 
   final _hasText = false.obs;
-  final _asterisk = Text(
-    '*',
-    style: TextStyle(color: AppColors.error),
-  );
 
   CustomTextFieldWidget({
     Key? key,

@@ -2,10 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:hi_doctor_v2/app/routes/app_pages.dart';
 
 import '../../common/util/utils.dart';
-// import '../bottom_navbar/controllers/navbar_controller.dart';
 import '../../common/values/strings.dart';
 import './views/user_profile_item.dart';
 import './views/user_profile.dart';
@@ -23,12 +21,6 @@ class SettingsPage extends StatelessWidget {
     if (confirmLogout ?? false) {
       _controller.logOut();
     }
-  }
-
-  void getUserInfo() {
-    // UserInfo? userInfo = await _controller.getUserInfo();
-    // print(userInfo!.toString());
-    Get.toNamed(Routes.PROFILE_DETAIL);
   }
 
   @override

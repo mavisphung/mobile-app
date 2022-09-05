@@ -50,6 +50,7 @@ class Messages extends Translations {
 
           // Information Message
           Strings.registerSuccessMsg: 'Register your account successfully.',
+          Strings.updateProfileMsg: 'Update your profile successfully.',
 
           // Alert Message
           Strings.policyAgreementNeedMsg: 'Please make sure you agreed with our policy.',
@@ -59,12 +60,13 @@ class Messages extends Translations {
           Strings.emailCantBeEmpty: 'Email ${Strings.cantBeEmpty.tr}',
           Strings.enterValidEmail: 'Please enter a valid email',
           Strings.duplicatedEmail: 'Email is duplicated',
-          Strings.enterValidPhone: 'Phone number must have 10 numbers',
           Strings.passCantBeEmpty: 'Password ${Strings.cantBeEmpty.tr}',
           Strings.passLengthtMsg: 'Password must has at least 6 characters',
           Strings.confirmPassCantBeEmpty: 'Confirm pasword ${Strings.cantBeEmpty.tr}',
           Strings.confirmPassLengthtMsg: 'Confirm password must has at least 6 characters',
           Strings.confirmPassNotMatchMsg: 'Confirm password is not matched',
+          Strings.enterValidPhone: 'Phone number must have 10 numbers',
+          Strings.otpExpiredMsg: 'Otp must have 6 digits',
 
           // Error Message
           Strings.unknownErrMsg: 'The system occurs unknown error. Please try later.',

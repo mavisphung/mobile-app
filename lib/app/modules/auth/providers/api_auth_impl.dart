@@ -2,9 +2,9 @@ import 'dart:convert';
 
 import 'package:get/get.dart';
 
-import '../../common/constants.dart';
+import '../../../common/constants.dart';
 import './api_auth.dart';
-import './api_auth_model.dart';
+import './req_auth_model.dart';
 
 class ApiAuthImpl extends GetConnect with ApiAuth {
   @override
@@ -30,9 +30,9 @@ class ApiAuthImpl extends GetConnect with ApiAuth {
   }
 
   @override
-  Future<Response> postLoginWithToken(String accessToken) {
+  Future<Response> getLoginWithToken(String accessToken) {
     return get(
-      '/cicd/',
+      '/user/me',
       headers: {
         // "content-type": "application/json",
         // "accept": "application/json",

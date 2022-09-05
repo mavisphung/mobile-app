@@ -2,12 +2,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../common/util/status.dart';
 import '../../common/util/utils.dart';
 import '../../common/util/validators.dart';
 import '../../common/values/strings.dart';
 import '../../routes/app_pages.dart';
+import '../widgets/custom_elevate_btn_widget.dart';
 import '../widgets/custom_textfield_widget.dart';
-import '../widgets/my_button_style.dart';
 import './controllers/login_controller.dart';
 
 class LoginPage extends GetView<LoginController> {
@@ -29,7 +30,6 @@ class LoginPage extends GetView<LoginController> {
 
   @override
   Widget build(BuildContext context) {
-    // initFocusNode();
     return WillPopScope(
       onWillPop: Utils.onWillPop,
       child: Scaffold(
@@ -100,7 +100,9 @@ class LoginPage extends GetView<LoginController> {
                       padding: const EdgeInsets.only(bottom: 12.0),
                       alignment: Alignment.centerRight,
                       child: InkWell(
-                        onTap: () {},
+                        onTap: () {
+                          if (controller.loginStatus.value != Status.loading) {}
+                        },
                         child: const Text(
                           'Forgot password?',
                         ),
@@ -111,14 +113,13 @@ class LoginPage extends GetView<LoginController> {
                       margin: const EdgeInsets.only(
                         bottom: 10.0,
                       ),
-                      child: ElevatedButton(
-                        style: MyButtonStyle(),
-                        onPressed: _submitLogin,
-                        child: const Text(
-                          'Login',
-                          style: TextStyle(fontSize: 17.0),
-                        ),
-                      ),
+                      child: ObxValue<Rx<Status>>(
+                          (data) => CustomElevatedButtonWidget(
+                                textChild: Strings.login.tr,
+                                status: data.value,
+                                onPressed: _submitLogin,
+                              ),
+                          controller.loginStatus),
                     ),
                     Container(
                       width: double.infinity,
@@ -148,7 +149,9 @@ class LoginPage extends GetView<LoginController> {
                             ),
                           ),
                         ),
-                        onPressed: () {},
+                        onPressed: () {
+                          if (controller.loginStatus.value != Status.loading) {}
+                        },
                       ),
                     ),
                     Padding(
@@ -159,15 +162,16 @@ class LoginPage extends GetView<LoginController> {
                           const Text('Don\'t have an account yet?'),
                           InkWell(
                             onTap: () {
-                              Get.toNamed(Routes.REGISTER);
+                              if (controller.loginStatus.value != Status.loading) {
+                                Get.toNamed(Routes.REGISTER);
+                              }
                             },
-                            child: const Padding(
-                              padding: EdgeInsets.all(5.0),
+                            child: Padding(
+                              padding: const EdgeInsets.all(5.0),
                               child: Text(
-                                'Sign Up',
+                                Strings.signUp.tr,
                                 textAlign: TextAlign.right,
-                                style: TextStyle(
-                                  // color: primaryColor,
+                                style: const TextStyle(
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
