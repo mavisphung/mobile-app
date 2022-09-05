@@ -1,6 +1,7 @@
 // ignore_for_file: constant_identifier_names
 
 import 'package:get/get.dart';
+import 'package:hi_doctor_v2/app/modules/appointment/views/booking_page.dart';
 import 'package:hi_doctor_v2/app/modules/home/views/doctor_detail_page.dart';
 import '../modules/appointment/appointment_page.dart';
 import '../modules/auth/bindings/login_binding.dart';
@@ -57,6 +58,10 @@ abstract class AppPages {
     GetPage(
       name: Routes.DOCTOR_DETAIL,
       page: () => DoctorDetailPage(),
+    ),
+    GetPage(
+      name: Routes.BOOKING,
+      page: () => BookingAppointmentPage(),
     ),
   ];
 }

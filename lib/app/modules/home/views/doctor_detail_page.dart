@@ -11,6 +11,8 @@ import 'package:hi_doctor_v2/app/modules/home/controllers/doctor_controller.dart
 import 'package:hi_doctor_v2/app/modules/home/controllers/home_controller.dart';
 import 'package:hi_doctor_v2/app/modules/home/widgets/doctor_tile.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/my_appbar.dart';
+import 'package:hi_doctor_v2/app/modules/widgets/my_section_title.dart';
+import 'package:hi_doctor_v2/app/routes/app_pages.dart';
 
 class DoctorDetailPage extends StatefulWidget {
   DoctorDetailPage({Key? key}) : super(key: key);
@@ -168,15 +170,8 @@ class _DoctorDetailPageState extends State<DoctorDetailPage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    SizedBox(
-                      height: 32.0.sp,
-                      child: Text(
-                        'About me',
-                        style: TextStyle(
-                          fontSize: 20.sp,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
+                   const MySectionTitle(
+                      title: 'About me',
                     ),
                     RichText(
                       text: TextSpan(
@@ -212,16 +207,9 @@ class _DoctorDetailPageState extends State<DoctorDetailPage> {
                 margin: EdgeInsets.only(top: 25.0.sp),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SizedBox(
-                      height: 32.0.sp,
-                      child: Text(
-                        'Working Time',
-                        style: TextStyle(
-                          fontSize: 20.sp,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
+                  children: const [
+                    MySectionTitle(
+                      title: 'Working time',
                     ),
                     Text('Monday - Friday, 8:00 AM to 17:30 PM'),
                   ],
@@ -235,15 +223,8 @@ class _DoctorDetailPageState extends State<DoctorDetailPage> {
                   children: [
                     Row(
                       children: [
-                        SizedBox(
-                          height: 32.0.sp,
-                          child: Text(
-                            'Reviews',
-                            style: TextStyle(
-                              fontSize: 20.sp,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
+                        const MySectionTitle(
+                          title: 'Reviews',
                         ),
                         const Spacer(),
                         GestureDetector(
@@ -298,17 +279,28 @@ class _DoctorDetailPageState extends State<DoctorDetailPage> {
                                     ),
                                   ),
                                   const Spacer(),
-                                  ElevatedButton(
-                                    onPressed: () {},
-                                    child: Row(
-                                      children: [
-                                        Icon(Icons.star_outline),
-                                        Text(
-                                          '5',
-                                          style: TextStyle(fontSize: 17.0.sp),
-                                        ),
-                                      ],
-                                    ),
+                                  // ElevatedButton(
+                                  //   onPressed: () {},
+                                  //   child: Row(
+                                  //     children: [
+                                  //       Icon(Icons.star_outline),
+                                  //       Text(
+                                  //         '5',
+                                  //         style: TextStyle(fontSize: 17.0.sp),
+                                  //       ),
+                                  //     ],
+                                  //   ),
+                                  // ),
+                                  Wrap(
+                                    direction: Axis.horizontal,
+                                    spacing: 5.0.sp,
+                                    children: [
+                                      Icon(Icons.star_half, size: 20.0.sp, color: AppColors.primary),
+                                      Text(
+                                        '5',
+                                        style: TextStyle(fontSize: 17.0.sp),
+                                      ),
+                                    ],
                                   ),
                                 ],
                               ),
@@ -379,7 +371,9 @@ class _DoctorDetailPageState extends State<DoctorDetailPage> {
                 'Make an appointment',
                 style: TextStyle(fontSize: 14.0.sp),
               ),
-              onPressed: () {},
+              onPressed: () {
+                Get.toNamed(Routes.BOOKING);
+              },
             ),
           ),
         ),
