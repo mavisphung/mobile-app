@@ -24,7 +24,7 @@ class CustomTextFieldWidget extends StatelessWidget {
   final TextAlign textAlign;
   final InputDecoration? inputDecoration;
 
-  final _hasText = false.obs;
+  final _hasFocus = false.obs;
 
   CustomTextFieldWidget({
     Key? key,
@@ -60,9 +60,9 @@ class CustomTextFieldWidget extends StatelessWidget {
         super(key: key) {
     focusNode.addListener(() {
       if (focusNode.hasFocus) {
-        _hasText.value = true;
+        _hasFocus.value = true;
       } else if (!focusNode.hasFocus) {
-        _hasText.value = false;
+        _hasFocus.value = false;
       }
     });
   }
@@ -70,7 +70,7 @@ class CustomTextFieldWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 100.sp,
+      height: 90.sp,
       child: ObxValue<RxBool>(
           (isObscure) => TextFormField(
                 readOnly: readOnly,
@@ -83,7 +83,7 @@ class CustomTextFieldWidget extends StatelessWidget {
                 keyboardType: keyboardType,
                 maxLines: maxLines,
                 onTap: () {
-                  _hasText.value = true;
+                  _hasFocus.value = true;
                   onTap?.call();
                 },
                 onChanged: onChanged,
@@ -106,8 +106,8 @@ class CustomTextFieldWidget extends StatelessWidget {
                               text: TextSpan(
                                 text: labelText,
                                 style: DefaultTextStyle.of(context).style.copyWith(
-                                      fontSize: 16.sp,
-                                      color: Colors.blue,
+                                      fontSize: 16.5.sp,
+                                      color: _hasFocus.value ? Colors.blue : Colors.grey[600],
                                     ),
                                 children: [
                                   TextSpan(
@@ -118,6 +118,7 @@ class CustomTextFieldWidget extends StatelessWidget {
                               ),
                             )
                           : Text(labelText ?? ''),
+                      // hintStyle: ,
                       hintText: hintText,
                       isDense: isDense,
                       prefixIcon: prefixIcon,
@@ -131,7 +132,7 @@ class CustomTextFieldWidget extends StatelessWidget {
                                           icon: const Icon(CupertinoIcons.xmark_circle),
                                         ).noSplash(),
                                       ),
-                                  _hasText)
+                                  _hasFocus)
                               : hasObscureIcon
                                   ? IconButton(
                                       onPressed: () => isObscure.value = !isObscure.value,
@@ -140,17 +141,17 @@ class CustomTextFieldWidget extends StatelessWidget {
                                           : const Icon(CupertinoIcons.eye),
                                     ).noSplash()
                                   : null),
-                      contentPadding: EdgeInsets.only(top: 15.sp, bottom: 15.sp, left: 18.sp, right: -18.sp),
+                      contentPadding: EdgeInsets.only(top: 16.sp, bottom: 16.sp, left: 18.sp, right: -18.sp),
                       floatingLabelBehavior: FloatingLabelBehavior.always,
                       enabledBorder: OutlineInputBorder(
-                        borderSide: const BorderSide(color: Color(0xFFE0E0E0)),
-                        borderRadius: BorderRadius.circular(10.0),
+                        borderSide: BorderSide.none,
+                        borderRadius: BorderRadius.circular(15.0),
                       ),
                       border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10.0),
+                        borderRadius: BorderRadius.circular(15.0),
                       ),
                       filled: true,
-                      fillColor: Colors.grey[100],
+                      fillColor: _hasFocus.value ? AppColors.blueHighlight : AppColors.whiteHighlight,
                     ),
               ),
           true.obs),

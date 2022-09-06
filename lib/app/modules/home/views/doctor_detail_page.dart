@@ -15,7 +15,7 @@ import 'package:hi_doctor_v2/app/modules/widgets/my_section_title.dart';
 import 'package:hi_doctor_v2/app/routes/app_pages.dart';
 
 class DoctorDetailPage extends StatefulWidget {
-  DoctorDetailPage({Key? key}) : super(key: key);
+  const DoctorDetailPage({Key? key}) : super(key: key);
 
   @override
   State<DoctorDetailPage> createState() => _DoctorDetailPageState();
@@ -85,7 +85,7 @@ class _DoctorDetailPageState extends State<DoctorDetailPage> {
                       decoration: BoxDecoration(
                         shape: BoxShape.rectangle,
                         borderRadius: BorderRadius.circular(15.0.sp),
-                        image: DecorationImage(
+                        image: const DecorationImage(
                           image: NetworkImage(Constants.defaultAvatar),
                         ),
                       ),
@@ -109,9 +109,9 @@ class _DoctorDetailPageState extends State<DoctorDetailPage> {
                             ),
                             SizedBox(
                               height: 32.0.sp,
-                              child: Text('Bác sĩ khoa tổng hợp'),
+                              child: const Text('Bác sĩ khoa tổng hợp'),
                             ),
-                            Text('Bệnh viện Hùng Vương, Tp. HCM, VN'),
+                            const Text('Bệnh viện Hùng Vương, Tp. HCM, VN'),
                           ],
                         ),
                       ),
@@ -170,7 +170,7 @@ class _DoctorDetailPageState extends State<DoctorDetailPage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                   const MySectionTitle(
+                    const MySectionTitle(
                       title: 'About me',
                     ),
                     RichText(
