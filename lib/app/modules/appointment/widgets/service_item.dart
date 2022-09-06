@@ -10,6 +10,7 @@ class ServiceItem extends StatelessWidget {
   String title;
   String description;
   int serviceId;
+  int price;
   IconData iconData;
 
   ServiceItem({
@@ -17,6 +18,7 @@ class ServiceItem extends StatelessWidget {
     required this.title,
     required this.description,
     required this.serviceId,
+    required this.price,
     required this.iconData,
   }) : super(key: key);
 
@@ -70,7 +72,7 @@ class ServiceItem extends StatelessWidget {
           Column(
             children: [
               Text(
-                '\$20',
+                '\$$price',
                 style: TextStyle(
                   color: AppColors.primary,
                   fontSize: 18.0.sp,
