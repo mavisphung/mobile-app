@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 import '../../common/util/status.dart';
+import '../../common/values/colors.dart';
 
 class CustomElevatedButtonWidget extends StatelessWidget {
   final String? textChild;
@@ -25,13 +26,12 @@ class CustomElevatedButtonWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-      style: ButtonStyle(
-        padding: MaterialStateProperty.all<EdgeInsets>(const EdgeInsets.symmetric(vertical: 10.0, horizontal: 22.0)),
-        shape: MaterialStateProperty.all(
-          RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(6.0),
-          ),
-        ),
+      style: ElevatedButton.styleFrom(
+        primary: AppColors.primary,
+        shadowColor: AppColors.primary,
+        elevation: 4.0,
+        padding: const EdgeInsets.symmetric(vertical: 11.0),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.0)),
       ),
       child: status == Status.loading
           ? SpinKitThreeBounce(
@@ -42,7 +42,7 @@ class CustomElevatedButtonWidget extends StatelessWidget {
               ? Text(
                   textChild!,
                   style: TextStyle(
-                    fontSize: 17.sp,
+                    fontSize: 16.sp,
                     color: Colors.white,
                   ),
                 )

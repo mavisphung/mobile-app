@@ -17,6 +17,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
         title,
         style: const TextStyle(color: Colors.black),
       ),
+      centerTitle: true,
       backgroundColor: Colors.transparent,
       elevation: 0.0,
       leading: GestureDetector(

@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../common/constants.dart';
@@ -13,8 +12,10 @@ import '../providers/api_auth_impl.dart';
 class RegisterController extends GetxController {
   late final ApiAuth _apiAuth;
   final nextStatus = Status.init.obs;
-  final otpFormKey = GlobalKey<FormState>();
+  final dynamic isEmailDuplicated = false.obs;
+  final gender = 'MALE'.obs;
   final isPolicyAgreed = false.obs;
+  String email = '';
   final otpCode = ''.obs;
 
   Future<bool?> checkEmailExisted(String email) async {
@@ -27,6 +28,7 @@ class RegisterController extends GetxController {
           response.statusCode == 400 &&
           response.data['user'][0] == '$email does not exist') {
         nextStatus.value = Status.success;
+        this.email = email;
         return false;
       } else if (response.isSuccess == true && response.statusCode == Constants.successPostStatusCode) {
         nextStatus.value = Status.fail;
