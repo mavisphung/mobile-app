@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import '../../../common/util/validators.dart';
@@ -140,51 +139,7 @@ class Step2 extends StatelessWidget {
                 children: [
                   Obx(() => Checkbox(
                         fillColor: MaterialStateProperty.all(Theme.of(context).primaryColor),
-                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(3.0)),
-                        value: _c.isPolicyAgreed.value,
-                        onChanged: (_) => _toggleIsPolicyAgreed(),
-                      )),
-                  Expanded(
-                    child: InkWell(
-                      onTap: _toggleIsPolicyAgreed,
-                      child: Text(
-                        Strings.policyAgreementMsg.tr,
-                      ),
-                    ),
-                  )
-                ],
-              ),
-            ),
-            ////////////////
-            //////////////
-            Padding(
-              padding: const EdgeInsets.only(top: 25.0, bottom: 20.0),
-              child: Row(
-                children: [
-                  Obx(() => Checkbox(
-                        fillColor: MaterialStateProperty.all(Theme.of(context).primaryColor),
-                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(3.0)),
-                        value: _c.isPolicyAgreed.value,
-                        onChanged: (_) => _toggleIsPolicyAgreed(),
-                      )),
-                  Expanded(
-                    child: InkWell(
-                      onTap: _toggleIsPolicyAgreed,
-                      child: Text(
-                        Strings.policyAgreementMsg.tr,
-                      ),
-                    ),
-                  )
-                ],
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(top: 25.0, bottom: 20.0),
-              child: Row(
-                children: [
-                  Obx(() => Checkbox(
-                        fillColor: MaterialStateProperty.all(Theme.of(context).primaryColor),
-                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(3.0)),
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0)),
                         value: _c.isPolicyAgreed.value,
                         onChanged: (_) => _toggleIsPolicyAgreed(),
                       )),

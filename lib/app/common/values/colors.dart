@@ -11,4 +11,5 @@ class AppColors {
   static Color get greyDivider => Colors.grey[400] ?? Colors.grey;
   static Color get blueHighlight => const Color(0xFFEEF4FF);
   static Color get whiteHighlight => const Color(0xFFF5F5F5);
+  static Color get bottomSheet => const Color(0xFFD9E5FF);
 }

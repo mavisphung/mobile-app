@@ -11,9 +11,11 @@ import 'package:hi_doctor_v2/app/modules/home/controllers/doctor_controller.dart
 import 'package:hi_doctor_v2/app/modules/home/controllers/home_controller.dart';
 import 'package:hi_doctor_v2/app/modules/home/widgets/doctor_tile.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/my_appbar.dart';
+import 'package:hi_doctor_v2/app/modules/widgets/my_section_title.dart';
+import 'package:hi_doctor_v2/app/routes/app_pages.dart';
 
 class DoctorDetailPage extends StatefulWidget {
-  DoctorDetailPage({Key? key}) : super(key: key);
+  const DoctorDetailPage({Key? key}) : super(key: key);
 
   @override
   State<DoctorDetailPage> createState() => _DoctorDetailPageState();
@@ -83,7 +85,7 @@ class _DoctorDetailPageState extends State<DoctorDetailPage> {
                       decoration: BoxDecoration(
                         shape: BoxShape.rectangle,
                         borderRadius: BorderRadius.circular(15.0.sp),
-                        image: DecorationImage(
+                        image: const DecorationImage(
                           image: NetworkImage(Constants.defaultAvatar),
                         ),
                       ),
@@ -107,9 +109,9 @@ class _DoctorDetailPageState extends State<DoctorDetailPage> {
                             ),
                             SizedBox(
                               height: 32.0.sp,
-                              child: Text('Bác sĩ khoa tổng hợp'),
+                              child: const Text('Bác sĩ khoa tổng hợp'),
                             ),
-                            Text('Bệnh viện Hùng Vương, Tp. HCM, VN'),
+                            const Text('Bệnh viện Hùng Vương, Tp. HCM, VN'),
                           ],
                         ),
                       ),
@@ -168,15 +170,8 @@ class _DoctorDetailPageState extends State<DoctorDetailPage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    SizedBox(
-                      height: 32.0.sp,
-                      child: Text(
-                        'About me',
-                        style: TextStyle(
-                          fontSize: 20.sp,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
+                    const MySectionTitle(
+                      title: 'About me',
                     ),
                     RichText(
                       text: TextSpan(
@@ -186,8 +181,8 @@ class _DoctorDetailPageState extends State<DoctorDetailPage> {
                         ),
                         text:
                             'Dr. ${doctorController.doctor.firstName} ${doctorController.doctor.lastName} là một trong những bác sĩ '
-                            'giỏi nhất trong khoa tổng hợp của bệnh viện Hùng Vương, TP. HCM.'
-                            'Đã từng đạt nhiều mạng người trên tay từ thời gian thực tập'
+                            'giỏi nhất trong khoa tổng hợp của bệnh viện Hùng Vương, TP. HCM. '
+                            'Đã từng đạt nhiều mạng người trên tay từ thời gian thực tập. '
                             'Tôi đã hành nghề này được hơn 10 năm...',
                         children: [
                           TextSpan(
@@ -212,16 +207,9 @@ class _DoctorDetailPageState extends State<DoctorDetailPage> {
                 margin: EdgeInsets.only(top: 25.0.sp),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SizedBox(
-                      height: 32.0.sp,
-                      child: Text(
-                        'Working Time',
-                        style: TextStyle(
-                          fontSize: 20.sp,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
+                  children: const [
+                    MySectionTitle(
+                      title: 'Working time',
                     ),
                     Text('Monday - Friday, 8:00 AM to 17:30 PM'),
                   ],
@@ -235,15 +223,8 @@ class _DoctorDetailPageState extends State<DoctorDetailPage> {
                   children: [
                     Row(
                       children: [
-                        SizedBox(
-                          height: 32.0.sp,
-                          child: Text(
-                            'Reviews',
-                            style: TextStyle(
-                              fontSize: 20.sp,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
+                        const MySectionTitle(
+                          title: 'Reviews',
                         ),
                         const Spacer(),
                         GestureDetector(
@@ -263,15 +244,137 @@ class _DoctorDetailPageState extends State<DoctorDetailPage> {
                     ListView.builder(
                       physics: const NeverScrollableScrollPhysics(),
                       shrinkWrap: true,
-                      itemCount: 200,
+                      itemCount: 3,
                       itemBuilder: (_, index) {
-                        return Text('${index}');
+                        if (index == 2) {
+                          return SizedBox(
+                            height: Get.height.sp / 100 * 9,
+                          );
+                        }
+                        return Container(
+                          margin: EdgeInsets.only(top: 10.0.sp, bottom: 20.0.sp),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Container(
+                                    margin: EdgeInsets.only(right: 20.0.sp),
+                                    width: 53.0.sp,
+                                    height: 53.0.sp,
+                                    decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      image: DecorationImage(
+                                        fit: BoxFit.cover,
+                                        image: NetworkImage(doctorController.doctor.avatar!),
+                                      ),
+                                    ),
+                                  ),
+                                  Text(
+                                    'Bệnh nhân ${index + 1}',
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 16.0.sp,
+                                    ),
+                                  ),
+                                  const Spacer(),
+                                  // ElevatedButton(
+                                  //   onPressed: () {},
+                                  //   child: Row(
+                                  //     children: [
+                                  //       Icon(Icons.star_outline),
+                                  //       Text(
+                                  //         '5',
+                                  //         style: TextStyle(fontSize: 17.0.sp),
+                                  //       ),
+                                  //     ],
+                                  //   ),
+                                  // ),
+                                  Wrap(
+                                    direction: Axis.horizontal,
+                                    spacing: 5.0.sp,
+                                    children: [
+                                      Icon(Icons.star_half, size: 20.0.sp, color: AppColors.primary),
+                                      Text(
+                                        '5',
+                                        style: TextStyle(fontSize: 17.0.sp),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                              SizedBox(
+                                height: 15.0.sp,
+                              ),
+                              RichText(
+                                text: TextSpan(
+                                  style: TextStyle(
+                                    fontSize: 14.0.sp,
+                                    color: Colors.black,
+                                  ),
+                                  text:
+                                      'Tôi có thể thấy rằng đây có thể giải quyết cho cái lưng đau của tôi một cách triệt để',
+                                ),
+                              ),
+                              Container(
+                                padding: EdgeInsets.only(
+                                  top: 12.0.sp,
+                                ),
+                                child: Text(
+                                  '2 ngày trước',
+                                  style: TextStyle(
+                                    fontSize: 11.0.sp,
+                                    color: Colors.grey[900],
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        );
                       },
                     ),
                   ],
                 ),
               ),
             ],
+          ),
+        ),
+      ),
+      bottomSheet: Container(
+        // width: Get.width,
+        height: Get.height.sp / 100 * 9,
+        padding: EdgeInsets.symmetric(horizontal: 12.0.sp),
+        decoration: BoxDecoration(
+          color: AppColors.bottomSheet,
+          // border: Border.all(color: Colors.black.withOpacity(0.125)),
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(35.0.sp),
+            topRight: Radius.circular(35.0.sp),
+          ),
+        ),
+        child: Center(
+          child: SizedBox(
+            width: Get.width.sp / 100 * 80,
+            height: 40.0.sp,
+            child: ElevatedButton(
+              style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all(AppColors.primary),
+                // overlayColor: MaterialStateProperty.all(Colors.transparent),
+                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                  RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20.0),
+                  ),
+                ),
+              ),
+              child: Text(
+                'Make an appointment',
+                style: TextStyle(fontSize: 14.0.sp),
+              ),
+              onPressed: () {
+                Get.toNamed(Routes.BOOKING);
+              },
+            ),
           ),
         ),
       ),
