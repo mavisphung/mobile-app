@@ -9,13 +9,13 @@ import '../widgets/my_chip.dart';
 
 class AppointmentFilterPage extends StatelessWidget {
   AppointmentFilterPage({Key? key}) : super(key: key);
-  final AppoinmentController _controller = Get.find<AppoinmentController>();
+  final AppointmentController _controller = Get.find<AppointmentController>();
 
   @override
   Widget build(BuildContext context) {
     return GetBuilder(
         init: _controller,
-        builder: (AppoinmentController controller) {
+        builder: (AppointmentController controller) {
           return Scaffold(
             appBar: AppBar(
               centerTitle: true,

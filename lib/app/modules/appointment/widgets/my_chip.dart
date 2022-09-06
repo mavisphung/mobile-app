@@ -30,17 +30,17 @@ class MyTypeChip extends StatefulWidget {
 }
 
 class _MyTypeChipState extends State<MyTypeChip> {
-  AppoinmentController historyController = Get.find<AppoinmentController>();
+  AppointmentController appsController = Get.find<AppointmentController>();
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        historyController.setAppointmentType(widget.value);
+        appsController.setAppointmentType(widget.value);
         setState(() {
           widget.isChosen = !widget.isChosen;
         });
-        print(historyController.selectedType);
+        print(appsController.selectedType);
       },
       child: Chip(
         elevation: 5.0.sp,
@@ -87,17 +87,17 @@ class MyStatusChip extends StatefulWidget {
 }
 
 class _MyStatusChipState extends State<MyStatusChip> {
-  AppoinmentController historyController = Get.find<AppoinmentController>();
+  AppointmentController appsController = Get.find<AppointmentController>();
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        historyController.setAppointmentStatus(widget.value);
+        appsController.setAppointmentStatus(widget.value);
         setState(() {
           widget.isChosen = !widget.isChosen;
         });
-        print(historyController.selectedStatus);
+        print(appsController.selectedStatus);
       },
       child: Chip(
         elevation: 5.0.sp,

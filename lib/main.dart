@@ -28,7 +28,21 @@ class MyApp extends StatelessWidget {
           title: Strings.appName,
           debugShowCheckedModeBanner: false,
           theme: ThemeData(
-            primarySwatch: Colors.blue,
+            primarySwatch: Colors.indigo,
+            fontFamily: 'Poppins',
+            // textTheme: ThemeData.light().textTheme.copyWith(
+            //   bodyText1: const TextStyle(
+            //     fontFamily: 'Poppins',
+            //     fontWeight: FontWeight.bold,
+            //     fontSize: 20,
+            //   ),
+            //   button: const TextStyle(
+            //     color: Colors.amber,
+            //     fontFamily: 'Poppins',
+            //     fontStyle: FontStyle.italic,
+            //     fontSize: 20,
+            //   ),
+            // ),
           ),
           defaultTransition: Transition.cupertino,
           initialRoute: AppPages.INITIAL,

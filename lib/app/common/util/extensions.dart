@@ -2,48 +2,39 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../data/api_response.dart';
-import '../../data/auth/api_auth_model.dart';
 import '../../data/errors/api_error.dart';
+import '../../data/response_model.dart';
 import '../../routes/app_pages.dart';
 import '../constants.dart';
 import '../storage/storage.dart';
 import '../values/strings.dart';
-import './loading_dialog.dart';
 import './utils.dart';
 
 extension FutureExt<T> on Future<Response<T>> {
-  Future<ResponseModel?> futureValue({
+  Future<ResponseModel1?> futureValue({
     Function(String? error)? onError,
     VoidCallback? retryFunction,
-    bool showLoading = true,
   }) async {
     // final _interface = Get.find<ApiInterfaceController>();
     // _interface.error = null;
-    if (showLoading) LoadingDialog.showLoadingDialog();
 
     return await timeout(
       Constants.timeout,
       onTimeout: () {
-        LoadingDialog.closeLoadingDialog();
-
         throw ApiError(
           type: ErrorType.connectTimeout,
           error: Strings.conTimeOutMsg.tr,
         );
       },
     ).then((value) {
-      LoadingDialog.closeLoadingDialog();
-
       final responseBody = ApiResponse.getResponse<T>(value);
       print('RESPONSE BODY: $responseBody');
       if (responseBody != null) {
-        final responseModel = ResponseModel.fromJson(responseBody as Map<String, dynamic>);
-        return responseModel;
+        final responseModel1 = ResponseModel1.fromJson(responseBody as Map<String, dynamic>);
+        return responseModel1;
       }
       // _interface.update();
     }).catchError((e) {
-      LoadingDialog.closeLoadingDialog();
-
       if (e == null) return null;
 
       final errorMessage = e is ApiError ? e.message : e.toString();
@@ -103,6 +94,19 @@ extension GenderExt on Gender {
         return 'FEMALE';
       default:
         return 'OTHER';
+    }
+  }
+}
+
+extension GenderExt2 on Gender {
+  String get label {
+    switch (this) {
+      case Gender.male:
+        return 'Male';
+      case Gender.female:
+        return 'Female';
+      default:
+        return 'Other';
     }
   }
 }
@@ -168,5 +172,44 @@ extension AppointmentStatusExt2 on AppointmentStatus {
       default:
         return 'All';
     }
+  }
+}
+
+extension StringToEnum on String {
+  AppointmentType get enumType {
+    switch (this) {
+      case 'ONLINE':
+        return AppointmentType.online;
+      case 'OFFLINE':
+        return AppointmentType.offline;
+      default:
+        return AppointmentType.all;
+    }
+  }
+
+  AppointmentStatus get enumStatus {
+    switch (this) {
+      case 'PENDING':
+        return AppointmentStatus.pending;
+      case 'COMPLETED':
+        return AppointmentStatus.completed;
+      case 'CANCELLED':
+        return AppointmentStatus.cancelled;
+      case 'IN_PROGRESS':
+        return AppointmentStatus.inProgress;
+      default:
+        return AppointmentStatus.all;
+    }
+  }
+}
+
+extension DebugLog on String {
+  void debugLog(String title) {
+    return debugPrint(
+      '\n********************************** DebugLog **********************************\n'
+      ' $title: $this'
+      '\n********************************** DebugLog **********************************\n',
+      wrapWidth: 1024,
+    );
   }
 }

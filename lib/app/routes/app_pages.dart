@@ -2,14 +2,15 @@
 
 import 'package:get/get.dart';
 import '../modules/appointment/appointment_page.dart';
+import '../modules/appointment/views/booking_page.dart';
 import '../modules/auth/bindings/login_binding.dart';
 import '../modules/auth/bindings/register_binding.dart';
 import '../modules/auth/login_page.dart';
 import '../modules/auth/register_page.dart';
 import '../modules/auth/splash_page.dart';
 import '../modules/bottom_navbar/nav_bar.dart';
-import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/home_page.dart';
+import '../modules/home/views/doctor_detail_page.dart';
 import '../modules/search/views/search_page.dart';
 import '../modules/settings/views/user_profile_detail.dart';
 
@@ -26,7 +27,7 @@ abstract class AppPages {
     GetPage(
       name: Routes.HOME,
       page: () => HomePage(),
-      binding: HomeBinding(),
+      // binding: HomeBinding(),
     ),
     GetPage(
       name: Routes.LOGIN,
@@ -53,6 +54,14 @@ abstract class AppPages {
     GetPage(
       name: Routes.PROFILE_DETAIL,
       page: () => UserProfileDetailPage(),
+    ),
+    GetPage(
+      name: Routes.DOCTOR_DETAIL,
+      page: () => const DoctorDetailPage(),
+    ),
+    GetPage(
+      name: Routes.BOOKING,
+      page: () => BookingAppointmentPage(),
     ),
   ];
 }

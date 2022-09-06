@@ -1,13 +1,16 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
+import '../../common/util/status.dart';
 import '../../common/util/utils.dart';
 import '../../common/util/validators.dart';
+import '../../common/values/colors.dart';
 import '../../common/values/strings.dart';
 import '../../routes/app_pages.dart';
+import '../widgets/custom_elevate_btn_widget.dart';
 import '../widgets/custom_textfield_widget.dart';
-import '../widgets/my_button_style.dart';
 import './controllers/login_controller.dart';
 
 class LoginPage extends GetView<LoginController> {
@@ -29,15 +32,15 @@ class LoginPage extends GetView<LoginController> {
 
   @override
   Widget build(BuildContext context) {
-    // initFocusNode();
     return WillPopScope(
       onWillPop: Utils.onWillPop,
       child: Scaffold(
         body: SafeArea(
           child: Center(
             child: SingleChildScrollView(
+              physics: const BouncingScrollPhysics(),
               child: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 40.0),
+                padding: const EdgeInsets.symmetric(horizontal: 35.0),
                 child: Column(
                   children: [
                     Container(
@@ -46,24 +49,13 @@ class LoginPage extends GetView<LoginController> {
                         top: 20.0,
                         bottom: 40.0,
                       ),
-                      child: Column(
-                        children: const [
-                          Text(
-                            'Welcome Back',
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              fontSize: 22,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          Text(
-                            'Sign in with your email and password or continue with sign in with Google',
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              fontSize: 14,
-                            ),
-                          ),
-                        ],
+                      child: Text(
+                        Strings.login.tr,
+                        textAlign: TextAlign.center,
+                        style: const TextStyle(
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
                     Form(
@@ -78,7 +70,7 @@ class LoginPage extends GetView<LoginController> {
                             onFieldSubmitted: (_) => FocusScope.of(context).requestFocus(_passwordFocusNode),
                             hintText: Strings.email.tr,
                             prefixIcon: const Icon(
-                              CupertinoIcons.mail,
+                              CupertinoIcons.mail_solid,
                             ),
                           ),
                           CustomTextFieldWidget(
@@ -91,39 +83,71 @@ class LoginPage extends GetView<LoginController> {
                             controller: _passwordController,
                             onFieldSubmitted: (_) => _submitLogin(),
                             hintText: Strings.pasword.tr,
-                            prefixIcon: const Icon(CupertinoIcons.lock),
+                            prefixIcon: const Icon(CupertinoIcons.lock_fill),
                           ),
                         ],
                       ),
                     ),
                     Container(
-                      padding: const EdgeInsets.only(bottom: 12.0),
+                      padding: const EdgeInsets.only(bottom: 15.0),
                       alignment: Alignment.centerRight,
-                      child: InkWell(
-                        onTap: () {},
-                        child: const Text(
+                      child: GestureDetector(
+                        onTap: () {
+                          if (controller.loginStatus.value != Status.loading) {}
+                        },
+                        child: Text(
                           'Forgot password?',
+                          style: TextStyle(
+                            color: AppColors.primary,
+                          ),
                         ),
                       ),
                     ),
                     Container(
                       width: double.infinity,
                       margin: const EdgeInsets.only(
-                        bottom: 10.0,
+                        bottom: 20.0,
                       ),
-                      child: ElevatedButton(
-                        style: MyButtonStyle(),
-                        onPressed: _submitLogin,
-                        child: const Text(
-                          'Login',
-                          style: TextStyle(fontSize: 17.0),
+                      child: ObxValue<Rx<Status>>(
+                          (data) => CustomElevatedButtonWidget(
+                                textChild: Strings.login.tr,
+                                status: data.value,
+                                onPressed: _submitLogin,
+                              ),
+                          controller.loginStatus),
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Expanded(
+                          child: Divider(
+                            color: AppColors.greyDivider,
+                            height: 2,
+                            indent: 10,
+                            endIndent: 10,
+                          ),
                         ),
-                      ),
+                        Text(
+                          'or',
+                          style: TextStyle(
+                            fontSize: 12.sp,
+                            color: Colors.grey[600],
+                          ),
+                        ),
+                        Expanded(
+                          child: Divider(
+                            color: AppColors.greyDivider,
+                            height: 2,
+                            indent: 10,
+                            endIndent: 10,
+                          ),
+                        ),
+                      ],
                     ),
                     Container(
                       width: double.infinity,
                       margin: const EdgeInsets.only(
-                        top: 5.0,
+                        top: 20.0,
                         bottom: 5.0,
                       ),
                       child: ElevatedButton.icon(
@@ -141,35 +165,37 @@ class LoginPage extends GetView<LoginController> {
                         ),
                         style: ButtonStyle(
                           backgroundColor: MaterialStateProperty.all(Colors.white),
-                          padding: MaterialStateProperty.all<EdgeInsets>(const EdgeInsets.symmetric(vertical: 8.0)),
+                          padding: MaterialStateProperty.all<EdgeInsets>(const EdgeInsets.symmetric(vertical: 10.0)),
                           shape: MaterialStateProperty.all(
                             RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(6.0),
+                              borderRadius: BorderRadius.circular(15.0),
                             ),
                           ),
                         ),
-                        onPressed: () {},
+                        onPressed: () {
+                          if (controller.loginStatus.value != Status.loading) {}
+                        },
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(top: 10.0, bottom: 25.0),
+                      padding: const EdgeInsets.only(top: 20.0, bottom: 45.0),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           const Text('Don\'t have an account yet?'),
-                          InkWell(
+                          SizedBox(width: 5.sp),
+                          GestureDetector(
                             onTap: () {
-                              Get.toNamed(Routes.REGISTER);
+                              if (controller.loginStatus.value != Status.loading) {
+                                Get.toNamed(Routes.REGISTER);
+                              }
                             },
-                            child: const Padding(
-                              padding: EdgeInsets.all(5.0),
-                              child: Text(
-                                'Sign Up',
-                                textAlign: TextAlign.right,
-                                style: TextStyle(
-                                  // color: primaryColor,
-                                  fontWeight: FontWeight.bold,
-                                ),
+                            child: Text(
+                              Strings.signUp.tr,
+                              textAlign: TextAlign.right,
+                              style: TextStyle(
+                                color: AppColors.primary,
+                                fontWeight: FontWeight.bold,
                               ),
                             ),
                           ),
