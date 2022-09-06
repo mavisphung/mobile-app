@@ -14,31 +14,8 @@ import './expandable_fab.dart';
 
 class NavBar extends StatelessWidget {
   final NavBarController _controller = Get.put(NavBarController());
-// <<<<<<< HEAD
-//   late AnimationController _animationController;
-//   late Animation<Offset> _animation;
 
-//   final _titleStyle = TextStyle(fontSize: 10.sp);
-
-//   @override
-//   void initState() {
-//     _letAnimate();
-//     super.initState();
-//   }
-
-//   void _letAnimate() {
-//     _animationController = AnimationController(
-//       duration: const Duration(milliseconds: 2000),
-//       vsync: this,
-//     )..forward();
-//     _animation = Tween<Offset>(
-//       begin: const Offset(0.0, 0.1),
-//       end: Offset.zero,
-//     ).animate(_animationController);
-//   }
-// =======
   NavBar({Key? key}) : super(key: key);
-// >>>>>>> 8925cd64f9e7389c9e95adfd7b6c3198fdcbd7e8
 
   void _closeFab() => ExpandableFab.closeFab(false);
 
@@ -75,7 +52,7 @@ class NavBar extends StatelessWidget {
                 _bottomNavigationBarItem(
                   icon: Icons.calendar_today,
                   label: Strings.appointment.tr,
-                  size: 16.sp,
+                  size: 20.sp,
                 ),
                 _bottomNavigationBarItem(
                   icon: CupertinoIcons.chat_bubble_2,

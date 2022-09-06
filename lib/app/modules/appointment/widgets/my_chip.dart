@@ -43,8 +43,11 @@ class _MyTypeChipState extends State<MyTypeChip> {
         print(appsController.selectedType);
       },
       child: Chip(
-        elevation: 5.0.sp,
+        elevation: 2.0.sp,
         padding: const EdgeInsets.all(2),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(5.sp),
+        ),
         backgroundColor: widget.isChosen ? widget.backgroundColor : Colors.transparent,
         shadowColor: Colors.black,
         label: Wrap(
@@ -52,7 +55,10 @@ class _MyTypeChipState extends State<MyTypeChip> {
           children: [
             Text(
               widget.label,
-              style: TextStyle(fontSize: 13.0.sp, color: widget.textColor),
+              style: TextStyle(
+                fontSize: 13.0.sp,
+                color: widget.isChosen ? widget.textColor : Colors.black,
+              ),
             ),
           ],
         ),
@@ -100,18 +106,16 @@ class _MyStatusChipState extends State<MyStatusChip> {
         print(appsController.selectedStatus);
       },
       child: Chip(
-        elevation: 5.0.sp,
+        elevation: 2.sp,
         padding: const EdgeInsets.all(2),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(5.sp),
+        ),
         backgroundColor: widget.isChosen ? widget.backgroundColor : Colors.transparent,
-        shadowColor: Colors.black,
-        label: Wrap(
-          crossAxisAlignment: WrapCrossAlignment.center,
-          children: [
-            Text(
-              widget.label,
-              style: TextStyle(fontSize: 13.0.sp, color: widget.textColor),
-            ),
-          ],
+        shadowColor: Colors.black87,
+        label: Text(
+          widget.label,
+          style: TextStyle(fontSize: 13.0.sp, color: widget.textColor),
         ),
       ),
     );

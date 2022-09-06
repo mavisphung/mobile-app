@@ -38,7 +38,7 @@ class _IncomingTabState extends State<IncomingTab> with AutomaticKeepAliveClient
           child: SingleChildScrollView(
             controller: widget.incController.scrollController,
             primary: false,
-            physics: const AlwaysScrollableScrollPhysics(),
+            physics: const BouncingScrollPhysics(),
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: 12.0.sp),
               child: Column(
@@ -70,7 +70,7 @@ class _IncomingTabState extends State<IncomingTab> with AutomaticKeepAliveClient
                             boxShadow: [
                               BoxShadow(
                                 color: Colors.black.withOpacity(0.12),
-                                offset: const Offset(0, 4),
+                                offset: const Offset(0, 2),
                                 blurRadius: 4.0.sp,
                               ),
                             ],

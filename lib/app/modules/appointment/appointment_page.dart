@@ -24,33 +24,15 @@ class _AppoinmentPageState extends State<AppoinmentPage> with SingleTickerProvid
   void initState() {
     super.initState();
 
-    tabs = <Tab>[
+    tabs = const <Tab>[
       Tab(
-        child: Wrap(
-          spacing: 12.0.sp,
-          children: [
-            const Icon(
-              Icons.calendar_today,
-            ),
-            Text(
-              'Incoming',
-              style: TextStyle(fontSize: 16.0.sp),
-            ),
-          ],
+        child: Text(
+          'Incoming',
         ),
       ),
       Tab(
-        child: Wrap(
-          spacing: 12.0.sp,
-          children: [
-            const Icon(
-              Icons.check_circle,
-            ),
-            Text(
-              'History',
-              style: TextStyle(fontSize: 16.0.sp),
-            ),
-          ],
+        child: Text(
+          'History',
         ),
       ),
     ];
@@ -73,23 +55,43 @@ class _AppoinmentPageState extends State<AppoinmentPage> with SingleTickerProvid
                     color: Colors.black,
                   ),
                 ),
-                bottom: TabBar(
-                  labelPadding: EdgeInsets.symmetric(horizontal: 12.0.sp),
-                  padding: EdgeInsets.symmetric(horizontal: 12.0.sp),
-                  indicatorColor: AppColors.primary,
-                  labelColor: AppColors.primary,
-                  unselectedLabelColor: Colors.grey,
-                  controller: tabx.controller,
-                  tabs: tabx.tabs,
-                ),
                 backgroundColor: Colors.white,
                 elevation: 0.0.sp,
               ),
-              body: TabBarView(
-                controller: tabx.controller,
+              body: Column(
                 children: [
-                  IncomingTab(),
-                  HistoryTab(),
+                  Container(
+                    margin: EdgeInsets.symmetric(horizontal: 12.0.sp),
+                    padding: EdgeInsets.symmetric(vertical: 3.8.sp, horizontal: 5.sp),
+                    decoration: BoxDecoration(
+                      color: const Color(0xFFE8EDF8),
+                      borderRadius: BorderRadius.circular(10.sp),
+                    ),
+                    child: TabBar(
+                      indicatorColor: Colors.white,
+                      indicator: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(10.sp),
+                      ),
+                      labelColor: Colors.indigo,
+                      unselectedLabelColor: const Color(0xFF9F9F9F),
+                      labelStyle: TextStyle(
+                        fontSize: 15.sp,
+                        fontWeight: FontWeight.w500,
+                      ),
+                      controller: tabx.controller,
+                      tabs: tabx.tabs,
+                    ),
+                  ),
+                  Expanded(
+                    child: TabBarView(
+                      controller: tabx.controller,
+                      children: [
+                        IncomingTab(),
+                        HistoryTab(),
+                      ],
+                    ),
+                  ),
                 ],
               ),
             ),

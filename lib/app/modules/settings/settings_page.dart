@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
@@ -38,6 +39,7 @@ class SettingsPage extends StatelessWidget {
               elevation: 0.0,
             ),
             body: SingleChildScrollView(
+              physics: const BouncingScrollPhysics(),
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16.0),
                 child: Column(
@@ -45,24 +47,24 @@ class SettingsPage extends StatelessWidget {
                     UserProfile(),
                     Container(
                       margin: EdgeInsets.only(top: 22.0.sp),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black.withOpacity(0.25),
-                            offset: const Offset(0, 4),
-                            blurRadius: 4.0,
-                          ),
-                        ],
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(5.0.sp),
-                        ),
-                      ),
                       padding: EdgeInsets.symmetric(vertical: 24.0.sp, horizontal: 16.0.sp),
+                      // decoration: BoxDecoration(
+                      //   color: Colors.white,
+                      //   boxShadow: [
+                      //     BoxShadow(
+                      //       color: Colors.black.withOpacity(0.25),
+                      //       offset: const Offset(0, 4),
+                      //       blurRadius: 4.0,
+                      //     ),
+                      //   ],
+                      //   borderRadius: BorderRadius.all(
+                      //     Radius.circular(5.0.sp),
+                      //   ),
+                      // ),
                       child: Column(
                         children: [
                           UserProfileItem(
-                            svgAssetUrl: 'assets/images/ic_profile.svg',
+                            icon: CupertinoIcons.person,
                             title: 'My Account',
                             description: 'Make changes to your account',
                             function: () {},
@@ -71,7 +73,7 @@ class SettingsPage extends StatelessWidget {
                             height: 25.0.sp,
                           ),
                           UserProfileItem(
-                            svgAssetUrl: 'assets/images/ic_profile.svg',
+                            icon: CupertinoIcons.doc_on_doc,
                             title: 'Patient Profiles',
                             description: 'Manage your profiles',
                             function: () {
@@ -82,7 +84,7 @@ class SettingsPage extends StatelessWidget {
                             height: 25.0.sp,
                           ),
                           UserProfileItem(
-                            svgAssetUrl: 'assets/images/ic_logout.svg',
+                            icon: Icons.logout,
                             title: 'Log Out',
                             description: 'Quit the app',
                             function: _logOut,
