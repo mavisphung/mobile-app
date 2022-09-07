@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:hi_doctor_v2/app/modules/appointment/controllers/incoming_controller.dart';
+
 import '../../../models/appointment.dart';
+import '../controllers/incoming_controller.dart';
 import '../widgets/appointment_tile.dart';
-import 'appointment_filter_page.dart';
+import './appointment_filter_page.dart';
 
 class IncomingTab extends StatefulWidget {
   IncomingTab({
@@ -61,8 +61,8 @@ class _IncomingTabState extends State<IncomingTab> with AutomaticKeepAliveClient
                         },
                         child: Container(
                           padding: EdgeInsets.symmetric(
-                            horizontal: 8.0.sp,
-                            vertical: 5.0.sp,
+                            horizontal: 9.0.sp,
+                            vertical: 6.0.sp,
                           ),
                           decoration: BoxDecoration(
                             color: Colors.white,
@@ -75,25 +75,7 @@ class _IncomingTabState extends State<IncomingTab> with AutomaticKeepAliveClient
                               ),
                             ],
                           ),
-                          child: Center(
-                            child: Row(
-                              // direction: Axis.horizontal,
-                              children: [
-                                Text(
-                                  'Filter',
-                                  style: TextStyle(
-                                    fontSize: 16.0.sp,
-                                  ),
-                                ),
-                                SvgPicture.asset(
-                                  'assets/images/ic_filter_black.svg',
-                                  width: 24.0.sp,
-                                  height: 24.0.sp,
-                                  fit: BoxFit.fill,
-                                ),
-                              ],
-                            ),
-                          ),
+                          child: const Icon(Icons.sort_rounded),
                         ),
                       ),
                     ],

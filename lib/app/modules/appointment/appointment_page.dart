@@ -5,7 +5,6 @@ import 'package:hi_doctor_v2/app/modules/appointment/controllers/appointment_con
 import 'package:hi_doctor_v2/app/modules/appointment/views/history_tab.dart';
 import 'package:hi_doctor_v2/app/modules/appointment/views/incoming_tab.dart';
 
-import '../../common/values/colors.dart';
 import './controllers/tab_controller.dart';
 
 class AppoinmentPage extends StatefulWidget {

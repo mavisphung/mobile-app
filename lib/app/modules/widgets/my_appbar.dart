@@ -2,13 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:hi_doctor_v2/app/modules/widgets/custom_icon_button.dart';
 
 class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
-  final Color backgroundColor = Colors.red;
   final String title;
   final List<Widget>? actions;
-
-  /// you can add more fields that meet your needs
 
   const MyAppBar({Key? key, required this.title, this.actions}) : super(key: key);
 
@@ -24,13 +22,13 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
       ),
       centerTitle: true,
       backgroundColor: Colors.transparent,
-      elevation: 0.0,
-      leading: GestureDetector(
-        onTap: () => Get.back(),
-        child: const Icon(
+      elevation: 0,
+      leading: CustomIconButton(
+        icon: const Icon(
           CupertinoIcons.left_chevron,
           color: Colors.black,
         ),
+        onPressed: () => Get.back(),
       ),
       actions: actions,
     );

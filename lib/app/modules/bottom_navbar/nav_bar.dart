@@ -10,14 +10,11 @@ import '../appointment/appointment_page.dart';
 import '../home/home_page.dart';
 import '../settings/settings_page.dart';
 import './controllers/navbar_controller.dart';
-import './expandable_fab.dart';
 
 class NavBar extends StatelessWidget {
   final NavBarController _controller = Get.put(NavBarController());
 
   NavBar({Key? key}) : super(key: key);
-
-  void _closeFab() => ExpandableFab.closeFab(false);
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +22,6 @@ class NavBar extends StatelessWidget {
       builder: (_) => WillPopScope(
         onWillPop: Utils.onWillPop,
         child: GestureDetector(
-          onTap: _closeFab,
           child: Scaffold(
             body: SafeArea(
               child: _controller.tabIndex == 0
@@ -47,51 +43,57 @@ class NavBar extends StatelessWidget {
               items: [
                 _bottomNavigationBarItem(
                   icon: CupertinoIcons.home,
+                  activeIcon: CupertinoIcons.house_fill,
                   label: Strings.home.tr,
                 ),
                 _bottomNavigationBarItem(
                   icon: Icons.calendar_today,
+                  activeIcon: Icons.calendar_today_rounded,
                   label: Strings.appointment.tr,
                   size: 20.sp,
                 ),
                 _bottomNavigationBarItem(
                   icon: CupertinoIcons.chat_bubble_2,
+                  activeIcon: CupertinoIcons.chat_bubble_2_fill,
                   label: Strings.message.tr,
                 ),
                 _bottomNavigationBarItem(
                   icon: CupertinoIcons.person,
+                  activeIcon: CupertinoIcons.person_fill,
                   label: Strings.personal.tr,
                 ),
               ],
             ),
-            floatingActionButton: ExpandableFab(
-              distance: 80.sp,
-              children: [
-                ActionButton(
-                  onPressed: () {
-                    _closeFab();
-                  },
-                  icon: Image.asset(
-                    'assets/images/navbar/contract.png',
-                    fit: BoxFit.cover,
-                    color: Colors.white,
-                    width: 23.0,
-                    height: 23.0,
-                  ),
+            floatingActionButton: PopupMenuButton(
+              itemBuilder: (_) => [
+                PopupMenuItem(
+                  onTap: () {},
+                  child: const Text('Book appointment'),
                 ),
-                ActionButton(
-                  onPressed: () {
-                    _closeFab();
-                  },
-                  icon: Image.asset(
-                    'assets/images/navbar/add_appointment.png',
-                    fit: BoxFit.cover,
-                    color: Colors.white,
-                    width: 23.0,
-                    height: 23.0,
-                  ),
+                PopupMenuItem(
+                  onTap: () {},
+                  child: const Text('Add a contract'),
                 ),
               ],
+              offset: Offset(0, -106.sp),
+              color: Colors.white,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10.sp),
+              ),
+              elevation: 4,
+              child: Card(
+                color: AppColors.primary,
+                elevation: 4,
+                shape: const CircleBorder(),
+                child: Padding(
+                  padding: EdgeInsets.all(12.8.sp),
+                  child: Icon(
+                    CupertinoIcons.add,
+                    color: Colors.white,
+                    size: 24.sp,
+                  ),
+                ),
+              ),
             ),
           ),
         ),
@@ -102,11 +104,16 @@ class NavBar extends StatelessWidget {
   BottomNavigationBarItem _bottomNavigationBarItem({
     required IconData icon,
     required String label,
+    required IconData activeIcon,
     double? size,
   }) {
     return BottomNavigationBarItem(
       icon: Icon(
         icon,
+        size: size,
+      ),
+      activeIcon: Icon(
+        activeIcon,
         size: size,
       ),
       label: label,

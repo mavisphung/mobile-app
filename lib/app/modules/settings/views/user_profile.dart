@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
 import '../../../common/values/colors.dart';
@@ -41,11 +40,16 @@ class UserProfile extends StatelessWidget {
                 onTap: () async {
                   Get.toNamed(Routes.PROFILE_DETAIL);
                 },
-                child: SvgPicture.asset(
-                  'assets/images/ic_edit.svg',
-                  width: 24.0.sp,
-                  height: 24.0.sp,
-                  color: Colors.amber,
+                child: Container(
+                  padding: EdgeInsets.all(3.sp),
+                  decoration: BoxDecoration(
+                    color: AppColors.primary,
+                    borderRadius: BorderRadius.circular(5.sp),
+                  ),
+                  child: const Icon(
+                    Icons.edit,
+                    color: Colors.white,
+                  ),
                 ),
               ),
             ),
