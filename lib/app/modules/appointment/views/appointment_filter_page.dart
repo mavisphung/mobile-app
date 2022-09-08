@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:hi_doctor_v2/app/common/util/extensions.dart';
 
+import '../../../common/util/extensions.dart';
 import '../../../common/values/colors.dart';
+import '../../widgets/my_appbar.dart';
 import '../controllers/appointment_controller.dart';
 import '../widgets/my_chip.dart';
 
@@ -17,25 +18,8 @@ class AppointmentFilterPage extends StatelessWidget {
         init: _controller,
         builder: (AppointmentController controller) {
           return Scaffold(
-            appBar: AppBar(
-              centerTitle: true,
-              elevation: 0.0,
-              title: const Text(
-                'Filter',
-                style: TextStyle(
-                  color: Colors.black,
-                ),
-              ),
-              backgroundColor: Colors.transparent,
-              leading: GestureDetector(
-                onTap: () {
-                  Get.back();
-                },
-                child: const Icon(
-                  Icons.arrow_back,
-                  color: Colors.black,
-                ),
-              ),
+            appBar: MyAppBar(
+              title: 'Filter',
             ),
             body: Padding(
               padding: EdgeInsets.symmetric(horizontal: 16.0.sp),
@@ -60,7 +44,8 @@ class AppointmentFilterPage extends StatelessWidget {
                           children: _controller.types
                               .map(
                                 (e) => MyTypeChip(
-                                  backgroundColor: Colors.greenAccent[100]!,
+                                  backgroundColor: Colors.indigo,
+                                  textColor: Colors.white,
                                   isChosen: controller.selectedType == e,
                                   label: e.label,
                                   value: e,

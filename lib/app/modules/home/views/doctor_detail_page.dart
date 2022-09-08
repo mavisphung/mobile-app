@@ -2,6 +2,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:hi_doctor_v2/app/common/constants.dart';
 import 'package:hi_doctor_v2/app/common/util/extensions.dart';
@@ -48,15 +49,13 @@ class _DoctorDetailPageState extends State<DoctorDetailPage> {
                   left: 12.0.sp,
                 ),
                 child: doctorController.isFavorite.value
-                    ? Icon(
+                    ? const Icon(
                         Icons.favorite,
                         color: Colors.red,
-                        size: 26.0.sp,
                       )
-                    : Icon(
+                    : const Icon(
                         Icons.favorite_outline,
                         color: Colors.black,
-                        size: 26.0.sp,
                       ),
               ),
             ),
@@ -347,41 +346,64 @@ class _DoctorDetailPageState extends State<DoctorDetailPage> {
           ),
         ),
       ),
-      bottomSheet: Container(
-        // width: Get.width,
-        height: Get.height.sp / 100 * 9,
-        padding: EdgeInsets.symmetric(horizontal: 12.0.sp),
-        decoration: BoxDecoration(
-          color: AppColors.bottomSheet,
-          // border: Border.all(color: Colors.black.withOpacity(0.125)),
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(35.0.sp),
-            topRight: Radius.circular(35.0.sp),
-          ),
-        ),
-        child: Center(
-          child: SizedBox(
-            width: Get.width.sp / 100 * 80,
-            height: 40.0.sp,
-            child: ElevatedButton(
-              style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all(AppColors.primary),
-                // overlayColor: MaterialStateProperty.all(Colors.transparent),
-                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                  RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20.0),
-                  ),
-                ),
+      // bottomSheet: Container(
+      //   width: Get.width,
+      //   height: Get.height.sp / 100 * 9,
+      //   padding: EdgeInsets.symmetric(horizontal: 12.0.sp),
+      //   decoration: BoxDecoration(
+      //     color: AppColors.bottomSheet,
+      //     // border: Border.all(color: Colors.black.withOpacity(0.125)),
+      //     borderRadius: BorderRadius.only(
+      //       topLeft: Radius.circular(35.0.sp),
+      //       topRight: Radius.circular(35.0.sp),
+      //     ),
+      //   ),
+      //   child: Center(
+      //     child: SizedBox(
+      //       width: Get.width.sp / 100 * 80,
+      //       height: 50.0.sp,
+      //       child: ElevatedButton(
+      //         style: ButtonStyle(
+      //           backgroundColor: MaterialStateProperty.all(AppColors.primary),
+      //           // overlayColor: MaterialStateProperty.all(Colors.transparent),
+      //           shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+      //             RoundedRectangleBorder(
+      //               borderRadius: BorderRadius.circular(15.0),
+      //             ),
+      //           ),
+      //         ),
+      //         child: Text(
+      //           'Make an appointment',
+      //           style: TextStyle(fontSize: 14.0.sp),
+      //         ),
+      //         onPressed: () {
+      //           Get.toNamed(Routes.BOOKING);
+      //         },
+      //       ),
+      //     ),
+      //   ),
+      // ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButton: SizedBox(
+        width: Get.width.sp / 100 * 80,
+        height: 50.sp,
+        child: ElevatedButton(
+          style: ButtonStyle(
+            backgroundColor: MaterialStateProperty.all(AppColors.primary),
+            // overlayColor: MaterialStateProperty.all(Colors.transparent),
+            shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+              RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(15.0),
               ),
-              child: Text(
-                'Make an appointment',
-                style: TextStyle(fontSize: 14.0.sp),
-              ),
-              onPressed: () {
-                Get.toNamed(Routes.BOOKING);
-              },
             ),
           ),
+          child: Text(
+            'Make an appointment',
+            style: TextStyle(fontSize: 14.0.sp),
+          ),
+          onPressed: () {
+            Get.toNamed(Routes.BOOKING);
+          },
         ),
       ),
     );
