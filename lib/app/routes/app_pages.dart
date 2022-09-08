@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:hi_doctor_v2/app/modules/appointment/appointment_page.dart';
 import 'package:hi_doctor_v2/app/modules/appointment/views/booking/booking_package_page.dart';
 import 'package:hi_doctor_v2/app/modules/appointment/views/booking/booking_page.dart';
+import 'package:hi_doctor_v2/app/modules/appointment/views/booking/booking_patient_detail.dart';
 import 'package:hi_doctor_v2/app/modules/auth/bindings/login_binding.dart';
 import 'package:hi_doctor_v2/app/modules/auth/bindings/register_binding.dart';
 import 'package:hi_doctor_v2/app/modules/auth/login_page.dart';
@@ -81,6 +82,13 @@ abstract class AppPages {
     GetPage(
       name: Routes.BOOKING_PACKAGE,
       page: () => BookingPackagePage(),
+      preventDuplicates: true,
+      fullscreenDialog: true,
+      transition: Transition.rightToLeftWithFade,
+    ),
+    GetPage(
+      name: Routes.BOOKING_PATIENT_DETAIL,
+      page: () => BookingPatientDetailPage(),
       preventDuplicates: true,
       fullscreenDialog: true,
       transition: Transition.rightToLeftWithFade,

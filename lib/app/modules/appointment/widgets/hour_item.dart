@@ -41,7 +41,7 @@ class _HourItemState extends State<HourItem> {
       },
       child: Container(
         padding: EdgeInsets.symmetric(
-          vertical: 8.0.sp,
+          vertical: 5.0.sp,
           horizontal: 16.0.sp,
         ),
         decoration: BoxDecoration(
@@ -54,9 +54,10 @@ class _HourItemState extends State<HourItem> {
         ),
         child: Text(
           widget.text,
+          textAlign: TextAlign.center,
           style: TextStyle(
-            fontSize: 16.5.sp,
-            fontWeight: FontWeight.w500,
+            fontSize: 15.0.sp,
+            fontWeight: FontWeight.bold,
             color: widget.isSelected ? Colors.white : AppColors.primary,
           ),
         ),

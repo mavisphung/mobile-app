@@ -99,7 +99,7 @@ class _DoctorDetailPageState extends State<DoctorDetailPage> {
                             Text(
                               'Dr. ${doctorController.doctor.firstName} ${doctorController.doctor.lastName}',
                               style: TextStyle(
-                                fontSize: 18.0.sp,
+                                fontSize: 14.0.sp,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
@@ -108,10 +108,16 @@ class _DoctorDetailPageState extends State<DoctorDetailPage> {
                               thickness: 0.65.sp,
                             ),
                             SizedBox(
-                              height: 32.0.sp,
-                              child: const Text('Bác sĩ khoa tổng hợp'),
+                              height: 30.0.sp,
+                              child: Text(
+                                'Bác sĩ khoa tổng hợp',
+                                style: TextStyle(fontSize: 11.5.sp),
+                              ),
                             ),
-                            const Text('Bệnh viện Hùng Vương, Tp. HCM, VN'),
+                            Text(
+                              'Bệnh viện Hùng Vương, Tp. HCM, VN',
+                              style: TextStyle(fontSize: 11.5.sp),
+                            ),
                           ],
                         ),
                       ),

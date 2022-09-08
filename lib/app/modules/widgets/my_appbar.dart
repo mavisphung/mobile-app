@@ -5,10 +5,11 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
   final Color backgroundColor = Colors.red;
   final String title;
   final List<Widget>? actions;
+  bool? centerTitle;
 
   /// you can add more fields that meet your needs
 
-  const MyAppBar({Key? key, required this.title, this.actions}) : super(key: key);
+  MyAppBar({Key? key, required this.title, this.actions, this.centerTitle = false}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +18,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
         title,
         style: const TextStyle(color: Colors.black),
       ),
-      centerTitle: true,
+      centerTitle: centerTitle,
       backgroundColor: Colors.transparent,
       elevation: 0.0,
       leading: GestureDetector(

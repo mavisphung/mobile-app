@@ -83,7 +83,9 @@ extension FutureExt<T> on Future<Response<T>> {
   // }
 }
 
-enum Gender { male, female, other }
+enum Gender { init, male, female, other }
+
+List<Gender> genders = [ Gender.male, Gender.female, Gender.other ];
 
 extension GenderExt on Gender {
   String get value {
@@ -92,6 +94,8 @@ extension GenderExt on Gender {
         return 'MALE';
       case Gender.female:
         return 'FEMALE';
+      case Gender.init:
+        return 'INIT';
       default:
         return 'OTHER';
     }
@@ -105,6 +109,8 @@ extension GenderExt2 on Gender {
         return 'Male';
       case Gender.female:
         return 'Female';
+      case Gender.init:
+        return 'Init';
       default:
         return 'Other';
     }

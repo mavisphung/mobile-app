@@ -9,6 +9,7 @@ import 'package:hi_doctor_v2/app/modules/appointment/widgets/booking_bottom_shee
 import 'package:hi_doctor_v2/app/modules/appointment/widgets/service_item.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/my_appbar.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/my_section_title.dart';
+import 'package:hi_doctor_v2/app/routes/app_pages.dart';
 
 class BookingPackagePage extends StatelessWidget {
   BookingPackagePage({Key? key}) : super(key: key);
@@ -41,7 +42,7 @@ class BookingPackagePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const MyAppBar(title: 'Select Package'),
+      appBar: MyAppBar(title: 'Select Package'),
       body: SingleChildScrollView(
         child: Container(
           margin: EdgeInsets.only(top: 17.5.sp),
@@ -127,6 +128,7 @@ class BookingPackagePage extends StatelessWidget {
         textButton: 'Next',
         onPressed: () {
           'You pressed Next button'.debugLog('BookingPackagePage');
+          Get.toNamed(Routes.BOOKING_PATIENT_DETAIL);
         },
       ),
     );

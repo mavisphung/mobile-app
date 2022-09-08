@@ -52,7 +52,7 @@ class _BookingAppointmentPageState extends State<BookingAppointmentPage> {
     _focusedDay = null;
   }
 
-  final double _crossAxisSpacing = 8, _mainAxisSpacing = 12, _aspectRatio = 2.8;
+  final double _crossAxisSpacing = 10, _mainAxisSpacing = 12, _aspectRatio = 3.0;
   final int _crossAxisCount = 3;
 
   @override
@@ -61,7 +61,7 @@ class _BookingAppointmentPageState extends State<BookingAppointmentPage> {
     var height = width / _aspectRatio;
 
     return Scaffold(
-      appBar: const MyAppBar(
+      appBar: MyAppBar(
         title: 'Make an appointment',
       ),
       body: SingleChildScrollView(

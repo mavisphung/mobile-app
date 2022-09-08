@@ -27,8 +27,12 @@ class ServiceItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      decoration: BoxDecoration(
+        color: AppColors.whiteHighlight,
+        borderRadius: BorderRadius.circular(12.0.sp),
+      ),
       margin: EdgeInsets.only(bottom: 20.0.sp),
-      padding: EdgeInsets.symmetric(horizontal: 16.0.sp, vertical: 8.0.sp),
+      padding: EdgeInsets.symmetric(horizontal: 16.0.sp, vertical: 16.0.sp),
       child: Row(
         children: [
           Container(
@@ -50,7 +54,7 @@ class ServiceItem extends StatelessWidget {
                 title,
                 style: TextStyle(
                   color: Colors.black,
-                  fontSize: 18.0.sp,
+                  fontSize: 16.0.sp,
                   fontWeight: FontWeight.bold,
                   overflow: TextOverflow.fade,
                 ),
@@ -62,8 +66,9 @@ class ServiceItem extends StatelessWidget {
                 description,
                 style: TextStyle(
                   color: Colors.black,
-                  fontSize: 12.0.sp,
+                  fontSize: 10.0.sp,
                   overflow: TextOverflow.fade,
+                  // wordSpacing: 0.1,
                 ),
               ),
             ],
