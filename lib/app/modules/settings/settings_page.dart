@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
@@ -14,7 +15,6 @@ enum SettingOption { myaccount, logout }
 class SettingsPage extends StatelessWidget {
   SettingsPage({Key? key}) : super(key: key);
   final SettingsController _controller = Get.put(SettingsController());
-  // final NavBarController _navbarController = Get.find<NavBarController>();
 
   void _logOut() async {
     final confirmLogout = await Utils.showConfirmDialog(Strings.logoutConfirmMsg.tr);
@@ -38,54 +38,58 @@ class SettingsPage extends StatelessWidget {
               elevation: 0.0,
             ),
             body: SingleChildScrollView(
+              physics: const BouncingScrollPhysics(),
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                padding: const EdgeInsets.symmetric(horizontal: 15.0),
                 child: Column(
                   children: [
                     UserProfile(),
                     Container(
                       margin: EdgeInsets.only(top: 22.0.sp),
+                      padding: EdgeInsets.symmetric(vertical: 15.0.sp, horizontal: 8.sp),
                       decoration: BoxDecoration(
                         color: Colors.white,
                         boxShadow: [
                           BoxShadow(
-                            color: Colors.black.withOpacity(0.25),
+                            color: Colors.black.withOpacity(0.08),
                             offset: const Offset(0, 4),
                             blurRadius: 4.0,
                           ),
                         ],
                         borderRadius: BorderRadius.all(
-                          Radius.circular(5.0.sp),
+                          Radius.circular(20.sp),
                         ),
                       ),
-                      padding: EdgeInsets.symmetric(vertical: 24.0.sp, horizontal: 16.0.sp),
                       child: Column(
                         children: [
                           UserProfileItem(
-                            svgAssetUrl: 'assets/images/ic_profile.svg',
-                            title: 'My Account',
+                            icon: SvgPicture.asset(
+                              'assets/images/icons/person.svg',
+                            ),
+                            title: 'My account',
                             description: 'Make changes to your account',
                             function: () {},
                           ),
-                          SizedBox(
-                            height: 25.0.sp,
-                          ),
                           UserProfileItem(
-                            svgAssetUrl: 'assets/images/ic_profile.svg',
+                            icon: const Icon(CupertinoIcons.doc_person),
                             title: 'Patient Profiles',
                             description: 'Manage your profiles',
                             function: () {
                               print('Not implement here');
                             },
                           ),
-                          SizedBox(
-                            height: 25.0.sp,
-                          ),
                           UserProfileItem(
-                            svgAssetUrl: 'assets/images/ic_logout.svg',
-                            title: 'Log Out',
+                            icon: SvgPicture.asset(
+                              'assets/images/icons/logout.svg',
+                              color: Colors.red,
+                              width: 25.sp,
+                              height: 25.sp,
+                            ),
+                            color: Colors.red,
+                            title: 'Log out',
                             description: 'Quit the app',
                             function: _logOut,
+                            isNavigator: false,
                           ),
                         ],
                       ),

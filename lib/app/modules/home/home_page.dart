@@ -36,123 +36,132 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: Size.fromHeight(40.sp),
-        child: AppBar(
-          backgroundColor: Colors.white,
-          elevation: 0.5,
-          actions: [
-            SizedBox(
-              width: 40.sp,
-              child: CustomIconButton(
-                onPressed: () => showSearch(
-                  context: context,
-                  delegate: CustomSearcDelegate(),
-                ),
-                icon: Icon(
-                  CupertinoIcons.search,
-                  color: AppColors.primary,
-                ),
-              ),
-            ),
-            Container(
-              width: 40.sp,
-              margin: EdgeInsets.only(right: 10.sp),
-              child: CustomIconButton(
-                onPressed: () {},
-                icon: Icon(
-                  CupertinoIcons.bell_fill,
-                  color: AppColors.primary,
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: EdgeInsets.only(
-            left: 10.sp,
-            right: 10.sp,
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  _getTitle(Strings.upcomingAppointment.tr),
-                  InkWell(
-                    onTap: () {},
-                    child: const Text(
-                      'See all',
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                    ),
-                  ),
-                ],
-              ),
-              const ReminderCard(),
-              _getTitle(Strings.category.tr),
-              SizedBox(
-                // height: 120.sp,
-                child: GridView.builder(
-                  physics: const NeverScrollableScrollPhysics(),
-                  shrinkWrap: true,
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                    crossAxisSpacing: 10.sp,
-                    mainAxisSpacing: 10.sp,
-                    childAspectRatio: 2.5,
-                  ),
-                  itemBuilder: (_, index) => CategoryItem(
-                    label: _categoriesList[index].label,
-                    image: _categoriesList[index].image,
-                  ),
-                  itemCount: _categoriesList.length,
-                ),
-              ),
-              _getTitle(Strings.latestSearchDoctor.tr),
-              FutureBuilder(
-                future: homeController.getDoctors(),
-                builder: (context, AsyncSnapshot snapshot) {
-                  if (snapshot.hasData) {
-                    return GetBuilder(
-                      init: homeController,
-                      builder: (_) {
-                        return SizedBox(
-                          height: 150.sp,
-                          width: double.infinity,
-                          child: ListView.builder(
-                            scrollDirection: Axis.horizontal,
-                            itemCount: homeController.doctorList.length,
-                            itemBuilder: (_, index) {
-                              var realDoctor = homeController.doctorList[index];
-                              // realDoctor.toJson().debugLog('Doctor');
-                              // 'Build again $index'.debugLog('DoctorList');
-                              return DoctorItem2(
-                                doctor: realDoctor,
-                              );
-                              // var doctor = _doctorList[index];
-                              // return DoctorItem(
-                              //   fullName: doctor.fullName,
-                              //   service: doctor.service,
-                              //   experienceYears: doctor.experienceYears,
-                              //   rating: doctor.rating,
-                              //   reviewNumber: doctor.reviewNumber,
-                              // );
-                            },
+      body: SafeArea(
+        child: SingleChildScrollView(
+          physics: const BouncingScrollPhysics(),
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 12.sp),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  padding: EdgeInsets.symmetric(vertical: 15.sp),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: Material(
+                          child: InkWell(
+                            borderRadius: BorderRadius.circular(15.sp),
+                            onTap: () => showSearch(
+                              context: context,
+                              delegate: CustomSearcDelegate(),
+                            ),
+                            child: Ink(
+                              padding: EdgeInsets.symmetric(vertical: 12.sp, horizontal: 15.sp),
+                              decoration: BoxDecoration(
+                                color: Colors.grey[200],
+                                borderRadius: BorderRadius.circular(15.sp),
+                              ),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: const [
+                                  Text('Search doctor or health issue'),
+                                  Icon(CupertinoIcons.search),
+                                ],
+                              ),
+                            ),
                           ),
-                        );
-                      },
-                    );
-                  }
-                  return CircularProgressIndicator();
-                },
-              ),
-              SizedBox(
-                height: 50.sp,
-              ),
-            ],
+                        ),
+                      ),
+                      SizedBox(
+                        width: 45.sp,
+                        child: CustomIconButton(
+                          onPressed: () {},
+                          icon: Icon(
+                            CupertinoIcons.bell_fill,
+                            color: AppColors.primary,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    _getTitle(Strings.upcomingAppointment.tr),
+                    InkWell(
+                      onTap: () {},
+                      child: const Text(
+                        'See all',
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                  ],
+                ),
+                const ReminderCard(),
+                _getTitle(Strings.category.tr),
+                SizedBox(
+                  // height: 120.sp,
+                  child: GridView.builder(
+                    physics: const NeverScrollableScrollPhysics(),
+                    shrinkWrap: true,
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      crossAxisSpacing: 5.sp,
+                      mainAxisSpacing: 5.sp,
+                      childAspectRatio: 3,
+                    ),
+                    itemBuilder: (_, index) => CategoryItem(
+                      label: _categoriesList[index].label,
+                      image: _categoriesList[index].image,
+                    ),
+                    itemCount: _categoriesList.length,
+                  ),
+                ),
+                _getTitle(Strings.latestSearchDoctor.tr),
+                FutureBuilder(
+                  future: homeController.getDoctors(),
+                  builder: (context, AsyncSnapshot snapshot) {
+                    if (snapshot.hasData) {
+                      return GetBuilder(
+                        init: homeController,
+                        builder: (_) {
+                          return SizedBox(
+                            height: 150.sp,
+                            width: double.infinity,
+                            child: ListView.builder(
+                              scrollDirection: Axis.horizontal,
+                              itemCount: homeController.doctorList.length,
+                              itemBuilder: (_, index) {
+                                var realDoctor = homeController.doctorList[index];
+                                // realDoctor.toJson().debugLog('Doctor');
+                                // 'Build again $index'.debugLog('DoctorList');
+                                return DoctorItem2(
+                                  doctor: realDoctor,
+                                );
+                                // var doctor = _doctorList[index];
+                                // return DoctorItem(
+                                //   fullName: doctor.fullName,
+                                //   service: doctor.service,
+                                //   experienceYears: doctor.experienceYears,
+                                //   rating: doctor.rating,
+                                //   reviewNumber: doctor.reviewNumber,
+                                // );
+                              },
+                            ),
+                          );
+                        },
+                      );
+                    }
+                    return CircularProgressIndicator();
+                  },
+                ),
+                SizedBox(
+                  height: 50.sp,
+                ),
+              ],
+            ),
           ),
         ),
       ),

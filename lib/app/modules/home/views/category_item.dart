@@ -15,33 +15,41 @@ class CategoryItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {},
+      borderRadius: BorderRadius.circular(5.sp),
       child: Ink(
         decoration: BoxDecoration(
-          color: Colors.grey[100],
-          borderRadius: BorderRadius.circular(10.sp),
+          color: Colors.white,
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.08),
+              offset: const Offset(0, 2),
+              blurRadius: 2.0,
+            ),
+          ],
+          borderRadius: BorderRadius.circular(5.sp),
         ),
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Row(
-            // mainAxisAlignment: MainAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Image.asset(
                 image,
                 fit: BoxFit.cover,
-                width: 38.0,
-                height: 38.0,
+                width: 33.0,
+                height: 33.0,
               ),
               Expanded(
                 child: Padding(
                   padding: EdgeInsets.only(
                     left: 10.sp,
-                    top: 8.sp,
+                    // top: 8.sp,
                   ),
                   child: Text(
                     label,
                     textAlign: TextAlign.start,
-                    overflow: TextOverflow.fade,
+                    overflow: TextOverflow.visible,
                   ),
                 ),
               ),

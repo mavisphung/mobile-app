@@ -134,7 +134,7 @@ extension AppointmentTypeExt2 on AppointmentType {
       case AppointmentType.offline:
         return 'Offline';
       default:
-        return 'all';
+        return 'All';
     }
   }
 }
