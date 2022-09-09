@@ -131,4 +131,6 @@ abstract class Utils {
     final DateFormat formatter = DateFormat("yyyy-MM-dd HH:mm:ss");
     return formatter.format(date);
   }
+
+  static String formatDate(DateTime date) => DateFormat('yyyy-MM-dd').format(date);
 }

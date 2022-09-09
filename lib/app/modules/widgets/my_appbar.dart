@@ -7,8 +7,11 @@ import 'package:hi_doctor_v2/app/modules/widgets/custom_icon_button.dart';
 class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
   final List<Widget>? actions;
+  bool? centerTitle;
 
-  const MyAppBar({Key? key, required this.title, this.actions}) : super(key: key);
+  /// you can add more fields that meet your needs
+
+  MyAppBar({Key? key, required this.title, this.actions, this.centerTitle = false}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +23,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
           fontSize: 16.sp,
         ),
       ),
-      centerTitle: true,
+      centerTitle: centerTitle,
       backgroundColor: Colors.transparent,
       elevation: 0,
       leading: CustomIconButton(

@@ -18,7 +18,7 @@ class AppointmentFilterPage extends StatelessWidget {
         init: _controller,
         builder: (AppointmentController controller) {
           return Scaffold(
-            appBar: const MyAppBar(
+            appBar: MyAppBar(
               title: 'Filter',
             ),
             body: Padding(
