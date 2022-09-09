@@ -5,10 +5,12 @@ import 'package:get/get.dart';
 import 'package:hi_doctor_v2/app/common/util/extensions.dart';
 import 'package:hi_doctor_v2/app/common/util/utils.dart';
 import 'package:hi_doctor_v2/app/common/values/colors.dart';
+import 'package:hi_doctor_v2/app/common/values/strings.dart';
 import 'package:hi_doctor_v2/app/modules/appointment/controllers/booking/patient_controller.dart';
 
-class MyDateTimeField extends StatefulWidget {
-  String hintText;
+class MyDateTimeField extends StatelessWidget {
+  final String hintText;
+  DateTime? _selectedDate;
 
   MyDateTimeField({
     Key? key,
@@ -16,13 +18,6 @@ class MyDateTimeField extends StatefulWidget {
   }) : super(key: key);
 
   final PatientController patientController = Get.find<PatientController>();
-
-  @override
-  State<MyDateTimeField> createState() => _MyDateTimeFieldState();
-}
-
-class _MyDateTimeFieldState extends State<MyDateTimeField> {
-  DateTime? _selectedDate;
 
   @override
   Widget build(BuildContext context) {
@@ -47,12 +42,9 @@ class _MyDateTimeFieldState extends State<MyDateTimeField> {
                       maximumDate: DateTime.now(),
                       maximumYear: DateTime.now().year,
                       onDateTimeChanged: (DateTime val) {
-                        setState(() {
-                          _selectedDate = val;
-                          widget.patientController.dob = val;
-                        });
+                        _selectedDate = val;
                         // controller.dob = val;
-                        widget.patientController.dob.toString().debugLog('Picked date');
+                        patientController.rxDob.value.toString().debugLog('Picked date');
                       },
                     ),
                   ),
@@ -61,6 +53,7 @@ class _MyDateTimeFieldState extends State<MyDateTimeField> {
                   CupertinoButton(
                     child: const Text('OK'),
                     onPressed: () {
+                      patientController.rxDob.value = Utils.formatDate(_selectedDate!);
                       Get.back();
                       FocusScope.of(context).unfocus();
                     },
@@ -81,12 +74,14 @@ class _MyDateTimeFieldState extends State<MyDateTimeField> {
         ),
         child: Row(
           children: [
-            Text(
-              _selectedDate != null ? Utils.formatDate(_selectedDate!) : widget.hintText,
-              style: TextStyle(
-                color: Colors.black54,
-                fontSize: 16.0.sp,
+            ObxValue<RxString>((data) => Text(
+                patientController.rxDob.value,
+                style: TextStyle(
+                  color: Colors.black54,
+                  fontSize: 16.0.sp,
+                ),
               ),
+              patientController.rxDob
             ),
             const Spacer(),
             const Icon(Icons.calendar_month),

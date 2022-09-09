@@ -1,20 +1,21 @@
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:hi_doctor_v2/app/common/util/extensions.dart';
+import 'package:hi_doctor_v2/app/common/values/strings.dart';
 import 'package:intl/intl.dart';
 
 class PatientController extends GetxController {
   TextEditingController firstNameController = TextEditingController();
   TextEditingController lastNameController = TextEditingController();
   TextEditingController problemController = TextEditingController();
-  Rx<DateTime> _rxDob = DateTime.now().obs;
+  final RxString rxDob = Strings.dob.tr.obs;
 
-  DateTime get dob => _rxDob.value;
-  final DateFormat _dateFormatter = DateFormat('yyyy-MM-dd');
+  // String get dob => _rxDob.value;
+  // final DateFormat _dateFormatter = DateFormat('yyyy-MM-dd');
 
-  set dob(DateTime value) {
-    _rxDob.value = value;
-  }
+  // set dob(String value) {
+  //   _rxDob.value = value;
+  // }
 
   final Rx<Gender> _rxGender = Gender.init.obs;
 
