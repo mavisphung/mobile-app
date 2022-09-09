@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 
 import '../../common/util/utils.dart';
@@ -50,7 +51,7 @@ class NavBar extends StatelessWidget {
                   icon: Icons.calendar_today,
                   activeIcon: Icons.calendar_today_rounded,
                   label: Strings.appointment.tr,
-                  size: 20.sp,
+                  size: 19.sp,
                 ),
                 _bottomNavigationBarItem(
                   icon: CupertinoIcons.chat_bubble_2,

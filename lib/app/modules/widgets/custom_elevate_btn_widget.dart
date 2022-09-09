@@ -34,9 +34,12 @@ class CustomElevatedButtonWidget extends StatelessWidget {
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.0)),
       ),
       child: status == Status.loading
-          ? SpinKitThreeBounce(
-              color: Colors.white70,
-              size: 20.sp,
+          ? Padding(
+              padding: EdgeInsets.symmetric(vertical: 3.sp),
+              child: SpinKitThreeBounce(
+                color: Colors.white70,
+                size: 20.sp,
+              ),
             )
           : textChild != null
               ? Text(

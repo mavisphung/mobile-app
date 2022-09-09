@@ -1,8 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:hi_doctor_v2/app/common/values/colors.dart';
+
 class ReminderCard extends StatelessWidget {
   const ReminderCard({Key? key}) : super(key: key);
 
@@ -64,8 +66,8 @@ class ReminderCard extends StatelessWidget {
               ),
               child: Row(
                 children: [
-                  const Icon(
-                    CupertinoIcons.calendar,
+                  SvgPicture.asset(
+                    'assets/images/icons/calendar.svg',
                     color: Colors.white,
                   ),
                   Padding(
@@ -76,8 +78,8 @@ class ReminderCard extends StatelessWidget {
                     ),
                   ),
                   const Spacer(),
-                  const Icon(
-                    CupertinoIcons.time,
+                  SvgPicture.asset(
+                    'assets/images/icons/clock.svg',
                     color: Colors.white,
                   ),
                   Padding(

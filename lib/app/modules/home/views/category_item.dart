@@ -30,9 +30,8 @@ class CategoryItem extends StatelessWidget {
         ),
         child: Padding(
           padding: const EdgeInsets.all(8.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Image.asset(
                 image,
@@ -43,13 +42,13 @@ class CategoryItem extends StatelessWidget {
               Expanded(
                 child: Padding(
                   padding: EdgeInsets.only(
-                    left: 10.sp,
-                    // top: 8.sp,
+                    // left: 10.sp,
+                    top: 4.sp,
                   ),
                   child: Text(
                     label,
                     textAlign: TextAlign.start,
-                    overflow: TextOverflow.visible,
+                    overflow: TextOverflow.ellipsis,
                   ),
                 ),
               ),

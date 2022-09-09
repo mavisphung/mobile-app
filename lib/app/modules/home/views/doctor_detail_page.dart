@@ -49,13 +49,15 @@ class _DoctorDetailPageState extends State<DoctorDetailPage> {
                   left: 12.0.sp,
                 ),
                 child: doctorController.isFavorite.value
-                    ? const Icon(
-                        Icons.favorite,
-                        color: Colors.red,
+                    ? SvgPicture.asset(
+                        'assets/images/icons/star.svg',
+                        color: Colors.amber,
                       )
-                    : const Icon(
-                        Icons.favorite_outline,
-                        color: Colors.black,
+                    : SvgPicture.asset(
+                        'assets/images/icons/star_fill.svg',
+                        color: Colors.amber,
+                        width: 23.sp,
+                        height: 23.sp,
                       ),
               ),
             ),
