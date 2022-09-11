@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:hi_doctor_v2/app/common/util/extensions.dart';
 import 'package:hi_doctor_v2/app/common/values/colors.dart';
+import 'package:hi_doctor_v2/app/common/values/strings.dart';
 import 'package:hi_doctor_v2/app/modules/appointment/controllers/booking/booking_controller.dart';
 import 'package:hi_doctor_v2/app/modules/appointment/models/working_hour_item.dart';
 import 'package:hi_doctor_v2/app/modules/appointment/widgets/booking_bottom_sheet.dart';
@@ -38,11 +39,14 @@ class _BookingAppointmentPageState extends State<BookingAppointmentPage> {
     WorkingHour(id: 1, title: '09:00 AM', value: '09:00'),
     WorkingHour(id: 2, title: '09:30 AM', value: '09:30'),
     WorkingHour(id: 3, title: '10:00 AM', value: '10:00'),
-    WorkingHour(id: 4, title: '10:00 AM', value: '10:00'),
+    WorkingHour(id: 4, title: '10:30 AM', value: '10:30'),
     WorkingHour(id: 5, title: '11:00 AM', value: '11:00'),
     WorkingHour(id: 6, title: '11:30 AM', value: '11:30'),
     WorkingHour(id: 7, title: '12:00 PM', value: '12:00'),
     WorkingHour(id: 8, title: '01:00 PM', value: '13:00'),
+    WorkingHour(id: 9, title: '01:00 PM', value: '13:00'),
+    WorkingHour(id: 10, title: '01:00 PM', value: '13:00'),
+    WorkingHour(id: 11, title: '01:00 PM', value: '13:00'),
   ];
 
   @override
@@ -52,40 +56,50 @@ class _BookingAppointmentPageState extends State<BookingAppointmentPage> {
     _focusedDay = null;
   }
 
-  final double _crossAxisSpacing = 10, _mainAxisSpacing = 12, _aspectRatio = 3.0;
-  final int _crossAxisCount = 3;
-
   @override
   Widget build(BuildContext context) {
-    var width = (Get.width - ((_crossAxisCount - 1) * _crossAxisSpacing)) / _crossAxisCount;
-    var height = width / _aspectRatio;
-
     return Scaffold(
       appBar: MyAppBar(
-        title: 'Make an appointment',
+        title: 'Book an appointment',
       ),
       body: SingleChildScrollView(
-        child: Container(
-          margin: EdgeInsets.only(top: 17.5.sp),
-          padding: EdgeInsets.symmetric(horizontal: 12.0.sp),
+        physics: const BouncingScrollPhysics(),
+        child: Padding(
+          padding: EdgeInsets.symmetric(
+            horizontal: 12.0.sp,
+          ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               // -------------------------------------------------------------------------------
-              const MySectionTitle(title: 'Select Date'),
+              MySectionTitle(
+                title: 'Select date',
+                paddingLeft: 8.sp,
+              ),
               Container(
-                height: 270.0.sp,
-                margin: EdgeInsets.only(bottom: 20.0.sp),
-                padding: EdgeInsets.symmetric(horizontal: 15.0.sp),
+                height: 330.0.sp,
+                margin: EdgeInsets.only(bottom: 30.0.sp),
+                padding: EdgeInsets.symmetric(
+                  vertical: 15.sp,
+                  horizontal: 15.0.sp,
+                ),
                 decoration: BoxDecoration(
-                  color: const Color(0xFFEEF4FF),
-                  borderRadius: BorderRadius.circular(30.0.sp),
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(25.0.sp),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.12),
+                      offset: const Offset(0, 2),
+                      blurRadius: 4.0.sp,
+                    ),
+                  ],
                 ),
                 child: GetBuilder(
                   init: bookingController,
                   builder: (BookingController controller) {
                     return TableCalendar(
                       shouldFillViewport: true,
+                      daysOfWeekHeight: 25.sp,
                       calendarStyle: CalendarStyle(
                         todayDecoration: BoxDecoration(
                           shape: BoxShape.circle,
@@ -98,7 +112,6 @@ class _BookingAppointmentPageState extends State<BookingAppointmentPage> {
                       ),
                       availableCalendarFormats: const {
                         CalendarFormat.month: 'Month',
-                        // CalendarFormat.week: '',
                       },
                       firstDay: DateTime.utc(_currentDate.year, _currentDate.month, _currentDate.day),
                       lastDay: DateTime.utc(_currentDate.year, _currentDate.month + 1, _currentDate.day),
@@ -139,55 +152,62 @@ class _BookingAppointmentPageState extends State<BookingAppointmentPage> {
                 ),
               ),
               // -------------------------------------------------------------------------------
-              const MySectionTitle(title: 'Select Hour'),
-              SizedBox(
-                width: Get.width.sp,
-                child: GetBuilder(
-                  init: bookingController,
-                  builder: (BookingController controller) {
-                    return GridView.builder(
-                      physics: const NeverScrollableScrollPhysics(),
-                      shrinkWrap: true,
-                      itemCount: workingHours.length,
-                      scrollDirection: Axis.vertical,
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: _crossAxisCount,
-                        crossAxisSpacing: _crossAxisSpacing,
-                        mainAxisSpacing: _mainAxisSpacing,
-                        childAspectRatio: _aspectRatio,
-                      ),
-                      itemBuilder: (_, int index) {
-                        WorkingHour e = workingHours[index];
-                        return HourItem(
-                          text: e.title!,
-                          id: e.id!,
-                          isSelected: controller.selectedId == e.id ? true : false,
-                        );
-                      },
-                    );
-                  },
-                ),
+              MySectionTitle(
+                title: 'Select hour',
+                paddingLeft: 8.sp,
               ),
-              SizedBox(height: 80.0.sp),
+              GetBuilder(
+                init: bookingController,
+                builder: (BookingController controller) {
+                  return GridView.builder(
+                    padding: EdgeInsets.only(bottom: 5.sp),
+                    physics: const NeverScrollableScrollPhysics(),
+                    shrinkWrap: true,
+                    itemCount: workingHours.length,
+                    gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+                      crossAxisSpacing: 10.sp,
+                      mainAxisSpacing: 20.sp,
+                      maxCrossAxisExtent: 80.sp,
+                      mainAxisExtent: 50.sp,
+                    ),
+                    itemBuilder: (_, int index) {
+                      WorkingHour e = workingHours[index];
+                      return HourItem(
+                        text: e.title!,
+                        id: e.id!,
+                        isSelected: controller.selectedId == e.id ? true : false,
+                      );
+                    },
+                  );
+                },
+              ),
+              SizedBox(height: 90.0.sp),
             ],
           ),
         ),
       ),
-      bottomSheet: BookingBottomSheet(
-        textButton: 'Next',
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButton: SizedBox(
         width: Get.width.sp / 100 * 80,
-        height: 40.0.sp,
-        decoration: BoxDecoration(
-          color: Colors.white,
-          // border: Border.all(color: Colors.black.withOpacity(0.125)),
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(35.0.sp),
-            topRight: Radius.circular(35.0.sp),
+        height: 50.sp,
+        child: ElevatedButton(
+          style: ButtonStyle(
+            backgroundColor: MaterialStateProperty.all(AppColors.primary),
+            // overlayColor: MaterialStateProperty.all(Colors.transparent),
+            shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+              RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(15.0),
+              ),
+            ),
           ),
+          child: Text(
+            Strings.kContinue.tr,
+            style: TextStyle(fontSize: 14.0.sp),
+          ),
+          onPressed: () {
+            Get.toNamed(Routes.BOOKING_PACKAGE, preventDuplicates: true);
+          },
         ),
-        onPressed: () {
-          Get.toNamed(Routes.BOOKING_PACKAGE, preventDuplicates: true);
-        },
       ),
     );
   }

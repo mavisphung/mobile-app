@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../../common/constants.dart';
-import '../../../common/storage/storage.dart';
-import '../../../models/user_info.dart';
-import '../../../routes/app_pages.dart';
+import 'package:hi_doctor_v2/app/common/storage/storage.dart';
+import 'package:hi_doctor_v2/app/models/user_info.dart';
+import 'package:hi_doctor_v2/app/routes/app_pages.dart';
 
 class SettingsController extends GetxController {
   TextEditingController emailController = TextEditingController();
@@ -26,13 +25,13 @@ class SettingsController extends GetxController {
     print('DATA: $data');
     userInfo.value = UserInfo2(
       id: data?['id'],
-      email: data?['email'] ?? '',
-      firstName: data?['firstName'] ?? '',
-      lastName: data?['lastName'] ?? '',
-      address: data?['address'] ?? '',
-      gender: data?['gender'] ?? '',
-      phoneNumber: data?['phoneNumber'] ?? '',
-      avatar: data?['avatar'] ?? Constants.defaultAvatar,
+      email: data?['email'],
+      firstName: data?['firstName'],
+      lastName: data?['lastName'],
+      address: data?['address'],
+      gender: data?['gender'],
+      phoneNumber: data?['phoneNumber'],
+      avatar: data?['avatar'],
     );
   }
 }

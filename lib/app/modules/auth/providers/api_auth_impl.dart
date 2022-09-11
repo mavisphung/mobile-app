@@ -34,8 +34,6 @@ class ApiAuthImpl extends GetConnect with ApiAuth {
     return get(
       '/user/me',
       headers: {
-        // "content-type": "application/json",
-        // "accept": "application/json",
         "Authorization": "Bearer $accessToken",
       },
     );

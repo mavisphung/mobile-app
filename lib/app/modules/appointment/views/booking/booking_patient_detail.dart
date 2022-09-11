@@ -1,29 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:hi_doctor_v2/app/common/util/extensions.dart';
-import 'package:hi_doctor_v2/app/common/util/validators.dart';
 import 'package:hi_doctor_v2/app/common/values/colors.dart';
 import 'package:hi_doctor_v2/app/common/values/strings.dart';
 import 'package:hi_doctor_v2/app/modules/appointment/controllers/booking/patient_controller.dart';
 import 'package:hi_doctor_v2/app/modules/appointment/widgets/date_time_field_widget.dart';
-import 'package:hi_doctor_v2/app/modules/widgets/custom_textfield_widget.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/my_appbar.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/my_section_title.dart';
 
 class BookingPatientDetailPage extends StatelessWidget {
   final _formKey = GlobalKey<FormState>();
-  final _firstNameFocusNode = FocusNode();
-  final _lastNameFocusNode = FocusNode();
-  final _problemFocusNode = FocusNode();
+  // final _problemFocusNode = FocusNode();
 
   final PatientController _controller = Get.put(PatientController());
+  final List<int> list = List.generate(4, (index) => index + 1);
 
   BookingPatientDetailPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    var dropdownValue = list.first;
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: MyAppBar(title: 'Patient Details'),
       body: SingleChildScrollView(
         child: Container(
@@ -32,8 +30,6 @@ class BookingPatientDetailPage extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // ------------- Choose patient section -------------
-              const MySectionTitle(title: 'Patient\'s Information'),
               Container(
                 padding: EdgeInsets.only(top: 15.0.sp),
                 child: Form(
@@ -44,71 +40,44 @@ class BookingPatientDetailPage extends StatelessWidget {
                       return Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          // input firstName and lastName
-                          Row(
-                            children: [
-                              Expanded(
-                                child: CustomTextFieldWidget2(
-                                  withAsterisk: false,
-                                  validator: (value) => Validators.validateEmpty(value),
-                                  focusNode: _firstNameFocusNode,
-                                  controller: _controller.firstNameController,
-                                  onFieldSubmitted: (_) => FocusScope.of(context).requestFocus(_firstNameFocusNode),
-                                  hintText: '',
-                                  labelText: 'First Name',
-                                ),
-                              ),
-                              SizedBox(
-                                width: 12.0.sp,
-                              ),
-                              Expanded(
-                                child: CustomTextFieldWidget2(
-                                  withAsterisk: false,
-                                  validator: (value) => Validators.validateEmpty(value),
-                                  focusNode: _lastNameFocusNode,
-                                  controller: _controller.lastNameController,
-                                  onFieldSubmitted: (_) => FocusScope.of(context).requestFocus(_lastNameFocusNode),
-                                  hintText: '',
-                                  labelText: 'Last Name',
-                                ),
-                              ),
-                            ],
-                          ),
-                          // TODO: Fix this dropdown button
-                          // select gender
+                          // ------------- Choose patient section -------------
+                          const MySectionTitle(title: 'Patient\'s information'),
                           Container(
-                            margin: EdgeInsets.symmetric(vertical: 15.0.sp),
-                            padding: EdgeInsets.symmetric(horizontal: 12.0.sp, vertical: 10.0.sp),
-                            width: Get.width,
-                            // height: 60.0.sp,
-                            decoration: BoxDecoration(
-                              color: AppColors.whiteHighlight,
-                              borderRadius: BorderRadius.circular(10.0.sp),
+                            margin: const EdgeInsets.only(bottom: 15.0),
+                            width: double.infinity,
+                            padding: const EdgeInsets.symmetric(
+                              vertical: 2.0,
+                              horizontal: 16.0,
                             ),
-                            child: DropdownButton<Gender>(
-                              // style: TextStyle(padding),
-                              value: controller.gender != Gender.init ? controller.gender : null,
+                            decoration: BoxDecoration(
+                              color: const Color(0xFFF5F5F5),
+                              borderRadius: BorderRadius.circular(15.0.sp),
+                            ),
+                            child: DropdownButton<int>(
+                              value: dropdownValue,
                               icon: Icon(
                                 Icons.arrow_drop_down_rounded,
                                 size: 35.0.sp,
                               ),
                               isExpanded: true,
-                              underline: Container(),
-                              hint: const Text('Select gender'),
+                              underline: const SizedBox.shrink(),
+                              hint: const Text('Select patient profile'),
                               borderRadius: BorderRadius.circular(10.0),
-                              items: genders
+                              items: list
                                   .map(
-                                    (e) => DropdownMenuItem<Gender>(
+                                    (e) => DropdownMenuItem<int>(
                                       value: e,
-                                      child: Text(e.label),
+                                      child: Text('$e profile'),
                                     ),
                                   )
                                   .toList(),
-                              onChanged: (Gender? gender) {
-                                gender!.value.toString().debugLog('Select gender');
-                                controller.gender = gender;
+                              onChanged: (value) {
+                                dropdownValue = value ?? 1;
                               },
                             ),
+                          ),
+                          SizedBox(
+                            height: 8.0.sp,
                           ),
                           // Dob picker
                           MyDateTimeField(hintText: Strings.dob.tr),
@@ -116,22 +85,31 @@ class BookingPatientDetailPage extends StatelessWidget {
                           SizedBox(
                             height: 16.0.sp,
                           ),
-                          const MySectionTitle(title: 'Write Your Problem'),
-                          CustomTextFieldWidget2(
-                            focusNode: _problemFocusNode,
-                            controller: controller.problemController,
-                            // TODO: Error not showing hint text when unfocus
-                            hintText: 'Description your health status, what you are suffering...',
-                            keyboardType: TextInputType.multiline,
-                            maxLines: 5,
-                            withAsterisk: false,
-                            autovalidateMode: AutovalidateMode.onUserInteraction,
+                          const MySectionTitle(title: 'Write your problem'),
+                          TextFormField(
                             validator: (String? value) {
                               if (value!.length >= 1000) {
                                 return 'Limit 1000 characters';
                               }
                               return null;
                             },
+                            focusNode: FocusNode(),
+                            controller: controller.problemController,
+                            decoration: InputDecoration(
+                              hintText: 'Description your health status, what you are suffering...',
+                              contentPadding: EdgeInsets.only(top: 16.sp, bottom: 16.sp, left: 18.sp, right: -18.sp),
+                              enabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide.none,
+                                borderRadius: BorderRadius.circular(15.0),
+                              ),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(15.0),
+                              ),
+                              filled: true,
+                              fillColor: AppColors.whiteHighlight,
+                            ),
+                            keyboardType: TextInputType.multiline,
+                            maxLines: 5,
                           ),
                         ],
                       );
@@ -141,6 +119,26 @@ class BookingPatientDetailPage extends StatelessWidget {
               ),
             ],
           ),
+        ),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButton: SizedBox(
+        width: Get.width.sp / 100 * 80,
+        height: 50.sp,
+        child: ElevatedButton(
+          style: ButtonStyle(
+            backgroundColor: MaterialStateProperty.all(AppColors.primary),
+            shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+              RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(15.0),
+              ),
+            ),
+          ),
+          child: Text(
+            Strings.kContinue.tr,
+            style: TextStyle(fontSize: 14.0.sp),
+          ),
+          onPressed: () {},
         ),
       ),
     );

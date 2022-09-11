@@ -3,9 +3,10 @@ import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:hi_doctor_v2/app/common/util/extensions.dart';
+import 'package:hi_doctor_v2/app/common/values/colors.dart';
+import 'package:hi_doctor_v2/app/common/values/strings.dart';
 import 'package:hi_doctor_v2/app/modules/appointment/controllers/booking/booking_controller.dart';
 import 'package:hi_doctor_v2/app/modules/appointment/controllers/booking/package_controller.dart';
-import 'package:hi_doctor_v2/app/modules/appointment/widgets/booking_bottom_sheet.dart';
 import 'package:hi_doctor_v2/app/modules/appointment/widgets/service_item.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/my_appbar.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/my_section_title.dart';
@@ -51,7 +52,7 @@ class BookingPackagePage extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               // -------------------------------------------------------------------------------
-              const MySectionTitle(title: 'Select Duration'),
+              const MySectionTitle(title: 'Select duration'),
               Container(
                 margin: const EdgeInsets.only(bottom: 15.0),
                 width: double.infinity,
@@ -70,14 +71,13 @@ class BookingPackagePage extends StatelessWidget {
                   init: packageController,
                   builder: (PackageController controller) {
                     return DropdownButton<int>(
-                      // style: TextStyle(padding),
                       value: controller.durationId < 0 ? null : controller.durationId,
                       icon: Icon(
                         Icons.arrow_drop_down_rounded,
                         size: 35.0.sp,
                       ),
                       isExpanded: true,
-                      underline: Container(),
+                      underline: const SizedBox.shrink(),
                       hint: const Text('Select duration'),
                       borderRadius: BorderRadius.circular(10.0),
                       items: durations
@@ -98,7 +98,7 @@ class BookingPackagePage extends StatelessWidget {
               ),
               // -------------------------------------------------------------------------------
               SizedBox(height: 20.0.sp),
-              const MySectionTitle(title: 'Select Package'),
+              const MySectionTitle(title: 'Select package'),
               ServiceItem(
                 title: 'Messaging',
                 description: 'Chat messages with doctor',
@@ -124,12 +124,27 @@ class BookingPackagePage extends StatelessWidget {
           ),
         ),
       ),
-      bottomSheet: BookingBottomSheet(
-        textButton: 'Next',
-        onPressed: () {
-          'You pressed Next button'.debugLog('BookingPackagePage');
-          Get.toNamed(Routes.BOOKING_PATIENT_DETAIL);
-        },
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButton: SizedBox(
+        width: Get.width.sp / 100 * 80,
+        height: 50.sp,
+        child: ElevatedButton(
+          style: ButtonStyle(
+            backgroundColor: MaterialStateProperty.all(AppColors.primary),
+            shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+              RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(15.0),
+              ),
+            ),
+          ),
+          child: Text(
+            Strings.kContinue.tr,
+            style: TextStyle(fontSize: 14.0.sp),
+          ),
+          onPressed: () {
+            Get.toNamed(Routes.BOOKING_PATIENT_DETAIL, preventDuplicates: true);
+          },
+        ),
       ),
     );
   }

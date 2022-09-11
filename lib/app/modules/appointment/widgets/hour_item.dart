@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:hi_doctor_v2/app/common/util/extensions.dart';
 import 'package:hi_doctor_v2/app/common/values/colors.dart';
 import 'package:hi_doctor_v2/app/modules/appointment/controllers/booking/booking_controller.dart';
 
@@ -45,20 +44,27 @@ class _HourItemState extends State<HourItem> {
           horizontal: 16.0.sp,
         ),
         decoration: BoxDecoration(
-          border: Border.all(
-            color: AppColors.primary,
-            width: 2.5.sp,
-          ),
-          borderRadius: BorderRadius.circular(25.0.sp),
+          // border: Border.all(
+          //   color: AppColors.primary,
+          //   width: 2.5.sp,
+          // ),
+          borderRadius: BorderRadius.circular(10.0.sp),
           color: widget.isSelected ? AppColors.primary : Colors.white,
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.12),
+              offset: const Offset(0, 2),
+              blurRadius: 4.0.sp,
+            ),
+          ],
         ),
         child: Text(
           widget.text,
           textAlign: TextAlign.center,
           style: TextStyle(
-            fontSize: 15.0.sp,
-            fontWeight: FontWeight.bold,
-            color: widget.isSelected ? Colors.white : AppColors.primary,
+            fontSize: 12.0.sp,
+            fontWeight: FontWeight.w400,
+            color: widget.isSelected ? Colors.white : Colors.black,
           ),
         ),
       ),

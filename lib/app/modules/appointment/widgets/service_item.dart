@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:hi_doctor_v2/app/common/util/extensions.dart';
@@ -7,11 +6,11 @@ import 'package:hi_doctor_v2/app/common/values/colors.dart';
 import 'package:hi_doctor_v2/app/modules/appointment/controllers/booking/package_controller.dart';
 
 class ServiceItem extends StatelessWidget {
-  String title;
-  String description;
-  int serviceId;
-  int price;
-  IconData iconData;
+  final String title;
+  final String description;
+  final int serviceId;
+  final int price;
+  final IconData iconData;
 
   ServiceItem({
     Key? key,
@@ -40,7 +39,14 @@ class ServiceItem extends StatelessWidget {
             padding: EdgeInsets.all(12.5.sp),
             decoration: BoxDecoration(
               shape: BoxShape.circle,
-              color: AppColors.primary.withOpacity(0.2),
+              color: Colors.white,
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.08),
+                  offset: const Offset(0, 2),
+                  blurRadius: 2.0.sp,
+                ),
+              ],
             ),
             child: Icon(
               iconData,
@@ -54,9 +60,8 @@ class ServiceItem extends StatelessWidget {
                 title,
                 style: TextStyle(
                   color: Colors.black,
-                  fontSize: 16.0.sp,
+                  fontSize: 14.0.sp,
                   fontWeight: FontWeight.bold,
-                  overflow: TextOverflow.fade,
                 ),
               ),
               SizedBox(
@@ -77,11 +82,11 @@ class ServiceItem extends StatelessWidget {
           Column(
             children: [
               Text(
-                '\$$price',
+                '\$ $price',
                 style: TextStyle(
                   color: AppColors.primary,
                   fontSize: 18.0.sp,
-                  fontWeight: FontWeight.bold,
+                  fontWeight: FontWeight.w500,
                 ),
               ),
               Text(

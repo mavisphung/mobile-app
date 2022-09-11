@@ -113,10 +113,8 @@ abstract class Utils {
   }
 
   static Future<void> upload(String url, File file, String fileExt) async {
-    // httpClient.baseUrl = url;
-    // print('File path: ${file.path}');
-    // print('Url: $url');
     final mime = lookupMimeType(file.path);
+    print('============ MIME: $mime');
     var request = http.Request('put', Uri.parse(url));
     request.headers['Content-Type'] = mime ?? 'application/octet-stream';
     request.bodyBytes = file.readAsBytesSync();

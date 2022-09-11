@@ -2,12 +2,12 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:get/get.dart';
-import 'package:image_picker/image_picker.dart';
 
-import '../../../common/constants.dart';
-import '../../../common/storage/storage.dart';
-import '../../../models/user_info.dart';
-import './api_settings.dart';
+import 'package:hi_doctor_v2/app/common/constants.dart';
+import 'package:hi_doctor_v2/app/common/storage/storage.dart';
+import 'package:hi_doctor_v2/app/models/user_info.dart';
+import 'package:hi_doctor_v2/app/modules/settings/providers/api_settings.dart';
+import 'package:image_picker/image_picker.dart';
 
 class ApiSettingsImpl extends GetConnect with ApiSettings {
   Map<String, String> headers = {
@@ -32,12 +32,13 @@ class ApiSettingsImpl extends GetConnect with ApiSettings {
     Map<String, dynamic> body = {};
     List<Map<String, dynamic>> list = images.map<Map<String, dynamic>>(
       (e) {
-        double size = (File(e.path)).lengthSync() / 1024 / 1024;
+        print('======== LENGTHSYNC: ${File(e.path).lengthSync()}');
+        double size = File(e.path).lengthSync() / 1024 / 1024;
         Map<String, dynamic> temp = {
           'ext': e.name.split('.')[1],
           'size': size,
         };
-        // print(temp);
+        print('======== TEMP: $temp');
         return temp;
       },
     ).toList();
@@ -45,7 +46,7 @@ class ApiSettingsImpl extends GetConnect with ApiSettings {
       'images',
       list,
     );
-    print('body $body');
+    print('body: $body');
     String bodyJson = json.encode(body);
     return post(
       '/get-presigned-urls/',

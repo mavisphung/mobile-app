@@ -1,13 +1,13 @@
 import 'package:get/get.dart';
 
-import '../../../common/constants.dart';
-import '../../../common/util/extensions.dart';
-import '../../../common/util/status.dart';
-import '../../../common/util/utils.dart';
-import '../../../common/values/strings.dart';
-import '../../../routes/app_pages.dart';
-import '../providers/api_auth.dart';
-import '../providers/api_auth_impl.dart';
+import 'package:hi_doctor_v2/app/common/constants.dart';
+import 'package:hi_doctor_v2/app/common/util/extensions.dart';
+import 'package:hi_doctor_v2/app/common/util/status.dart';
+import 'package:hi_doctor_v2/app/common/util/utils.dart';
+import 'package:hi_doctor_v2/app/common/values/strings.dart';
+import 'package:hi_doctor_v2/app/modules/auth/providers/api_auth.dart';
+import 'package:hi_doctor_v2/app/modules/auth/providers/api_auth_impl.dart';
+import 'package:hi_doctor_v2/app/routes/app_pages.dart';
 
 class RegisterController extends GetxController {
   late final ApiAuth _apiAuth;

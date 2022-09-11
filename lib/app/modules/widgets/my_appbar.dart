@@ -11,7 +11,12 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   /// you can add more fields that meet your needs
 
-  MyAppBar({Key? key, required this.title, this.actions, this.centerTitle = false}) : super(key: key);
+  MyAppBar({
+    Key? key,
+    required this.title,
+    this.actions,
+    this.centerTitle = false,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -23,6 +28,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
           fontSize: 16.sp,
         ),
       ),
+      titleSpacing: 0,
       centerTitle: centerTitle,
       backgroundColor: Colors.transparent,
       elevation: 0,

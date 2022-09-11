@@ -2,7 +2,6 @@ import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:hi_doctor_v2/app/common/util/extensions.dart';
 import 'package:hi_doctor_v2/app/common/values/strings.dart';
-import 'package:intl/intl.dart';
 
 class PatientController extends GetxController {
   TextEditingController firstNameController = TextEditingController();

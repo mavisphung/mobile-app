@@ -5,7 +5,6 @@ import 'package:get/get.dart';
 import 'package:hi_doctor_v2/app/common/util/extensions.dart';
 import 'package:hi_doctor_v2/app/common/util/utils.dart';
 import 'package:hi_doctor_v2/app/common/values/colors.dart';
-import 'package:hi_doctor_v2/app/common/values/strings.dart';
 import 'package:hi_doctor_v2/app/modules/appointment/controllers/booking/patient_controller.dart';
 
 class MyDateTimeField extends StatelessWidget {
@@ -74,15 +73,15 @@ class MyDateTimeField extends StatelessWidget {
         ),
         child: Row(
           children: [
-            ObxValue<RxString>((data) => Text(
-                patientController.rxDob.value,
-                style: TextStyle(
-                  color: Colors.black54,
-                  fontSize: 16.0.sp,
-                ),
-              ),
-              patientController.rxDob
-            ),
+            ObxValue<RxString>(
+                (data) => Text(
+                      patientController.rxDob.value,
+                      style: TextStyle(
+                        color: Colors.black54,
+                        fontSize: 16.0.sp,
+                      ),
+                    ),
+                patientController.rxDob),
             const Spacer(),
             const Icon(Icons.calendar_month),
           ],

@@ -1,13 +1,13 @@
 import 'package:get/get.dart';
-import 'package:hi_doctor_v2/app/common/constants.dart';
 
-import '../../../common/storage/storage.dart';
-import '../../../common/util/extensions.dart';
-import '../../../common/util/status.dart';
-import '../../../common/util/utils.dart';
-import '../../../routes/app_pages.dart';
-import '../providers/api_auth.dart';
-import '../providers/api_auth_impl.dart';
+import 'package:hi_doctor_v2/app/common/constants.dart';
+import 'package:hi_doctor_v2/app/common/storage/storage.dart';
+import 'package:hi_doctor_v2/app/common/util/extensions.dart';
+import 'package:hi_doctor_v2/app/common/util/status.dart';
+import 'package:hi_doctor_v2/app/common/util/utils.dart';
+import 'package:hi_doctor_v2/app/modules/auth/providers/api_auth.dart';
+import 'package:hi_doctor_v2/app/modules/auth/providers/api_auth_impl.dart';
+import 'package:hi_doctor_v2/app/routes/app_pages.dart';
 
 class LoginController extends GetxController {
   final loginStatus = Status.init.obs;
@@ -29,7 +29,7 @@ class LoginController extends GetxController {
         'address': response.data['address'],
         'phoneNumber': response.data['phoneNumber'],
         'gender': response.data['gender'],
-        'avatar': response.data['avatar'] ?? Constants.defaultAvatar,
+        'avatar': response.data['avatar'],
       };
       await Storage.saveValue(CacheKey.USER_INFO.name, userInfo);
 
@@ -56,7 +56,7 @@ class LoginController extends GetxController {
           'address': response.data['address'],
           'phoneNumber': response.data['phoneNumber'],
           'gender': response.data['gender'],
-          'avatar': response.data['avatar'] ?? Constants.defaultAvatar,
+          'avatar': response.data['avatar'],
         };
         await Storage.saveValue(CacheKey.USER_INFO.name, userInfo);
         return true;

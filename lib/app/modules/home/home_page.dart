@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+
 import 'package:hi_doctor_v2/app/common/storage/storage.dart';
 import 'package:hi_doctor_v2/app/common/values/colors.dart';
 import 'package:hi_doctor_v2/app/common/values/strings.dart';
@@ -12,6 +13,7 @@ import 'package:hi_doctor_v2/app/modules/home/views/category_item2.dart';
 import 'package:hi_doctor_v2/app/modules/home/views/doctor_item.dart';
 import 'package:hi_doctor_v2/app/modules/home/views/reminder_card.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/custom_icon_button.dart';
+import 'package:hi_doctor_v2/app/modules/widgets/my_section_title.dart';
 
 class HomePage extends StatelessWidget {
   HomePage({Key? key}) : super(key: key);
@@ -21,19 +23,9 @@ class HomePage extends StatelessWidget {
   final HomeController homeController = Get.put(HomeController());
   final DoctorController doctorController = Get.put(DoctorController());
 
-  Widget _getTitle(String title) => Padding(
-        padding: EdgeInsets.only(
-          top: 20.sp,
-          bottom: 12.sp,
-        ),
-        child: Text(
-          title,
-          style: TextStyle(
-            fontSize: 14.5.sp,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-      );
+  final _spacing = SizedBox(
+    height: 18.sp,
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -103,6 +95,7 @@ class HomePage extends StatelessWidget {
                   ],
                 ),
               ),
+              _spacing,
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 12.sp),
                 child: Column(
@@ -111,7 +104,7 @@ class HomePage extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        _getTitle(Strings.upcomingAppointment.tr),
+                        MySectionTitle(title: Strings.upcomingAppointment.tr),
                         InkWell(
                           onTap: () {},
                           child: const Text(
@@ -122,7 +115,8 @@ class HomePage extends StatelessWidget {
                       ],
                     ),
                     const ReminderCard(),
-                    _getTitle(Strings.category.tr),
+                    _spacing,
+                    MySectionTitle(title: Strings.category.tr),
                     SizedBox(
                       height: 70.sp,
                       // child: GridView.builder(
@@ -153,7 +147,8 @@ class HomePage extends StatelessWidget {
                         itemCount: _categoriesList.length,
                       ),
                     ),
-                    _getTitle(Strings.latestSearchDoctor.tr),
+                    _spacing,
+                    MySectionTitle(title: Strings.latestSearchDoctor.tr),
                     FutureBuilder(
                       future: homeController.getDoctors(),
                       builder: (context, AsyncSnapshot snapshot) {
