@@ -1,6 +1,8 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 import './app/common/util/initializer.dart';
 import './app/routes/app_pages.dart';
@@ -9,7 +11,16 @@ import './app/common/util/messages.dart';
 import './app/common/values/strings.dart';
 
 void main() {
-  Initializer.init(() {
+  Initializer.init(() async {
+    WidgetsFlutterBinding.ensureInitialized();
+    await Firebase.initializeApp();
+    FirebaseMessaging.instance.getToken().then((value) {
+      print('Firebase token on this device: ');
+      print(value);
+    }).onError((error, stackTrace) {
+      print('-------------------------- ERROR WHILE GET FIREBASE TOKEN --------------------------');
+      print(error);
+    });
     runApp(const MyApp());
   });
 }
