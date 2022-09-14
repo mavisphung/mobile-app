@@ -8,13 +8,13 @@ import 'package:hi_doctor_v2/app/common/values/colors.dart';
 import 'package:hi_doctor_v2/app/modules/appointment/controllers/booking/patient_controller.dart';
 
 class MyDateTimeField extends StatelessWidget {
-  DateTime? _selectedDate;
+  DateTime? _selectedDate = DateTime.now();
 
   MyDateTimeField({
     Key? key,
   }) : super(key: key);
 
-  final PatientController patientController = Get.find<PatientController>();
+  final PatientController _patientController = Get.find<PatientController>();
 
   @override
   Widget build(BuildContext context) {
@@ -27,21 +27,19 @@ class MyDateTimeField extends StatelessWidget {
             return Container(
               height: Get.height / 10 * 3,
               padding: EdgeInsets.symmetric(vertical: 10.0.sp),
-              color: const Color.fromARGB(255, 255, 255, 255),
+              color: Colors.white,
               child: Column(
                 children: [
                   SizedBox(
                     height: Get.height / 10 * 2,
                     child: CupertinoDatePicker(
                       mode: CupertinoDatePickerMode.date,
-                      initialDateTime: _selectedDate ?? DateTime.now(),
+                      initialDateTime: _selectedDate,
                       minimumYear: 1901,
                       maximumDate: DateTime.now(),
                       maximumYear: DateTime.now().year,
                       onDateTimeChanged: (DateTime val) {
                         _selectedDate = val;
-                        // controller.dob = val;
-                        patientController.rxDob.value.toString().debugLog('Picked date');
                       },
                     ),
                   ),
@@ -50,7 +48,8 @@ class MyDateTimeField extends StatelessWidget {
                   CupertinoButton(
                     child: const Text('OK'),
                     onPressed: () {
-                      patientController.rxDob.value = Utils.formatDate(_selectedDate!);
+                      _patientController.rxDob.value = Utils.formatDate(_selectedDate!);
+                      _patientController.rxDob.value.toString().debugLog('Picked date');
                       Get.back();
                       FocusScope.of(context).unfocus();
                     },
@@ -73,13 +72,13 @@ class MyDateTimeField extends StatelessWidget {
           children: [
             ObxValue<RxString>(
                 (data) => Text(
-                      patientController.rxDob.value,
+                      _patientController.rxDob.value,
                       style: TextStyle(
                         color: Colors.black54,
                         fontSize: 16.0.sp,
                       ),
                     ),
-                patientController.rxDob),
+                _patientController.rxDob),
             const Spacer(),
             const Icon(Icons.calendar_month),
           ],

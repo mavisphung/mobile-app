@@ -6,19 +6,16 @@ import 'package:hi_doctor_v2/app/common/storage/storage.dart';
 import 'package:hi_doctor_v2/app/common/values/colors.dart';
 import 'package:hi_doctor_v2/app/common/values/strings.dart';
 import 'package:hi_doctor_v2/app/modules/appointment/controllers/booking/patient_controller.dart';
-import 'package:hi_doctor_v2/app/modules/appointment/providers/req_appointment_model.dart';
 import 'package:hi_doctor_v2/app/modules/appointment/widgets/date_time_field_widget.dart';
-import 'package:hi_doctor_v2/app/modules/home/controllers/doctor_controller.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/custom_bottom_sheet.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/my_appbar.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/my_section_title.dart';
+import 'package:hi_doctor_v2/app/routes/app_pages.dart';
 
 class BookingPatientDetailPage extends StatelessWidget {
   final _formKey = GlobalKey<FormState>();
 
   final PatientController _controller = Get.put(PatientController());
-  final _doctorController = Get.find<DoctorController>();
-  final List<int> list = List.generate(4, (index) => index + 1);
 
   BookingPatientDetailPage({Key? key}) : super(key: key);
 
@@ -34,21 +31,6 @@ class BookingPatientDetailPage extends StatelessWidget {
     );
   }
 
-  void createAppointment() {
-    final doctorId = _doctorController.rxDoctor.value.id;
-    if (doctorId != null) {
-      final reqModel = ReqAppointmentModel(
-        doctorId,
-        2,
-        1,
-        "2022-09-15 18:43:00",
-        "ONLINE",
-        _controller.problemController.text.trim(),
-      );
-      _controller.createAppointment(reqModel);
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     final userInfo = Storage.getValue<Map<String, dynamic>>(CacheKey.USER_INFO.name);
@@ -56,6 +38,7 @@ class BookingPatientDetailPage extends StatelessWidget {
       resizeToAvoidBottomInset: false,
       appBar: MyAppBar(title: 'Patient Details'),
       body: SingleChildScrollView(
+        physics: const BouncingScrollPhysics(),
         child: Container(
           margin: EdgeInsets.only(top: 17.5.sp),
           padding: EdgeInsets.symmetric(horizontal: 12.0.sp),
@@ -172,7 +155,7 @@ class BookingPatientDetailPage extends StatelessWidget {
       ),
       bottomSheet: CustomBottomSheet(
         buttonText: Strings.kContinue.tr,
-        onPressed: createAppointment,
+        onPressed: () => Get.toNamed(Routes.BOOKING_SUMMARY),
       ),
     );
   }

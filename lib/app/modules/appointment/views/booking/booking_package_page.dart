@@ -3,7 +3,6 @@ import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:hi_doctor_v2/app/common/util/extensions.dart';
-import 'package:hi_doctor_v2/app/common/values/colors.dart';
 import 'package:hi_doctor_v2/app/common/values/strings.dart';
 import 'package:hi_doctor_v2/app/modules/appointment/controllers/booking/booking_controller.dart';
 import 'package:hi_doctor_v2/app/modules/appointment/controllers/booking/package_controller.dart';
@@ -144,9 +143,7 @@ class BookingPackagePage extends StatelessWidget {
       ),
       bottomSheet: CustomBottomSheet(
         buttonText: Strings.kContinue.tr,
-        onPressed: () {
-          Get.toNamed(Routes.BOOKING_PATIENT_DETAIL, preventDuplicates: true);
-        },
+        onPressed: () => Get.toNamed(Routes.BOOKING_PATIENT_DETAIL),
       ),
     );
   }
