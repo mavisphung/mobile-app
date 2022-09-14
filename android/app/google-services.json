@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "162922742863",
+    "project_id": "capstone-95504",
+    "storage_bucket": "capstone-95504.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:162922742863:android:b070b2fba46763f94c963a",
+        "android_client_info": {
+          "package_name": "com.example.hi_doctor_v2"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "162922742863-4oe3p4rs7i5cvtal4t3dut1h2o2fq1fo.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAqKQm1-vM6I2CTbLajrgmnf4DwUt8-bXo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "162922742863-4oe3p4rs7i5cvtal4t3dut1h2o2fq1fo.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
