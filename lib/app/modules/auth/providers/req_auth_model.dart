@@ -1,6 +1,7 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
 
-import '../../../common/constants.dart';
+import 'package:hi_doctor_v2/app/common/constants.dart';
 
 class RequestLoginModel {
   final String email;

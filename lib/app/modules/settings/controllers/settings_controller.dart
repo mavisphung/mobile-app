@@ -8,11 +8,35 @@ import 'package:hi_doctor_v2/app/routes/app_pages.dart';
 class SettingsController extends GetxController {
   TextEditingController emailController = TextEditingController();
   final userInfo = UserInfo2().obs;
+  final isEnglish = false.obs;
+  Locale get myLocale {
+    final locale = Storage.getValue<Locale>(CacheKey.LOCALE.name);
+    return locale ?? const Locale('vi', 'VN');
+  }
+
+  @override
+  void onInit() {
+    _checkLocale();
+    super.onInit();
+  }
 
   @override
   void dispose() {
     emailController.dispose();
     super.dispose();
+  }
+
+  void _checkLocale() {
+    print('LANGUGE: ${myLocale.languageCode}');
+    isEnglish.value = myLocale.languageCode == 'en' && myLocale.countryCode == 'US' ? true : false;
+    print(isEnglish);
+  }
+
+  void changeLanguage(bool value) async {
+    var locale = value ? const Locale('en', 'US') : const Locale('vi', 'VN');
+    await Storage.saveValue(CacheKey.LOCALE.name, locale);
+    await Get.updateLocale(locale);
+    _checkLocale();
   }
 
   void logOut() async {

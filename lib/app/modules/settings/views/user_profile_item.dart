@@ -1,8 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:get/get.dart';
 
 class UserProfileItem extends StatelessWidget {
   final String title;
@@ -11,6 +9,7 @@ class UserProfileItem extends StatelessWidget {
   final Color? color;
   final void Function() function;
   final bool isNavigator;
+  final Widget? suffix;
 
   const UserProfileItem({
     Key? key,
@@ -20,7 +19,9 @@ class UserProfileItem extends StatelessWidget {
     this.color,
     required this.function,
     this.isNavigator = true,
-  }) : super(key: key);
+    this.suffix,
+  })  : assert(suffix == null || isNavigator == false, 'Cannot provide both a suffix and a navigator'),
+        super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -67,6 +68,7 @@ class UserProfileItem extends StatelessWidget {
                     CupertinoIcons.chevron_right,
                     size: 18.sp,
                   ),
+                if (suffix != null) suffix!,
               ],
             ),
           ),

@@ -98,8 +98,10 @@ class UserProfileController extends GetxController {
     status.value = Status.fail;
   }
 
-  void getImage() async {
-    file = await _picker.pickImage(source: ImageSource.camera);
+  void getImage(bool isFromGallery) async {
+    file = isFromGallery
+        ? await _picker.pickImage(source: ImageSource.gallery)
+        : await _picker.pickImage(source: ImageSource.camera);
     if (file == null) {
       return;
     }

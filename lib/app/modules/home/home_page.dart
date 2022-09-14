@@ -8,7 +8,6 @@ import 'package:hi_doctor_v2/app/common/values/colors.dart';
 import 'package:hi_doctor_v2/app/common/values/strings.dart';
 import 'package:hi_doctor_v2/app/modules/home/controllers/doctor_controller.dart';
 import 'package:hi_doctor_v2/app/modules/home/controllers/home_controller.dart';
-// import 'package:hi_doctor_v2/app/modules/home/views/category_item.dart';
 import 'package:hi_doctor_v2/app/modules/home/views/category_item2.dart';
 import 'package:hi_doctor_v2/app/modules/home/views/doctor_item.dart';
 import 'package:hi_doctor_v2/app/modules/home/views/reminder_card.dart';
@@ -18,7 +17,6 @@ import 'package:hi_doctor_v2/app/modules/widgets/my_section_title.dart';
 class HomePage extends StatelessWidget {
   HomePage({Key? key}) : super(key: key);
   final _categoriesList = categoriesList;
-  final _doctorList = doctorList;
 
   final HomeController homeController = Get.put(HomeController());
   final DoctorController doctorController = Get.put(DoctorController());
@@ -104,7 +102,7 @@ class HomePage extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        MySectionTitle(title: Strings.upcomingAppointment.tr),
+                        MyTitleSection(title: Strings.upcomingAppointment.tr),
                         InkWell(
                           onTap: () {},
                           child: const Text(
@@ -116,9 +114,9 @@ class HomePage extends StatelessWidget {
                     ),
                     const ReminderCard(),
                     _spacing,
-                    MySectionTitle(title: Strings.category.tr),
+                    MyTitleSection(title: Strings.category.tr),
                     SizedBox(
-                      height: 70.sp,
+                      height: 80.sp,
                       // child: GridView.builder(
                       //   physics: const NeverScrollableScrollPhysics(),
                       //   shrinkWrap: true,
@@ -148,7 +146,7 @@ class HomePage extends StatelessWidget {
                       ),
                     ),
                     _spacing,
-                    MySectionTitle(title: Strings.latestSearchDoctor.tr),
+                    MyTitleSection(title: Strings.latestSearchDoctor.tr),
                     FutureBuilder(
                       future: homeController.getDoctors(),
                       builder: (context, AsyncSnapshot snapshot) {
@@ -166,7 +164,7 @@ class HomePage extends StatelessWidget {
                                     var realDoctor = homeController.doctorList[index];
                                     // realDoctor.toJson().debugLog('Doctor');
                                     // 'Build again $index'.debugLog('DoctorList');
-                                    return DoctorItem2(
+                                    return DoctorItem(
                                       doctor: realDoctor,
                                     );
                                     // var doctor = _doctorList[index];

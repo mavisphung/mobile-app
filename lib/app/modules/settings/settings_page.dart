@@ -1,8 +1,11 @@
+import 'dart:math';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:hi_doctor_v2/app/common/storage/storage.dart';
 
 import '../../common/util/utils.dart';
 import '../../common/values/strings.dart';
@@ -15,6 +18,7 @@ enum SettingOption { myaccount, logout }
 class SettingsPage extends StatelessWidget {
   SettingsPage({Key? key}) : super(key: key);
   final SettingsController _controller = Get.put(SettingsController());
+  var _isEngish = false;
 
   void _logOut() async {
     final confirmLogout = await Utils.showConfirmDialog(Strings.logoutConfirmMsg.tr);
@@ -23,8 +27,14 @@ class SettingsPage extends StatelessWidget {
     }
   }
 
+  void _checkLocale() {
+    final locale = Storage.getValue<Locale>(CacheKey.LOCALE.name);
+    _isEngish = locale?.languageCode == 'en' && locale?.countryCode == 'US' ? true : false;
+  }
+
   @override
   Widget build(BuildContext context) {
+    _checkLocale();
     return GetBuilder(
         init: _controller,
         builder: (_) {
@@ -90,6 +100,19 @@ class SettingsPage extends StatelessWidget {
                             description: 'Quit the app',
                             function: _logOut,
                             isNavigator: false,
+                          ),
+                          UserProfileItem(
+                            icon: const Icon(CupertinoIcons.doc_person),
+                            title: 'Language',
+                            description: _isEngish ? 'Switch to Vietnamese' : 'Switch to English',
+                            isNavigator: false,
+                            suffix: CupertinoSwitch(
+                              value: _isEngish,
+                              onChanged: (value) => _controller.changeLanguage(value),
+                            ),
+                            function: () {
+                              print('Not implement here');
+                            },
                           ),
                         ],
                       ),

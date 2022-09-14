@@ -1,25 +1,57 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:hi_doctor_v2/app/common/storage/storage.dart';
+
 import 'package:hi_doctor_v2/app/common/values/colors.dart';
 import 'package:hi_doctor_v2/app/common/values/strings.dart';
 import 'package:hi_doctor_v2/app/modules/appointment/controllers/booking/patient_controller.dart';
+import 'package:hi_doctor_v2/app/modules/appointment/providers/req_appointment_model.dart';
 import 'package:hi_doctor_v2/app/modules/appointment/widgets/date_time_field_widget.dart';
+import 'package:hi_doctor_v2/app/modules/home/controllers/doctor_controller.dart';
+import 'package:hi_doctor_v2/app/modules/widgets/custom_bottom_sheet.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/my_appbar.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/my_section_title.dart';
 
 class BookingPatientDetailPage extends StatelessWidget {
   final _formKey = GlobalKey<FormState>();
-  // final _problemFocusNode = FocusNode();
 
   final PatientController _controller = Get.put(PatientController());
+  final _doctorController = Get.find<DoctorController>();
   final List<int> list = List.generate(4, (index) => index + 1);
 
   BookingPatientDetailPage({Key? key}) : super(key: key);
 
+  Widget _getTitle(String text) {
+    return SizedBox(
+      width: 115.sp,
+      child: Text(
+        text,
+        style: const TextStyle(
+          fontWeight: FontWeight.w500,
+        ),
+      ),
+    );
+  }
+
+  void createAppointment() {
+    final doctorId = _doctorController.rxDoctor.value.id;
+    if (doctorId != null) {
+      final reqModel = ReqAppointmentModel(
+        doctorId,
+        2,
+        1,
+        "2022-09-15 18:43:00",
+        "ONLINE",
+        _controller.problemController.text.trim(),
+      );
+      _controller.createAppointment(reqModel);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    var dropdownValue = list.first;
+    final userInfo = Storage.getValue<Map<String, dynamic>>(CacheKey.USER_INFO.name);
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: MyAppBar(title: 'Patient Details'),
@@ -41,51 +73,68 @@ class BookingPatientDetailPage extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           // ------------- Choose patient section -------------
-                          const MySectionTitle(title: 'Patient\'s information'),
+                          const MyTitleSection(title: 'Patient\'s information'),
                           Container(
                             margin: const EdgeInsets.only(bottom: 15.0),
                             width: double.infinity,
-                            padding: const EdgeInsets.symmetric(
-                              vertical: 2.0,
-                              horizontal: 16.0,
+                            padding: EdgeInsets.symmetric(
+                              vertical: 20.sp,
+                              horizontal: 15.sp,
                             ),
                             decoration: BoxDecoration(
-                              color: const Color(0xFFF5F5F5),
+                              color: Colors.grey[100],
                               borderRadius: BorderRadius.circular(15.0.sp),
                             ),
-                            child: DropdownButton<int>(
-                              value: dropdownValue,
-                              icon: Icon(
-                                Icons.arrow_drop_down_rounded,
-                                size: 35.0.sp,
-                              ),
-                              isExpanded: true,
-                              underline: const SizedBox.shrink(),
-                              hint: const Text('Select patient profile'),
-                              borderRadius: BorderRadius.circular(10.0),
-                              items: list
-                                  .map(
-                                    (e) => DropdownMenuItem<int>(
-                                      value: e,
-                                      child: Text('$e profile'),
+                            child: Column(
+                              children: [
+                                Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    _getTitle('Full name:'),
+                                    Flexible(
+                                      child: Text(
+                                        '${userInfo?["lastName"]} ${userInfo?["firstName"]}',
+                                      ),
                                     ),
-                                  )
-                                  .toList(),
-                              onChanged: (value) {
-                                dropdownValue = value ?? 1;
-                              },
+                                  ],
+                                ),
+                                Row(
+                                  children: [
+                                    _getTitle('Gender:'),
+                                    Text('${userInfo?["gender"]}'),
+                                  ],
+                                ),
+                                Row(
+                                  children: [
+                                    _getTitle('Day of birth:'),
+                                    const Text('25/6/2000'),
+                                  ],
+                                ),
+                                Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    _getTitle('Address:'),
+                                    Flexible(child: Text('${userInfo?["address"]}')),
+                                  ],
+                                ),
+                                Row(
+                                  children: [
+                                    _getTitle('Phone number:'),
+                                    Text('${userInfo?["phoneNumber"]}'),
+                                  ],
+                                ),
+                              ],
                             ),
                           ),
                           SizedBox(
                             height: 8.0.sp,
                           ),
                           // Dob picker
-                          MyDateTimeField(hintText: Strings.dob.tr),
-                          //
+                          MyDateTimeField(),
                           SizedBox(
                             height: 16.0.sp,
                           ),
-                          const MySectionTitle(title: 'Write your problem'),
+                          const MyTitleSection(title: 'Write your problem'),
                           TextFormField(
                             validator: (String? value) {
                               if (value!.length >= 1000) {
@@ -121,25 +170,9 @@ class BookingPatientDetailPage extends StatelessWidget {
           ),
         ),
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      floatingActionButton: SizedBox(
-        width: Get.width.sp / 100 * 80,
-        height: 50.sp,
-        child: ElevatedButton(
-          style: ButtonStyle(
-            backgroundColor: MaterialStateProperty.all(AppColors.primary),
-            shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-              RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(15.0),
-              ),
-            ),
-          ),
-          child: Text(
-            Strings.kContinue.tr,
-            style: TextStyle(fontSize: 14.0.sp),
-          ),
-          onPressed: () {},
-        ),
+      bottomSheet: CustomBottomSheet(
+        buttonText: Strings.kContinue.tr,
+        onPressed: createAppointment,
       ),
     );
   }

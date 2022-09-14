@@ -24,7 +24,7 @@ class Messages extends Translations {
           Strings.home: 'Home',
           Strings.appointment: 'Appointment',
           Strings.message: 'Message',
-          Strings.personal: 'Personal',
+          Strings.settings: 'Settings',
           Strings.policyAgreementMsg:
               'Creating an account means you\'re agreed with our Terms of Service, Privacy Policy, and our default Notification Settings.',
           Strings.upcomingAppointment: 'Upcoming appointment',
@@ -36,7 +36,6 @@ class Messages extends Translations {
           Strings.yes: 'Yes',
           Strings.no: 'No',
           Strings.back: 'Back',
-          Strings.back: 'Back',
           Strings.kContinue: 'Continue',
           Strings.login: 'Login',
           Strings.signIn: 'Sign in',
@@ -45,7 +44,6 @@ class Messages extends Translations {
           Strings.alert: 'Alert',
           Strings.registerSuccess: 'Registration success',
           Strings.exitAppAlert: 'Press double back to exit app',
-          Strings.policyAgreementAlert: 'Policy agreement Alert',
           Strings.seeAll: 'See all',
 
           // Information Message
@@ -66,7 +64,7 @@ class Messages extends Translations {
           Strings.confirmPassLengthtMsg: 'Confirm password must has at least 6 characters',
           Strings.confirmPassNotMatchMsg: 'Confirm password is not matched',
           Strings.enterValidPhone: 'Phone number must have 10 numbers',
-          Strings.otpExpiredMsg: 'Otp must have 6 digits',
+          Strings.otpLengthMsg: 'Otp must have 6 digits',
 
           // Error Message
           Strings.unknownErrMsg: 'The system occurs unknown error. Please try later.',
@@ -79,6 +77,79 @@ class Messages extends Translations {
           Strings.loginFailedMsg: 'Wrong email or password',
           Strings.otpErrorMsg: 'OTP @code is incorect.',
           Strings.otpExpiredMsg: 'Verification code expired',
+        },
+        'vi_VN': {
+          // Noun
+          Strings.appName: 'Hi Doctor',
+          Strings.registration: 'Đăng ký',
+          Strings.verification: 'Xác nhận',
+          Strings.email: 'Địa chỉ email',
+          Strings.pasword: 'Mật khẩu',
+          Strings.confirmPasword: 'Xác nhận mật khẩu',
+          Strings.firstName: 'Tên',
+          Strings.lastName: 'Họ',
+          Strings.address: 'Địa chỉ',
+          Strings.gender: 'Giới tính',
+          Strings.phoneNumber: 'Số điện thoại',
+          Strings.male: 'Nam',
+          Strings.female: 'Nữ',
+          Strings.other: 'Khác',
+          Strings.home: 'Trang chủ',
+          Strings.appointment: 'Cuộc hẹn',
+          Strings.message: 'Tin nhắn',
+          Strings.settings: 'Cài đặt',
+          Strings.policyAgreementMsg:
+              'Creating an account means you\'re agreed with our Terms of Service, Privacy Policy, and our default Notification Settings.',
+          Strings.upcomingAppointment: 'Upcoming appointment',
+          Strings.category: 'Thể loại',
+          Strings.latestSearchDoctor: 'Bác sĩ đã xem gần đây',
+
+          // Verb, Adjective
+          Strings.ok: 'Đồng ý',
+          Strings.yes: 'Có',
+          Strings.no: 'Không',
+          Strings.back: 'Quay lại',
+          Strings.kContinue: 'Tiếp tục',
+          Strings.login: 'Đăng nhập',
+          Strings.signIn: 'Đăng nhập',
+          Strings.signUp: 'Đăng ký',
+          Strings.verify: 'Xác nhận',
+          Strings.alert: 'Cảnh báo',
+          Strings.registerSuccess: 'Đăng ký tài khoản',
+          Strings.exitAppAlert: 'Bấm quay lại 2 lần để thoát ứng dụng',
+          Strings.seeAll: 'Xem tất cả',
+
+          // Information Message
+          Strings.registerSuccessMsg: 'Bạn đã đăng ký tài khoản thành công.',
+          Strings.updateProfileMsg: 'Bạn đã cập nhật thông tin tài khoản thành công.',
+
+          // Alert Message
+          Strings.policyAgreementNeedMsg: 'Xin hãy chắc chắn bạn đã đồng ý với điều khoản của chúng tôi.',
+          Strings.logoutConfirmMsg: 'Bạn có chắc muốn đăng xuất khỏi tài khoản?',
+          Strings.cantBeEmpty: "không thể bỏ trống",
+          Strings.fieldCantBeEmpty: 'Thông tin ${Strings.cantBeEmpty.tr}',
+          Strings.emailCantBeEmpty: 'Email ${Strings.cantBeEmpty.tr}',
+          Strings.enterValidEmail: 'Địa chỉ email không hợp lệ',
+          Strings.duplicatedEmail: 'Địa chỉ email này đã có tài khoản',
+          Strings.passCantBeEmpty: 'Mật khẩu ${Strings.cantBeEmpty.tr}',
+          Strings.passLengthtMsg: 'Mật khẩu phải có ít nhất 6 ký tự',
+          Strings.confirmPassCantBeEmpty: 'Xin hãy xác nhận lại mật khẩu',
+          Strings.confirmPassLengthtMsg: 'Xác nhận mật khẩu phải có ít nhất 6 ký tự',
+          Strings.confirmPassNotMatchMsg: 'Xác nhận mật khẩu không khớp',
+          Strings.enterValidPhone: 'Số điện thoại phải có 10 số',
+          Strings.otpLengthMsg: 'Mã xác thực phải có 6 ký tự',
+
+          // Error Message
+          Strings.unknownErrMsg: 'The system occurs unknown error. Please try later.',
+          Strings.systemErrMsg: 'The system has problem. Please try later.',
+          Strings.conTimeOutMsg: 'Kết nối hết hạn. Xin hãy thử lại sau',
+          Strings.noConMsg: 'Không có kết nối mạng. Xin hãy kiểm tra kết nối của bạn.',
+          Strings.invalidInputMsg: 'Thông tin bạn nhập không hợp lệ.',
+          Strings.formatErrMsg: 'Lỗi định dạng đã xảy ra',
+          Strings.unauthorizedErrMsg: 'Your action has not authorized yet.',
+          Strings.loginFailedMsg: 'Địa chỉ email hoặc mật khẩu không đúng.',
+          Strings.otpErrorMsg: 'Mã xác thực @code không đúng.',
+          Strings.otpExpiredMsg: 'Mã xác thực đã hết hạn',
         },
       };
 }

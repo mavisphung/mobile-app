@@ -4,13 +4,14 @@ import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+
 import 'package:hi_doctor_v2/app/common/constants.dart';
 import 'package:hi_doctor_v2/app/common/util/extensions.dart';
 import 'package:hi_doctor_v2/app/common/values/colors.dart';
 import 'package:hi_doctor_v2/app/models/doctor.dart';
 import 'package:hi_doctor_v2/app/modules/home/controllers/doctor_controller.dart';
-import 'package:hi_doctor_v2/app/modules/home/controllers/home_controller.dart';
 import 'package:hi_doctor_v2/app/modules/home/widgets/doctor_tile.dart';
+import 'package:hi_doctor_v2/app/modules/widgets/custom_bottom_sheet.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/my_appbar.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/my_section_title.dart';
 import 'package:hi_doctor_v2/app/routes/app_pages.dart';
@@ -23,7 +24,6 @@ class DoctorDetailPage extends StatefulWidget {
 }
 
 class _DoctorDetailPageState extends State<DoctorDetailPage> {
-  final HomeController homeController = Get.find<HomeController>();
   final DoctorController doctorController = Get.find<DoctorController>();
 
   @override
@@ -177,7 +177,7 @@ class _DoctorDetailPageState extends State<DoctorDetailPage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const MySectionTitle(
+                    const MyTitleSection(
                       title: 'About me',
                     ),
                     RichText(
@@ -215,7 +215,7 @@ class _DoctorDetailPageState extends State<DoctorDetailPage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: const [
-                    MySectionTitle(
+                    MyTitleSection(
                       title: 'Working time',
                     ),
                     Text('Monday - Friday, 8:00 AM to 17:30 PM'),
@@ -230,7 +230,7 @@ class _DoctorDetailPageState extends State<DoctorDetailPage> {
                   children: [
                     Row(
                       children: [
-                        const MySectionTitle(
+                        const MyTitleSection(
                           title: 'Reviews',
                         ),
                         const Spacer(),
@@ -348,65 +348,9 @@ class _DoctorDetailPageState extends State<DoctorDetailPage> {
           ),
         ),
       ),
-      // bottomSheet: Container(
-      //   width: Get.width,
-      //   height: Get.height.sp / 100 * 9,
-      //   padding: EdgeInsets.symmetric(horizontal: 12.0.sp),
-      //   decoration: BoxDecoration(
-      //     color: AppColors.bottomSheet,
-      //     // border: Border.all(color: Colors.black.withOpacity(0.125)),
-      //     borderRadius: BorderRadius.only(
-      //       topLeft: Radius.circular(35.0.sp),
-      //       topRight: Radius.circular(35.0.sp),
-      //     ),
-      //   ),
-      //   child: Center(
-      //     child: SizedBox(
-      //       width: Get.width.sp / 100 * 80,
-      //       height: 50.0.sp,
-      //       child: ElevatedButton(
-      //         style: ButtonStyle(
-      //           backgroundColor: MaterialStateProperty.all(AppColors.primary),
-      //           // overlayColor: MaterialStateProperty.all(Colors.transparent),
-      //           shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-      //             RoundedRectangleBorder(
-      //               borderRadius: BorderRadius.circular(15.0),
-      //             ),
-      //           ),
-      //         ),
-      //         child: Text(
-      //           'Make an appointment',
-      //           style: TextStyle(fontSize: 14.0.sp),
-      //         ),
-      //         onPressed: () {
-      //           Get.toNamed(Routes.BOOKING);
-      //         },
-      //       ),
-      //     ),
-      //   ),
-      // ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      floatingActionButton: SizedBox(
-        width: Get.width.sp / 100 * 80,
-        height: 50.sp,
-        child: ElevatedButton(
-          style: ButtonStyle(
-            backgroundColor: MaterialStateProperty.all(AppColors.primary),
-            // overlayColor: MaterialStateProperty.all(Colors.transparent),
-            shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-              RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(15.0),
-              ),
-            ),
-          ),
-          child: Text(
-            'Make an appointment',
-            style: TextStyle(fontSize: 14.0.sp),
-          ),
-          onPressed: () {
-            Get.toNamed(Routes.BOOKING);
-          },
-        ),
+      bottomSheet: CustomBottomSheet(
+        buttonText: 'Make an appointment',
+        onPressed: () => Get.toNamed(Routes.BOOKING),
       ),
     );
   }

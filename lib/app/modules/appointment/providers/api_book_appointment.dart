@@ -2,8 +2,9 @@ import 'package:get/get.dart';
 
 import 'package:hi_doctor_v2/app/common/constants.dart';
 import 'package:hi_doctor_v2/app/common/storage/storage.dart';
+import 'package:hi_doctor_v2/app/modules/appointment/providers/req_appointment_model.dart';
 
-class ApiHomeImpl extends GetConnect {
+class ApiBookAppointmentImpl extends GetConnect {
   final Map<String, String> headers = {
     'Authorization': 'Bearer ${Storage.getValue(CacheKey.TOKEN.name) ?? ""}',
   };
@@ -15,14 +16,11 @@ class ApiHomeImpl extends GetConnect {
     httpClient.timeout = Constants.timeout;
   }
 
-  Future<Response> getDoctorList({int page = 1, int limit = 10}) {
-    return get(
-      '/doctors/',
+  Future<Response> postAppointment(ReqAppointmentModel reqModel) {
+    return post(
+      '/appointments/',
+      reqModel.toJson(),
       headers: headers,
-      query: {
-        'page': page.toString(),
-        'limit': limit.toString(),
-      },
     );
   }
 }

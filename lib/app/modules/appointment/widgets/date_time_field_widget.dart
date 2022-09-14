@@ -8,12 +8,10 @@ import 'package:hi_doctor_v2/app/common/values/colors.dart';
 import 'package:hi_doctor_v2/app/modules/appointment/controllers/booking/patient_controller.dart';
 
 class MyDateTimeField extends StatelessWidget {
-  final String hintText;
   DateTime? _selectedDate;
 
   MyDateTimeField({
     Key? key,
-    required this.hintText,
   }) : super(key: key);
 
   final PatientController patientController = Get.find<PatientController>();
@@ -22,18 +20,18 @@ class MyDateTimeField extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        'Picking date'.debugLog('DOB');
+        // 'Picking date'.debugLog('DOB');
         showModalBottomSheet(
           context: context,
           builder: (_) {
             return Container(
-              height: Get.height / 100 * 30,
+              height: Get.height / 10 * 3,
               padding: EdgeInsets.symmetric(vertical: 10.0.sp),
               color: const Color.fromARGB(255, 255, 255, 255),
               child: Column(
                 children: [
                   SizedBox(
-                    height: Get.height / 100 * 20,
+                    height: Get.height / 10 * 2,
                     child: CupertinoDatePicker(
                       mode: CupertinoDatePickerMode.date,
                       initialDateTime: _selectedDate ?? DateTime.now(),

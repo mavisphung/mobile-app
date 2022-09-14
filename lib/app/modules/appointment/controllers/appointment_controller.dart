@@ -1,13 +1,13 @@
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
+
 import 'package:hi_doctor_v2/app/common/util/extensions.dart';
+import 'package:hi_doctor_v2/app/common/util/status.dart';
 import 'package:hi_doctor_v2/app/data/api_response.dart';
 import 'package:hi_doctor_v2/app/data/response_model.dart';
 import 'package:hi_doctor_v2/app/models/appointment.dart';
-import 'package:hi_doctor_v2/app/modules/appointment/data/api_appointment.dart';
-
-import '../../../common/util/status.dart';
-import '../models/filter_model.dart';
+import 'package:hi_doctor_v2/app/modules/appointment/models/filter_model.dart';
+import 'package:hi_doctor_v2/app/modules/appointment/providers/api_appointment.dart';
 
 class AppointmentController extends GetxController {
   RxList<Appointment> historyList = <Appointment>[].obs;

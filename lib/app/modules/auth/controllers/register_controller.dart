@@ -53,7 +53,6 @@ class RegisterController extends GetxController {
     if (!isPolicyAgreed.value) {
       Utils.showAlertDialog(
         Strings.policyAgreementNeedMsg.tr,
-        title: Strings.policyAgreementAlert.tr,
       );
       return false;
     }

@@ -15,9 +15,9 @@ class CategoryItem2 extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {},
-      borderRadius: BorderRadius.circular(5.sp),
+      borderRadius: BorderRadius.circular(8.sp),
       child: Container(
-        width: 100.sp,
+        width: 90.sp,
         padding: EdgeInsets.all(8.sp),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
