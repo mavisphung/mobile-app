@@ -38,12 +38,9 @@ class HomeController extends GetxController {
       // TODO: handle the received notifications
 
       FirebaseMessaging.onMessageOpenedApp.listen((event) {
+        
         print(event.notification!.title!.toString());
         print(event.notification!.title!.toString());
-      });
-      FirebaseMessaging.onBackgroundMessage((message) async {
-        print('Backgound notification');
-        return null;
       });
     } else {
       print('User declined or has not accepted permission');
