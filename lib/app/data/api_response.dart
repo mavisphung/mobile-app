@@ -35,7 +35,7 @@ abstract class ApiResponse {
         print('NOT OK: ${response.body}');
         if (res['success'] == false && res['status'] == 400) {
           if (res['message'].toString() == 'INVALID_INPUT' &&
-              !res['data']['user'][0].toString().contains('does not exist')) {
+              res['data']['user'][0].toString().contains('does not exist')) {
             throw ApiError(
               type: ErrorType.failedResponse,
               error: Strings.invalidInputMsg.tr,

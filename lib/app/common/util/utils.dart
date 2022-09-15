@@ -2,7 +2,10 @@ import 'dart:io';
 import 'dart:math';
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:hi_doctor_v2/app/common/values/colors.dart';
 import 'package:intl/intl.dart';
 import 'package:mime/mime.dart';
 import 'package:http/http.dart' as http;
@@ -29,27 +32,122 @@ abstract class Utils {
     String cancelText = 'No',
     String confirmText = 'Yes',
   }) {
-    return showCupertinoDialog<bool>(
+    return showDialog<bool>(
       context: Get.overlayContext!,
-      barrierDismissible: false,
+      barrierDismissible: true,
       builder: (ctx) {
-        return CupertinoAlertDialog(
-          title: Text(title ?? Strings.alert.tr),
-          content: Text(message),
-          actions: [
-            CupertinoDialogAction(
-              onPressed: () => Navigator.pop(ctx, false),
-              child: Text(cancelText),
-            ),
-            CupertinoDialogAction(
-              onPressed: () => Navigator.pop(ctx, true),
-              child: Text(confirmText),
-            ),
-          ],
+        return Dialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(25.sp),
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Padding(
+                padding: EdgeInsets.symmetric(vertical: 8.sp, horizontal: 15.sp),
+                child: Text(
+                  title ?? 'Confirm',
+                  style: TextStyle(
+                    color: AppColors.primary,
+                    fontSize: 15.sp,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.symmetric(vertical: 8.sp, horizontal: 15.sp),
+                child:
+                    Text('dksnfskflsndfksnfsfkldsfksknlkfdskf \n skkfsdmfskmflsdmfksmdfmsfmsdkfsdkfkdsnfklsdkndflsnf'),
+              ),
+              Divider(
+                height: 0,
+                color: AppColors.greyDivider,
+                thickness: 0.8.sp,
+              ),
+              IntrinsicHeight(
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Expanded(
+                      child: InkWell(
+                        onTap: () => Navigator.pop(ctx, false),
+                        customBorder: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.only(bottomLeft: Radius.circular(25.sp)),
+                        ),
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(vertical: 10.sp),
+                          child: Center(
+                            child: Text(
+                              cancelText,
+                              style: const TextStyle(
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    VerticalDivider(
+                      width: 0,
+                      color: AppColors.greyDivider,
+                      thickness: 0.8.sp,
+                    ),
+                    Expanded(
+                      child: InkWell(
+                        onTap: () => Navigator.pop(ctx, true),
+                        customBorder: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.only(bottomRight: Radius.circular(25.sp)),
+                        ),
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(vertical: 10.sp),
+                          child: Center(
+                            child: Text(
+                              confirmText,
+                              style: const TextStyle(
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              )
+            ],
+          ),
         );
       },
     );
   }
+
+  // static Future<bool?> showConfirmDialog(
+  //   String message, {
+  //   String? title,
+  //   String cancelText = 'No',
+  //   String confirmText = 'Yes',
+  // }) {
+  //   return showCupertinoDialog<bool>(
+  //     context: Get.overlayContext!,
+  //     barrierDismissible: false,
+  //     builder: (ctx) {
+  //       return CupertinoAlertDialog(
+  //         title: Text(title ?? Strings.alert.tr),
+  //         content: Text(message),
+  //         actions: [
+  //           CupertinoDialogAction(
+  //             onPressed: () => Navigator.pop(ctx, false),
+  //             child: Text(cancelText),
+  //           ),
+  //           CupertinoDialogAction(
+  //             onPressed: () => Navigator.pop(ctx, true),
+  //             child: Text(confirmText),
+  //           ),
+  //         ],
+  //       );
+  //     },
+  //   );
+  // }
 
   static void showAlertDialog(
     String message, {

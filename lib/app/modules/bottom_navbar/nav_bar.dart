@@ -60,7 +60,7 @@ class NavBar extends StatelessWidget {
                 _bottomNavigationBarItem(
                   icon: CupertinoIcons.person,
                   activeIcon: CupertinoIcons.person_fill,
-                  label: Strings.personal.tr,
+                  label: Strings.settings.tr,
                 ),
               ],
             ),

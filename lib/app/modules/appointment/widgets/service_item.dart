@@ -53,32 +53,34 @@ class ServiceItem extends StatelessWidget {
               color: AppColors.primary,
             ),
           ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                title,
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 14.0.sp,
-                  fontWeight: FontWeight.bold,
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  title,
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 14.0.sp,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
-              ),
-              SizedBox(
-                height: 5.0.sp,
-              ),
-              Text(
-                description,
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 10.0.sp,
-                  overflow: TextOverflow.fade,
-                  // wordSpacing: 0.1,
+                SizedBox(
+                  height: 5.0.sp,
                 ),
-              ),
-            ],
+                Text(
+                  description,
+                  maxLines: 2,
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 10.0.sp,
+                    overflow: TextOverflow.fade,
+                    // wordSpacing: 0.1,
+                  ),
+                ),
+              ],
+            ),
           ),
-          const Spacer(),
           Column(
             children: [
               Text(

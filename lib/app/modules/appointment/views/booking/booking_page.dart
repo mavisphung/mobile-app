@@ -6,7 +6,7 @@ import 'package:hi_doctor_v2/app/common/values/colors.dart';
 import 'package:hi_doctor_v2/app/common/values/strings.dart';
 import 'package:hi_doctor_v2/app/modules/appointment/controllers/booking/booking_controller.dart';
 import 'package:hi_doctor_v2/app/modules/appointment/models/working_hour_item.dart';
-import 'package:hi_doctor_v2/app/modules/appointment/widgets/booking_bottom_sheet.dart';
+import 'package:hi_doctor_v2/app/modules/widgets/custom_bottom_sheet.dart';
 import 'package:hi_doctor_v2/app/modules/appointment/widgets/hour_item.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/my_appbar.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/my_section_title.dart';
@@ -72,7 +72,7 @@ class _BookingAppointmentPageState extends State<BookingAppointmentPage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               // -------------------------------------------------------------------------------
-              MySectionTitle(
+              MyTitleSection(
                 title: 'Select date',
                 paddingLeft: 8.sp,
               ),
@@ -152,7 +152,7 @@ class _BookingAppointmentPageState extends State<BookingAppointmentPage> {
                 ),
               ),
               // -------------------------------------------------------------------------------
-              MySectionTitle(
+              MyTitleSection(
                 title: 'Select hour',
                 paddingLeft: 8.sp,
               ),
@@ -186,28 +186,11 @@ class _BookingAppointmentPageState extends State<BookingAppointmentPage> {
           ),
         ),
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      floatingActionButton: SizedBox(
-        width: Get.width.sp / 100 * 80,
-        height: 50.sp,
-        child: ElevatedButton(
-          style: ButtonStyle(
-            backgroundColor: MaterialStateProperty.all(AppColors.primary),
-            // overlayColor: MaterialStateProperty.all(Colors.transparent),
-            shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-              RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(15.0),
-              ),
-            ),
-          ),
-          child: Text(
-            Strings.kContinue.tr,
-            style: TextStyle(fontSize: 14.0.sp),
-          ),
-          onPressed: () {
-            Get.toNamed(Routes.BOOKING_PACKAGE, preventDuplicates: true);
-          },
-        ),
+      bottomSheet: CustomBottomSheet(
+        buttonText: Strings.kContinue.tr,
+        onPressed: () {
+          Get.toNamed(Routes.BOOKING_PACKAGE, preventDuplicates: true);
+        },
       ),
     );
   }

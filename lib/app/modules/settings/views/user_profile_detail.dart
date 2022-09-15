@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:hi_doctor_v2/app/common/util/extensions.dart';
+import 'package:hi_doctor_v2/app/common/util/utils.dart';
 import 'package:hi_doctor_v2/app/modules/settings/controllers/user_profile_controller.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/custom_elevate_btn_widget.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/custom_text_form_field.dart';
@@ -73,7 +74,16 @@ class UserProfileDetailPage extends StatelessWidget {
                                     bottom: 20.0.sp,
                                     right: -2.0.sp,
                                     child: GestureDetector(
-                                      onTap: _controller.getImage,
+                                      onTap: () async {
+                                        var isFromGallery = await Utils.showConfirmDialog(
+                                          'Choose source of your image',
+                                          cancelText: 'Camera',
+                                          confirmText: 'Gallery',
+                                        );
+                                        if (isFromGallery != null) {
+                                          isFromGallery ? _controller.getImage(true) : _controller.getImage(false);
+                                        }
+                                      },
                                       child: Icon(
                                         Icons.camera_alt,
                                         color: Colors.black45,

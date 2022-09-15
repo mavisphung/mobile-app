@@ -17,7 +17,7 @@ abstract class Strings {
   static String get home => 'Home';
   static String get appointment => 'Appointment';
   static String get message => 'Message';
-  static String get personal => 'Personal';
+  static String get settings => 'Settings';
   static String get policyAgreementMsg => 'Policy agreement msg';
   static String get upcomingAppointment => 'Upcoming appointment';
   static String get category => 'Categories';
@@ -37,7 +37,6 @@ abstract class Strings {
   static String get alert => 'Alert';
   static String get registerSuccess => 'Register sucess';
   static String get exitAppAlert => 'Exit app alert';
-  static String get policyAgreementAlert => 'Policy agreenment alert';
   static String get seeAll => 'See all';
 
   // Information Message
@@ -70,5 +69,5 @@ abstract class Strings {
   static String get unauthorizedErrMsg => 'Unauthorized error msg';
   static String get loginFailedMsg => 'Login failed msg';
   static String get otpErrorMsg => 'Otp incorect msg';
-  static String get otpExpiredMsg => 'Ok';
+  static String get otpExpiredMsg => 'Otp expired msg';
 }
