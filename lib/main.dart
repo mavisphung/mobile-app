@@ -38,7 +38,8 @@ void registerNotification() async {
   // FirebaseMessaging.onMessage.listen((RemoteMessage message) {
   //   Get.snackbar(message.notification!.title!.toString(), message.notification!.body!.toString());
   // });
-  print('User granted permission: ${settings.authorizationStatus} ---------------------');
+  print(
+      'User granted permission: ${settings.authorizationStatus} ---------------------');
   if (settings.authorizationStatus == AuthorizationStatus.authorized) {
     print('User granted permission');
 
@@ -63,13 +64,14 @@ void main() {
     WidgetsFlutterBinding.ensureInitialized();
     await Firebase.initializeApp();
     registerNotification();
-    // FirebaseMessaging.instance.getToken().then((value) {
-    //   print('Firebase token on this device: ');
-    //   print(value);
-    // }).onError((error, stackTrace) {
-    //   print('-------------------------- ERROR WHILE GET FIREBASE TOKEN --------------------------');
-    //   print(error);
-    // });
+    FirebaseMessaging.instance.getToken().then((value) {
+      print('Firebase token on this device: ');
+      print(value);
+    }).onError((error, stackTrace) {
+      print(
+          '-------------------------- ERROR WHILE GET FIREBASE TOKEN --------------------------');
+      print(error);
+    });
     runApp(const MyApp());
   });
 }
