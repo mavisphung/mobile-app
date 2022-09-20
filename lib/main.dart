@@ -11,17 +11,65 @@ import 'package:hi_doctor_v2/app/modules/settings/controllers/settings_controlle
 import 'package:hi_doctor_v2/app/modules/widgets/base_widget.dart';
 import 'package:hi_doctor_v2/app/routes/app_pages.dart';
 
+Future<void> processBackgroundMessage(RemoteMessage message) async {
+  await Firebase.initializeApp();
+  print('background message run');
+  // Get.snackbar(
+  //   message.notification!.title!.toString(),
+  //   message.notification!.body!.toString(),
+  //   backgroundColor: Colors.redAccent,
+  // );
+}
+
+void registerNotification() async {
+  // 1. Initialize the Firebase app
+  // await Firebase.initializeApp();
+
+  // 2. Instantiate Firebase Messaging
+  var _messaging = FirebaseMessaging.instance;
+
+  // 3. On iOS, this helps to take the user permissions
+  NotificationSettings settings = await _messaging.requestPermission(
+    alert: true,
+    badge: true,
+    provisional: false,
+    sound: true,
+  );
+  // FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+  //   Get.snackbar(message.notification!.title!.toString(), message.notification!.body!.toString());
+  // });
+  print('User granted permission: ${settings.authorizationStatus} ---------------------');
+  if (settings.authorizationStatus == AuthorizationStatus.authorized) {
+    print('User granted permission');
+
+    // TODO: handle the received notifications
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+      print('From message opened app');
+      Get.snackbar(
+        message.notification!.title!.toString(),
+        message.notification!.body!.toString(),
+        backgroundColor: Colors.redAccent,
+      );
+    });
+
+    FirebaseMessaging.onBackgroundMessage(processBackgroundMessage);
+  } else {
+    print('User declined or has not accepted permission');
+  }
+}
+
 void main() {
   Initializer.init(() async {
     WidgetsFlutterBinding.ensureInitialized();
     await Firebase.initializeApp();
-    FirebaseMessaging.instance.getToken().then((value) {
-      print('Firebase token on this device: ');
-      print(value);
-    }).onError((error, stackTrace) {
-      print('-------------------------- ERROR WHILE GET FIREBASE TOKEN --------------------------');
-      print(error);
-    });
+    registerNotification();
+    // FirebaseMessaging.instance.getToken().then((value) {
+    //   print('Firebase token on this device: ');
+    //   print(value);
+    // }).onError((error, stackTrace) {
+    //   print('-------------------------- ERROR WHILE GET FIREBASE TOKEN --------------------------');
+    //   print(error);
+    // });
     runApp(const MyApp());
   });
 }
