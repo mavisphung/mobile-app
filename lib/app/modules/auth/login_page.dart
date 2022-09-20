@@ -72,6 +72,7 @@ class LoginPage extends GetView<LoginController> {
                             prefixIcon: const Icon(
                               CupertinoIcons.mail_solid,
                             ),
+                            keyboardType: TextInputType.emailAddress,
                           ),
                           CustomTextFieldWidget(
                             withAsterisk: false,
