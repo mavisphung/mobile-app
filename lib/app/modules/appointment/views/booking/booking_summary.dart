@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:hi_doctor_v2/app/common/constants.dart';
 import 'package:hi_doctor_v2/app/common/storage/storage.dart';
@@ -14,6 +14,7 @@ import 'package:hi_doctor_v2/app/modules/home/controllers/doctor_controller.dart
 import 'package:hi_doctor_v2/app/modules/widgets/custom_bottom_sheet.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/custom_container.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/my_appbar.dart';
+import 'package:intl/intl.dart';
 
 // ignore: must_be_immutable
 class BookingSummary extends StatelessWidget {
@@ -58,7 +59,7 @@ class BookingSummary extends StatelessWidget {
         doctorId,
         2,
         _c.serviceId,
-        "2022-09-15 18:43:00",
+        "${DateFormat('yyyy-MM-dd').format(_c.selectedDate)} ${_c.selectedTime}",
         "ONLINE",
         _c.problemController.text.trim(),
       );
@@ -208,7 +209,7 @@ class BookingSummary extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         _getSubText('Book at:'),
-                        const Text('15/6/2022 16:00'),
+                        Text("${DateFormat('yyyy-MM-dd').format(_c.selectedDate)} ${_c.selectedTime}"),
                       ],
                     ),
                     Row(
@@ -255,7 +256,10 @@ class BookingSummary extends StatelessWidget {
                   children: [
                     Row(
                       children: [
-                        SvgPicture.asset('assets/icons/momo.svg'),
+                        SvgPicture.asset(
+                          'assets/icons/momo.svg',
+                          color: Colors.amber,
+                        ),
                         const Text('****123456'),
                       ],
                     ),

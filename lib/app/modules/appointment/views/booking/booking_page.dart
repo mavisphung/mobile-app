@@ -48,14 +48,13 @@ class BookingAppointmentPage extends StatelessWidget {
           do {
             label = 'AM';
             final midTime = DateTime(currentDate.year, currentDate.month, currentDate.day, 12);
-            print('midTime: $midTime');
             if (endTime.isAfter(midTime)) {
               label = 'PM';
             }
             slots.add(WorkingHour(
               id: id++,
               title: '${Utils.formatTime(endSlot)} $label',
-              value: Utils.formatTime(endSlot),
+              value: '${Utils.formatTime(endSlot)}:00',
             ));
             endSlot = DateTime(
               currentDate.year,
@@ -65,7 +64,6 @@ class BookingAppointmentPage extends StatelessWidget {
               endSlot.minute,
             ).add(const Duration(minutes: 30));
             print('endSlot: $endSlot');
-            print(endSlot.isBefore(endTime));
           } while (endSlot.isBefore(endTime) || endSlot.compareTo(endTime) == 0);
 
           return slots;
@@ -208,7 +206,7 @@ class BookingAppointmentPage extends StatelessWidget {
                       return GestureDetector(
                         onTap: () {
                           _c.setSelectedTimeId(e.id!);
-                          print(_c.selectedTimeId);
+                          _c.selectedTime = e.value!;
                         },
                         child: ObxValue<RxInt>(
                             (data) => HourItem(

@@ -20,6 +20,12 @@ class BookingController extends GetxController {
   bool get isSelected => rxIsSelected.value;
   int get selectedTimeId => rxSelectedTimeId.value;
 
+  String _selectedTime = '';
+  String get selectedTime => _selectedTime;
+  set selectedTime(newValue) {
+    _selectedTime = newValue;
+  }
+
   void setSelectedTimeId(int value) {
     rxSelectedTimeId.value = value;
     update();

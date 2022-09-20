@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 
 import 'package:hi_doctor_v2/app/common/constants.dart';
 import 'package:hi_doctor_v2/app/common/storage/storage.dart';
+import 'package:hi_doctor_v2/app/common/util/extensions.dart';
 import 'package:hi_doctor_v2/app/modules/appointment/providers/req_appointment_model.dart';
 
 class ApiBookAppointmentImpl extends GetConnect {
@@ -17,6 +18,7 @@ class ApiBookAppointmentImpl extends GetConnect {
   }
 
   Future<Response> postAppointment(ReqAppointmentModel reqModel) {
+    reqModel.toString().debugLog('Req Appointment Body:');
     return post(
       '/appointments/',
       reqModel.toJson(),
