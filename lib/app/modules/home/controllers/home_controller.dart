@@ -11,9 +11,6 @@ class HomeController extends GetxController {
   RxList<Doctor> doctorList = <Doctor>[].obs;
   late final ApiHomeImpl apiHome;
 
-  // Add firebase messaging
-  late final FirebaseMessaging _messaging;
-
   @override
   void onInit() {
     super.onInit();
