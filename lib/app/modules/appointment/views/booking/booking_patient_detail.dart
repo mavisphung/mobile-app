@@ -5,8 +5,8 @@ import 'package:hi_doctor_v2/app/common/storage/storage.dart';
 
 import 'package:hi_doctor_v2/app/common/values/colors.dart';
 import 'package:hi_doctor_v2/app/common/values/strings.dart';
-import 'package:hi_doctor_v2/app/modules/appointment/controllers/booking/patient_controller.dart';
-import 'package:hi_doctor_v2/app/modules/appointment/widgets/date_time_field_widget.dart';
+import 'package:hi_doctor_v2/app/models/user_info.dart';
+import 'package:hi_doctor_v2/app/modules/appointment/controllers/booking/booking_controller.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/custom_bottom_sheet.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/my_appbar.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/my_section_title.dart';
@@ -15,7 +15,7 @@ import 'package:hi_doctor_v2/app/routes/app_pages.dart';
 class BookingPatientDetailPage extends StatelessWidget {
   final _formKey = GlobalKey<FormState>();
 
-  final PatientController _controller = Get.put(PatientController());
+  final _c = Get.find<BookingController>();
 
   BookingPatientDetailPage({Key? key}) : super(key: key);
 
@@ -33,7 +33,7 @@ class BookingPatientDetailPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final userInfo = Storage.getValue<Map<String, dynamic>>(CacheKey.USER_INFO.name);
+    final userInfo = Storage.getValue<UserInfo2>(CacheKey.USER_INFO.name);
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: MyAppBar(title: 'Patient Details'),
@@ -49,9 +49,9 @@ class BookingPatientDetailPage extends StatelessWidget {
                 padding: EdgeInsets.only(top: 15.0.sp),
                 child: Form(
                   key: _formKey,
-                  child: GetBuilder<PatientController>(
-                    init: _controller,
-                    builder: (PatientController controller) {
+                  child: GetBuilder<BookingController>(
+                    init: _c,
+                    builder: (_) {
                       return Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -76,7 +76,7 @@ class BookingPatientDetailPage extends StatelessWidget {
                                     _getTitle('Full name:'),
                                     Flexible(
                                       child: Text(
-                                        '${userInfo?["lastName"]} ${userInfo?["firstName"]}',
+                                        '${userInfo?.lastName} ${userInfo?.firstName}',
                                       ),
                                     ),
                                   ],
@@ -84,7 +84,7 @@ class BookingPatientDetailPage extends StatelessWidget {
                                 Row(
                                   children: [
                                     _getTitle('Gender:'),
-                                    Text('${userInfo?["gender"]}'),
+                                    Text('${userInfo?.gender}'),
                                   ],
                                 ),
                                 Row(
@@ -97,13 +97,7 @@ class BookingPatientDetailPage extends StatelessWidget {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     _getTitle('Address:'),
-                                    Flexible(child: Text('${userInfo?["address"]}')),
-                                  ],
-                                ),
-                                Row(
-                                  children: [
-                                    _getTitle('Phone number:'),
-                                    Text('${userInfo?["phoneNumber"]}'),
+                                    Flexible(child: Text('${userInfo?.address}')),
                                   ],
                                 ),
                               ],
@@ -112,8 +106,6 @@ class BookingPatientDetailPage extends StatelessWidget {
                           SizedBox(
                             height: 8.0.sp,
                           ),
-                          // Dob picker
-                          MyDateTimeField(),
                           SizedBox(
                             height: 16.0.sp,
                           ),
@@ -126,7 +118,7 @@ class BookingPatientDetailPage extends StatelessWidget {
                               return null;
                             },
                             focusNode: FocusNode(),
-                            controller: controller.problemController,
+                            controller: _c.problemController,
                             decoration: InputDecoration(
                               hintText: 'Description your health status, what you are suffering...',
                               contentPadding: EdgeInsets.only(top: 16.sp, bottom: 16.sp, left: 18.sp, right: -18.sp),

@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 
 import 'package:hi_doctor_v2/app/common/constants.dart';
 import 'package:hi_doctor_v2/app/common/storage/storage.dart';
+import 'package:hi_doctor_v2/app/models/patient.dart';
 import 'package:hi_doctor_v2/app/models/user_info.dart';
 import 'package:hi_doctor_v2/app/modules/settings/providers/api_settings.dart';
 import 'package:image_picker/image_picker.dart';
@@ -28,7 +29,7 @@ class ApiSettingsImpl extends GetConnect with ApiSettings {
   }
 
   @override
-  Future<Response> getPresignedUrls(List<XFile> images) {
+  Future<Response> postPresignedUrls(List<XFile> images) {
     Map<String, dynamic> body = {};
     List<Map<String, dynamic>> list = images.map<Map<String, dynamic>>(
       (e) {
@@ -55,9 +56,38 @@ class ApiSettingsImpl extends GetConnect with ApiSettings {
   }
 
   @override
-  Future<Response> updateProfile(UserInfo2 data) {
+  Future<Response> putUserProfile(UserInfo2 data) {
     return put(
       '/user/me/',
+      data.toJson(),
+      headers: headers,
+    );
+  }
+
+  @override
+  Future<Response> getPatientList({int page = 1, int limit = 10}) {
+    return get(
+      '/user/patients/data/',
+      headers: headers,
+      query: {
+        'page': page.toString(),
+        'limit': limit.toString(),
+      },
+    );
+  }
+
+  @override
+  Future<Response> getPatientProfile(int id) {
+    return get(
+      '/user/patients/$id',
+      headers: headers,
+    );
+  }
+
+  @override
+  Future<Response> postPatientProfile(Patient data) {
+    return post(
+      '/user/patients/',
       data.toJson(),
       headers: headers,
     );

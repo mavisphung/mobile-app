@@ -118,7 +118,6 @@ class CustomTextFieldWidget extends StatelessWidget {
                               ),
                             )
                           : Text(labelText ?? ''),
-                      // hintStyle: ,
                       hintText: hintText,
                       isDense: isDense,
                       prefixIcon: prefixIcon,
@@ -236,7 +235,6 @@ class CustomTextFieldWidget2 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      // height: 90.sp,
       child: ObxValue<RxBool>(
           (isObscure) => TextFormField(
                 readOnly: readOnly,
@@ -286,7 +284,6 @@ class CustomTextFieldWidget2 extends StatelessWidget {
                               ),
                             )
                           : Text(labelText ?? ''),
-                      // hintStyle: ,
                       hintText: hintText,
                       isDense: isDense,
                       prefixIcon: prefixIcon,

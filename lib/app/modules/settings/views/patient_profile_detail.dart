@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:hi_doctor_v2/app/common/constants.dart';
-
 import 'package:hi_doctor_v2/app/common/util/status.dart';
 import 'package:hi_doctor_v2/app/common/util/utils.dart';
 import 'package:hi_doctor_v2/app/common/util/validators.dart';
@@ -10,28 +9,24 @@ import 'package:hi_doctor_v2/app/common/values/colors.dart';
 import 'package:hi_doctor_v2/app/common/values/strings.dart';
 import 'package:hi_doctor_v2/app/models/user_info.dart';
 import 'package:hi_doctor_v2/app/modules/appointment/widgets/date_time_field_widget.dart';
-import 'package:hi_doctor_v2/app/modules/settings/controllers/settings_controller.dart';
-import 'package:hi_doctor_v2/app/modules/settings/controllers/user_profile_controller.dart';
+import 'package:hi_doctor_v2/app/modules/settings/controllers/patient_profile_controller.dart';
+
 import 'package:hi_doctor_v2/app/modules/widgets/custom_elevate_btn_widget.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/custom_textfield_widget.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/my_appbar.dart';
 
-// ignore: must_be_immutable
-class UserProfileDetailPage extends StatelessWidget {
-  late UserProfileController _c;
+class PatientProfileDetailPage extends StatelessWidget {
+  final _c = Get.put(PatientProfileController());
+  final patientId = Get.arguments as int;
 
-  UserProfileDetailPage({Key? key}) : super(key: key) {
-    _c = Get.put(UserProfileController());
-  }
+  PatientProfileDetailPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: MyAppBar(
-        title: 'User profile details',
-      ),
+      appBar: MyAppBar(title: 'Patient profile details'),
       body: FutureBuilder<bool>(
-        future: _c.getProfile(),
+        future: _c.getPatientWithId(patientId),
         builder: (ctx, snapshot) {
           if (snapshot.hasData) {
             if (snapshot.data == true) {
@@ -46,8 +41,8 @@ class UserProfileDetailPage extends StatelessWidget {
                             children: [
                               ObxValue<RxString>(
                                 (data) => Container(
-                                  width: Get.width.sp / 3,
-                                  height: Get.width.sp / 3,
+                                  width: Get.width.sp / 4,
+                                  height: Get.width.sp / 4,
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(Constants.borderRadius.sp),
                                     image: DecorationImage(
@@ -73,9 +68,9 @@ class UserProfileDetailPage extends StatelessWidget {
                                     }
                                   },
                                   child: Container(
-                                    padding: EdgeInsets.all(5.sp),
+                                    padding: EdgeInsets.all(3.sp),
                                     decoration: BoxDecoration(
-                                      color: AppColors.grey600,
+                                      color: AppColors.primary,
                                       borderRadius: BorderRadius.circular(5.sp),
                                     ),
                                     child: const Icon(
@@ -86,22 +81,6 @@ class UserProfileDetailPage extends StatelessWidget {
                                 ),
                               ),
                             ],
-                          ),
-                          Text(
-                            '${_c.profile.firstName} ${_c.profile.lastName}',
-                            style: TextStyle(
-                              fontSize: 16.0.sp,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          SizedBox(
-                            height: 2.0.sp,
-                          ),
-                          Text(
-                            '${_c.profile.email}',
-                            style: TextStyle(
-                              fontSize: 12.5.sp,
-                            ),
                           ),
                           SizedBox(
                             height: 28.0.sp,
@@ -135,17 +114,8 @@ class UserProfileDetailPage extends StatelessWidget {
                             validator: Validators.validateEmpty,
                             focusNode: _c.addressFocusNode,
                             controller: _c.address,
-                            onFieldSubmitted: (_) => FocusScope.of(context).requestFocus(_c.phoneNumberFocusNode),
-                            labelText: Strings.address.tr,
-                          ),
-                          CustomTextFieldWidget(
-                            validator: Validators.validatePhone,
-                            focusNode: _c.phoneNumberFocusNode,
-                            controller: _c.phoneNumber,
                             onFieldSubmitted: (_) => Utils.unfocus(),
-                            labelText: Strings.phoneNumber.tr,
-                            keyboardType: TextInputType.number,
-                            maxLength: 10,
+                            labelText: Strings.address.tr,
                           ),
                           // Dob picker
                           MyDateTimeField(dob: _c.dob),
@@ -191,7 +161,7 @@ class UserProfileDetailPage extends StatelessWidget {
                                 (data) => CustomElevatedButtonWidget(
                                       textChild: 'Save profile',
                                       status: data.value,
-                                      onPressed: () => _c.updateUserProfile(Get.find<SettingsController>()),
+                                      onPressed: () {},
                                     ),
                                 _c.status),
                           ),

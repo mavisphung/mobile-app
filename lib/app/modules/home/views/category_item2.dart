@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class CategoryItem2 extends StatelessWidget {
   final String label;
@@ -22,7 +23,7 @@ class CategoryItem2 extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Image.asset(
+            SvgPicture.asset(
               image,
               fit: BoxFit.cover,
               width: 33.0,
@@ -48,26 +49,26 @@ class CategoryItem2 extends StatelessWidget {
 List<CategoryItem2> categoriesList = [
   const CategoryItem2(
     label: 'Cardiology',
-    image: 'assets/images/specs/cardio.png',
+    image: 'assets/icons/specs/cardio2.svg',
   ),
   const CategoryItem2(
     label: 'Pediatrics',
-    image: 'assets/images/specs/baby.png',
+    image: 'assets/icons/specs/baby2.svg',
   ),
   const CategoryItem2(
     label: 'Dentistry',
-    image: 'assets/images/specs/dental.png',
+    image: 'assets/icons/specs/dental2.svg',
   ),
   const CategoryItem2(
     label: 'Pulmonology',
-    image: 'assets/images/specs/lung.png',
+    image: 'assets/icons/specs/lung2.svg',
   ),
-  const CategoryItem2(
-    label: 'Physical therapy',
-    image: 'assets/images/specs/physical.png',
-  ),
+  // const CategoryItem2(
+  //   label: 'Physical therapy',
+  //   image: 'assets/icons/specs/physical.svg',
+  // ),
   const CategoryItem2(
     label: 'More',
-    image: 'assets/images/specs/more.png',
+    image: 'assets/icons/specs/more2.svg',
   ),
 ];

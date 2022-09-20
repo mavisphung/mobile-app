@@ -16,9 +16,11 @@ import 'package:hi_doctor_v2/app/modules/bottom_navbar/nav_bar.dart';
 import 'package:hi_doctor_v2/app/modules/home/home_page.dart';
 import 'package:hi_doctor_v2/app/modules/home/views/doctor_detail_page.dart';
 import 'package:hi_doctor_v2/app/modules/search/views/search_page.dart';
+import 'package:hi_doctor_v2/app/modules/settings/views/patient_list.dart';
+import 'package:hi_doctor_v2/app/modules/settings/views/patient_profile_detail.dart';
 import 'package:hi_doctor_v2/app/modules/settings/views/user_profile_detail.dart';
 
-part './app_routes.dart';
+part 'package:hi_doctor_v2/app/routes/app_routes.dart';
 
 abstract class AppPages {
   static const INITIAL = Routes.SPLASH;
@@ -56,12 +58,12 @@ abstract class AppPages {
       page: () => const SearchPage(),
     ),
     GetPage(
-      name: Routes.PROFILE_DETAIL,
+      name: Routes.USER_PROFILE_DETAIL,
       page: () => UserProfileDetailPage(),
     ),
     GetPage(
       name: Routes.DOCTOR_DETAIL,
-      page: () => const DoctorDetailPage(),
+      page: () => DoctorDetailPage(),
     ),
     GetPage(
       name: Routes.BOOKING,
@@ -87,6 +89,20 @@ abstract class AppPages {
     GetPage(
       name: Routes.BOOKING_SUMMARY,
       page: () => BookingSummary(),
+      preventDuplicates: true,
+      fullscreenDialog: true,
+      transition: Transition.rightToLeftWithFade,
+    ),
+    GetPage(
+      name: Routes.PATIENT_LIST,
+      page: () => const PatientListPage(),
+      preventDuplicates: true,
+      fullscreenDialog: true,
+      transition: Transition.rightToLeftWithFade,
+    ),
+    GetPage(
+      name: Routes.PATIENT_PROFILE_DETAIL,
+      page: () => PatientProfileDetailPage(),
       preventDuplicates: true,
       fullscreenDialog: true,
       transition: Transition.rightToLeftWithFade,

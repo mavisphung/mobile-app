@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+
 import 'package:hi_doctor_v2/app/common/util/extensions.dart';
 import 'package:hi_doctor_v2/app/common/values/colors.dart';
-import 'package:hi_doctor_v2/app/modules/appointment/controllers/booking/package_controller.dart';
+import 'package:hi_doctor_v2/app/modules/appointment/controllers/booking/booking_controller.dart';
 
 class ServiceItem extends StatelessWidget {
   final String title;
@@ -21,7 +22,7 @@ class ServiceItem extends StatelessWidget {
     required this.iconData,
   }) : super(key: key);
 
-  final PackageController packageController = Get.find<PackageController>();
+  final _c = Get.find<BookingController>();
 
   @override
   Widget build(BuildContext context) {
@@ -102,11 +103,11 @@ class ServiceItem extends StatelessWidget {
           Obx(
             () => Radio(
               onChanged: (int? value) {
-                packageController.serviceId = value!;
-                packageController.serviceId.toString().debugLog('Service Id');
+                _c.serviceId = value!;
+                _c.serviceId.toString().debugLog('Service Id');
               },
               value: serviceId,
-              groupValue: packageController.serviceId,
+              groupValue: _c.serviceId,
             ),
           ),
         ],

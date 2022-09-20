@@ -1,21 +1,17 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:hi_doctor_v2/app/common/util/extensions.dart';
 import 'package:hi_doctor_v2/app/models/doctor.dart';
-import 'package:hi_doctor_v2/app/modules/home/controllers/home_controller.dart';
 import 'package:hi_doctor_v2/app/routes/app_pages.dart';
 
 class DoctorItem extends StatelessWidget {
   final Doctor doctor;
 
-  DoctorItem({
+  const DoctorItem({
     Key? key,
     required this.doctor,
   }) : super(key: key);
-
-  final HomeController homeController = Get.find<HomeController>();
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +21,7 @@ class DoctorItem extends StatelessWidget {
       child: InkWell(
         onTap: () {
           'Call api get doctor with id ${doctor.id}'.debugLog('Doctor instance');
-          Get.toNamed(Routes.DOCTOR_DETAIL, arguments: doctor);
+          Get.toNamed(Routes.DOCTOR_DETAIL, arguments: doctor.id);
         },
         child: Ink(
           decoration: BoxDecoration(

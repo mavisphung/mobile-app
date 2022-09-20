@@ -38,7 +38,7 @@ class UserProfile extends StatelessWidget {
               right: 0,
               child: GestureDetector(
                 onTap: () async {
-                  Get.toNamed(Routes.PROFILE_DETAIL);
+                  Get.toNamed(Routes.USER_PROFILE_DETAIL);
                 },
                 child: Container(
                   padding: EdgeInsets.all(3.sp),

@@ -26,8 +26,7 @@ abstract class ApiResponse {
 
       print('STATUS CODE: ${response.statusCode}, ${res["success"]}, ${res["status"]}');
       if (response.isOk) {
-        if (res['success'] == true &&
-            (res['status'] == Constants.successPostStatusCode || res['status'] == Constants.successGetStatusCode)) {
+        if (res['success'] == true) {
           print('OK: ${response.body}');
           return response.body;
         }
@@ -36,10 +35,10 @@ abstract class ApiResponse {
         if (res['success'] == false && res['status'] == 400) {
           if (res['message'].toString() == 'INVALID_INPUT' &&
               res['data']['user'][0].toString().contains('does not exist')) {
-            throw ApiError(
-              type: ErrorType.failedResponse,
-              error: Strings.invalidInputMsg.tr,
-            );
+            // throw ApiError(
+            //   type: ErrorType.failedResponse,
+            //   error: Strings.invalidInputMsg.tr,
+            // );
           }
           return response.body;
         } else if (status.isServerError) {

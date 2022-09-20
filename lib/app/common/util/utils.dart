@@ -223,10 +223,15 @@ abstract class Utils {
     }
   }
 
-  static String formatDateTime(DateTime date) {
-    final DateFormat formatter = DateFormat("yyyy-MM-dd HH:mm:ss");
-    return formatter.format(date);
-  }
+  static String formatDateTime(DateTime date) => DateFormat("dd-MM-yyyy HH:mm").format(date);
 
-  static String formatDate(DateTime date) => DateFormat('yyyy-MM-dd').format(date);
+  static String formatDate(DateTime date) => DateFormat('dd-MM-yyyy').format(date);
+
+  static String formatTime(DateTime date) => DateFormat('HH:mm').format(date);
+
+  static DateTime? parseStrToDateTime(String str) => DateFormat('yyyy-MM-dd HH:mm').parse(str);
+
+  static DateTime? parseStrToDate(String str) => DateFormat('yyyy-MM-dd').parse(str);
+
+  static DateTime? parseStrToTime(String str) => DateFormat('HH:mm').parse(str);
 }

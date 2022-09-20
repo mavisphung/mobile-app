@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
 import '../../common/util/status.dart';
@@ -151,8 +152,8 @@ class LoginPage extends GetView<LoginController> {
                         bottom: 5.0,
                       ),
                       child: ElevatedButton.icon(
-                        icon: Image.asset(
-                          'assets/images/gg_ic.png',
+                        icon: SvgPicture.asset(
+                          'assets/icons/gg.svg',
                           fit: BoxFit.cover,
                           width: 23.0,
                           height: 23.0,

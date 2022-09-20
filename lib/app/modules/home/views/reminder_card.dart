@@ -66,7 +66,7 @@ class ReminderCard extends StatelessWidget {
               child: Row(
                 children: [
                   SvgPicture.asset(
-                    'assets/images/icons/calendar.svg',
+                    'assets/icons/calendar.svg',
                     color: Colors.white,
                   ),
                   Padding(
@@ -78,7 +78,7 @@ class ReminderCard extends StatelessWidget {
                   ),
                   const Spacer(),
                   SvgPicture.asset(
-                    'assets/images/icons/clock.svg',
+                    'assets/icons/clock.svg',
                     color: Colors.white,
                   ),
                   Padding(

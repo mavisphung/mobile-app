@@ -89,4 +89,9 @@ class ResponseModel2 {
   String toJson() => json.encode(toMap());
 
   factory ResponseModel2.fromJson(String source) => ResponseModel2.fromMap(json.decode(source) as Map<String, dynamic>);
+
+  @override
+  String toString() {
+    return 'ResponseModel2(success: $success, status: $status, message: $message, totalItems: $totalItems, nextPage: $nextPage, previousPage: $previousPage, totalPages: $totalPages, currentPage: $currentPage, limit: $limit, data: $data)';
+  }
 }
