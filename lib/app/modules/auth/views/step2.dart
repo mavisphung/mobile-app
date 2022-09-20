@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:hi_doctor_v2/app/modules/appointment/widgets/date_time_field_widget.dart';
 
 import '../../../common/util/validators.dart';
 import '../../../common/values/strings.dart';
@@ -90,6 +92,11 @@ class Step2 extends StatelessWidget {
               keyboardType: TextInputType.number,
               maxLength: 10,
             ),
+            // Dob picker
+            MyDateTimeField(dob: _c.dob),
+            SizedBox(
+              height: 20.sp,
+            ),
             Container(
               margin: const EdgeInsets.only(bottom: 15.0),
               width: double.infinity,
@@ -103,35 +110,24 @@ class Step2 extends StatelessWidget {
                 ),
                 borderRadius: BorderRadius.circular(10.0),
               ),
-              child: DropdownButton<String>(
-                // style: TextStyle(padding),
-                value: _c.gender.value,
-                isExpanded: true,
-                underline: Container(),
-                hint: Text(Strings.gender.tr),
-                borderRadius: BorderRadius.circular(10.0),
-                items: UserGender.gender.value.map((item) {
-                  String label = Strings.male.tr;
-                  switch (item) {
-                    case 'MALE':
-                      label = Strings.male.tr;
-                      break;
-                    case 'FEMALE':
-                      label = Strings.female.tr;
-                      break;
-                    case 'OTHER':
-                      label = Strings.other.tr;
-                      break;
-                  }
-                  return DropdownMenuItem<String>(
-                    value: item,
-                    child: Text(label),
-                  );
-                }).toList(),
-                onChanged: (value) {
-                  _c.gender.value = value ?? 'OTHER';
-                },
-              ),
+              child: ObxValue<RxString>(
+                  (data) => DropdownButton<String>(
+                        value: data.value,
+                        isExpanded: true,
+                        underline: Container(),
+                        hint: Text(Strings.gender.tr),
+                        borderRadius: BorderRadius.circular(10.0),
+                        items: userGender.map((item) {
+                          return DropdownMenuItem<String>(
+                            value: item['value'],
+                            child: Text(item['label'] ?? ''),
+                          );
+                        }).toList(),
+                        onChanged: (value) {
+                          data.value = value ?? 'OTHER';
+                        },
+                      ),
+                  _c.gender),
             ),
             Padding(
               padding: const EdgeInsets.only(top: 25.0, bottom: 20.0),

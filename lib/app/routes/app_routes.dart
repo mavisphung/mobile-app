@@ -9,11 +9,13 @@ abstract class Routes {
   static const REGISTER = '/register';
   static const NAVBAR = '/navbar';
   static const HISTORY = '/history';
-  static const PROFILE_DETAIL = '/profileDetail';
+  static const USER_PROFILE_DETAIL = '/userProfileDetail';
   static const SEARCH = '/search';
   static const DOCTOR_DETAIL = '/doctorDetail';
   static const BOOKING = '/booking';
   static const BOOKING_PACKAGE = '/bookingPackage';
   static const BOOKING_PATIENT_DETAIL = '/bookingPatientDetail';
   static const BOOKING_SUMMARY = '/bookingSummary';
+  static const PATIENT_LIST = '/patientList';
+  static const PATIENT_PROFILE_DETAIL = '/patientProfileDetail';
 }

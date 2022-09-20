@@ -2,10 +2,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:hi_doctor_v2/app/common/constants.dart';
 
 import 'package:hi_doctor_v2/app/common/storage/storage.dart';
 import 'package:hi_doctor_v2/app/common/values/colors.dart';
 import 'package:hi_doctor_v2/app/common/values/strings.dart';
+import 'package:hi_doctor_v2/app/models/user_info.dart';
 import 'package:hi_doctor_v2/app/modules/home/controllers/doctor_controller.dart';
 import 'package:hi_doctor_v2/app/modules/home/controllers/home_controller.dart';
 import 'package:hi_doctor_v2/app/modules/home/views/category_item2.dart';
@@ -27,7 +29,7 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final userInfo = Storage.getValue<Map<String, dynamic>>(CacheKey.USER_INFO.name);
+    final userInfo = Storage.getValue<UserInfo2>(CacheKey.USER_INFO.name);
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
@@ -45,7 +47,7 @@ class HomePage extends StatelessWidget {
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
                         image: DecorationImage(
-                          image: NetworkImage(userInfo?['avatar']),
+                          image: NetworkImage(userInfo?.avatar ?? Constants.defaultAvatar),
                           fit: BoxFit.cover,
                         ),
                       ),
@@ -181,7 +183,7 @@ class HomePage extends StatelessWidget {
                             },
                           );
                         }
-                        return CircularProgressIndicator();
+                        return const CircularProgressIndicator();
                       },
                     ),
                     SizedBox(

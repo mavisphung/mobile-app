@@ -45,7 +45,7 @@ class MyTitleSection extends StatelessWidget {
                         TextStyle(
                           color: Colors.amber,
                           fontSize: 14.sp,
-                          fontWeight: FontWeight.w500,
+                          fontWeight: FontWeight.w700,
                         ),
                   ),
                 )

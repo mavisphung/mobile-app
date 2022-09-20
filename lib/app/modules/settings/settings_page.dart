@@ -1,23 +1,24 @@
-import 'dart:math';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:hi_doctor_v2/app/common/storage/storage.dart';
 
-import '../../common/util/utils.dart';
-import '../../common/values/strings.dart';
-import './views/user_profile_item.dart';
-import './views/user_profile.dart';
-import './controllers/settings_controller.dart';
+import 'package:hi_doctor_v2/app/common/storage/storage.dart';
+import 'package:hi_doctor_v2/app/common/util/utils.dart';
+import 'package:hi_doctor_v2/app/common/values/strings.dart';
+import 'package:hi_doctor_v2/app/modules/settings/controllers/settings_controller.dart';
+import 'package:hi_doctor_v2/app/modules/settings/widgets/user_profile.dart';
+import 'package:hi_doctor_v2/app/modules/settings/widgets/user_profile_item.dart';
+import 'package:hi_doctor_v2/app/routes/app_pages.dart';
 
 enum SettingOption { myaccount, logout }
 
+// ignore: must_be_immutable
 class SettingsPage extends StatelessWidget {
   SettingsPage({Key? key}) : super(key: key);
-  final SettingsController _controller = Get.put(SettingsController());
+  final _controller = Get.find<SettingsController>();
   var _isEngish = false;
 
   void _logOut() async {
@@ -74,45 +75,43 @@ class SettingsPage extends StatelessWidget {
                         children: [
                           UserProfileItem(
                             icon: SvgPicture.asset(
-                              'assets/images/icons/person.svg',
+                              'assets/icons/person.svg',
                             ),
                             title: 'My account',
-                            description: 'Make changes to your account',
-                            function: () {},
+                            description: 'Update your account',
+                            function: () => Get.toNamed(Routes.USER_PROFILE_DETAIL),
                           ),
                           UserProfileItem(
                             icon: const Icon(CupertinoIcons.doc_person),
-                            title: 'Patient Profiles',
-                            description: 'Manage your profiles',
-                            function: () {
-                              print('Not implement here');
-                            },
+                            title: 'Patient profile',
+                            description: 'Manage patient profiles',
+                            function: () => Get.toNamed(Routes.PATIENT_LIST),
                           ),
                           UserProfileItem(
-                            icon: SvgPicture.asset(
-                              'assets/images/icons/logout.svg',
-                              color: Colors.red,
-                              width: 25.sp,
-                              height: 25.sp,
-                            ),
-                            color: Colors.red,
-                            title: 'Log out',
-                            description: 'Quit the app',
-                            function: _logOut,
-                            isNavigator: false,
-                          ),
-                          UserProfileItem(
-                            icon: const Icon(CupertinoIcons.doc_person),
+                            icon: const Icon(Icons.translate_rounded),
                             title: 'Language',
                             description: _isEngish ? 'Switch to Vietnamese' : 'Switch to English',
                             isNavigator: false,
-                            suffix: CupertinoSwitch(
+                            suffix: Switch(
                               value: _isEngish,
                               onChanged: (value) => _controller.changeLanguage(value),
                             ),
                             function: () {
                               print('Not implement here');
                             },
+                          ),
+                          UserProfileItem(
+                            icon: SvgPicture.asset(
+                              'assets/icons/logout.svg',
+                              color: Colors.red,
+                              width: 25.sp,
+                              height: 25.sp,
+                            ),
+                            color: Colors.red,
+                            title: 'Logout',
+                            description: 'Quit the app',
+                            function: _logOut,
+                            isNavigator: false,
                           ),
                         ],
                       ),

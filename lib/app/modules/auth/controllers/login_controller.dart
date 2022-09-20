@@ -5,6 +5,7 @@ import 'package:hi_doctor_v2/app/common/storage/storage.dart';
 import 'package:hi_doctor_v2/app/common/util/extensions.dart';
 import 'package:hi_doctor_v2/app/common/util/status.dart';
 import 'package:hi_doctor_v2/app/common/util/utils.dart';
+import 'package:hi_doctor_v2/app/models/user_info.dart';
 import 'package:hi_doctor_v2/app/modules/auth/providers/api_auth.dart';
 import 'package:hi_doctor_v2/app/modules/auth/providers/api_auth_impl.dart';
 import 'package:hi_doctor_v2/app/routes/app_pages.dart';
@@ -21,16 +22,16 @@ class LoginController extends GetxController {
       await Storage.saveValue(CacheKey.TOKEN.name, response.data['accessToken']);
       await Storage.saveValue(CacheKey.IS_LOGGED.name, true);
 
-      final userInfo = {
-        'id': response.data['id'],
-        'email': response.data['email'],
-        'firstName': response.data['firstName'],
-        'lastName': response.data['lastName'],
-        'address': response.data['address'],
-        'phoneNumber': response.data['phoneNumber'],
-        'gender': response.data['gender'],
-        'avatar': response.data['avatar'],
-      };
+      final userInfo = UserInfo2(
+        id: response.data['id'],
+        email: response.data['email'],
+        firstName: response.data['firstName'],
+        lastName: response.data['lastName'],
+        address: response.data['address'],
+        phoneNumber: response.data['phoneNumber'],
+        gender: response.data['gender'],
+        avatar: response.data['avatar'],
+      );
       await Storage.saveValue(CacheKey.USER_INFO.name, userInfo);
 
       Get.offNamed(Routes.NAVBAR);
@@ -48,16 +49,16 @@ class LoginController extends GetxController {
 
     if (response != null) {
       if (response.isSuccess == true && response.statusCode == Constants.successGetStatusCode) {
-        final userInfo = {
-          'id': response.data['id'],
-          'email': response.data['email'],
-          'firstName': response.data['firstName'],
-          'lastName': response.data['lastName'],
-          'address': response.data['address'],
-          'phoneNumber': response.data['phoneNumber'],
-          'gender': response.data['gender'],
-          'avatar': response.data['avatar'],
-        };
+        final userInfo = UserInfo2(
+          id: response.data['id'],
+          email: response.data['email'],
+          firstName: response.data['firstName'],
+          lastName: response.data['lastName'],
+          address: response.data['address'],
+          phoneNumber: response.data['phoneNumber'],
+          gender: response.data['gender'],
+          avatar: response.data['avatar'],
+        );
         await Storage.saveValue(CacheKey.USER_INFO.name, userInfo);
         return true;
       } else {

@@ -2,7 +2,7 @@ abstract class Constants {
   static const String baseUrl = 'http://capstone-elb-1141242582.ap-southeast-1.elb.amazonaws.com';
   // static const String baseUrl = 'http://localhost:8000';
   static const String baseUrl2 = 'capstone-elb-1141242582.ap-southeast-1.elb.amazonaws.com';
-  static const timeout = Duration(seconds: 7);
+  static const timeout = Duration(seconds: 30);
   static const successGetStatusCode = 200;
   static const successPostStatusCode = 201;
   static const userType = 'MEMBER';
@@ -12,4 +12,6 @@ abstract class Constants {
   static const nextPage = 'nextPage';
   static const previousPage = 'previousPage';
   static const totalItems = 'totalItems';
+  static const borderRadius = 20;
+  static const padding = 12.5;
 }

@@ -93,7 +93,7 @@ class MyApp extends StatelessWidget {
                   debugShowCheckedModeBanner: false,
                   theme: ThemeData(
                     primarySwatch: Colors.indigo,
-                    fontFamily: data.value ? 'Poppins' : 'Roboto',
+                    fontFamily: data.value ? 'Poppins' : 'Opensans',
                     bottomSheetTheme: const BottomSheetThemeData(
                       backgroundColor: Colors.transparent,
                     ),

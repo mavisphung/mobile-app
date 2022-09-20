@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:hi_doctor_v2/app/common/util/extensions.dart';
 
 import 'package:hi_doctor_v2/app/data/api_response.dart';
 import 'package:hi_doctor_v2/app/data/response_model.dart';
@@ -25,12 +26,14 @@ class DoctorController extends GetxController {
     super.dispose();
   }
 
-  void getDoctorWithId(int id) async {
-    var result = await apiDoctor.getDoctorWithId(id);
-    Map<String, dynamic> response = ApiResponse.getResponse(result);
-    ResponseModel2 model = ResponseModel2.fromMap(response);
-    Map<String, dynamic> data = model.data as Map<String, dynamic>;
-    rxDoctor.value = Doctor.fromMap(data);
-    update();
+  Future<bool> getDoctorWithId(int id) async {
+    var response = await apiDoctor.getDoctorWithId(id).futureValue();
+
+    if (response != null && response.isSuccess == true) {
+      rxDoctor.value = Doctor.fromMap(response.data);
+      return true;
+    }
+
+    return false;
   }
 }

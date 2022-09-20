@@ -9,10 +9,11 @@ class Doctor {
   int? age;
   String? dob;
   String? phoneNumber;
-  int? isApproved;
+  bool? isApproved;
   String? avatar;
   double? experienceYears;
   String? gender;
+  List<dynamic>? shifts;
 
   Doctor({
     this.id,
@@ -26,6 +27,7 @@ class Doctor {
     this.avatar,
     this.experienceYears,
     this.gender,
+    this.shifts,
   });
 
   Map<String, dynamic> toMap() {
@@ -41,6 +43,7 @@ class Doctor {
       'avatar': avatar,
       'experienceYears': experienceYears,
       'gender': gender,
+      'shifts': shifts,
     };
   }
 
@@ -53,10 +56,11 @@ class Doctor {
       age: map['age'] != null ? map['age'] as int : null,
       dob: map['dob'] != null ? map['dob'] as String : null,
       phoneNumber: map['phoneNumber'] != null ? map['phoneNumber'] as String : null,
-      isApproved: map['isApproved'] != null ? map['isApproved'] as int : null,
+      isApproved: map['isApproved'] != null ? map['isApproved'] as bool : null,
       avatar: map['avatar'] != null ? map['avatar'] as String : null,
       experienceYears: map['experienceYears'] != null ? map['experienceYears'] as double : null,
       gender: map['gender'] != null ? map['gender'] as String : null,
+      shifts: map['shifts'] as List<dynamic>,
     );
   }
 
@@ -66,6 +70,6 @@ class Doctor {
 
   @override
   String toString() {
-    return 'Doctor(id: $id, email: $email, firstName: $firstName, lastName: $lastName, age: $age, dob: $dob, phoneNumber: $phoneNumber, isApproved: $isApproved, avatar: $avatar, experienceYears: $experienceYears, gender: $gender)';
+    return 'Doctor(id: $id, email: $email, firstName: $firstName, lastName: $lastName, age: $age, dob: $dob, phoneNumber: $phoneNumber, isApproved: $isApproved, avatar: $avatar, experienceYears: $experienceYears, gender: $gender, shifts: $shifts)';
   }
 }

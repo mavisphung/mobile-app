@@ -30,4 +30,9 @@ class ReqAppointmentModel {
   }
 
   String toJson() => json.encode(toMap());
+
+  @override
+  String toString() {
+    return 'ReqAppointmentModel(doctor: $doctor, patient: $patient, packageMeta: $packageMeta, bookedAt: $bookedAt, type: $type, diseaseDescription: $diseaseDescription)';
+  }
 }
