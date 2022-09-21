@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:hi_doctor_v2/app/modules/message/message_page.dart';
 
 import '../../common/util/utils.dart';
 import '../../common/values/strings.dart';
@@ -28,7 +29,9 @@ class NavBar extends StatelessWidget {
                   ? HomePage()
                   : _controller.tabIndex == 1
                       ? const AppoinmentPage()
-                      : SettingsPage(),
+                      : _controller.tabIndex == 2
+                          ? MessagePage()
+                          : SettingsPage(),
             ),
             bottomNavigationBar: BottomNavigationBar(
               unselectedItemColor: AppColors.grey600,

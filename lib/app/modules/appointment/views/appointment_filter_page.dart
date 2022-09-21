@@ -19,7 +19,7 @@ class AppointmentFilterPage extends StatelessWidget {
         builder: (AppointmentController controller) {
           return Scaffold(
             appBar: MyAppBar(
-              title: 'Filter',
+              title: 'Bộ lọc',
             ),
             body: Padding(
               padding: EdgeInsets.symmetric(horizontal: 16.0.sp),
@@ -31,7 +31,7 @@ class AppointmentFilterPage extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Types',
+                          'Hình thức',
                           style: TextStyle(
                             fontSize: 18.0.sp,
                             fontWeight: FontWeight.bold,
@@ -65,7 +65,7 @@ class AppointmentFilterPage extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Status',
+                          'Trạng thái',
                           style: TextStyle(
                             fontSize: 18.0.sp,
                             fontWeight: FontWeight.bold,

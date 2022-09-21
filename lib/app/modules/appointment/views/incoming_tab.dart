@@ -55,29 +55,6 @@ class _IncomingTabState extends State<IncomingTab> with AutomaticKeepAliveClient
                         child: const Text('Clear'),
                       ),
                       const Spacer(),
-                      GestureDetector(
-                        onTap: () {
-                          Get.to(() => AppointmentFilterPage(), fullscreenDialog: true);
-                        },
-                        child: Container(
-                          padding: EdgeInsets.symmetric(
-                            horizontal: 9.0.sp,
-                            vertical: 6.0.sp,
-                          ),
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(5.0.sp),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.black.withOpacity(0.12),
-                                offset: const Offset(0, 2),
-                                blurRadius: 4.0.sp,
-                              ),
-                            ],
-                          ),
-                          child: const Icon(Icons.sort_rounded),
-                        ),
-                      ),
                     ],
                   ),
                   //--------------------------------------------------------
@@ -88,7 +65,7 @@ class _IncomingTabState extends State<IncomingTab> with AutomaticKeepAliveClient
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
-                            'No appointments found!',
+                            'Hiện tại chưa có cuộc hẹn nào!',
                             textAlign: TextAlign.center,
                             style: TextStyle(
                               fontSize: 18.0.sp,

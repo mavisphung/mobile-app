@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:hi_doctor_v2/app/common/util/extensions.dart';
 import 'package:hi_doctor_v2/app/modules/appointment/controllers/history_controller.dart';
 import 'package:hi_doctor_v2/app/modules/appointment/widgets/appointment_tile.dart';
+import 'package:hi_doctor_v2/app/modules/appointment/widgets/filter_button.dart';
 
 import '../../../common/util/status.dart';
 
@@ -55,7 +56,7 @@ class _HistoryTabState extends State<HistoryTab> with AutomaticKeepAliveClientMi
                           child: const Text('Clear'),
                         ),
                         const Spacer(),
-                        Text('${widget.histController.historyList.length} item(s)'),
+                        const FilterButton(),
                       ],
                     ),
                     //--------------------------------------------------------
@@ -68,7 +69,7 @@ class _HistoryTabState extends State<HistoryTab> with AutomaticKeepAliveClientMi
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text(
-                              'No appointments found!',
+                              'Bạn chưa đặt bất kỳ cuộc hẹn nào!',
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                 fontSize: 18.0.sp,
@@ -80,7 +81,7 @@ class _HistoryTabState extends State<HistoryTab> with AutomaticKeepAliveClientMi
                       )
                     ] else
                       ...widget.histController.historyList
-                          .map((e) => AppointmentTile(
+                          .map((e) => HistoryAppointmentTile(
                                 data: e,
                               ))
                           .toList(),

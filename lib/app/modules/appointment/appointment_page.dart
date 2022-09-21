@@ -26,12 +26,12 @@ class _AppoinmentPageState extends State<AppoinmentPage> with SingleTickerProvid
     tabs = const <Tab>[
       Tab(
         child: Text(
-          'Incoming',
+          'Đang chờ',
         ),
       ),
       Tab(
         child: Text(
-          'History',
+          'Lịch sử',
         ),
       ),
     ];
@@ -49,7 +49,7 @@ class _AppoinmentPageState extends State<AppoinmentPage> with SingleTickerProvid
             child: Scaffold(
               appBar: AppBar(
                 title: const Text(
-                  "Appointments",
+                  "Lịch hẹn",
                   style: TextStyle(
                     color: Colors.black,
                   ),

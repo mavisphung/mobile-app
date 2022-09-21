@@ -85,7 +85,7 @@ extension FutureExt<T> on Future<Response<T>> {
 
 enum Gender { init, male, female, other }
 
-List<Gender> genders = [ Gender.male, Gender.female, Gender.other ];
+List<Gender> genders = [Gender.male, Gender.female, Gender.other];
 
 extension GenderExt on Gender {
   String get value {
@@ -106,13 +106,13 @@ extension GenderExt2 on Gender {
   String get label {
     switch (this) {
       case Gender.male:
-        return 'Male';
+        return 'Nam';
       case Gender.female:
-        return 'Female';
+        return 'Nữ';
       case Gender.init:
         return 'Init';
       default:
-        return 'Other';
+        return 'Khác';
     }
   }
 }
@@ -140,7 +140,7 @@ extension AppointmentTypeExt2 on AppointmentType {
       case AppointmentType.offline:
         return 'Offline';
       default:
-        return 'All';
+        return 'Tất cả';
     }
   }
 }
@@ -168,15 +168,15 @@ extension AppointmentStatusExt2 on AppointmentStatus {
   String get label {
     switch (this) {
       case AppointmentStatus.pending:
-        return 'Pending';
+        return 'Đang chờ';
       case AppointmentStatus.completed:
-        return 'Completed';
+        return 'Đã hoàn thành';
       case AppointmentStatus.cancelled:
-        return 'Cancelled';
+        return 'Đã hủy';
       case AppointmentStatus.inProgress:
-        return 'In Progress';
+        return 'Đang tiến hành';
       default:
-        return 'All';
+        return 'Tất cả';
     }
   }
 }
