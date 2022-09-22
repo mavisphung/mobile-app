@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class CategoryItem extends StatelessWidget {
   final String label;
@@ -15,45 +16,31 @@ class CategoryItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {},
-      borderRadius: BorderRadius.circular(5.sp),
-      child: Ink(
-        decoration: BoxDecoration(
-          color: Colors.white,
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.08),
-              offset: const Offset(0, 2),
-              blurRadius: 2.0,
+      borderRadius: BorderRadius.circular(8.sp),
+      child: Container(
+        width: 90.sp,
+        padding: EdgeInsets.all(8.sp),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            SvgPicture.asset(
+              image,
+              color: Colors.amber,
+              fit: BoxFit.cover,
+              width: 33.0,
+              height: 33.0,
+            ),
+            SizedBox(
+              height: 4.sp,
+            ),
+            Expanded(
+              child: Text(
+                label,
+                style: TextStyle(fontSize: 11.6.sp),
+                overflow: TextOverflow.ellipsis,
+              ),
             ),
           ],
-          borderRadius: BorderRadius.circular(5.sp),
-        ),
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Image.asset(
-                image,
-                fit: BoxFit.cover,
-                width: 33.0,
-                height: 33.0,
-              ),
-              Expanded(
-                child: Padding(
-                  padding: EdgeInsets.only(
-                    // left: 10.sp,
-                    top: 4.sp,
-                  ),
-                  child: Text(
-                    label,
-                    textAlign: TextAlign.start,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                ),
-              ),
-            ],
-          ),
         ),
       ),
     );
@@ -63,26 +50,26 @@ class CategoryItem extends StatelessWidget {
 List<CategoryItem> categoriesList = [
   const CategoryItem(
     label: 'Cardiology',
-    image: 'assets/images/specs/cardio.png',
+    image: 'assets/icons/specs/cardio2.svg',
   ),
   const CategoryItem(
     label: 'Pediatrics',
-    image: 'assets/images/specs/baby.png',
+    image: 'assets/icons/specs/baby2.svg',
   ),
   const CategoryItem(
     label: 'Dentistry',
-    image: 'assets/images/specs/dental.png',
+    image: 'assets/icons/specs/dental2.svg',
   ),
   const CategoryItem(
     label: 'Pulmonology',
-    image: 'assets/images/specs/lung.png',
+    image: 'assets/icons/specs/lung2.svg',
   ),
-  const CategoryItem(
-    label: 'Physical therapy',
-    image: 'assets/images/specs/physical.png',
-  ),
+  // const CategoryItem(
+  //   label: 'Physical therapy',
+  //   image: 'assets/icons/specs/physical.svg',
+  // ),
   const CategoryItem(
     label: 'More',
-    image: 'assets/images/specs/more.png',
+    image: 'assets/icons/specs/more2.svg',
   ),
 ];

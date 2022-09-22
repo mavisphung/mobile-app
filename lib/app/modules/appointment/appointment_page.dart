@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+
 import 'package:hi_doctor_v2/app/modules/appointment/controllers/appointment_controller.dart';
+import 'package:hi_doctor_v2/app/modules/appointment/controllers/tab_controller.dart';
 import 'package:hi_doctor_v2/app/modules/appointment/views/history_tab.dart';
 import 'package:hi_doctor_v2/app/modules/appointment/views/incoming_tab.dart';
-
-import './controllers/tab_controller.dart';
 
 class AppoinmentPage extends StatefulWidget {
   const AppoinmentPage({Key? key}) : super(key: key);

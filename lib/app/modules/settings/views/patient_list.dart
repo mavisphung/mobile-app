@@ -11,7 +11,7 @@ class PatientListPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final _c = Get.put(PatientProfileController());
     return Scaffold(
-      appBar: MyAppBar(title: 'Patient profile'),
+      appBar: const MyAppBar(title: 'Patient profile'),
       body: Column(
         children: [
           OutlinedButton(

@@ -4,22 +4,19 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
-import '../../common/util/status.dart';
-import '../../common/util/utils.dart';
-import '../../common/util/validators.dart';
-import '../../common/values/colors.dart';
-import '../../common/values/strings.dart';
-import '../../routes/app_pages.dart';
-import '../widgets/custom_elevate_btn_widget.dart';
-import '../widgets/custom_textfield_widget.dart';
-import './controllers/login_controller.dart';
+import 'package:hi_doctor_v2/app/common/util/status.dart';
+import 'package:hi_doctor_v2/app/common/util/utils.dart';
+import 'package:hi_doctor_v2/app/common/util/validators.dart';
+import 'package:hi_doctor_v2/app/common/values/colors.dart';
+import 'package:hi_doctor_v2/app/common/values/strings.dart';
+import 'package:hi_doctor_v2/app/modules/auth/controllers/login_controller.dart';
+import 'package:hi_doctor_v2/app/modules/widgets/base_page.dart';
+import 'package:hi_doctor_v2/app/modules/widgets/custom_elevate_btn_widget.dart';
+import 'package:hi_doctor_v2/app/modules/widgets/custom_textfield_widget.dart';
+import 'package:hi_doctor_v2/app/routes/app_pages.dart';
 
 class LoginPage extends GetView<LoginController> {
   final _formKey = GlobalKey<FormState>();
-  final _emailFocusNode = FocusNode();
-  final _passwordFocusNode = FocusNode();
-  final _emailController = TextEditingController();
-  final _passwordController = TextEditingController();
 
   LoginPage({Key? key}) : super(key: key);
 
@@ -28,7 +25,7 @@ class LoginPage extends GetView<LoginController> {
 
     _formKey.currentState!.save();
 
-    controller.login(_emailController.text, _passwordController.text);
+    controller.login(controller.emailController.text, controller.passwordController.text);
   }
 
   @override
@@ -38,10 +35,9 @@ class LoginPage extends GetView<LoginController> {
       child: Scaffold(
         body: SafeArea(
           child: Center(
-            child: SingleChildScrollView(
-              physics: const BouncingScrollPhysics(),
-              child: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 35.0),
+            child: BasePage(
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 15.sp),
                 child: Column(
                   children: [
                     Container(
@@ -66,9 +62,9 @@ class LoginPage extends GetView<LoginController> {
                           CustomTextFieldWidget(
                             withAsterisk: false,
                             validator: (value) => Validators.validateEmail(value, false),
-                            focusNode: _emailFocusNode,
-                            controller: _emailController,
-                            onFieldSubmitted: (_) => FocusScope.of(context).requestFocus(_passwordFocusNode),
+                            focusNode: controller.emailFocusNode,
+                            controller: controller.emailController,
+                            onFieldSubmitted: (_) => FocusScope.of(context).requestFocus(controller.passwordFocusNode),
                             hintText: Strings.email.tr,
                             prefixIcon: const Icon(
                               CupertinoIcons.mail_solid,
@@ -80,8 +76,8 @@ class LoginPage extends GetView<LoginController> {
                             hasClearIcon: false,
                             validator: Validators.validatePassword,
                             textInputAction: TextInputAction.done,
-                            focusNode: _passwordFocusNode,
-                            controller: _passwordController,
+                            focusNode: controller.passwordFocusNode,
+                            controller: controller.passwordController,
                             onFieldSubmitted: (_) => _submitLogin(),
                             hintText: Strings.pasword.tr,
                             prefixIcon: const Icon(CupertinoIcons.lock_fill),

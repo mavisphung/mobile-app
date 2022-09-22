@@ -2,19 +2,19 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:hi_doctor_v2/app/common/constants.dart';
 
+import 'package:hi_doctor_v2/app/common/constants.dart';
 import 'package:hi_doctor_v2/app/common/storage/storage.dart';
 import 'package:hi_doctor_v2/app/common/values/colors.dart';
 import 'package:hi_doctor_v2/app/common/values/strings.dart';
 import 'package:hi_doctor_v2/app/models/user_info.dart';
 import 'package:hi_doctor_v2/app/modules/home/controllers/doctor_controller.dart';
 import 'package:hi_doctor_v2/app/modules/home/controllers/home_controller.dart';
-import 'package:hi_doctor_v2/app/modules/home/views/category_item2.dart';
+import 'package:hi_doctor_v2/app/modules/home/views/category_item.dart';
 import 'package:hi_doctor_v2/app/modules/home/views/doctor_item.dart';
 import 'package:hi_doctor_v2/app/modules/home/views/reminder_card.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/custom_icon_button.dart';
-import 'package:hi_doctor_v2/app/modules/widgets/my_section_title.dart';
+import 'package:hi_doctor_v2/app/modules/widgets/custom_title_section.dart';
 
 class HomePage extends StatelessWidget {
   HomePage({Key? key}) : super(key: key);
@@ -104,7 +104,7 @@ class HomePage extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        MyTitleSection(title: Strings.upcomingAppointment.tr),
+                        CustomTitleSection(title: Strings.upcomingAppointment.tr),
                         InkWell(
                           onTap: () {},
                           child: const Text(
@@ -116,28 +116,13 @@ class HomePage extends StatelessWidget {
                     ),
                     const ReminderCard(),
                     _spacing,
-                    MyTitleSection(title: Strings.category.tr),
+                    CustomTitleSection(title: Strings.category.tr),
                     SizedBox(
                       height: 80.sp,
-                      // child: GridView.builder(
-                      //   physics: const NeverScrollableScrollPhysics(),
-                      //   shrinkWrap: true,
-                      //   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      //     crossAxisCount: 3,
-                      //     crossAxisSpacing: 5.sp,
-                      //     mainAxisSpacing: 5.sp,
-                      //     childAspectRatio: 1.6,
-                      //   ),
-                      //   itemBuilder: (_, index) => CategoryItem2(
-                      //     label: _categoriesList[index].label,
-                      //     image: _categoriesList[index].image,
-                      //   ),
-                      //   itemCount: _categoriesList.length,
-                      // ),
                       child: ListView.separated(
                         scrollDirection: Axis.horizontal,
                         physics: const BouncingScrollPhysics(),
-                        itemBuilder: (_, index) => CategoryItem2(
+                        itemBuilder: (_, index) => CategoryItem(
                           label: _categoriesList[index].label,
                           image: _categoriesList[index].image,
                         ),
@@ -148,7 +133,7 @@ class HomePage extends StatelessWidget {
                       ),
                     ),
                     _spacing,
-                    MyTitleSection(title: Strings.latestSearchDoctor.tr),
+                    CustomTitleSection(title: Strings.latestSearchDoctor.tr),
                     FutureBuilder(
                       future: homeController.getDoctors(),
                       builder: (context, AsyncSnapshot snapshot) {

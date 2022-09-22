@@ -13,18 +13,6 @@ class BaseWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
-      // child: GetBuilder<ApiRetryController>(
-      //   builder: (controller) => Stack(
-      //     children: [
-      //       Positioned.fill(child: child),
-      //       Visibility(
-      //         visible: controller.retry != null && controller.error != null,
-      //         child: Positioned.fill(child: child),
-      //       ),
-      //     ],
-      //   ),
-      // ),
-
       child: child,
     );
   }

@@ -3,13 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
-import '../../common/util/utils.dart';
-import '../../common/values/strings.dart';
-import '../../common/values/colors.dart';
-import '../appointment/appointment_page.dart';
-import '../home/home_page.dart';
-import '../settings/settings_page.dart';
-import './controllers/navbar_controller.dart';
+import 'package:hi_doctor_v2/app/common/util/utils.dart';
+import 'package:hi_doctor_v2/app/common/values/colors.dart';
+import 'package:hi_doctor_v2/app/common/values/strings.dart';
+import 'package:hi_doctor_v2/app/modules/appointment/appointment_page.dart';
+import 'package:hi_doctor_v2/app/modules/bottom_navbar/controllers/navbar_controller.dart';
+import 'package:hi_doctor_v2/app/modules/home/home_page.dart';
+import 'package:hi_doctor_v2/app/modules/settings/settings_page.dart';
 
 class NavBar extends StatelessWidget {
   final NavBarController _controller = Get.put(NavBarController());

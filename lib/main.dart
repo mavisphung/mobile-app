@@ -91,7 +91,7 @@ class MyApp extends StatelessWidget {
                   debugShowCheckedModeBanner: false,
                   theme: ThemeData(
                     primarySwatch: Colors.indigo,
-                    fontFamily: data.value ? 'Poppins' : 'Opensans',
+                    fontFamily: data.value ? 'Poppins' : 'Quicksand',
                     bottomSheetTheme: const BottomSheetThemeData(
                       backgroundColor: Colors.transparent,
                     ),
@@ -112,7 +112,7 @@ class MyApp extends StatelessWidget {
                   defaultTransition: Transition.cupertino,
                   initialRoute: AppPages.INITIAL,
                   getPages: AppPages.routes,
-                  initialBinding: InitialBindings(),
+                  // initialBinding: InitialBindings(),
                   builder: (_, child) => BaseWidget(
                     child: child ?? const SizedBox.shrink(),
                   ),

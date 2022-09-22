@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import 'package:hi_doctor_v2/app/common/constants.dart';
@@ -13,6 +14,11 @@ import 'package:hi_doctor_v2/app/routes/app_pages.dart';
 class LoginController extends GetxController {
   final loginStatus = Status.init.obs;
   late final ApiAuth _apiAuth;
+
+  final emailFocusNode = FocusNode();
+  final passwordFocusNode = FocusNode();
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
 
   Future<void> login(String email, String password) async {
     Utils.unfocus();
@@ -66,6 +72,15 @@ class LoginController extends GetxController {
       }
     }
     return null;
+  }
+
+  @override
+  void dispose() {
+    emailFocusNode.dispose();
+    emailController.dispose();
+    passwordFocusNode.dispose();
+    passwordController.dispose();
+    super.dispose();
   }
 
   @override

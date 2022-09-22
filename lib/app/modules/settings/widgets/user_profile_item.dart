@@ -46,8 +46,8 @@ class UserProfileItem extends StatelessWidget {
                       Text(
                         title,
                         style: TextStyle(
-                          fontSize: 13.0.sp,
-                          fontWeight: FontWeight.w500,
+                          fontSize: 14.5.sp,
+                          fontWeight: FontWeight.w600,
                           color: color,
                         ),
                       ),

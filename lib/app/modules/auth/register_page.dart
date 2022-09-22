@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+
+import 'package:hi_doctor_v2/app/common/util/status.dart';
+import 'package:hi_doctor_v2/app/common/values/strings.dart';
+import 'package:hi_doctor_v2/app/modules/auth/controllers/register_controller.dart';
+import 'package:hi_doctor_v2/app/modules/auth/views/dot_indicator.dart';
 import 'package:hi_doctor_v2/app/modules/auth/views/step1.dart';
 import 'package:hi_doctor_v2/app/modules/auth/views/step2.dart';
-
-import '../../common/util/status.dart';
-import '../../common/values/strings.dart';
-import '../widgets/custom_elevate_btn_widget.dart';
-import '../widgets/my_appbar.dart';
-import './controllers/register_controller.dart';
-import './views/step3.dart';
-import './views/dot_indicator.dart';
+import 'package:hi_doctor_v2/app/modules/auth/views/step3.dart';
+import 'package:hi_doctor_v2/app/modules/widgets/custom_elevate_btn_widget.dart';
+import 'package:hi_doctor_v2/app/modules/widgets/my_appbar.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({Key? key}) : super(key: key);
@@ -158,8 +158,8 @@ class _RegisterPageState extends State<RegisterPage> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: MyAppBar(title: Strings.registration.tr),
-      body: Container(
-        padding: EdgeInsets.symmetric(horizontal: 25.sp, vertical: 30.sp),
+      body: Padding(
+        padding: EdgeInsets.symmetric(horizontal: 25.sp),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [

@@ -49,7 +49,6 @@ class Step2 extends StatelessWidget {
         key: formKey,
         child: Column(
           children: [
-            const SizedBox(height: 8.0),
             Row(
               children: [
                 Expanded(

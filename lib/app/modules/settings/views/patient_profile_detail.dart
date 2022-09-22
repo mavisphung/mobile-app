@@ -24,7 +24,7 @@ class PatientProfileDetailPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: MyAppBar(title: 'Patient profile details'),
+      appBar: const MyAppBar(title: 'Patient profile details'),
       body: FutureBuilder<bool>(
         future: _c.getPatientWithId(patientId),
         builder: (ctx, snapshot) {

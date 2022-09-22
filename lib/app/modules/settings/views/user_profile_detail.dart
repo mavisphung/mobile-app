@@ -27,7 +27,7 @@ class UserProfileDetailPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: MyAppBar(
+      appBar: const MyAppBar(
         title: 'User profile details',
       ),
       body: FutureBuilder<bool>(
