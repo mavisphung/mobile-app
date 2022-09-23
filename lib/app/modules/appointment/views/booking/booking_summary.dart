@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
+
 import 'package:hi_doctor_v2/app/common/constants.dart';
 import 'package:hi_doctor_v2/app/common/storage/storage.dart';
 import 'package:hi_doctor_v2/app/common/values/colors.dart';
@@ -15,7 +17,6 @@ import 'package:hi_doctor_v2/app/modules/widgets/base_page.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/custom_bottom_sheet.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/custom_container.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/my_appbar.dart';
-import 'package:intl/intl.dart';
 
 // ignore: must_be_immutable
 class BookingSummary extends StatelessWidget {
@@ -73,12 +74,12 @@ class BookingSummary extends StatelessWidget {
     _doctorInfo = _doctorController.rxDoctor.value;
     _userInfo = Storage.getValue<UserInfo2>(CacheKey.USER_INFO.name);
     return Scaffold(
-      appBar: const MyAppBar(title: 'Review summary'),
+      appBar: MyAppBar(title: Strings.reviewSummary.tr),
       body: BasePage(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text('Doctor'),
+            Text(Strings.doctor.tr),
             CustomContainer(
               child: Row(
                 children: [
@@ -102,7 +103,7 @@ class BookingSummary extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Dr. ${_doctorInfo.firstName} ${_doctorInfo.lastName}',
+                          '${Strings.dr.tr} ${_doctorInfo.firstName} ${_doctorInfo.lastName}',
                           style: const TextStyle(
                             fontWeight: FontWeight.w500,
                           ),
@@ -114,21 +115,21 @@ class BookingSummary extends StatelessWidget {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            _getSubText('Gender:'),
+                            _getSubText(Strings.gender.tr),
                             Text('${_doctorInfo.gender}'),
                           ],
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            _getSubText('Age:'),
+                            _getSubText(Strings.age.tr),
                             Text('${_doctorInfo.age}'),
                           ],
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            _getSubText('Experience years:'),
+                            _getSubText(Strings.expYrs.tr),
                             Text('${_doctorInfo.experienceYears}'),
                           ],
                         ),
@@ -139,7 +140,7 @@ class BookingSummary extends StatelessWidget {
               ),
             ),
             _spacing,
-            const Text('Patient'),
+            Text(Strings.patient.tr),
             CustomContainer(
               child: Row(
                 children: [
@@ -174,20 +175,20 @@ class BookingSummary extends StatelessWidget {
                         ),
                         Row(
                           children: [
-                            _getTitle('Gender:'),
+                            _getTitle(Strings.gender.tr),
                             Text('${_userInfo?.gender}'),
                           ],
                         ),
                         Row(
                           children: [
-                            _getTitle('Day of birth:'),
+                            _getTitle(Strings.dob.tr),
                             const Text('25/6/2000'),
                           ],
                         ),
                         Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            _getTitle('Address:'),
+                            _getTitle(Strings.dob.tr),
                             Flexible(child: Text('${_userInfo?.address}')),
                           ],
                         ),
@@ -198,35 +199,35 @@ class BookingSummary extends StatelessWidget {
               ),
             ),
             _spacing,
-            const Text('Appointment details'),
+            Text(Strings.appointmentDetail.tr),
             CustomContainer(
               child: Column(
                 children: [
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      _getSubText('Book at:'),
+                      _getSubText(Strings.bookAt.tr),
                       Text("${DateFormat('yyyy-MM-dd').format(_c.selectedDate)} ${_c.selectedTime}"),
                     ],
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      _getSubText('Duration:'),
+                      _getSubText(Strings.duration.tr),
                       const Text('30 minutes'),
                     ],
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      _getSubText('Type:'),
+                      _getSubText(Strings.appointmentType.tr),
                       const Text('ONLINE'),
                     ],
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      _getSubText('Pakage:'),
+                      _getSubText(Strings.package.tr),
                       const Text('Messaging'),
                     ],
                   ),
@@ -238,7 +239,7 @@ class BookingSummary extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      _getSubText('Price:'),
+                      _getSubText(Strings.price.tr),
                       const Text('\$ 20'),
                     ],
                   ),
@@ -249,27 +250,22 @@ class BookingSummary extends StatelessWidget {
             const Text('Payment'),
             CustomContainer(
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Row(
-                    children: [
-                      Container(
-                        width: 50.sp,
-                        height: 50.sp,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(Constants.borderRadius.sp),
-                        ),
-                        child: SvgPicture.asset(
-                          'assets/icons/momo.svg',
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                      const Text('****123456'),
-                    ],
+                  SvgPicture.asset(
+                    'assets/icons/momo.svg',
+                    // fit: BoxFit.cover,
+                    width: 38.sp,
+                    height: 38.sp,
+                  ),
+                  SizedBox(
+                    width: 15.sp,
+                  ),
+                  const Expanded(
+                    child: Text('****123456'),
                   ),
                   TextButton(
                     onPressed: () {},
-                    child: const Text('CHANGE'),
+                    child: Text(Strings.change.tr),
                   ),
                 ],
               ),

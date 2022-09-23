@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 
 import 'package:hi_doctor_v2/app/common/constants.dart';
 import 'package:hi_doctor_v2/app/common/values/colors.dart';
+import 'package:hi_doctor_v2/app/common/values/strings.dart';
 import 'package:hi_doctor_v2/app/models/patient.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/custom_container.dart';
 import 'package:hi_doctor_v2/app/routes/app_pages.dart';
@@ -65,21 +66,21 @@ class PatientItem extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      _getSubText('Day of birth:'),
+                      _getSubText(Strings.dob.tr),
                       Text('${patient.dob}'),
                     ],
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      _getSubText('Address:'),
+                      _getSubText(Strings.address.tr),
                       Text('${patient.address}'),
                     ],
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      _getSubText('Gender:'),
+                      _getSubText(Strings.gender.tr),
                       Text('${patient.gender}'),
                     ],
                   ),

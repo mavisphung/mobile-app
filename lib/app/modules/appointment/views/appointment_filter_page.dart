@@ -31,7 +31,7 @@ class AppointmentFilterPage extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Types',
+                          'Hình thức',
                           style: TextStyle(
                             fontSize: 18.0.sp,
                             fontWeight: FontWeight.bold,
@@ -65,7 +65,7 @@ class AppointmentFilterPage extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Status',
+                          'Trạng thái',
                           style: TextStyle(
                             fontSize: 18.0.sp,
                             fontWeight: FontWeight.bold,

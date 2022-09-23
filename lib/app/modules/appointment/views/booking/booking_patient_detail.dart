@@ -53,7 +53,7 @@ class BookingPatientDetailPage extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         // ------------- Choose patient section -------------
-                        const CustomTitleSection(title: 'Patient\'s information'),
+                        CustomTitleSection(title: Strings.patient.tr),
                         Container(
                           margin: const EdgeInsets.only(bottom: 15.0),
                           width: double.infinity,
@@ -70,7 +70,7 @@ class BookingPatientDetailPage extends StatelessWidget {
                               Row(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  _getTitle('Full name:'),
+                                  _getTitle(Strings.fullName.tr),
                                   Flexible(
                                     child: Text(
                                       '${userInfo?.lastName} ${userInfo?.firstName}',
@@ -80,20 +80,20 @@ class BookingPatientDetailPage extends StatelessWidget {
                               ),
                               Row(
                                 children: [
-                                  _getTitle('Gender:'),
+                                  _getTitle(Strings.gender.tr),
                                   Text('${userInfo?.gender}'),
                                 ],
                               ),
                               Row(
                                 children: [
-                                  _getTitle('Day of birth:'),
+                                  _getTitle(Strings.dob.tr),
                                   const Text('25/6/2000'),
                                 ],
                               ),
                               Row(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  _getTitle('Address:'),
+                                  _getTitle(Strings.address.tr),
                                   Flexible(child: Text('${userInfo?.address}')),
                                 ],
                               ),
@@ -106,18 +106,18 @@ class BookingPatientDetailPage extends StatelessWidget {
                         SizedBox(
                           height: 16.0.sp,
                         ),
-                        const CustomTitleSection(title: 'Write your problem'),
+                        CustomTitleSection(title: Strings.healthIssue.tr),
                         TextFormField(
                           validator: (String? value) {
                             if (value!.length >= 1000) {
-                              return 'Limit 1000 characters';
+                              return Strings.problemLengthMsg.tr;
                             }
                             return null;
                           },
                           focusNode: FocusNode(),
                           controller: _c.problemController,
                           decoration: InputDecoration(
-                            hintText: 'Description your health status, what you are suffering...',
+                            hintText: Strings.problemMsg.tr,
                             contentPadding: EdgeInsets.only(top: 16.sp, bottom: 16.sp, left: 18.sp, right: -18.sp),
                             enabledBorder: OutlineInputBorder(
                               borderSide: BorderSide.none,

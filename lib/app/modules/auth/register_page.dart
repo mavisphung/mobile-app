@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:hi_doctor_v2/app/common/constants.dart';
 
 import 'package:hi_doctor_v2/app/common/util/status.dart';
 import 'package:hi_doctor_v2/app/common/values/strings.dart';
@@ -9,6 +10,7 @@ import 'package:hi_doctor_v2/app/modules/auth/views/dot_indicator.dart';
 import 'package:hi_doctor_v2/app/modules/auth/views/step1.dart';
 import 'package:hi_doctor_v2/app/modules/auth/views/step2.dart';
 import 'package:hi_doctor_v2/app/modules/auth/views/step3.dart';
+import 'package:hi_doctor_v2/app/modules/widgets/base_page.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/custom_elevate_btn_widget.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/my_appbar.dart';
 
@@ -155,37 +157,53 @@ class _RegisterPageState extends State<RegisterPage> {
 
   @override
   Widget build(BuildContext context) {
+    final bottomPadding = MediaQuery.of(context).viewInsets.bottom;
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      appBar: MyAppBar(title: Strings.registration.tr),
-      body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 25.sp),
+      appBar: MyAppBar(
+        title: Strings.registration.tr,
+        hasBackBtn: true,
+      ),
+      body: SingleChildScrollView(
+        physics: const BouncingScrollPhysics(),
+        child: Padding(
+          padding: EdgeInsets.only(
+            top: 29.sp,
+            bottom: bottomPadding,
+            left: Constants.padding.sp,
+            right: Constants.padding.sp,
+          ),
+          child: _step[_currentStep],
+        ),
+      ),
+      bottomSheet: Container(
+        height: 110.sp,
+        color: Colors.transparent,
+        constraints: BoxConstraints(
+          minHeight: 110.sp,
+        ),
+        padding: EdgeInsets.only(
+          left: 15.0.sp,
+          right: 15.sp,
+          bottom: 30.sp,
+        ),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Expanded(child: _step[_currentStep]),
-            Column(
-              children: [
-                Padding(
-                  padding: EdgeInsets.symmetric(vertical: 10.sp),
-                  child: ObxValue<RxInt>(
-                      (data) => DotIndicator(
-                            currentStep: data.value,
-                          ),
-                      _currentStep.obs),
-                ),
-                SizedBox(
-                  width: double.infinity,
-                  child: ObxValue<Rx<Status>>(
-                      (data) => CustomElevatedButtonWidget(
-                            textChild: _currentStep == 2 ? Strings.verify.tr : Strings.kContinue.tr,
-                            status: data.value,
-                            onPressed: _continue,
-                          ),
-                      _controller.nextStatus),
-                ),
-              ],
+            Padding(
+              padding: EdgeInsets.symmetric(vertical: 10.sp),
+              child: ObxValue<RxInt>(
+                  (data) => DotIndicator(
+                        currentStep: data.value,
+                      ),
+                  _currentStep.obs),
             ),
+            ObxValue<Rx<Status>>(
+                (data) => CustomElevatedButtonWidget(
+                      textChild: _currentStep == 2 ? Strings.verify.tr : Strings.kContinue.tr,
+                      status: data.value,
+                      onPressed: _continue,
+                    ),
+                _controller.nextStatus),
           ],
         ),
       ),

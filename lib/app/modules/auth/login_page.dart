@@ -10,7 +10,6 @@ import 'package:hi_doctor_v2/app/common/util/validators.dart';
 import 'package:hi_doctor_v2/app/common/values/colors.dart';
 import 'package:hi_doctor_v2/app/common/values/strings.dart';
 import 'package:hi_doctor_v2/app/modules/auth/controllers/login_controller.dart';
-import 'package:hi_doctor_v2/app/modules/widgets/base_page.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/custom_elevate_btn_widget.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/custom_textfield_widget.dart';
 import 'package:hi_doctor_v2/app/routes/app_pages.dart';
@@ -35,9 +34,10 @@ class LoginPage extends GetView<LoginController> {
       child: Scaffold(
         body: SafeArea(
           child: Center(
-            child: BasePage(
+            child: SingleChildScrollView(
+              physics: const BouncingScrollPhysics(),
               child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 15.sp),
+                padding: EdgeInsets.symmetric(horizontal: 35.sp),
                 child: Column(
                   children: [
                     Container(
@@ -69,6 +69,7 @@ class LoginPage extends GetView<LoginController> {
                             prefixIcon: const Icon(
                               CupertinoIcons.mail_solid,
                             ),
+                            keyboardType: TextInputType.emailAddress,
                           ),
                           CustomTextFieldWidget(
                             withAsterisk: false,
@@ -93,7 +94,7 @@ class LoginPage extends GetView<LoginController> {
                           if (controller.loginStatus.value != Status.loading) {}
                         },
                         child: Text(
-                          'Forgot password?',
+                          Strings.forgotPassword.tr,
                           style: TextStyle(
                             color: AppColors.primary,
                           ),
@@ -154,9 +155,9 @@ class LoginPage extends GetView<LoginController> {
                           width: 23.0,
                           height: 23.0,
                         ),
-                        label: const Text(
-                          'Sign in with Google',
-                          style: TextStyle(
+                        label: Text(
+                          Strings.signInGg.tr,
+                          style: const TextStyle(
                             color: Colors.black,
                           ),
                         ),
@@ -179,7 +180,7 @@ class LoginPage extends GetView<LoginController> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          const Text('Don\'t have an account yet?'),
+                          Text(Strings.notAccountYet.tr),
                           SizedBox(width: 5.sp),
                           GestureDetector(
                             onTap: () {

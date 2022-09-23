@@ -47,7 +47,7 @@ class MyDateTimeField extends StatelessWidget {
                     child: const Text('OK'),
                     onPressed: () {
                       dob.value = selectedDate;
-                      dob.value.toString().debugLog('Picked date:');
+                      dob.value.toString().debugLog('Picked date');
                       Get.back();
                       // FocusScope.of(context).unfocus();
                     },

@@ -63,13 +63,13 @@ void main() {
     WidgetsFlutterBinding.ensureInitialized();
     await Firebase.initializeApp();
     registerNotification();
-    // FirebaseMessaging.instance.getToken().then((value) {
-    //   print('Firebase token on this device: ');
-    //   print(value);
-    // }).onError((error, stackTrace) {
-    //   print('-------------------------- ERROR WHILE GET FIREBASE TOKEN --------------------------');
-    //   print(error);
-    // });
+    FirebaseMessaging.instance.getToken().then((value) {
+      print('Firebase token on this device: ');
+      print(value);
+    }).onError((error, stackTrace) {
+      print('-------------------------- ERROR WHILE GET FIREBASE TOKEN --------------------------');
+      print(error);
+    });
     runApp(const MyApp());
   });
 }
@@ -95,12 +95,11 @@ class MyApp extends StatelessWidget {
                     bottomSheetTheme: const BottomSheetThemeData(
                       backgroundColor: Colors.transparent,
                     ),
-                    // textTheme: ThemeData.light().textTheme.copyWith(
-                    //   bodyText1: const TextStyle(
-                    //     fontFamily: 'Poppins',
-                    //     fontWeight: FontWeight.bold,
-                    //     fontSize: 20,
-                    //   ),
+                    textTheme: ThemeData.light().textTheme.copyWith(
+                          titleMedium: const TextStyle(
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
                     //   button: const TextStyle(
                     //     color: Colors.amber,
                     //     fontFamily: 'Poppins',

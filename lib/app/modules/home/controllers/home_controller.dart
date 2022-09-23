@@ -1,5 +1,3 @@
-import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:get/get.dart';
 import 'package:hi_doctor_v2/app/common/util/extensions.dart';
 import 'package:hi_doctor_v2/app/data/api_response.dart';
@@ -10,9 +8,6 @@ import 'package:hi_doctor_v2/app/modules/home/data/api_home.dart';
 class HomeController extends GetxController {
   RxList<Doctor> doctorList = <Doctor>[].obs;
   late final ApiHomeImpl apiHome;
-
-  // Add firebase messaging
-  late final FirebaseMessaging _messaging;
 
   @override
   void onInit() {

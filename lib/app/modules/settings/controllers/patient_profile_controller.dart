@@ -111,10 +111,10 @@ class PatientProfileController extends GetxController {
     return false;
   }
 
-  void getImage(bool isFromGallery) async {
-    file = isFromGallery
-        ? await _picker.pickImage(source: ImageSource.gallery)
-        : await _picker.pickImage(source: ImageSource.camera);
+  void getImage(bool isFromCamera) async {
+    file = isFromCamera
+        ? await _picker.pickImage(source: ImageSource.camera)
+        : await _picker.pickImage(source: ImageSource.gallery);
     if (file == null) {
       return;
     }

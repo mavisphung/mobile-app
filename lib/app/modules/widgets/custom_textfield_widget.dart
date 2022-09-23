@@ -102,19 +102,22 @@ class CustomTextFieldWidget extends StatelessWidget {
                 decoration: inputDecoration ??
                     InputDecoration(
                       label: withAsterisk
-                          ? RichText(
-                              text: TextSpan(
-                                text: labelText,
-                                style: DefaultTextStyle.of(context).style.copyWith(
-                                      fontSize: 16.5.sp,
-                                      color: _hasFocus.value ? Colors.blue : Colors.grey[600],
+                          ? Padding(
+                              padding: EdgeInsets.only(bottom: 22.sp),
+                              child: RichText(
+                                text: TextSpan(
+                                  text: labelText,
+                                  style: DefaultTextStyle.of(context).style.copyWith(
+                                        fontSize: 16.5.sp,
+                                        color: _hasFocus.value ? Colors.blue : Colors.grey[600],
+                                      ),
+                                  children: [
+                                    TextSpan(
+                                      text: ' *',
+                                      style: TextStyle(color: AppColors.error),
                                     ),
-                                children: [
-                                  TextSpan(
-                                    text: ' *',
-                                    style: TextStyle(color: AppColors.error),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
                             )
                           : Text(labelText ?? ''),

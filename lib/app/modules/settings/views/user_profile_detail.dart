@@ -6,12 +6,12 @@ import 'package:hi_doctor_v2/app/common/constants.dart';
 import 'package:hi_doctor_v2/app/common/util/status.dart';
 import 'package:hi_doctor_v2/app/common/util/utils.dart';
 import 'package:hi_doctor_v2/app/common/util/validators.dart';
-import 'package:hi_doctor_v2/app/common/values/colors.dart';
 import 'package:hi_doctor_v2/app/common/values/strings.dart';
 import 'package:hi_doctor_v2/app/models/user_info.dart';
 import 'package:hi_doctor_v2/app/modules/appointment/widgets/date_time_field_widget.dart';
 import 'package:hi_doctor_v2/app/modules/settings/controllers/settings_controller.dart';
 import 'package:hi_doctor_v2/app/modules/settings/controllers/user_profile_controller.dart';
+import 'package:hi_doctor_v2/app/modules/settings/widgets/image_picker_widget.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/custom_elevate_btn_widget.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/custom_textfield_widget.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/my_appbar.dart';
@@ -61,28 +61,8 @@ class UserProfileDetailPage extends StatelessWidget {
                               Positioned(
                                 bottom: 0,
                                 right: 0,
-                                child: GestureDetector(
-                                  onTap: () async {
-                                    var isFromGallery = await Utils.showConfirmDialog(
-                                      'Choose source of your image',
-                                      cancelText: 'Camera',
-                                      confirmText: 'Gallery',
-                                    );
-                                    if (isFromGallery != null) {
-                                      isFromGallery ? _c.getImage(true) : _c.getImage(false);
-                                    }
-                                  },
-                                  child: Container(
-                                    padding: EdgeInsets.all(5.sp),
-                                    decoration: BoxDecoration(
-                                      color: AppColors.grey600,
-                                      borderRadius: BorderRadius.circular(5.sp),
-                                    ),
-                                    child: const Icon(
-                                      Icons.camera_alt_outlined,
-                                      color: Colors.white,
-                                    ),
-                                  ),
+                                child: ImagePickerWidget(
+                                  getImageFucntion: _c.getImage,
                                 ),
                               ),
                             ],
@@ -189,7 +169,7 @@ class UserProfileDetailPage extends StatelessWidget {
                             width: 1.sw,
                             child: ObxValue<Rx<Status>>(
                                 (data) => CustomElevatedButtonWidget(
-                                      textChild: 'Save profile',
+                                      textChild: Strings.saveProfile.tr,
                                       status: data.value,
                                       onPressed: () => _c.updateUserProfile(Get.find<SettingsController>()),
                                     ),

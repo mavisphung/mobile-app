@@ -1,20 +1,20 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
-import 'package:hi_doctor_v2/app/modules/widgets/custom_icon_button.dart';
+import 'package:hi_doctor_v2/app/common/values/strings.dart';
+import 'package:hi_doctor_v2/app/modules/widgets/icon_text_btn.dart';
 
 class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
   final List<Widget>? actions;
-  final bool? centerTitle;
+  final bool hasBackBtn;
 
   const MyAppBar({
     Key? key,
     required this.title,
     this.actions,
-    this.centerTitle = false,
+    this.hasBackBtn = false,
   }) : super(key: key);
 
   @override
@@ -24,21 +24,22 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
         title,
         style: TextStyle(
           color: Colors.black,
-          fontSize: 16.sp,
+          fontSize: 15.sp,
         ),
       ),
-      titleSpacing: 0,
-      centerTitle: centerTitle,
+      centerTitle: hasBackBtn,
       backgroundColor: Colors.transparent,
       elevation: 0,
-      leading: CustomIconButton(
-        icon: const Icon(
-          CupertinoIcons.left_chevron,
-          color: Colors.black,
-        ),
-        onPressed: () => Get.back(),
-      ),
       actions: actions,
+      leadingWidth: hasBackBtn ? Get.width / 4 : 0,
+      leading: hasBackBtn
+          ? Padding(
+              padding: EdgeInsets.only(
+                left: 8.sp,
+              ),
+              child: IconTextButton(btnText: Strings.back.tr),
+            )
+          : null,
     );
   }
 

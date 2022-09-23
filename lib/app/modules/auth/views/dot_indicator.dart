@@ -5,7 +5,7 @@ import '../../../common/values/colors.dart';
 
 class DotIndicator extends StatelessWidget {
   final space = 3.8.sp;
-  final circleSize = 9.5.sp;
+  final circleSize = 7.sp;
   final int stepsNumber;
   final int currentStep;
   DotIndicator({

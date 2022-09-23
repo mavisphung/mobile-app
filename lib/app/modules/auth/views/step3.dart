@@ -3,8 +3,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
-import '../../../common/values/strings.dart';
-import '../controllers/register_controller.dart';
+import 'package:hi_doctor_v2/app/common/values/strings.dart';
+import 'package:hi_doctor_v2/app/modules/auth/controllers/register_controller.dart';
 
 class Step3 extends StatelessWidget {
   final GlobalKey<FormState> formKey;
@@ -34,74 +34,71 @@ class Step3 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      physics: const BouncingScrollPhysics(),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 10.0),
-            child: Text(
-              'Enter OTP Code',
-              style: Theme.of(context).textTheme.headline6,
-            ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 10.0),
+          child: Text(
+            Strings.enterOtp.tr,
+            style: Theme.of(context).textTheme.headline6,
           ),
-          const Text('We\'ve sent OTP code to your email:'),
-          Text(
-            email,
+        ),
+        Text(Strings.sentOtpMsg.tr),
+        Text(
+          email,
+        ),
+        const SizedBox(
+          height: 40.0,
+        ),
+        Form(
+          key: formKey,
+          child: TextFormField(
+            validator: ((value) {
+              if (value == null || value.isEmpty) {
+                return Strings.fieldCantBeEmpty;
+              } else if (value.length < 6) {
+                return Strings.otpLengthMsg.tr;
+              }
+              return null;
+            }),
+            onSaved: (value) => _c.otpCode.value = value ?? '',
+            onFieldSubmitted: (_) => activateAccount(),
+            style: Theme.of(context).textTheme.headline6,
+            keyboardType: TextInputType.number,
+            textAlign: TextAlign.center,
+            inputFormatters: [
+              LengthLimitingTextInputFormatter(6),
+              FilteringTextInputFormatter.digitsOnly,
+            ],
+            decoration: _otpInputDecoration,
           ),
-          const SizedBox(
-            height: 40.0,
-          ),
-          Form(
-            key: formKey,
-            child: TextFormField(
-              validator: ((value) {
-                if (value == null || value.isEmpty) {
-                  return Strings.fieldCantBeEmpty;
-                } else if (value.length < 6) {
-                  return Strings.otpLengthMsg.tr;
-                }
-                return null;
-              }),
-              onSaved: (value) => _c.otpCode.value = value ?? '',
-              onFieldSubmitted: (_) => activateAccount(),
-              style: Theme.of(context).textTheme.headline6,
-              keyboardType: TextInputType.number,
-              textAlign: TextAlign.center,
-              inputFormatters: [
-                LengthLimitingTextInputFormatter(6),
-                FilteringTextInputFormatter.digitsOnly,
-              ],
-              decoration: _otpInputDecoration,
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(bottom: 10.0),
-            child: Row(
-              children: [
-                const Text('Don\'t receive any code?'),
-                InkWell(
-                  onTap: () async {
-                    await _c.resendOtp(email);
-                  },
-                  child: Padding(
-                    padding: const EdgeInsets.all(5.0),
-                    child: Text(
-                      'Resend',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: Theme.of(context).primaryColor,
-                        fontWeight: FontWeight.bold,
-                      ),
+        ),
+        Padding(
+          padding: const EdgeInsets.only(bottom: 10.0),
+          child: Row(
+            children: [
+              Text(Strings.notReceiveOtpMsg.tr),
+              InkWell(
+                onTap: () async {
+                  await _c.resendOtp(email);
+                },
+                child: Padding(
+                  padding: const EdgeInsets.all(5.0),
+                  child: Text(
+                    Strings.resend.tr,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: Theme.of(context).primaryColor,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
-                )
-              ],
-            ),
+                ),
+              )
+            ],
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }
