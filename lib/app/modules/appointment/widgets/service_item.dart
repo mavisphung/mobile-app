@@ -29,10 +29,10 @@ class ServiceItem extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         color: AppColors.whiteHighlight,
-        borderRadius: BorderRadius.circular(12.0.sp),
+        borderRadius: BorderRadius.circular(12.sp),
       ),
-      margin: EdgeInsets.only(bottom: 20.0.sp),
-      padding: EdgeInsets.symmetric(horizontal: 16.0.sp, vertical: 16.0.sp),
+      margin: EdgeInsets.only(bottom: 20.sp),
+      padding: EdgeInsets.symmetric(horizontal: 16.sp, vertical: 16.sp),
       child: Row(
         children: [
           Container(
@@ -45,7 +45,7 @@ class ServiceItem extends StatelessWidget {
                 BoxShadow(
                   color: Colors.black.withOpacity(0.08),
                   offset: const Offset(0, 2),
-                  blurRadius: 2.0.sp,
+                  blurRadius: 2.sp,
                 ),
               ],
             ),
@@ -62,19 +62,19 @@ class ServiceItem extends StatelessWidget {
                   title,
                   style: TextStyle(
                     color: Colors.black,
-                    fontSize: 14.0.sp,
+                    fontSize: 14.sp,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
                 SizedBox(
-                  height: 5.0.sp,
+                  height: 5.sp,
                 ),
                 Text(
                   description,
                   maxLines: 2,
                   style: TextStyle(
                     color: Colors.black,
-                    fontSize: 10.0.sp,
+                    fontSize: 10.sp,
                     overflow: TextOverflow.fade,
                     // wordSpacing: 0.1,
                   ),
@@ -88,14 +88,14 @@ class ServiceItem extends StatelessWidget {
                 '\$ $price',
                 style: TextStyle(
                   color: AppColors.primary,
-                  fontSize: 18.0.sp,
+                  fontSize: 18.sp,
                   fontWeight: FontWeight.w500,
                 ),
               ),
               Text(
                 '/ 30 mins',
                 style: TextStyle(
-                  fontSize: 10.0.sp,
+                  fontSize: 10.sp,
                 ),
               ),
             ],

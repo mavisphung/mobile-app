@@ -13,5 +13,6 @@ abstract class Constants {
   static const previousPage = 'previousPage';
   static const totalItems = 'totalItems';
   static const borderRadius = 20;
+  static const textFieldRadius = 15;
   static const padding = 12.5;
 }

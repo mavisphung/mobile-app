@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hi_doctor_v2/app/common/values/colors.dart';
@@ -22,8 +21,8 @@ class DoctorTile extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Container(
-          margin: EdgeInsets.only(bottom: 10.0.sp),
-          padding: EdgeInsets.all(15.0.sp),
+          margin: EdgeInsets.only(bottom: 10.sp),
+          padding: EdgeInsets.all(15.sp),
           decoration: BoxDecoration(
             shape: BoxShape.circle,
             color: AppColors.primary.withOpacity(0.125),
@@ -31,11 +30,11 @@ class DoctorTile extends StatelessWidget {
           child: icon,
         ),
         SizedBox(
-          height: 28.0.sp,
+          height: 28.sp,
           child: Text(
             middleText!,
             style: TextStyle(
-              fontSize: 16.0.sp,
+              fontSize: 16.sp,
               fontWeight: FontWeight.bold,
               color: AppColors.primary,
             ),
@@ -44,7 +43,7 @@ class DoctorTile extends StatelessWidget {
         Text(
           bottomText!,
           style: TextStyle(
-            fontSize: 12.0.sp,
+            fontSize: 12.sp,
           ),
         ),
       ],

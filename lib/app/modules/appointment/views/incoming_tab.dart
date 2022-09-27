@@ -5,7 +5,6 @@ import 'package:get/get.dart';
 import '../../../models/appointment.dart';
 import '../controllers/incoming_controller.dart';
 import '../widgets/appointment_tile.dart';
-import './appointment_filter_page.dart';
 
 class IncomingTab extends StatefulWidget {
   IncomingTab({
@@ -40,11 +39,11 @@ class _IncomingTabState extends State<IncomingTab> with AutomaticKeepAliveClient
             primary: false,
             physics: const BouncingScrollPhysics(),
             child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 12.0.sp),
+              padding: EdgeInsets.symmetric(horizontal: 12.sp),
               child: Column(
                 children: [
                   SizedBox(
-                    height: 18.0.sp,
+                    height: 18.sp,
                   ),
                   Row(
                     children: [
@@ -68,7 +67,7 @@ class _IncomingTabState extends State<IncomingTab> with AutomaticKeepAliveClient
                             'Hiện tại chưa có cuộc hẹn nào!',
                             textAlign: TextAlign.center,
                             style: TextStyle(
-                              fontSize: 18.0.sp,
+                              fontSize: 18.sp,
                               fontWeight: FontWeight.bold,
                             ),
                           ),

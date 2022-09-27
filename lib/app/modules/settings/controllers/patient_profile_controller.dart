@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -11,8 +9,8 @@ import 'package:hi_doctor_v2/app/data/api_response.dart';
 import 'package:hi_doctor_v2/app/data/response_model.dart';
 import 'package:hi_doctor_v2/app/models/patient.dart';
 import 'package:hi_doctor_v2/app/models/user_info.dart';
+import 'package:hi_doctor_v2/app/modules/settings/controllers/settings_controller.dart';
 import 'package:hi_doctor_v2/app/modules/settings/providers/api_settings_impl.dart';
-import 'package:image_picker/image_picker.dart';
 
 class PatientProfileController extends GetxController {
   final firstNameFocusNode = FocusNode();
@@ -21,7 +19,7 @@ class PatientProfileController extends GetxController {
   final firstName = TextEditingController();
   final lastName = TextEditingController();
   final address = TextEditingController();
-  final dob = DateTime.now().obs;
+  final dob = TextEditingController();
   final gender = userGender.first['value']!.obs;
   final avatar = ''.obs;
 
@@ -29,10 +27,7 @@ class PatientProfileController extends GetxController {
 
   final status = Status.init.obs;
 
-  final _provider = Get.put(ApiSettingsImpl());
-
-  late XFile? file;
-  final ImagePicker _picker = ImagePicker();
+  final _provider = Get.find<ApiSettingsImpl>();
 
   @override
   void dispose() {
@@ -42,7 +37,7 @@ class PatientProfileController extends GetxController {
     firstName.dispose();
     lastName.dispose();
     address.dispose();
-    dob.close();
+    dob.dispose();
     gender.close();
     avatar.close();
     super.dispose();
@@ -100,7 +95,7 @@ class PatientProfileController extends GetxController {
       final patient = Patient.fromMap(response.data);
       firstName.text = patient.firstName ?? '';
       lastName.text = patient.lastName ?? '';
-      dob.value = Utils.parseStrToDate(patient.dob ?? '') ?? DateTime.now();
+      dob.text = patient.dob ?? Utils.formatDate(DateTime.now());
       if (patient.gender != null) {
         gender.value = patient.gender!;
       }
@@ -111,30 +106,10 @@ class PatientProfileController extends GetxController {
     return false;
   }
 
-  void getImage(bool isFromGallery) async {
-    file = isFromGallery
-        ? await _picker.pickImage(source: ImageSource.gallery)
-        : await _picker.pickImage(source: ImageSource.camera);
-    if (file == null) {
-      return;
-    }
-    List<XFile> files = <XFile>[];
-    files.add(file!);
-    var response = await _provider.postPresignedUrls(files);
-    if (response.isOk) {
-      ResponseModel1 resModel = ResponseModel1.fromJson(response.body);
-      String fileExt = file!.name.split('.')[1];
-      String fullUrl = resModel.data['urls'][0];
-      String url = fullUrl.split('?')[0];
-
-      await Utils.upload(fullUrl, File(file!.path), fileExt);
-      try {
-        avatar.value = url;
-      } catch (e) {
-        print('error $e');
-        rethrow;
-      }
-    }
+  void setAvatar(bool isFromCamera) async {
+    final settingsController = Get.find<SettingsController>();
+    final url = await settingsController.getImage(isFromCamera);
+    if (url != null) avatar.value = url;
   }
 
   void addPatientProfile() async {

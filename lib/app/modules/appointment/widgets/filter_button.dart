@@ -16,17 +16,17 @@ class FilterButton extends StatelessWidget {
       },
       child: Container(
         padding: EdgeInsets.symmetric(
-          horizontal: 9.0.sp,
-          vertical: 6.0.sp,
+          horizontal: 9.sp,
+          vertical: 6.sp,
         ),
         decoration: BoxDecoration(
           color: Colors.white,
-          borderRadius: BorderRadius.circular(5.0.sp),
+          borderRadius: BorderRadius.circular(5.sp),
           boxShadow: [
             BoxShadow(
               color: Colors.black.withOpacity(0.12),
               offset: const Offset(0, 2),
-              blurRadius: 4.0.sp,
+              blurRadius: 4.sp,
             ),
           ],
         ),

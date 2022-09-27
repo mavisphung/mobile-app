@@ -7,7 +7,6 @@ import 'package:hi_doctor_v2/app/modules/appointment/views/booking/booking_packa
 import 'package:hi_doctor_v2/app/modules/appointment/views/booking/booking_page.dart';
 import 'package:hi_doctor_v2/app/modules/appointment/views/booking/booking_patient_detail.dart';
 import 'package:hi_doctor_v2/app/modules/appointment/views/booking/booking_summary.dart';
-import 'package:hi_doctor_v2/app/modules/auth/bindings/login_binding.dart';
 import 'package:hi_doctor_v2/app/modules/auth/bindings/register_binding.dart';
 import 'package:hi_doctor_v2/app/modules/auth/login_page.dart';
 import 'package:hi_doctor_v2/app/modules/auth/register_page.dart';
@@ -38,7 +37,6 @@ abstract class AppPages {
     GetPage(
       name: Routes.LOGIN,
       page: () => LoginPage(),
-      binding: LoginBinding(),
     ),
     GetPage(
       name: Routes.REGISTER,

@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hi_doctor_v2/app/common/constants.dart';
@@ -8,11 +6,9 @@ import 'package:hi_doctor_v2/app/common/util/extensions.dart';
 import 'package:hi_doctor_v2/app/common/util/status.dart';
 import 'package:hi_doctor_v2/app/common/util/utils.dart';
 import 'package:hi_doctor_v2/app/common/values/strings.dart';
-import 'package:hi_doctor_v2/app/data/response_model.dart';
 import 'package:hi_doctor_v2/app/models/user_info.dart';
 import 'package:hi_doctor_v2/app/modules/settings/controllers/settings_controller.dart';
 import 'package:hi_doctor_v2/app/modules/settings/providers/api_settings_impl.dart';
-import 'package:image_picker/image_picker.dart';
 
 class UserProfileController extends GetxController {
   final firstNameFocusNode = FocusNode();
@@ -23,17 +19,14 @@ class UserProfileController extends GetxController {
   final lastName = TextEditingController();
   final address = TextEditingController();
   final phoneNumber = TextEditingController();
-  final dob = DateTime.now().obs;
+  final dob = TextEditingController();
   final gender = userGender.first['value']!.obs;
   final avatar = ''.obs;
 
   var _profile = UserInfo2();
   final status = Status.init.obs;
 
-  final _provider = Get.put(ApiSettingsImpl());
-
-  late XFile? file;
-  final ImagePicker _picker = ImagePicker();
+  final _provider = Get.find<ApiSettingsImpl>();
 
   UserInfo2 get profile => _profile;
 
@@ -57,11 +50,11 @@ class UserProfileController extends GetxController {
           address: response.data['address'],
           phoneNumber: response.data['phoneNumber'],
           gender: response.data['gender'],
-          avatar: response.data['avatar'] ?? Constants.defaultAvatar,
+          avatar: response.data['avatar'],
         );
-        dob.value = Utils.parseStrToDate('2022-10-08') ?? DateTime.now();
-        gender.value = response.data['gender'];
-        avatar.value = response.data['avatar'];
+        // dob.text = response.data['dob'] ?? Utils.formatDate(DateTime.now());
+        // gender.value = response.data['gender'];
+        // avatar.value = response.data['avatar'];
         _setInitialValue();
         return true;
       }
@@ -79,7 +72,7 @@ class UserProfileController extends GetxController {
     lastName.dispose();
     address.dispose();
     phoneNumber.dispose();
-    dob.close();
+    dob.dispose();
     gender.close();
     avatar.close();
     super.dispose();
@@ -104,34 +97,13 @@ class UserProfileController extends GetxController {
     status.value = Status.fail;
   }
 
-  void getImage(bool isFromGallery) async {
-    file = isFromGallery
-        ? await _picker.pickImage(source: ImageSource.gallery)
-        : await _picker.pickImage(source: ImageSource.camera);
-    if (file == null) {
-      return;
-    }
-    List<XFile> files = <XFile>[];
-    files.add(file!);
-    var response = await _provider.postPresignedUrls(files);
-    if (response.isOk) {
-      ResponseModel1 resModel = ResponseModel1.fromJson(response.body);
-      String fileExt = file!.name.split('.')[1];
-      String fullUrl = resModel.data['urls'][0];
-      String url = fullUrl.split('?')[0];
-
-      await Utils.upload(fullUrl, File(file!.path), fileExt);
-      try {
-        avatar.value = url;
-      } catch (e) {
-        print('error $e');
-        rethrow;
-      }
-    }
+  void setAvatar(bool isFromCamera) async {
+    final settingsController = Get.find<SettingsController>();
+    final url = await settingsController.getImage(isFromCamera);
+    if (url != null) avatar.value = url;
   }
 
   Future<void> updateUserProfile(SettingsController settingsController) async {
-    // Update UI to prevent multiple taps
     setStatusLoading();
 
     UserInfo2 info = UserInfo2(

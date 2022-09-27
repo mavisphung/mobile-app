@@ -18,7 +18,7 @@ class ApiBookAppointmentImpl extends GetConnect {
   }
 
   Future<Response> postAppointment(ReqAppointmentModel reqModel) {
-    reqModel.toString().debugLog('Req Appointment Body:');
+    reqModel.toString().debugLog('Req Appointment Body');
     return post(
       '/appointments/',
       reqModel.toJson(),

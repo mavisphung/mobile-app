@@ -1,23 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../data/api_response.dart';
-import '../../data/errors/api_error.dart';
-import '../../data/response_model.dart';
-import '../../routes/app_pages.dart';
-import '../constants.dart';
-import '../storage/storage.dart';
-import '../values/strings.dart';
-import './utils.dart';
+import 'package:hi_doctor_v2/app/common/constants.dart';
+import 'package:hi_doctor_v2/app/common/storage/storage.dart';
+import 'package:hi_doctor_v2/app/common/util/utils.dart';
+import 'package:hi_doctor_v2/app/common/values/strings.dart';
+import 'package:hi_doctor_v2/app/data/api_response.dart';
+import 'package:hi_doctor_v2/app/data/errors/api_error.dart';
+import 'package:hi_doctor_v2/app/data/response_model.dart';
+import 'package:hi_doctor_v2/app/routes/app_pages.dart';
 
 extension FutureExt<T> on Future<Response<T>> {
   Future<ResponseModel1?> futureValue({
     Function(String? error)? onError,
     VoidCallback? retryFunction,
   }) async {
-    // final _interface = Get.find<ApiInterfaceController>();
-    // _interface.error = null;
-
     return await timeout(
       Constants.timeout,
       onTimeout: () {
@@ -33,7 +30,6 @@ extension FutureExt<T> on Future<Response<T>> {
         final responseModel1 = ResponseModel1.fromJson(responseBody as Map<String, dynamic>);
         return responseModel1;
       }
-      // _interface.update();
     }).catchError((e) {
       if (e == null) return null;
 
@@ -43,14 +39,10 @@ extension FutureExt<T> on Future<Response<T>> {
         if (e.type == ErrorType.connectTimeout) {
           Utils.showBottomSnackbar(errorMessage);
         } else if (e.type == ErrorType.noConnection) {
-          // _interface.error = e;
-
-          // Get.defaultDialog(title: 'No connection', middleText: errorMessage);
           Utils.showAlertDialog(errorMessage);
-          // _retry(_interface, retryFunction);
         } else if (e.type == ErrorType.unauthorized) {
           if (e.message == 'AUTHENTICATION_FAILED') {
-            Utils.showBottomSnackbar(Strings.loginFailedMsg.tr);
+            Utils.showTopSnackbar(Strings.loginFailedMsg.tr, title: Strings.authentication.tr);
             return null;
           }
           Storage.clearStorage();
@@ -58,10 +50,6 @@ extension FutureExt<T> on Future<Response<T>> {
           // change the ROUTE to the LOGIN or SPLASH screen so that the
           // user can login again on UnauthorizeError error
         } else if (onError == null) {
-          // Utils.showDialog(
-          //   errorMessage,
-          //   onConfirm: () => Get.back(),
-          // );
           Utils.showAlertDialog(errorMessage);
         }
       }
@@ -73,14 +61,6 @@ extension FutureExt<T> on Future<Response<T>> {
       printError(info: 'catchError: $e\nerrorMessage: $errorMessage');
     });
   }
-
-  // void _retry(
-  //   ApiInterfaceController _interface,
-  //   VoidCallback retryFunction,
-  // ) {
-  //   _interface.retry = retryFunction;
-  //   _interface.update();
-  // }
 }
 
 enum Gender { init, male, female, other }

@@ -2,22 +2,20 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class UserProfileItem extends StatelessWidget {
+class SettingItem extends StatelessWidget {
   final String title;
-  final String description;
   final Widget icon;
   final Color? color;
-  final void Function() function;
+  final VoidCallback? function;
   final bool isNavigator;
   final Widget? suffix;
 
-  const UserProfileItem({
+  const SettingItem({
     Key? key,
     required this.title,
-    required this.description,
     required this.icon,
     this.color,
-    required this.function,
+    this.function,
     this.isNavigator = true,
     this.suffix,
   })  : assert(suffix == null || isNavigator == false, 'Cannot provide both a suffix and a navigator'),
@@ -36,31 +34,16 @@ class UserProfileItem extends StatelessWidget {
               children: [
                 icon,
                 SizedBox(
-                  width: 14.0.sp,
+                  width: 14.sp,
                 ),
                 Expanded(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        title,
-                        style: TextStyle(
-                          fontSize: 13.0.sp,
-                          fontWeight: FontWeight.w500,
-                          color: color,
-                        ),
-                      ),
-                      Text(
-                        description,
-                        maxLines: 2,
-                        style: TextStyle(
-                          fontSize: 12.0.sp,
-                          color: Colors.grey,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      ),
-                    ],
+                  child: Text(
+                    title,
+                    style: TextStyle(
+                      fontSize: 14.sp,
+                      fontWeight: FontWeight.w500,
+                      color: color,
+                    ),
                   ),
                 ),
                 if (isNavigator)

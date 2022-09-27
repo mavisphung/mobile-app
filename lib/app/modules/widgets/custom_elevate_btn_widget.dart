@@ -3,56 +3,59 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
-import '../../common/util/status.dart';
-import '../../common/values/colors.dart';
+import 'package:hi_doctor_v2/app/common/util/status.dart';
+import 'package:hi_doctor_v2/app/common/values/colors.dart';
 
 class CustomElevatedButtonWidget extends StatelessWidget {
-  final String? textChild;
-  final Widget? child;
+  final String textChild;
   final Status? status;
-  final Function onPressed;
+  final VoidCallback onPressed;
   const CustomElevatedButtonWidget({
     Key? key,
-    this.textChild,
-    this.child,
-    this.status = Status.init,
+    required this.textChild,
     required this.onPressed,
-  })  : assert(
-            textChild == null || child == null,
-            'Cannot provide both a textChild and a child\n'
-            'To provide both, use "child: Text(textChild)".'),
-        super(key: key);
+    this.status = Status.init,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton(
-      style: ElevatedButton.styleFrom(
-        primary: AppColors.primary,
-        shadowColor: AppColors.primary,
-        elevation: 4.0,
-        padding: const EdgeInsets.symmetric(vertical: 11.0),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.0)),
-      ),
-      child: status == Status.loading
-          ? Padding(
-              padding: EdgeInsets.symmetric(vertical: 3.sp),
-              child: SpinKitThreeBounce(
+    return GestureDetector(
+      onTap: () {
+        status != Status.loading ? onPressed.call() : null;
+      },
+      child: Container(
+        height: 50.sp,
+        alignment: Alignment.center,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(16.sp),
+          color: AppColors.primary,
+          boxShadow: [
+            BoxShadow(
+              color: Colors.white.withOpacity(0.5),
+              spreadRadius: 0.4,
+              blurRadius: 7,
+            ),
+            BoxShadow(
+              color: Colors.indigoAccent.withOpacity(0.5),
+              spreadRadius: 0.4,
+              blurRadius: 7,
+            ),
+          ],
+        ),
+        child: status == Status.loading
+            ? SpinKitThreeBounce(
                 color: Colors.white70,
                 size: 20.sp,
+              )
+            : Text(
+                textChild,
+                style: TextStyle(
+                  fontSize: 16.sp,
+                  color: Colors.white,
+                  fontWeight: FontWeight.w500,
+                ),
               ),
-            )
-          : textChild != null
-              ? Text(
-                  textChild!,
-                  style: TextStyle(
-                    fontSize: 16.sp,
-                    color: Colors.white,
-                  ),
-                )
-              : child ?? const SizedBox.shrink(),
-      onPressed: () async {
-        status != Status.loading ? await onPressed.call() : null;
-      },
+      ),
     );
   }
 }

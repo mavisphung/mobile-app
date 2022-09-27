@@ -7,8 +7,8 @@ abstract class Routes {
   static const SPLASH = '/splash';
   static const LOGIN = '/login';
   static const REGISTER = '/register';
-  static const MESSAGE = '/message';
   static const NAVBAR = '/navbar';
+  static const MESSAGE = '/message';
   static const HISTORY = '/history';
   static const USER_PROFILE_DETAIL = '/userProfileDetail';
   static const SEARCH = '/search';

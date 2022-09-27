@@ -1,8 +1,6 @@
 import 'package:get/get.dart';
 import 'package:hi_doctor_v2/app/common/util/extensions.dart';
 
-import 'package:hi_doctor_v2/app/data/api_response.dart';
-import 'package:hi_doctor_v2/app/data/response_model.dart';
 import 'package:hi_doctor_v2/app/models/doctor.dart';
 import 'package:hi_doctor_v2/app/modules/home/data/api_doctor.dart';
 

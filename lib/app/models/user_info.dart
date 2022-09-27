@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:get/get.dart';
-import 'package:hi_doctor_v2/app/common/constants.dart';
+
 import 'package:hi_doctor_v2/app/common/values/strings.dart';
 
 // ignore_for_file: public_member_api_docs, sort_constructors_first
@@ -25,10 +25,10 @@ class UserInfo2 {
   final String? email;
   final String? firstName;
   final String? lastName;
-  final String? type;
   final String? address;
-  final String? gender;
   final String? phoneNumber;
+  final String? dob;
+  final String? gender;
   final String? avatar;
 
   UserInfo2({
@@ -36,10 +36,10 @@ class UserInfo2 {
     this.email,
     this.firstName,
     this.lastName,
-    this.type = Constants.userType,
     this.address,
-    this.gender,
     this.phoneNumber,
+    this.dob,
+    this.gender,
     this.avatar,
   });
 
@@ -49,8 +49,9 @@ class UserInfo2 {
     String? firstName,
     String? lastName,
     String? address,
-    String? gender,
     String? phoneNumber,
+    String? dob,
+    String? gender,
     String? avatar,
   }) {
     return UserInfo2(
@@ -59,8 +60,9 @@ class UserInfo2 {
       firstName: firstName ?? this.firstName,
       lastName: lastName ?? this.lastName,
       address: address ?? this.address,
-      gender: gender ?? this.gender,
       phoneNumber: phoneNumber ?? this.phoneNumber,
+      dob: dob ?? this.dob,
+      gender: gender ?? this.gender,
       avatar: avatar ?? this.avatar,
     );
   }
@@ -72,29 +74,33 @@ class UserInfo2 {
       'firstName': firstName,
       'lastName': lastName,
       'address': address,
-      'gender': gender,
       'phoneNumber': phoneNumber,
+      'dob': dob,
+      'gender': gender,
       'avatar': avatar,
     };
   }
 
-  String toJson() => json.encode(toMap());
-
   factory UserInfo2.fromMap(Map<String, dynamic> map) {
     return UserInfo2(
-      id: map['id'],
-      email: map['email'],
-      firstName: map['firstName'],
-      lastName: map['lastName'],
-      address: map['address'],
-      gender: map['gender'],
-      phoneNumber: map['phoneNumber'],
-      avatar: map['avatar'] ?? Constants.defaultAvatar,
+      id: map['id'] != null ? map['id'] as int : null,
+      email: map['email'] != null ? map['email'] as String : null,
+      firstName: map['firstName'] != null ? map['firstName'] as String : null,
+      lastName: map['lastName'] != null ? map['lastName'] as String : null,
+      address: map['address'] != null ? map['address'] as String : null,
+      phoneNumber: map['phoneNumber'] != null ? map['phoneNumber'] as String : null,
+      dob: map['dob'] != null ? map['dob'] as String : null,
+      gender: map['gender'] != null ? map['gender'] as String : null,
+      avatar: map['avatar'] != null ? map['avatar'] as String : null,
     );
   }
+
+  String toJson() => json.encode(toMap());
 
   factory UserInfo2.fromJson(String source) => UserInfo2.fromMap(json.decode(source) as Map<String, dynamic>);
 
   @override
-  String toString() => 'UserInfo2($id, $email, $firstName, $lastName, $address, $gender, $phoneNumber, $avatar)';
+  String toString() {
+    return 'UserInfo2(id: $id, email: $email, firstName: $firstName, lastName: $lastName, address: $address, phoneNumber: $phoneNumber, dob: $dob, gender: $gender, avatar: $avatar)';
+  }
 }

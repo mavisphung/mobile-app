@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:hi_doctor_v2/app/common/constants.dart';
 import 'package:hi_doctor_v2/app/common/values/colors.dart';
 import 'package:intl/intl.dart';
 import 'package:mime/mime.dart';
@@ -29,8 +30,8 @@ abstract class Utils {
   static Future<bool?> showConfirmDialog(
     String message, {
     String? title,
-    String cancelText = 'No',
-    String confirmText = 'Yes',
+    String? cancelText,
+    String? confirmText,
   }) {
     return showDialog<bool>(
       context: Get.overlayContext!,
@@ -38,26 +39,35 @@ abstract class Utils {
       builder: (ctx) {
         return Dialog(
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(25.sp),
+            borderRadius: BorderRadius.circular(12.sp),
           ),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
               Padding(
-                padding: EdgeInsets.symmetric(vertical: 8.sp, horizontal: 15.sp),
+                padding: EdgeInsets.only(
+                  top: 8.sp,
+                  bottom: 15.sp,
+                  left: 30.sp,
+                  right: 30.sp,
+                ),
                 child: Text(
-                  title ?? 'Confirm',
+                  title ?? Strings.confirm.tr,
                   style: TextStyle(
-                    color: AppColors.primary,
                     fontSize: 15.sp,
                     fontWeight: FontWeight.w500,
                   ),
                 ),
               ),
-              Padding(
-                padding: EdgeInsets.symmetric(vertical: 8.sp, horizontal: 15.sp),
-                child:
-                    Text('dksnfskflsndfksnfsfkldsfksknlkfdskf \n skkfsdmfskmflsdmfksmdfmsfmsdkfsdkfkdsnfklsdkndflsnf'),
+              Center(
+                child: Padding(
+                  padding: EdgeInsets.only(
+                    bottom: 15.sp,
+                    left: 20.sp,
+                    right: 20.sp,
+                  ),
+                  child: Text(message),
+                ),
               ),
               Divider(
                 height: 0,
@@ -72,15 +82,16 @@ abstract class Utils {
                       child: InkWell(
                         onTap: () => Navigator.pop(ctx, false),
                         customBorder: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.only(bottomLeft: Radius.circular(25.sp)),
+                          borderRadius: BorderRadius.only(bottomLeft: Radius.circular(12.sp)),
                         ),
                         child: Padding(
-                          padding: EdgeInsets.symmetric(vertical: 10.sp),
+                          padding: EdgeInsets.symmetric(vertical: Constants.padding.sp),
                           child: Center(
                             child: Text(
-                              cancelText,
+                              cancelText ?? Strings.cancel.tr,
                               style: const TextStyle(
                                 fontWeight: FontWeight.w500,
+                                color: Colors.blue,
                               ),
                             ),
                           ),
@@ -96,15 +107,16 @@ abstract class Utils {
                       child: InkWell(
                         onTap: () => Navigator.pop(ctx, true),
                         customBorder: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.only(bottomRight: Radius.circular(25.sp)),
+                          borderRadius: BorderRadius.only(bottomRight: Radius.circular(12.sp)),
                         ),
                         child: Padding(
-                          padding: EdgeInsets.symmetric(vertical: 10.sp),
+                          padding: EdgeInsets.symmetric(vertical: Constants.padding.sp),
                           child: Center(
                             child: Text(
-                              confirmText,
+                              confirmText ?? Strings.confirm.tr,
                               style: const TextStyle(
                                 fontWeight: FontWeight.w500,
+                                color: Colors.blue,
                               ),
                             ),
                           ),
@@ -121,51 +133,71 @@ abstract class Utils {
     );
   }
 
-  // static Future<bool?> showConfirmDialog(
-  //   String message, {
-  //   String? title,
-  //   String cancelText = 'No',
-  //   String confirmText = 'Yes',
-  // }) {
-  //   return showCupertinoDialog<bool>(
-  //     context: Get.overlayContext!,
-  //     barrierDismissible: false,
-  //     builder: (ctx) {
-  //       return CupertinoAlertDialog(
-  //         title: Text(title ?? Strings.alert.tr),
-  //         content: Text(message),
-  //         actions: [
-  //           CupertinoDialogAction(
-  //             onPressed: () => Navigator.pop(ctx, false),
-  //             child: Text(cancelText),
-  //           ),
-  //           CupertinoDialogAction(
-  //             onPressed: () => Navigator.pop(ctx, true),
-  //             child: Text(confirmText),
-  //           ),
-  //         ],
-  //       );
-  //     },
-  //   );
-  // }
-
-  static void showAlertDialog(
+  static Future<bool?> showAlertDialog(
     String message, {
     String? title,
   }) {
-    showCupertinoDialog(
+    return showDialog<bool>(
       context: Get.overlayContext!,
-      barrierDismissible: false,
+      barrierDismissible: true,
       builder: (ctx) {
-        return CupertinoAlertDialog(
-          title: Text(title ?? Strings.alert.tr),
-          content: Text(message),
-          actions: [
-            CupertinoDialogAction(
-              onPressed: () => Navigator.pop(ctx),
-              child: const Text('OK'),
-            ),
-          ],
+        return Dialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12.sp),
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Padding(
+                padding: EdgeInsets.only(
+                  top: 8.sp,
+                  bottom: 15.sp,
+                  left: 30.sp,
+                  right: 30.sp,
+                ),
+                child: Text(
+                  title ?? Strings.alert.tr,
+                  style: TextStyle(
+                    fontSize: 15.sp,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+              ),
+              Center(
+                child: Padding(
+                  padding: EdgeInsets.only(
+                    bottom: 15.sp,
+                    left: 20.sp,
+                    right: 20.sp,
+                  ),
+                  child: Text(message),
+                ),
+              ),
+              Divider(
+                height: 0,
+                color: AppColors.greyDivider,
+                thickness: 0.8.sp,
+              ),
+              InkWell(
+                onTap: () => Navigator.pop(ctx, false),
+                customBorder: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.only(bottomLeft: Radius.circular(12.sp)),
+                ),
+                child: Padding(
+                  padding: EdgeInsets.symmetric(vertical: Constants.padding.sp),
+                  child: Center(
+                    child: Text(
+                      Strings.ok.tr,
+                      style: const TextStyle(
+                        fontWeight: FontWeight.w500,
+                        color: Colors.blue,
+                      ),
+                    ),
+                  ),
+                ),
+              )
+            ],
+          ),
         );
       },
     );
@@ -229,9 +261,27 @@ abstract class Utils {
 
   static String formatTime(DateTime date) => DateFormat('HH:mm').format(date);
 
-  static DateTime? parseStrToDateTime(String str) => DateFormat('yyyy-MM-dd HH:mm').parse(str);
+  static DateTime? parseStrToDateTime(String str) {
+    try {
+      return DateFormat('yyyy-MM-dd HH:mm').parse(str);
+    } catch (e) {
+      return null;
+    }
+  }
 
-  static DateTime? parseStrToDate(String str) => DateFormat('yyyy-MM-dd').parse(str);
+  static DateTime? parseStrToDate(String str) {
+    try {
+      return DateFormat('dd-MM-yyyy').parse(str);
+    } catch (e) {
+      return null;
+    }
+  }
 
-  static DateTime? parseStrToTime(String str) => DateFormat('HH:mm').parse(str);
+  static DateTime? parseStrToTime(String str) {
+    try {
+      return DateFormat('HH:mm').parse(str);
+    } catch (e) {
+      return null;
+    }
+  }
 }

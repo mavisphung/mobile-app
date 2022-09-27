@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
-import '../../../common/values/colors.dart';
-import '../../../models/user_info.dart';
-import '../../../routes/app_pages.dart';
-import '../controllers/settings_controller.dart';
+import 'package:hi_doctor_v2/app/common/constants.dart';
+import 'package:hi_doctor_v2/app/common/values/colors.dart';
+import 'package:hi_doctor_v2/app/models/user_info.dart';
+import 'package:hi_doctor_v2/app/modules/settings/controllers/settings_controller.dart';
+import 'package:hi_doctor_v2/app/routes/app_pages.dart';
 
 class UserProfile extends StatelessWidget {
   final SettingsController _settingsController = Get.find<SettingsController>();
@@ -26,7 +27,7 @@ class UserProfile extends StatelessWidget {
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   image: DecorationImage(
-                    image: NetworkImage(data.value.avatar!),
+                    image: NetworkImage(data.value.avatar ?? Constants.defaultAvatar),
                     fit: BoxFit.cover,
                   ),
                 ),
@@ -56,7 +57,7 @@ class UserProfile extends StatelessWidget {
           ],
         ),
         SizedBox(
-          height: 10.0.sp,
+          height: 10.sp,
         ),
         ObxValue<Rx<UserInfo2>>(
           (data) => Text(
@@ -73,7 +74,7 @@ class UserProfile extends StatelessWidget {
           _settingsController.userInfo.value.email!,
           style: TextStyle(
             color: Colors.grey,
-            fontSize: 12.0.sp,
+            fontSize: 12.sp,
           ),
           overflow: TextOverflow.clip,
         ),

@@ -1,86 +1,83 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:hi_doctor_v2/app/common/constants.dart';
 import 'package:hi_doctor_v2/app/common/util/status.dart';
 import 'package:hi_doctor_v2/app/common/values/colors.dart';
 import 'package:hi_doctor_v2/app/modules/message/controllers/message_controller.dart';
+import 'package:hi_doctor_v2/app/modules/widgets/my_appbar.dart';
 
 class MessagePage extends StatelessWidget {
   MessagePage({Key? key}) : super(key: key);
 
   final MessageController _controller = Get.put(MessageController());
-  final itemCount = 101;
+
+  final _textStyle = TextStyle(
+    color: Colors.grey[700],
+  );
 
   Widget buildWhenSuccess() {
-    return Container(
-      width: Get.width,
-      child: Column(
-        children: [
-          ListView.builder(
-            shrinkWrap: true,
-            itemCount: _controller.itemCount,
-            physics: const NeverScrollableScrollPhysics(),
-            itemBuilder: (context, index) {
-              return Container(
-                padding: EdgeInsets.symmetric(vertical: 12.0.sp),
-                height: Get.height.sp * 0.1,
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
+    return ListView.separated(
+      shrinkWrap: true,
+      itemCount: _controller.itemCount,
+      physics: const NeverScrollableScrollPhysics(),
+      itemBuilder: (_, __) {
+        return Container(
+          height: 75.sp,
+          padding: EdgeInsets.all(12.sp),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(Constants.textFieldRadius.sp),
+          ),
+          child: Row(
+            children: [
+              Container(
+                width: 55.sp,
+                height: 55.sp,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: AppColors.primary,
+                ),
+              ),
+              SizedBox(width: 10.sp),
+              Expanded(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Container(
-                      width: Get.width.sp * 0.2,
-                      height: Get.width.sp * 0.2,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: AppColors.primary,
+                    Text(
+                      'Bs. Hello Wolf ád dfsdfsdfsd fsdfsdfsf',
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                        fontSize: 16.sp,
+                        fontWeight: FontWeight.w500,
                       ),
                     ),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Expanded(
-                            child: Text(
-                              'Bs. Hello Wolf ád ádas',
-                              overflow: TextOverflow.ellipsis,
-                              softWrap: true,
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 17.0.sp,
-                              ),
-                            ),
-                          ),
-                          const Spacer(flex: 1),
-                          Expanded(
-                            child: Text(
-                              'This is the message from huy phung',
-                              overflow: TextOverflow.ellipsis,
-                              softWrap: true,
-                              style: TextStyle(
-                                fontSize: 14.0.sp,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
+                    SizedBox(
+                      height: 6.sp,
                     ),
-                    // Spacer(flex: 1),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.end,
+                    Row(
                       children: [
+                        Expanded(
+                          child: Text(
+                            'This is the message from huy phung',
+                            overflow: TextOverflow.ellipsis,
+                            style: _textStyle,
+                          ),
+                        ),
                         Text(
-                          '21/10/2022\n 10:00 AM',
-                          textAlign: TextAlign.end,
+                          '10:00 pm',
+                          style: _textStyle,
                         ),
                       ],
                     ),
                   ],
                 ),
-              );
-            },
+              ),
+            ],
           ),
-        ],
-      ),
+        );
+      },
+      separatorBuilder: (_, __) => SizedBox(height: 7.sp),
     );
   }
 
@@ -106,33 +103,26 @@ class MessagePage extends StatelessWidget {
     };
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text(
-          'Trò chuyện',
-          style: TextStyle(
-            color: Colors.black,
-          ),
-        ),
-        backgroundColor: Colors.white,
-        elevation: 0.0.sp,
+      backgroundColor: AppColors.background,
+      appBar: const MyAppBar(
+        title: 'Tin nhắn',
+        hasBackBtn: false,
       ),
       body: GetBuilder(
         init: _controller,
-        builder: (MessageController controller) => Container(
-          padding: EdgeInsets.symmetric(horizontal: 12.0.sp),
-          child: RefreshIndicator(
-            onRefresh: () async {
-              Get.snackbar('Refresh indicator', 'Reloading...');
-              controller.loadingStatus = Status.loading;
-              await Future.delayed(const Duration(seconds: 1));
-              controller.loadingStatus = Status.success;
-            },
-            child: SingleChildScrollView(
-              controller: controller.scrollController,
-              physics: const AlwaysScrollableScrollPhysics(),
-              child: Container(
-                child: widgets[controller.loadingStatus],
-              ),
+        builder: (MessageController controller) => RefreshIndicator(
+          onRefresh: () async {
+            Get.snackbar('Refresh indicator', 'Reloading...');
+            controller.loadingStatus = Status.loading;
+            await Future.delayed(const Duration(seconds: 1));
+            controller.loadingStatus = Status.success;
+          },
+          child: SingleChildScrollView(
+            controller: controller.scrollController,
+            physics: const AlwaysScrollableScrollPhysics(),
+            child: Padding(
+              padding: EdgeInsets.all(Constants.padding.sp),
+              child: widgets[controller.loadingStatus],
             ),
           ),
         ),
