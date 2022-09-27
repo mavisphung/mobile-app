@@ -11,7 +11,7 @@ import 'package:hi_doctor_v2/app/modules/settings/providers/api_settings.dart';
 import 'package:image_picker/image_picker.dart';
 
 class ApiSettingsImpl extends GetConnect with ApiSettings {
-  Map<String, String> headers = {
+  final Map<String, String> headers = {
     'Authorization': 'Bearer ${Storage.getValue<String>(CacheKey.TOKEN.name)}',
   };
 

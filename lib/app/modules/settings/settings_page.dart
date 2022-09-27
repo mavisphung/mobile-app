@@ -6,9 +6,9 @@ import 'package:get/get.dart';
 
 import 'package:hi_doctor_v2/app/common/util/utils.dart';
 import 'package:hi_doctor_v2/app/common/values/strings.dart';
-import 'package:hi_doctor_v2/app/modules/settings/controllers/settings_controller.dart';
+import 'package:hi_doctor_v2/app/data/custom_controller.dart';
 import 'package:hi_doctor_v2/app/modules/settings/widgets/user_profile.dart';
-import 'package:hi_doctor_v2/app/modules/settings/widgets/user_profile_item.dart';
+import 'package:hi_doctor_v2/app/modules/settings/widgets/setting_item.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/base_page.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/my_appbar.dart';
 import 'package:hi_doctor_v2/app/routes/app_pages.dart';
@@ -17,8 +17,9 @@ enum SettingOption { myaccount, logout }
 
 // ignore: must_be_immutable
 class SettingsPage extends StatelessWidget {
+  final _cCustom = Get.find<CustomController>();
+
   SettingsPage({Key? key}) : super(key: key);
-  final _c = Get.find<SettingsController>();
 
   void _logOut() async {
     final confirmLogout = await Utils.showConfirmDialog(
@@ -27,7 +28,7 @@ class SettingsPage extends StatelessWidget {
       confirmText: Strings.yes.tr,
     );
     if (confirmLogout ?? false) {
-      _c.logOut();
+      _cCustom.logOut();
     }
   }
 
@@ -38,12 +39,12 @@ class SettingsPage extends StatelessWidget {
         title: Strings.settings.tr,
         hasBackBtn: false,
       ),
-      child: Column(
+      body: Column(
         children: [
           UserProfile(),
           Container(
-            margin: EdgeInsets.only(top: 22.0.sp),
-            padding: EdgeInsets.symmetric(vertical: 15.0.sp, horizontal: 8.sp),
+            margin: EdgeInsets.only(top: 22.sp),
+            padding: EdgeInsets.symmetric(vertical: 15.sp, horizontal: 8.sp),
             decoration: BoxDecoration(
               color: Colors.white,
               boxShadow: [
@@ -59,19 +60,19 @@ class SettingsPage extends StatelessWidget {
             ),
             child: Column(
               children: [
-                UserProfileItem(
+                SettingItem(
                   icon: SvgPicture.asset(
                     'assets/icons/person.svg',
                   ),
                   title: Strings.myAccount.tr,
                   function: () => Get.toNamed(Routes.USER_PROFILE_DETAIL),
                 ),
-                UserProfileItem(
+                SettingItem(
                   icon: const Icon(CupertinoIcons.doc_person),
                   title: Strings.patientProfile.tr,
                   function: () => Get.toNamed(Routes.PATIENT_LIST),
                 ),
-                UserProfileItem(
+                SettingItem(
                   icon: const Icon(Icons.translate_rounded),
                   title: Strings.language.tr,
                   isNavigator: false,
@@ -79,10 +80,10 @@ class SettingsPage extends StatelessWidget {
                       (data) => ToggleButtons(
                             onPressed: (int index) {
                               if (index == 0) {
-                                _c.changeLanguage(false);
+                                _cCustom.changeLanguage(false);
                                 return;
                               }
-                              _c.changeLanguage(true);
+                              _cCustom.changeLanguage(true);
                             },
                             borderRadius: const BorderRadius.all(Radius.circular(8)),
                             selectedBorderColor: Colors.white,
@@ -98,9 +99,9 @@ class SettingsPage extends StatelessWidget {
                             isSelected: [data.isTrue, data.isFalse],
                             children: [Text(Strings.vi), Text(Strings.en)],
                           ),
-                      _c.isEnglish),
+                      _cCustom.isEnglish),
                 ),
-                UserProfileItem(
+                SettingItem(
                   icon: SvgPicture.asset(
                     'assets/icons/logout.svg',
                     color: Colors.red,

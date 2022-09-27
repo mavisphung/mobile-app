@@ -14,7 +14,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
     Key? key,
     required this.title,
     this.actions,
-    this.hasBackBtn = false,
+    this.hasBackBtn = true,
   }) : super(key: key);
 
   @override

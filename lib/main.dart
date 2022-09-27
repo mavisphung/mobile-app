@@ -7,7 +7,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:hi_doctor_v2/app/common/util/initializer.dart';
 import 'package:hi_doctor_v2/app/common/util/messages.dart';
 import 'package:hi_doctor_v2/app/common/values/strings.dart';
-import 'package:hi_doctor_v2/app/modules/settings/controllers/settings_controller.dart';
+import 'package:hi_doctor_v2/app/data/custom_controller.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/base_widget.dart';
 import 'package:hi_doctor_v2/app/routes/app_pages.dart';
 
@@ -77,6 +77,16 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
+  TextTheme? getTextTheme(bool isEnglish) {
+    return isEnglish
+        ? null
+        : ThemeData.light().textTheme.copyWith(
+              titleMedium: const TextStyle(
+                fontWeight: FontWeight.w500,
+              ),
+            );
+  }
+
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
@@ -84,7 +94,7 @@ class MyApp extends StatelessWidget {
       useInheritedMediaQuery: true,
       designSize: const Size(375, 812),
       builder: (_, __) {
-        final c = Get.put(SettingsController());
+        final c = Get.put(CustomController());
         return ObxValue<RxBool>(
             (data) => GetMaterialApp(
                   title: Strings.appName,
@@ -95,11 +105,7 @@ class MyApp extends StatelessWidget {
                     bottomSheetTheme: const BottomSheetThemeData(
                       backgroundColor: Colors.transparent,
                     ),
-                    textTheme: ThemeData.light().textTheme.copyWith(
-                          titleMedium: const TextStyle(
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
+                    textTheme: getTextTheme(data.value),
                     //   button: const TextStyle(
                     //     color: Colors.amber,
                     //     fontFamily: 'Poppins',

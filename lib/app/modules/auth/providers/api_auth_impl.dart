@@ -50,20 +50,10 @@ class ApiAuthImpl extends GetConnect with ApiAuth {
   }
 
   @override
-  Future<Response> postRegister(String email, String password, String confirmPassword, String firstName,
-      String lastName, String phoneNumber, String address, String gender) {
+  Future<Response> postRegister(RequestRegisterModel reqBody) {
     return post(
       '/register/',
-      RequestRegisterModel(
-        email: email,
-        password: password,
-        confirmPassword: confirmPassword,
-        firstName: firstName,
-        lastName: lastName,
-        phoneNumber: phoneNumber,
-        address: address,
-        gender: gender,
-      ).toJson(),
+      reqBody.toJson(),
     );
   }
 

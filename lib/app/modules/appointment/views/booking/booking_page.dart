@@ -86,7 +86,7 @@ class BookingAppointmentPage extends StatelessWidget {
           Get.toNamed(Routes.BOOKING_PACKAGE, preventDuplicates: true);
         },
       ),
-      child: Column(
+      body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           CustomTitleSection(
@@ -94,20 +94,20 @@ class BookingAppointmentPage extends StatelessWidget {
             paddingLeft: 8.sp,
           ),
           Container(
-            height: 330.0.sp,
-            margin: EdgeInsets.only(bottom: 30.0.sp),
+            height: 330.sp,
+            margin: EdgeInsets.only(bottom: 30.sp),
             padding: EdgeInsets.symmetric(
               vertical: 15.sp,
-              horizontal: 15.0.sp,
+              horizontal: 15.sp,
             ),
             decoration: BoxDecoration(
               color: Colors.white,
-              borderRadius: BorderRadius.circular(25.0.sp),
+              borderRadius: BorderRadius.circular(25.sp),
               boxShadow: [
                 BoxShadow(
                   color: Colors.black.withOpacity(0.12),
                   offset: const Offset(0, 2),
-                  blurRadius: 4.0.sp,
+                  blurRadius: 4.sp,
                 ),
               ],
             ),
@@ -207,7 +207,7 @@ class BookingAppointmentPage extends StatelessWidget {
             }
             return Text('No slot on week day ${data.value.weekday}');
           }, _c.rxSelectedDate),
-          SizedBox(height: 90.0.sp),
+          SizedBox(height: 90.sp),
         ],
       ),
     );

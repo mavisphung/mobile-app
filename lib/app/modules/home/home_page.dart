@@ -13,7 +13,8 @@ import 'package:hi_doctor_v2/app/modules/home/controllers/home_controller.dart';
 import 'package:hi_doctor_v2/app/modules/home/views/category_item.dart';
 import 'package:hi_doctor_v2/app/modules/home/views/doctor_item.dart';
 import 'package:hi_doctor_v2/app/modules/home/views/reminder_card.dart';
-import 'package:hi_doctor_v2/app/modules/widgets/background_page.dart';
+import 'package:hi_doctor_v2/app/modules/settings/controllers/settings_controller.dart';
+import 'package:hi_doctor_v2/app/modules/widgets/base_page.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/custom_icon_button.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/custom_title_section.dart';
 
@@ -21,8 +22,9 @@ class HomePage extends StatelessWidget {
   HomePage({Key? key}) : super(key: key);
   final _categoriesList = categoriesList;
 
-  final HomeController homeController = Get.put(HomeController());
-  final DoctorController doctorController = Get.put(DoctorController());
+  final HomeController _homeController = Get.put(HomeController());
+  final DoctorController _doctorController = Get.put(DoctorController());
+  final _settingsController = Get.put(SettingsController());
 
   final _spacing = SizedBox(
     height: 18.sp,
@@ -30,10 +32,10 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final userInfo = Storage.getValue<UserInfo2>(CacheKey.USER_INFO.name);
-    return BackgroundPage(
+    final userInfo = _settingsController.userInfo.value;
+    return BasePage(
       appBar: null,
-      child: Column(
+      body: Column(
         children: [
           _spacing,
           Row(
@@ -45,7 +47,7 @@ class HomePage extends StatelessWidget {
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   image: DecorationImage(
-                    image: NetworkImage(userInfo?.avatar ?? Constants.defaultAvatar),
+                    image: NetworkImage(userInfo.avatar ?? Constants.defaultAvatar),
                     fit: BoxFit.cover,
                   ),
                 ),
@@ -62,7 +64,7 @@ class HomePage extends StatelessWidget {
                     child: Ink(
                       padding: EdgeInsets.symmetric(vertical: 12.sp, horizontal: 12.sp),
                       decoration: BoxDecoration(
-                        color: Colors.white,
+                        color: Colors.grey[200],
                         borderRadius: BorderRadius.circular(Constants.textFieldRadius.sp),
                       ),
                       child: Row(
@@ -131,20 +133,20 @@ class HomePage extends StatelessWidget {
               _spacing,
               CustomTitleSection(title: Strings.latestSearchDoctor.tr),
               FutureBuilder(
-                future: homeController.getDoctors(),
+                future: _homeController.getDoctors(),
                 builder: (context, AsyncSnapshot snapshot) {
                   if (snapshot.hasData) {
                     return GetBuilder(
-                      init: homeController,
+                      init: _homeController,
                       builder: (_) {
                         return SizedBox(
                           height: 150.sp,
                           width: double.infinity,
-                          child: ListView.builder(
+                          child: ListView.separated(
                             scrollDirection: Axis.horizontal,
-                            itemCount: homeController.doctorList.length,
+                            itemCount: _homeController.doctorList.length,
                             itemBuilder: (_, index) {
-                              var realDoctor = homeController.doctorList[index];
+                              var realDoctor = _homeController.doctorList[index];
                               // realDoctor.toJson().debugLog('Doctor');
                               // 'Build again $index'.debugLog('DoctorList');
                               return DoctorItem(
@@ -159,6 +161,9 @@ class HomePage extends StatelessWidget {
                               //   reviewNumber: doctor.reviewNumber,
                               // );
                             },
+                            separatorBuilder: (_, __) => SizedBox(
+                              width: 10.sp,
+                            ),
                           ),
                         );
                       },

@@ -6,6 +6,7 @@ import 'package:hi_doctor_v2/app/common/constants.dart';
 import 'package:hi_doctor_v2/app/common/util/status.dart';
 import 'package:hi_doctor_v2/app/common/values/strings.dart';
 import 'package:hi_doctor_v2/app/modules/auth/controllers/register_controller.dart';
+import 'package:hi_doctor_v2/app/modules/auth/providers/req_auth_model.dart';
 import 'package:hi_doctor_v2/app/modules/auth/views/dot_indicator.dart';
 import 'package:hi_doctor_v2/app/modules/auth/views/step1.dart';
 import 'package:hi_doctor_v2/app/modules/auth/views/step2.dart';
@@ -42,6 +43,7 @@ class _RegisterPageState extends State<RegisterPage> {
   final _lastNameController = TextEditingController();
   final _addressController = TextEditingController();
   final _phoneNumberController = TextEditingController();
+  final _dobController = TextEditingController();
 
   late List<Widget> _step;
 
@@ -61,6 +63,7 @@ class _RegisterPageState extends State<RegisterPage> {
     _lastNameController.dispose();
     _addressController.dispose();
     _phoneNumberController.dispose();
+    _dobController.dispose();
     super.dispose();
   }
 
@@ -72,16 +75,21 @@ class _RegisterPageState extends State<RegisterPage> {
 
   void _submitRegisterForm() async {
     if (!_checkForm(_formKey2)) return;
-    var isRegistrationSuccess = await _controller.register(
-      _emailController.text,
-      _passwordController.text,
-      _confirmController.text,
-      _firstNameController.text.trim(),
-      _lastNameController.text.trim(),
-      _phoneNumberController.text,
-      _addressController.text.trim(),
-      _controller.gender.value,
+    if (_dobController.text.isEmpty) return;
+    final dob = _dobController.text.split('-');
+    final formatedDob = '${dob[2]}-${dob[1]}-${dob[0]}';
+    RequestRegisterModel model = RequestRegisterModel(
+      email: _emailController.text,
+      password: _passwordController.text,
+      repassword: _confirmController.text,
+      firstName: _firstNameController.text.trim(),
+      lastName: _lastNameController.text.trim(),
+      address: _addressController.text.trim(),
+      phoneNumber: _phoneNumberController.text,
+      gender: _controller.gender.value,
+      dob: formatedDob,
     );
+    var isRegistrationSuccess = await _controller.register(model);
     if (isRegistrationSuccess) {
       setState(() {
         _currentStep += 1;
@@ -118,63 +126,100 @@ class _RegisterPageState extends State<RegisterPage> {
     }
   }
 
-  @override
-  void didChangeDependencies() {
-    _step = [
-      Step1(
-        key: const ValueKey<int>(0),
-        formKey: _formKey1,
-        action: _checkEmail,
-        emailFocusNode: _emailFocusNode,
-        passwordFocusNode: _passwordFocusNode,
-        confirmFocusNode: _confirmFocusNode,
-        emailController: _emailController,
-        passwordController: _passwordController,
-        confirmController: _confirmController,
-      ),
-      Step2(
-        key: const ValueKey<int>(1),
-        formKey: _formKey2,
-        action: _submitRegisterForm,
-        firstNameFocusNode: _firstNameFocusNode,
-        lastNameFocusNode: _lastNameFocusNode,
-        phoneNumberFocusNode: _phoneNumberFocusNode,
-        addressFocusNode: _addressFocusNode,
-        firstNameController: _firstNameController,
-        lastNameController: _lastNameController,
-        addressController: _addressController,
-        phoneNumberController: _phoneNumberController,
-      ),
-      Step3(
-        key: const ValueKey<int>(2),
-        formKey: _formKey3,
-        email: _controller.email,
-        activateAccount: _activateAccount,
-      ),
-    ];
-    super.didChangeDependencies();
+  Widget _getStep(int step) {
+    final step1 = Step1(
+      key: const ValueKey<int>(0),
+      formKey: _formKey1,
+      action: _checkEmail,
+      emailFocusNode: _emailFocusNode,
+      passwordFocusNode: _passwordFocusNode,
+      confirmFocusNode: _confirmFocusNode,
+      emailController: _emailController,
+      passwordController: _passwordController,
+      confirmController: _confirmController,
+    );
+    switch (step) {
+      case 0:
+        return step1;
+      case 1:
+        return Step2(
+          key: const ValueKey<int>(1),
+          formKey: _formKey2,
+          action: _submitRegisterForm,
+          firstNameFocusNode: _firstNameFocusNode,
+          lastNameFocusNode: _lastNameFocusNode,
+          phoneNumberFocusNode: _phoneNumberFocusNode,
+          addressFocusNode: _addressFocusNode,
+          firstNameController: _firstNameController,
+          lastNameController: _lastNameController,
+          addressController: _addressController,
+          phoneNumberController: _phoneNumberController,
+          dobController: _dobController,
+        );
+      case 2:
+        return Step3(
+          key: const ValueKey<int>(2),
+          formKey: _formKey3,
+          email: _controller.email,
+          activateAccount: _activateAccount,
+        );
+      default:
+        return step1;
+    }
   }
+
+  // @override
+  // void didChangeDependencies() {
+  //   _step = [
+  //     Step1(
+  //       key: const ValueKey<int>(0),
+  //       formKey: _formKey1,
+  //       action: _checkEmail,
+  //       emailFocusNode: _emailFocusNode,
+  //       passwordFocusNode: _passwordFocusNode,
+  //       confirmFocusNode: _confirmFocusNode,
+  //       emailController: _emailController,
+  //       passwordController: _passwordController,
+  //       confirmController: _confirmController,
+  //     ),
+  //     Step2(
+  //       key: const ValueKey<int>(1),
+  //       formKey: _formKey2,
+  //       action: _submitRegisterForm,
+  //       firstNameFocusNode: _firstNameFocusNode,
+  //       lastNameFocusNode: _lastNameFocusNode,
+  //       phoneNumberFocusNode: _phoneNumberFocusNode,
+  //       addressFocusNode: _addressFocusNode,
+  //       firstNameController: _firstNameController,
+  //       lastNameController: _lastNameController,
+  //       addressController: _addressController,
+  //       phoneNumberController: _phoneNumberController,
+  //       dobController: _dobController,
+  //     ),
+  //     Step3(
+  //       key: const ValueKey<int>(2),
+  //       formKey: _formKey3,
+  //       email: _controller.email,
+  //       activateAccount: _activateAccount,
+  //     ),
+  //   ];
+  //   super.didChangeDependencies();
+  // }
 
   @override
   Widget build(BuildContext context) {
-    final bottomPadding = MediaQuery.of(context).viewInsets.bottom;
-    return Scaffold(
-      resizeToAvoidBottomInset: false,
+    return BasePage(
       appBar: MyAppBar(
         title: Strings.registration.tr,
         hasBackBtn: true,
       ),
-      body: SingleChildScrollView(
-        physics: const BouncingScrollPhysics(),
-        child: Padding(
-          padding: EdgeInsets.only(
-            top: 29.sp,
-            bottom: bottomPadding,
-            left: Constants.padding.sp,
-            right: Constants.padding.sp,
-          ),
-          child: _step[_currentStep],
+      body: Padding(
+        padding: EdgeInsets.only(
+          top: 29.sp,
+          bottom: 330.sp,
         ),
+        // child: _step[_currentStep],
+        child: _getStep(_currentStep),
       ),
       bottomSheet: Container(
         height: 110.sp,
@@ -183,7 +228,7 @@ class _RegisterPageState extends State<RegisterPage> {
           minHeight: 110.sp,
         ),
         padding: EdgeInsets.only(
-          left: 15.0.sp,
+          left: 15.sp,
           right: 15.sp,
           bottom: 30.sp,
         ),

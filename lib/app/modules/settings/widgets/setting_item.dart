@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class UserProfileItem extends StatelessWidget {
+class SettingItem extends StatelessWidget {
   final String title;
   final Widget icon;
   final Color? color;
@@ -10,7 +10,7 @@ class UserProfileItem extends StatelessWidget {
   final bool isNavigator;
   final Widget? suffix;
 
-  const UserProfileItem({
+  const SettingItem({
     Key? key,
     required this.title,
     required this.icon,
@@ -34,7 +34,7 @@ class UserProfileItem extends StatelessWidget {
               children: [
                 icon,
                 SizedBox(
-                  width: 14.0.sp,
+                  width: 14.sp,
                 ),
                 Expanded(
                   child: Text(

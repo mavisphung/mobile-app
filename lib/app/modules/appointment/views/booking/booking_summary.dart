@@ -76,7 +76,7 @@ class BookingSummary extends StatelessWidget {
     return Scaffold(
       appBar: MyAppBar(title: Strings.reviewSummary.tr),
       body: BasePage(
-        child: Column(
+        body: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(Strings.doctor.tr),
@@ -149,7 +149,7 @@ class BookingSummary extends StatelessWidget {
                     height: _imageSize,
                     decoration: BoxDecoration(
                       shape: BoxShape.rectangle,
-                      borderRadius: BorderRadius.circular(15.0.sp),
+                      borderRadius: BorderRadius.circular(15.sp),
                       image: DecorationImage(
                         image: NetworkImage(_userInfo?.avatar ?? Constants.defaultAvatar),
                         fit: BoxFit.cover,

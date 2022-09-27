@@ -30,6 +30,7 @@ class Messages extends Translations {
           Strings.upcomingAppointment: 'Upcoming appointment',
           Strings.category: 'Categories',
           Strings.latestSearchDoctor: 'Latest search doctors',
+          Strings.dob: 'Date of birth',
 
           // Verb, Adjective
           Strings.ok: 'OK',
@@ -144,6 +145,7 @@ class Messages extends Translations {
           Strings.upcomingAppointment: 'Upcoming appointment',
           Strings.category: 'Thể loại',
           Strings.latestSearchDoctor: 'Bác sĩ đã xem gần đây',
+          Strings.dob: 'Ngày sinh',
 
           // Verb, Adjective
           Strings.ok: 'OK',

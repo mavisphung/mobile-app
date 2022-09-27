@@ -24,36 +24,39 @@ class RequestLoginModel {
 class RequestRegisterModel {
   final String email;
   final String password;
-  final String confirmPassword;
+  final String repassword;
   final String firstName;
   final String lastName;
-  final String type = Constants.userType;
-  final String phoneNumber;
   final String address;
+  final String phoneNumber;
   final String gender;
+  final String dob;
+  final String type = Constants.userType;
 
   RequestRegisterModel({
     required this.email,
     required this.password,
-    required this.confirmPassword,
+    required this.repassword,
     required this.firstName,
     required this.lastName,
-    required this.phoneNumber,
     required this.address,
+    required this.phoneNumber,
     required this.gender,
+    required this.dob,
   });
 
   Map<String, dynamic> _toMap() {
     return <String, dynamic>{
       'email': email,
       'password': password,
-      'repassword': confirmPassword,
+      'repassword': repassword,
       'firstName': firstName,
       'lastName': lastName,
-      'type': type,
-      'phoneNumber': phoneNumber,
       'address': address,
+      'phoneNumber': phoneNumber,
       'gender': gender,
+      'dob': dob,
+      'type': type,
     };
   }
 

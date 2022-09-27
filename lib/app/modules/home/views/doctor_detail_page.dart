@@ -36,8 +36,8 @@ class DoctorDetailPage extends StatelessWidget {
               },
               child: Container(
                 padding: EdgeInsets.only(
-                  right: 12.0.sp,
-                  left: 12.0.sp,
+                  right: 12.sp,
+                  left: 12.sp,
                 ),
                 child: doctorController.isFavorite.value
                     ? SvgPicture.asset(
@@ -55,11 +55,7 @@ class DoctorDetailPage extends StatelessWidget {
           ),
         ],
       ),
-      bottomSheet: CustomBottomSheet(
-        buttonText: 'Make an appointment',
-        onPressed: () => Get.toNamed(Routes.BOOKING),
-      ),
-      child: FutureBuilder(
+      body: FutureBuilder(
         future: doctorController.getDoctorWithId(doctorId),
         builder: (_, snapshot) {
           if (snapshot.hasData) {
@@ -67,22 +63,22 @@ class DoctorDetailPage extends StatelessWidget {
               return Column(
                 children: [
                   Container(
-                    margin: EdgeInsets.only(top: 8.0.sp),
-                    padding: EdgeInsets.all(12.0.sp),
+                    margin: EdgeInsets.only(top: 8.sp),
+                    padding: EdgeInsets.all(12.sp),
                     width: Get.width,
                     decoration: BoxDecoration(
                       // border: Border.all(color: Colors.grey[200]!),
                       color: Colors.black.withOpacity(0.011),
-                      borderRadius: BorderRadius.circular(20.0.sp),
+                      borderRadius: BorderRadius.circular(20.sp),
                     ),
                     child: Row(
                       children: [
                         Container(
-                          width: 120.0.sp,
-                          height: 120.0.sp,
+                          width: 120.sp,
+                          height: 120.sp,
                           decoration: BoxDecoration(
                             shape: BoxShape.rectangle,
-                            borderRadius: BorderRadius.circular(15.0.sp),
+                            borderRadius: BorderRadius.circular(15.sp),
                             image: const DecorationImage(
                               image: NetworkImage(Constants.defaultAvatar),
                             ),
@@ -90,14 +86,14 @@ class DoctorDetailPage extends StatelessWidget {
                         ),
                         Expanded(
                           child: Container(
-                            padding: EdgeInsets.only(left: 15.0.sp),
+                            padding: EdgeInsets.only(left: 15.sp),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.stretch,
                               children: [
                                 Text(
                                   'Dr. ${doctorController.doctor.firstName} ${doctorController.doctor.lastName}',
                                   style: TextStyle(
-                                    fontSize: 14.0.sp,
+                                    fontSize: 14.sp,
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
@@ -106,7 +102,7 @@ class DoctorDetailPage extends StatelessWidget {
                                   thickness: 0.65.sp,
                                 ),
                                 SizedBox(
-                                  height: 30.0.sp,
+                                  height: 30.sp,
                                   child: Text(
                                     'Bác sĩ khoa tổng hợp',
                                     style: TextStyle(fontSize: 11.5.sp),
@@ -124,15 +120,15 @@ class DoctorDetailPage extends StatelessWidget {
                     ),
                   ),
                   Container(
-                    margin: EdgeInsets.only(top: 25.0.sp),
-                    padding: EdgeInsets.symmetric(horizontal: 12.0.sp),
+                    margin: EdgeInsets.only(top: 25.sp),
+                    padding: EdgeInsets.symmetric(horizontal: 12.sp),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         DoctorTile(
                           icon: Icon(
                             PhosphorIcons.users,
-                            size: 30.0.sp,
+                            size: 30.sp,
                             color: AppColors.primary,
                           ),
                           middleText: '5,000+',
@@ -141,7 +137,7 @@ class DoctorDetailPage extends StatelessWidget {
                         DoctorTile(
                           icon: Icon(
                             PhosphorIcons.chart_line_up,
-                            size: 30.0.sp,
+                            size: 30.sp,
                             color: AppColors.primary,
                           ),
                           middleText: '10+',
@@ -150,7 +146,7 @@ class DoctorDetailPage extends StatelessWidget {
                         DoctorTile(
                           icon: Icon(
                             Icons.star_half,
-                            size: 30.0.sp,
+                            size: 30.sp,
                             color: AppColors.primary,
                           ),
                           middleText: '4.8',
@@ -159,7 +155,7 @@ class DoctorDetailPage extends StatelessWidget {
                         DoctorTile(
                           icon: Icon(
                             PhosphorIcons.chat_centered_text,
-                            size: 30.0.sp,
+                            size: 30.sp,
                             color: AppColors.primary,
                           ),
                           middleText: '321',
@@ -170,7 +166,7 @@ class DoctorDetailPage extends StatelessWidget {
                   ),
                   Container(
                     width: Get.width,
-                    margin: EdgeInsets.only(top: 25.0.sp),
+                    margin: EdgeInsets.only(top: 25.sp),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -208,7 +204,7 @@ class DoctorDetailPage extends StatelessWidget {
                   ),
                   Container(
                     width: Get.width,
-                    margin: EdgeInsets.only(top: 25.0.sp),
+                    margin: EdgeInsets.only(top: 25.sp),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: const [
@@ -221,7 +217,7 @@ class DoctorDetailPage extends StatelessWidget {
                   ),
                   Container(
                     width: Get.width,
-                    margin: EdgeInsets.only(top: 25.0.sp),
+                    margin: EdgeInsets.only(top: 25.sp),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -256,7 +252,7 @@ class DoctorDetailPage extends StatelessWidget {
                               );
                             }
                             return Container(
-                              margin: EdgeInsets.only(top: 10.0.sp, bottom: 20.0.sp),
+                              margin: EdgeInsets.only(top: 10.sp, bottom: 20.sp),
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
@@ -264,9 +260,9 @@ class DoctorDetailPage extends StatelessWidget {
                                     mainAxisAlignment: MainAxisAlignment.start,
                                     children: [
                                       Container(
-                                        margin: EdgeInsets.only(right: 20.0.sp),
-                                        width: 53.0.sp,
-                                        height: 53.0.sp,
+                                        margin: EdgeInsets.only(right: 20.sp),
+                                        width: 53.sp,
+                                        height: 53.sp,
                                         decoration: BoxDecoration(
                                           shape: BoxShape.circle,
                                           image: DecorationImage(
@@ -279,7 +275,7 @@ class DoctorDetailPage extends StatelessWidget {
                                         'Bệnh nhân ${index + 1}',
                                         style: TextStyle(
                                           fontWeight: FontWeight.bold,
-                                          fontSize: 16.0.sp,
+                                          fontSize: 16.sp,
                                         ),
                                       ),
                                       const Spacer(),
@@ -290,31 +286,31 @@ class DoctorDetailPage extends StatelessWidget {
                                       //       Icon(Icons.star_outline),
                                       //       Text(
                                       //         '5',
-                                      //         style: TextStyle(fontSize: 17.0.sp),
+                                      //         style: TextStyle(fontSize: 17.sp),
                                       //       ),
                                       //     ],
                                       //   ),
                                       // ),
                                       Wrap(
                                         direction: Axis.horizontal,
-                                        spacing: 5.0.sp,
+                                        spacing: 5.sp,
                                         children: [
-                                          Icon(Icons.star_half, size: 20.0.sp, color: AppColors.primary),
+                                          Icon(Icons.star_half, size: 20.sp, color: AppColors.primary),
                                           Text(
                                             '5',
-                                            style: TextStyle(fontSize: 17.0.sp),
+                                            style: TextStyle(fontSize: 17.sp),
                                           ),
                                         ],
                                       ),
                                     ],
                                   ),
                                   SizedBox(
-                                    height: 15.0.sp,
+                                    height: 15.sp,
                                   ),
                                   RichText(
                                     text: TextSpan(
                                       style: TextStyle(
-                                        fontSize: 14.0.sp,
+                                        fontSize: 14.sp,
                                         color: Colors.black,
                                       ),
                                       text:
@@ -323,12 +319,12 @@ class DoctorDetailPage extends StatelessWidget {
                                   ),
                                   Container(
                                     padding: EdgeInsets.only(
-                                      top: 12.0.sp,
+                                      top: 12.sp,
                                     ),
                                     child: Text(
                                       '2 ngày trước',
                                       style: TextStyle(
-                                        fontSize: 11.0.sp,
+                                        fontSize: 11.sp,
                                         color: Colors.grey[900],
                                       ),
                                     ),
@@ -349,6 +345,10 @@ class DoctorDetailPage extends StatelessWidget {
             child: Text('Loading'),
           );
         },
+      ),
+      bottomSheet: CustomBottomSheet(
+        buttonText: 'Make an appointment',
+        onPressed: () => Get.toNamed(Routes.BOOKING),
       ),
     );
   }

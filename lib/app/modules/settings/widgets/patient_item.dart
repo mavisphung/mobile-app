@@ -3,7 +3,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import 'package:hi_doctor_v2/app/common/constants.dart';
-import 'package:hi_doctor_v2/app/common/values/colors.dart';
 import 'package:hi_doctor_v2/app/common/values/strings.dart';
 import 'package:hi_doctor_v2/app/models/patient.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/custom_container.dart';
@@ -14,11 +13,27 @@ class PatientItem extends StatelessWidget {
 
   const PatientItem({Key? key, required this.patient}) : super(key: key);
 
-  Widget _getSubText(String text) {
-    return Text(
-      text,
-      style: const TextStyle(
-        color: Colors.grey,
+  Widget _getDescription(String title, String detail) {
+    return Padding(
+      padding: EdgeInsets.only(top: 5.sp),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            title,
+            style: TextStyle(
+              color: Colors.grey,
+              fontSize: 11.sp,
+            ),
+          ),
+          Text(
+            detail,
+            style: TextStyle(
+              fontSize: 11.sp,
+              color: Colors.grey,
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -39,7 +54,7 @@ class PatientItem extends StatelessWidget {
               height: imageSize,
               decoration: BoxDecoration(
                 shape: BoxShape.rectangle,
-                borderRadius: BorderRadius.circular(15.0.sp),
+                borderRadius: BorderRadius.circular(15.sp),
                 image: DecorationImage(
                   image: NetworkImage(patient.avatar ?? Constants.defaultAvatar),
                   fit: BoxFit.cover,
@@ -47,7 +62,7 @@ class PatientItem extends StatelessWidget {
               ),
             ),
             SizedBox(
-              width: 10.sp,
+              width: 15.sp,
             ),
             Expanded(
               child: Column(
@@ -55,35 +70,18 @@ class PatientItem extends StatelessWidget {
                 children: [
                   Text(
                     '${patient.firstName} ${patient.lastName}',
-                    style: const TextStyle(
+                    style: TextStyle(
+                      fontSize: 14.sp,
                       fontWeight: FontWeight.w500,
                     ),
                   ),
                   Divider(
-                    color: AppColors.greyDivider,
-                    thickness: 0.8.sp,
+                    color: Colors.grey[300],
+                    thickness: 0.2.sp,
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      _getSubText(Strings.dob.tr),
-                      Text('${patient.dob}'),
-                    ],
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      _getSubText(Strings.address.tr),
-                      Text('${patient.address}'),
-                    ],
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      _getSubText(Strings.gender.tr),
-                      Text('${patient.gender}'),
-                    ],
-                  ),
+                  _getDescription(Strings.dob.tr, patient.dob ?? ''),
+                  _getDescription(Strings.address.tr, patient.address ?? ''),
+                  _getDescription(Strings.gender.tr, patient.gender ?? ''),
                 ],
               ),
             ),

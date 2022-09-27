@@ -39,11 +39,11 @@ class BookingPatientDetailPage extends StatelessWidget {
       resizeToAvoidBottomInset: false,
       appBar: const MyAppBar(title: 'Patient Details'),
       body: BasePage(
-        child: Column(
+        body: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
-              padding: EdgeInsets.only(top: 15.0.sp),
+              padding: EdgeInsets.only(top: 15.sp),
               child: Form(
                 key: _formKey,
                 child: GetBuilder<BookingController>(
@@ -63,7 +63,7 @@ class BookingPatientDetailPage extends StatelessWidget {
                           ),
                           decoration: BoxDecoration(
                             color: Colors.grey[100],
-                            borderRadius: BorderRadius.circular(15.0.sp),
+                            borderRadius: BorderRadius.circular(15.sp),
                           ),
                           child: Column(
                             children: [
@@ -101,10 +101,10 @@ class BookingPatientDetailPage extends StatelessWidget {
                           ),
                         ),
                         SizedBox(
-                          height: 8.0.sp,
+                          height: 8.sp,
                         ),
                         SizedBox(
-                          height: 16.0.sp,
+                          height: 16.sp,
                         ),
                         CustomTitleSection(title: Strings.healthIssue.tr),
                         TextFormField(

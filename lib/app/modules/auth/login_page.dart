@@ -14,8 +14,9 @@ import 'package:hi_doctor_v2/app/modules/widgets/custom_elevate_btn_widget.dart'
 import 'package:hi_doctor_v2/app/modules/widgets/custom_textfield_widget.dart';
 import 'package:hi_doctor_v2/app/routes/app_pages.dart';
 
-class LoginPage extends GetView<LoginController> {
+class LoginPage extends StatelessWidget {
   final _formKey = GlobalKey<FormState>();
+  final _c = Get.find<LoginController>();
 
   LoginPage({Key? key}) : super(key: key);
 
@@ -24,7 +25,7 @@ class LoginPage extends GetView<LoginController> {
 
     _formKey.currentState!.save();
 
-    controller.login(controller.emailController.text, controller.passwordController.text);
+    _c.login(_c.emailController.text, _c.passwordController.text);
   }
 
   @override
@@ -32,6 +33,7 @@ class LoginPage extends GetView<LoginController> {
     return WillPopScope(
       onWillPop: Utils.onWillPop,
       child: Scaffold(
+        backgroundColor: AppColors.background,
         body: SafeArea(
           child: Center(
             child: SingleChildScrollView(
@@ -62,9 +64,9 @@ class LoginPage extends GetView<LoginController> {
                           CustomTextFieldWidget(
                             withAsterisk: false,
                             validator: (value) => Validators.validateEmail(value, false),
-                            focusNode: controller.emailFocusNode,
-                            controller: controller.emailController,
-                            onFieldSubmitted: (_) => FocusScope.of(context).requestFocus(controller.passwordFocusNode),
+                            focusNode: _c.emailFocusNode,
+                            controller: _c.emailController,
+                            onFieldSubmitted: (_) => FocusScope.of(context).requestFocus(_c.passwordFocusNode),
                             hintText: Strings.email.tr,
                             prefixIcon: const Icon(
                               CupertinoIcons.mail_solid,
@@ -77,8 +79,8 @@ class LoginPage extends GetView<LoginController> {
                             hasClearIcon: false,
                             validator: Validators.validatePassword,
                             textInputAction: TextInputAction.done,
-                            focusNode: controller.passwordFocusNode,
-                            controller: controller.passwordController,
+                            focusNode: _c.passwordFocusNode,
+                            controller: _c.passwordController,
                             onFieldSubmitted: (_) => _submitLogin(),
                             hintText: Strings.pasword.tr,
                             prefixIcon: const Icon(CupertinoIcons.lock_fill),
@@ -91,7 +93,7 @@ class LoginPage extends GetView<LoginController> {
                       alignment: Alignment.centerRight,
                       child: GestureDetector(
                         onTap: () {
-                          if (controller.loginStatus.value != Status.loading) {}
+                          if (_c.loginStatus.value != Status.loading) {}
                         },
                         child: Text(
                           Strings.forgotPassword.tr,
@@ -112,7 +114,7 @@ class LoginPage extends GetView<LoginController> {
                                 status: data.value,
                                 onPressed: _submitLogin,
                               ),
-                          controller.loginStatus),
+                          _c.loginStatus),
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -171,7 +173,7 @@ class LoginPage extends GetView<LoginController> {
                           ),
                         ),
                         onPressed: () {
-                          if (controller.loginStatus.value != Status.loading) {}
+                          if (_c.loginStatus.value != Status.loading) {}
                         },
                       ),
                     ),
@@ -184,7 +186,7 @@ class LoginPage extends GetView<LoginController> {
                           SizedBox(width: 5.sp),
                           GestureDetector(
                             onTap: () {
-                              if (controller.loginStatus.value != Status.loading) {
+                              if (_c.loginStatus.value != Status.loading) {
                                 Get.toNamed(Routes.REGISTER);
                               }
                             },

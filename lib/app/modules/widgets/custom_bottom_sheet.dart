@@ -19,7 +19,7 @@ class CustomBottomSheet extends StatelessWidget {
       height: 70.sp,
       color: Colors.transparent,
       padding: EdgeInsets.only(
-        left: 15.0.sp,
+        left: 15.sp,
         right: 15.sp,
         bottom: 20.sp,
       ),

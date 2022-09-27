@@ -40,11 +40,11 @@ class _HistoryTabState extends State<HistoryTab> with AutomaticKeepAliveClientMi
               // controller: widget.histController.historyScrollController,
               physics: const AlwaysScrollableScrollPhysics(),
               child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 16.0.sp),
+                padding: EdgeInsets.symmetric(horizontal: 16.sp),
                 child: Column(
                   children: [
                     SizedBox(
-                      height: 18.0.sp,
+                      height: 18.sp,
                     ),
                     Row(
                       children: [
@@ -72,7 +72,7 @@ class _HistoryTabState extends State<HistoryTab> with AutomaticKeepAliveClientMi
                               'Bạn chưa đặt bất kỳ cuộc hẹn nào!',
                               textAlign: TextAlign.center,
                               style: TextStyle(
-                                fontSize: 18.0.sp,
+                                fontSize: 18.sp,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),

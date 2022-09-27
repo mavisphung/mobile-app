@@ -21,10 +21,10 @@ class BookingPackagePage extends StatelessWidget {
     return Scaffold(
       appBar: const MyAppBar(title: 'Select Package'),
       body: BasePage(
-        child: Column(
+        body: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(height: 20.0.sp),
+            SizedBox(height: 20.sp),
             const CustomTitleSection(title: 'Select package'),
             const Text('Offline'),
             ServiceItem(

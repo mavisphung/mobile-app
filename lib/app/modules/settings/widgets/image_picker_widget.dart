@@ -3,7 +3,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import 'package:hi_doctor_v2/app/common/util/utils.dart';
-import 'package:hi_doctor_v2/app/common/values/colors.dart';
 import 'package:hi_doctor_v2/app/common/values/strings.dart';
 
 class ImagePickerWidget extends StatelessWidget {
@@ -27,10 +26,17 @@ class ImagePickerWidget extends StatelessWidget {
         }
       },
       child: Container(
-        padding: EdgeInsets.all(3.sp),
+        padding: EdgeInsets.all(5.sp),
         decoration: BoxDecoration(
-          color: AppColors.primary,
           borderRadius: BorderRadius.circular(5.sp),
+          color: Colors.black87,
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.12),
+              offset: const Offset(0, 2),
+              blurRadius: 4.sp,
+            ),
+          ],
         ),
         child: const Icon(
           Icons.camera_alt_outlined,

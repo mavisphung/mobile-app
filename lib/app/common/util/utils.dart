@@ -261,9 +261,27 @@ abstract class Utils {
 
   static String formatTime(DateTime date) => DateFormat('HH:mm').format(date);
 
-  static DateTime? parseStrToDateTime(String str) => DateFormat('yyyy-MM-dd HH:mm').parse(str);
+  static DateTime? parseStrToDateTime(String str) {
+    try {
+      return DateFormat('yyyy-MM-dd HH:mm').parse(str);
+    } catch (e) {
+      return null;
+    }
+  }
 
-  static DateTime? parseStrToDate(String str) => DateFormat('yyyy-MM-dd').parse(str);
+  static DateTime? parseStrToDate(String str) {
+    try {
+      return DateFormat('dd-MM-yyyy').parse(str);
+    } catch (e) {
+      return null;
+    }
+  }
 
-  static DateTime? parseStrToTime(String str) => DateFormat('HH:mm').parse(str);
+  static DateTime? parseStrToTime(String str) {
+    try {
+      return DateFormat('HH:mm').parse(str);
+    } catch (e) {
+      return null;
+    }
+  }
 }

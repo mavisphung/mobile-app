@@ -70,7 +70,7 @@ class CustomTextFieldWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 90.sp,
+      height: 100.sp,
       child: ObxValue<RxBool>(
           (isObscure) => TextFormField(
                 readOnly: readOnly,
@@ -310,13 +310,13 @@ class CustomTextFieldWidget2 extends StatelessWidget {
                                     ).noSplash()
                                   : null),
                       contentPadding: EdgeInsets.only(top: 16.sp, bottom: 16.sp, left: 18.sp, right: -18.sp),
-                      floatingLabelBehavior: FloatingLabelBehavior.auto,
+                      floatingLabelBehavior: FloatingLabelBehavior.always,
                       enabledBorder: OutlineInputBorder(
                         borderSide: BorderSide.none,
-                        borderRadius: BorderRadius.circular(15.0),
+                        borderRadius: BorderRadius.circular(15.sp),
                       ),
                       border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(15.0),
+                        borderRadius: BorderRadius.circular(15.sp),
                       ),
                       filled: true,
                       fillColor: _hasFocus.value ? AppColors.blueHighlight : AppColors.whiteHighlight,

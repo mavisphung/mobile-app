@@ -2,14 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
-import 'package:hi_doctor_v2/app/common/constants.dart';
 import 'package:hi_doctor_v2/app/common/util/status.dart';
 import 'package:hi_doctor_v2/app/common/util/utils.dart';
 import 'package:hi_doctor_v2/app/common/util/validators.dart';
 import 'package:hi_doctor_v2/app/common/values/strings.dart';
-import 'package:hi_doctor_v2/app/models/user_info.dart';
 import 'package:hi_doctor_v2/app/modules/appointment/widgets/date_time_field_widget.dart';
 import 'package:hi_doctor_v2/app/modules/settings/controllers/patient_profile_controller.dart';
+import 'package:hi_doctor_v2/app/modules/settings/views/gender_dropdown.dart';
 import 'package:hi_doctor_v2/app/modules/settings/widgets/image_picker_widget.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/base_page.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/custom_elevate_btn_widget.dart';
@@ -26,7 +25,7 @@ class PatientProfileDetailPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return BasePage(
       appBar: MyAppBar(title: Strings.patientProfileDetail.tr),
-      child: FutureBuilder<bool>(
+      body: FutureBuilder<bool>(
         future: _c.getPatientWithId(patientId),
         builder: (ctx, snapshot) {
           if (snapshot.hasData) {
@@ -37,10 +36,10 @@ class PatientProfileDetailPage extends StatelessWidget {
                     children: [
                       ObxValue<RxString>(
                         (data) => Container(
-                          width: Get.width.sp / 4,
-                          height: Get.width.sp / 4,
+                          width: Get.width.sp / 3,
+                          height: Get.width.sp / 2.5,
                           decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(Constants.borderRadius.sp),
+                            borderRadius: BorderRadius.circular(5.sp),
                             image: DecorationImage(
                               image: NetworkImage(data.value),
                               fit: BoxFit.cover,
@@ -53,13 +52,13 @@ class PatientProfileDetailPage extends StatelessWidget {
                         bottom: 0,
                         right: 0,
                         child: ImagePickerWidget(
-                          getImageFucntion: _c.getImage,
+                          getImageFucntion: _c.setAvatar,
                         ),
                       ),
                     ],
                   ),
                   SizedBox(
-                    height: 28.0.sp,
+                    height: 28.sp,
                   ),
                   Row(
                     children: [
@@ -95,41 +94,7 @@ class PatientProfileDetailPage extends StatelessWidget {
                   ),
                   // Dob picker
                   MyDateTimeField(dob: _c.dob),
-                  SizedBox(
-                    height: 20.sp,
-                  ),
-                  Container(
-                    margin: const EdgeInsets.only(bottom: 15.0),
-                    width: double.infinity,
-                    padding: const EdgeInsets.symmetric(
-                      vertical: 2.0,
-                      horizontal: 16.0,
-                    ),
-                    decoration: BoxDecoration(
-                      border: Border.all(
-                        color: Theme.of(context).primaryColor,
-                      ),
-                      borderRadius: BorderRadius.circular(10.0),
-                    ),
-                    child: ObxValue<RxString>(
-                        (data) => DropdownButton<String>(
-                              value: data.value,
-                              isExpanded: true,
-                              underline: Container(),
-                              hint: Text(Strings.gender.tr),
-                              borderRadius: BorderRadius.circular(10.0),
-                              items: userGender.map((item) {
-                                return DropdownMenuItem<String>(
-                                  value: item['value'],
-                                  child: Text(item['label'] ?? ''),
-                                );
-                              }).toList(),
-                              onChanged: (value) {
-                                data.value = value ?? 'OTHER';
-                              },
-                            ),
-                        _c.gender),
-                  ),
+                  GenderDropdown(rxGender: _c.gender),
                   // -------------------------------------------
                   SizedBox(
                     width: 1.sw,

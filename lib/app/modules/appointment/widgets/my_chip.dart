@@ -43,7 +43,7 @@ class _MyTypeChipState extends State<MyTypeChip> {
         print(appsController.selectedType);
       },
       child: Chip(
-        elevation: 2.0.sp,
+        elevation: 2.sp,
         padding: const EdgeInsets.all(2),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(5.sp),
@@ -56,7 +56,7 @@ class _MyTypeChipState extends State<MyTypeChip> {
             Text(
               widget.label,
               style: TextStyle(
-                fontSize: 13.0.sp,
+                fontSize: 13.sp,
                 color: widget.isChosen ? widget.textColor : Colors.black,
               ),
             ),
@@ -115,7 +115,7 @@ class _MyStatusChipState extends State<MyStatusChip> {
         shadowColor: Colors.black87,
         label: Text(
           widget.label,
-          style: TextStyle(fontSize: 13.0.sp, color: widget.textColor),
+          style: TextStyle(fontSize: 13.sp, color: widget.textColor),
         ),
       ),
     );

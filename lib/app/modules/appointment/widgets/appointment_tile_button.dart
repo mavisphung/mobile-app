@@ -3,17 +3,17 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class AppointmentButton extends StatelessWidget {
   final void Function()? onTap;
-  final Color? color;
+  final Color? textColor;
   final Color? backgroundColor;
-  final Color? borderColor;
+  final Color borderColor;
   final String label;
 
-  AppointmentButton({
+  const AppointmentButton({
     Key? key,
     this.onTap,
-    this.color,
+    this.textColor,
     this.backgroundColor = Colors.transparent,
-    this.borderColor,
+    required this.borderColor,
     required this.label,
   }) : super(key: key);
 
@@ -23,19 +23,19 @@ class AppointmentButton extends StatelessWidget {
       onTap: onTap,
       child: Container(
         alignment: Alignment.center,
-        padding: EdgeInsets.symmetric(horizontal: 12.0.sp, vertical: 6.0.sp),
+        padding: EdgeInsets.symmetric(vertical: 10.sp),
         decoration: BoxDecoration(
           color: backgroundColor,
           border: Border.all(
-            color: borderColor!,
-            width: 2.0.sp,
+            color: borderColor,
+            width: 0.8.sp,
           ),
-          borderRadius: BorderRadius.circular(25.0.sp),
+          borderRadius: BorderRadius.circular(10.sp),
         ),
         child: Text(
           label,
           style: TextStyle(
-            color: color,
+            color: textColor,
           ),
         ),
       ),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:hi_doctor_v2/app/common/values/colors.dart';
 
 import 'package:hi_doctor_v2/app/common/values/strings.dart';
 import 'package:hi_doctor_v2/app/modules/auth/controllers/register_controller.dart';
@@ -20,16 +21,17 @@ class Step3 extends StatelessWidget {
   }) : super(key: key);
 
   final _otpInputDecoration = InputDecoration(
-    contentPadding: EdgeInsets.symmetric(vertical: 15.sp),
+    contentPadding: EdgeInsets.symmetric(vertical: 16.sp),
+    floatingLabelBehavior: FloatingLabelBehavior.always,
     enabledBorder: OutlineInputBorder(
-      borderSide: const BorderSide(color: Color(0xFFE0E0E0)),
-      borderRadius: BorderRadius.circular(10.0),
+      borderSide: BorderSide.none,
+      borderRadius: BorderRadius.circular(15.sp),
     ),
     border: OutlineInputBorder(
-      borderRadius: BorderRadius.circular(10.0),
+      borderRadius: BorderRadius.circular(15.sp),
     ),
     filled: true,
-    fillColor: Colors.grey[100],
+    fillColor: AppColors.whiteHighlight,
   );
 
   @override
@@ -45,6 +47,7 @@ class Step3 extends StatelessWidget {
           ),
         ),
         Text(Strings.sentOtpMsg.tr),
+        SizedBox(height: 5.sp),
         Text(
           email,
         ),
@@ -75,7 +78,7 @@ class Step3 extends StatelessWidget {
           ),
         ),
         Padding(
-          padding: const EdgeInsets.only(bottom: 10.0),
+          padding: EdgeInsets.only(top: 15.sp),
           child: Row(
             children: [
               Text(Strings.notReceiveOtpMsg.tr),
