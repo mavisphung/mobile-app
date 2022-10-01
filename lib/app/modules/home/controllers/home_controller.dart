@@ -18,10 +18,10 @@ class HomeController extends GetxController {
 
   void getDoctorList({int page = 1, int limit = 10}) async {
     'Initializing data'.debugLog('HomeController');
-    var result = await apiHome.getDoctorList(page: page, limit: limit);
-    Map<String, dynamic> response = ApiResponse.getResponse(result);
-    ResponseModel2 model = ResponseModel2.fromMap(response);
-    var data = model.data as List<dynamic>;
+    final result = await apiHome.getDoctorList(page: page, limit: limit);
+    final Map<String, dynamic> response = ApiResponse.getResponse(result);
+    final model = ResponseModel2.fromMap(response);
+    final data = model.data as List<dynamic>;
     doctorList.value += data
         .map(
           (e) => Doctor(

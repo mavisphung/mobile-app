@@ -6,7 +6,7 @@ import 'package:hi_doctor_v2/app/common/util/extensions.dart';
 import 'package:hi_doctor_v2/app/modules/appointment/providers/req_appointment_model.dart';
 
 class ApiBookAppointmentImpl extends GetConnect {
-  final Map<String, String> headers = {
+  final Map<String, String> _headers = {
     'Authorization': 'Bearer ${Storage.getValue(CacheKey.TOKEN.name) ?? ""}',
   };
 
@@ -17,12 +17,19 @@ class ApiBookAppointmentImpl extends GetConnect {
     httpClient.timeout = Constants.timeout;
   }
 
+  Future<Response> getDoctorPackage(int doctorId) {
+    return get(
+      '/doctor/$doctorId/packages/',
+      headers: _headers,
+    );
+  }
+
   Future<Response> postAppointment(ReqAppointmentModel reqModel) {
     reqModel.toString().debugLog('Req Appointment Body');
     return post(
       '/appointments/',
       reqModel.toJson(),
-      headers: headers,
+      headers: _headers,
     );
   }
 }

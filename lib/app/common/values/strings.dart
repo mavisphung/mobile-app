@@ -47,14 +47,13 @@ abstract class Strings {
   // Alert Message
   static String get policyAgreementNeedMsg => 'Policy agreenment need msg';
   static String get logoutConfirmMsg => 'Logout confirm msg';
-  static String get cantBeEmpty => "can't be empty";
-  static String get fieldCantBeEmpty => 'Field $cantBeEmpty';
-  static String get emailCantBeEmpty => 'Email $cantBeEmpty';
+  static String get fieldCantBeEmpty => 'Field cant be empty';
+  static String get emailCantBeEmpty => 'Email cant be empty';
   static String get enterValidEmail => 'Invalid email';
   static String get duplicatedEmail => 'Duplicated email';
-  static String get passCantBeEmpty => 'Password $cantBeEmpty';
+  static String get passCantBeEmpty => 'Password cant be empty';
   static String get passLengthtMsg => 'Password length msg';
-  static String get confirmPassCantBeEmpty => 'Confirm password $cantBeEmpty';
+  static String get confirmPassCantBeEmpty => 'Confirm password cant be empty';
   static String get confirmPassLengthtMsg => 'Confirm password length msg';
   static String get confirmPassNotMatchMsg => 'Confirm password not match msg';
   static String get enterValidPhone => 'Invalid phone';
@@ -89,7 +88,8 @@ abstract class Strings {
   //'Describe your health status, what you are suffering...';
   static String get problemLengthMsg => 'Problem length msg';
   static String get info => 'Info';
-  static String get patient => 'Patient';
+  static String get patientInfo => 'Patient info';
+  static String get doctorInfo => 'Doctor info';
   static String get online => 'Online';
   static String get offline => 'Offline';
   static String get age => 'Age';

@@ -29,7 +29,7 @@ class CustomTitleSection extends StatelessWidget {
         bottom: Constants.padding.sp,
       ),
       child: Row(
-        // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(
             title,

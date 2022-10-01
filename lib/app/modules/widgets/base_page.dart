@@ -7,11 +7,18 @@ class BasePage extends StatelessWidget {
   final PreferredSizeWidget? appBar;
   final Widget body;
   final Widget? bottomSheet;
+  final Color? backgroundColor;
+  final double? paddingTop, paddingBottom, paddingLeft, paddingRight;
   const BasePage({
     Key? key,
     this.appBar,
     required this.body,
     this.bottomSheet,
+    this.backgroundColor,
+    this.paddingTop,
+    this.paddingBottom,
+    this.paddingLeft,
+    this.paddingRight,
   }) : super(key: key);
 
   @override
@@ -19,13 +26,18 @@ class BasePage extends StatelessWidget {
     final child = SingleChildScrollView(
       physics: const BouncingScrollPhysics(),
       child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: Constants.padding.sp),
+        padding: EdgeInsets.only(
+          top: paddingTop ?? 0,
+          bottom: paddingBottom ?? 0,
+          left: paddingLeft ?? Constants.padding.sp,
+          right: paddingRight ?? Constants.padding.sp,
+        ),
         child: body,
       ),
     );
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      backgroundColor: AppColors.background,
+      backgroundColor: backgroundColor ?? AppColors.background,
       appBar: appBar,
       body: appBar == null ? SafeArea(child: child) : child,
       bottomSheet: bottomSheet,

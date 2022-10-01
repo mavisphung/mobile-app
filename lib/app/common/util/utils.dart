@@ -5,13 +5,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:hi_doctor_v2/app/common/constants.dart';
-import 'package:hi_doctor_v2/app/common/values/colors.dart';
 import 'package:intl/intl.dart';
 import 'package:mime/mime.dart';
 import 'package:http/http.dart' as http;
 
-import '../values/strings.dart';
+import 'package:hi_doctor_v2/app/common/constants.dart';
+import 'package:hi_doctor_v2/app/common/values/colors.dart';
+import 'package:hi_doctor_v2/app/common/values/strings.dart';
 
 abstract class Utils {
   static DateTime? currentBackPressTime;
@@ -179,7 +179,7 @@ abstract class Utils {
                 thickness: 0.8.sp,
               ),
               InkWell(
-                onTap: () => Navigator.pop(ctx, false),
+                onTap: () => Navigator.pop(ctx, true),
                 customBorder: RoundedRectangleBorder(
                   borderRadius: BorderRadius.only(bottomLeft: Radius.circular(12.sp)),
                 ),
@@ -283,5 +283,10 @@ abstract class Utils {
     } catch (e) {
       return null;
     }
+  }
+
+  static String toYmd(String dmy) {
+    final dob = dmy.split('-');
+    return '${dob[2]}-${dob[1]}-${dob[0]}';
   }
 }
