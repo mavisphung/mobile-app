@@ -27,7 +27,7 @@ class DoctorDetailPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return BasePage(
       appBar: MyAppBar(
-        title: 'Doctor details',
+        title: 'Thông tin bác sĩ',
         actions: [
           Obx(
             () => GestureDetector(
@@ -91,7 +91,7 @@ class DoctorDetailPage extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.stretch,
                               children: [
                                 Text(
-                                  'Dr. ${doctorController.doctor.firstName} ${doctorController.doctor.lastName}',
+                                  'Bs. ${doctorController.doctor.firstName} ${doctorController.doctor.lastName}',
                                   style: TextStyle(
                                     fontSize: 14.sp,
                                     fontWeight: FontWeight.bold,
@@ -132,7 +132,7 @@ class DoctorDetailPage extends StatelessWidget {
                             color: AppColors.primary,
                           ),
                           middleText: '5,000+',
-                          bottomText: 'patients',
+                          bottomText: 'Bệnh nhân',
                         ),
                         DoctorTile(
                           icon: Icon(
@@ -141,7 +141,7 @@ class DoctorDetailPage extends StatelessWidget {
                             color: AppColors.primary,
                           ),
                           middleText: '10+',
-                          bottomText: 'years',
+                          bottomText: 'Năm',
                         ),
                         DoctorTile(
                           icon: Icon(
@@ -150,7 +150,7 @@ class DoctorDetailPage extends StatelessWidget {
                             color: AppColors.primary,
                           ),
                           middleText: '4.8',
-                          bottomText: 'rating',
+                          bottomText: 'Đánh giá',
                         ),
                         DoctorTile(
                           icon: Icon(
@@ -159,7 +159,7 @@ class DoctorDetailPage extends StatelessWidget {
                             color: AppColors.primary,
                           ),
                           middleText: '321',
-                          bottomText: 'reviews',
+                          bottomText: 'Lượt review',
                         ),
                       ],
                     ),
@@ -171,7 +171,7 @@ class DoctorDetailPage extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         const CustomTitleSection(
-                          title: 'About me',
+                          title: 'Mô Tả',
                         ),
                         RichText(
                           text: TextSpan(
@@ -179,8 +179,7 @@ class DoctorDetailPage extends StatelessWidget {
                               color: Colors.black,
                               height: 1.25.sp, // Line height
                             ),
-                            text:
-                                'Dr. ${doctorController.doctor.firstName} ${doctorController.doctor.lastName} là một trong những bác sĩ '
+                            text: 'Dr. ${doctorController.doctor.firstName} ${doctorController.doctor.lastName} là một trong những bác sĩ '
                                 'giỏi nhất trong khoa tổng hợp của bệnh viện Hùng Vương, TP. HCM. '
                                 'Đã từng đạt nhiều mạng người trên tay từ thời gian thực tập. '
                                 'Tôi đã hành nghề này được hơn 10 năm...',
@@ -209,9 +208,9 @@ class DoctorDetailPage extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: const [
                         CustomTitleSection(
-                          title: 'Working time',
+                          title: 'Giờ Làm Việc',
                         ),
-                        Text('Monday - Friday, 8:00 AM to 17:30 PM'),
+                        Text('Thứ 2 - Thứ 6, 17:00 đến 20:00'),
                       ],
                     ),
                   ),
@@ -224,7 +223,7 @@ class DoctorDetailPage extends StatelessWidget {
                         Row(
                           children: [
                             const CustomTitleSection(
-                              title: 'Reviews',
+                              title: 'Đánh Giá',
                             ),
                             const Spacer(),
                             GestureDetector(
@@ -232,7 +231,7 @@ class DoctorDetailPage extends StatelessWidget {
                                 'See more reviews'.debugLog('ReviewSection');
                               },
                               child: Text(
-                                'See all',
+                                'Xem thêm',
                                 style: TextStyle(
                                   color: AppColors.primary,
                                   fontWeight: FontWeight.bold,
@@ -313,8 +312,7 @@ class DoctorDetailPage extends StatelessWidget {
                                         fontSize: 14.sp,
                                         color: Colors.black,
                                       ),
-                                      text:
-                                          'Tôi có thể thấy rằng đây có thể giải quyết cho cái lưng đau của tôi một cách triệt để',
+                                      text: 'Tôi có thể thấy rằng đây có thể giải quyết cho cái lưng đau của tôi một cách triệt để',
                                     ),
                                   ),
                                   Container(
@@ -342,12 +340,12 @@ class DoctorDetailPage extends StatelessWidget {
             }
           }
           return const Center(
-            child: Text('Loading'),
+            child: Text('Đang tải...'),
           );
         },
       ),
       bottomSheet: CustomBottomSheet(
-        buttonText: 'Make an appointment',
+        buttonText: 'Tạo Lịch Hẹn',
         onPressed: () => Get.toNamed(Routes.BOOKING),
       ),
     );

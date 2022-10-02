@@ -14,6 +14,7 @@ import 'package:hi_doctor_v2/app/modules/appointment/widgets/hour_item.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/my_appbar.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/custom_title_section.dart';
 import 'package:hi_doctor_v2/app/routes/app_pages.dart';
+import 'package:intl/intl.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 // ignore: must_be_immutable
@@ -174,7 +175,7 @@ class BookingAppointmentPage extends StatelessWidget {
             paddingLeft: 8.sp,
           ),
           ObxValue<Rx<DateTime>>((data) {
-            final slots = getAvailableSlot(data.value.weekday);
+            final slots = getAvailableSlot(data.value.getWeekday(data.value.weekday));
             if (slots != null) {
               return GridView.builder(
                 padding: EdgeInsets.only(bottom: 5.sp),
@@ -205,7 +206,7 @@ class BookingAppointmentPage extends StatelessWidget {
                 },
               );
             }
-            return Text('No slot on week day ${data.value.weekday}');
+            return Text('No slot on week day ${DateFormat('EEEE').format(data.value)}');
           }, _c.rxSelectedDate),
           SizedBox(height: 90.sp),
         ],

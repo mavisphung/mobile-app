@@ -199,3 +199,18 @@ extension DebugLog on String {
     );
   }
 }
+
+extension DateTimeConverter on DateTime {
+  static const Map<int, int> weekdays = {
+    DateTime.sunday: 1,
+    DateTime.monday: 2,
+    DateTime.tuesday: 3,
+    DateTime.wednesday: 4,
+    DateTime.thursday: 5,
+    DateTime.friday: 6,
+    DateTime.saturday: 7,
+  };
+  int getWeekday(int flutterWeekday) {
+    return weekdays[flutterWeekday]!;
+  }
+}
