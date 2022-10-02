@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
@@ -12,9 +11,47 @@ import 'package:hi_doctor_v2/app/modules/widgets/my_appbar.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/custom_title_section.dart';
 import 'package:hi_doctor_v2/app/routes/app_pages.dart';
 
+enum PackageType { online, offline }
+
+// ignore: must_be_immutable
 class BookingPackagePage extends StatelessWidget {
   BookingPackagePage({Key? key}) : super(key: key);
-  final BookingController bookingController = Get.find<BookingController>();
+  final _cBooking = Get.find<BookingController>();
+
+  Future<List<PackageItem>?> getService() async {
+    final doctorId = _cBooking.doctor.id;
+    if (doctorId != null) {
+      return await _cBooking.getPackages(doctorId);
+    }
+    return null;
+  }
+
+  Widget buildPackageType(String typeName, PackageType type) {
+    String name = typeName;
+    PackageType value = type;
+    return Row(
+      children: [
+        Text(
+          name,
+          style: TextStyle(
+            color: Colors.green[400],
+            fontSize: 18.sp,
+            fontWeight: FontWeight.w500,
+          ),
+        ),
+        ObxValue<Rx<PackageType>>(
+          (data) => Radio<PackageType>(
+            onChanged: (PackageType? value) {
+              value != null ? _cBooking.setServiceType(value) : null;
+            },
+            value: value,
+            groupValue: data.value,
+          ),
+          _cBooking.rxServiceType,
+        )
+      ],
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -25,44 +62,25 @@ class BookingPackagePage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(height: 20.sp),
+            buildPackageType(Strings.online.tr, PackageType.online),
+            buildPackageType(Strings.offline.tr, PackageType.offline),
+            SizedBox(height: 20.sp),
             const CustomTitleSection(title: 'Select package'),
-            const Text('Offline'),
-            ServiceItem(
-              title: 'At home',
-              description: 'Doctor will come to your home for appointment',
-              serviceId: 1,
-              iconData: PhosphorIcons.house_light,
-              price: 20,
-            ),
-            ServiceItem(
-              title: 'At clinic',
-              description: 'Appoinment at doctor\'s clinic',
-              serviceId: 2,
-              iconData: PhosphorIcons.phone_call_bold,
-              price: 45,
-            ),
-            const Text('Online'),
-            ServiceItem(
-              title: 'Messaging',
-              description: 'Chat messages with doctor',
-              serviceId: 3,
-              iconData: PhosphorIcons.chat_circle_dots_bold,
-              price: 20,
-            ),
-            ServiceItem(
-              title: 'Voice Call',
-              description: 'Voice call with doctor',
-              serviceId: 4,
-              iconData: PhosphorIcons.phone_call_bold,
-              price: 45,
-            ),
-            ServiceItem(
-              title: 'Video Call',
-              description: 'Video call with doctor',
-              serviceId: 5,
-              iconData: PhosphorIcons.video_camera_bold,
-              price: 60,
-            ),
+            FutureBuilder(
+                future: getService(),
+                builder: (_, AsyncSnapshot<List<PackageItem>?> snapshot) {
+                  if (snapshot.hasData) {
+                    return ListView.builder(
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemCount: snapshot.data!.length,
+                      itemBuilder: (_, index) {
+                        return snapshot.data![index];
+                      },
+                    );
+                  }
+                  return const CircularProgressIndicator();
+                }),
           ],
         ),
       ),

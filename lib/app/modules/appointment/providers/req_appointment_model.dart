@@ -4,7 +4,7 @@ import 'dart:convert';
 class ReqAppointmentModel {
   final int doctor;
   final int patient;
-  final int packageMeta;
+  final int package;
   final String bookedAt;
   final String type;
   final String diseaseDescription;
@@ -12,7 +12,7 @@ class ReqAppointmentModel {
   ReqAppointmentModel(
     this.doctor,
     this.patient,
-    this.packageMeta,
+    this.package,
     this.bookedAt,
     this.type,
     this.diseaseDescription,
@@ -22,7 +22,7 @@ class ReqAppointmentModel {
     return <String, dynamic>{
       'doctor': doctor,
       'patient': patient,
-      'packageMeta': packageMeta,
+      'package': package,
       'bookedAt': bookedAt,
       'type': type,
       'diseaseDescription': diseaseDescription,
@@ -33,6 +33,6 @@ class ReqAppointmentModel {
 
   @override
   String toString() {
-    return 'ReqAppointmentModel(doctor: $doctor, patient: $patient, packageMeta: $packageMeta, bookedAt: $bookedAt, type: $type, diseaseDescription: $diseaseDescription)';
+    return 'ReqAppointmentModel(doctor: $doctor, patient: $patient, package: $package, bookedAt: $bookedAt, type: $type, diseaseDescription: $diseaseDescription)';
   }
 }

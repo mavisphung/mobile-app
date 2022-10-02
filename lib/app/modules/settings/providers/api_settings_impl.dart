@@ -77,9 +77,9 @@ class ApiSettingsImpl extends GetConnect with ApiSettings {
   }
 
   @override
-  Future<Response> getPatientProfile(int id) {
+  Future<Response> getPatientProfile(int patientId) {
     return get(
-      '/user/patients/$id',
+      '/user/patients/$patientId',
       headers: headers,
     );
   }
@@ -88,6 +88,18 @@ class ApiSettingsImpl extends GetConnect with ApiSettings {
   Future<Response> postPatientProfile(Patient data) {
     return post(
       '/user/patients/',
+      data.toJson(),
+      headers: headers,
+    );
+  }
+
+  @override
+  Future<Response> putPatientProfile(
+    int patientId,
+    Patient data,
+  ) {
+    return put(
+      '/user/patients/$patientId',
       data.toJson(),
       headers: headers,
     );

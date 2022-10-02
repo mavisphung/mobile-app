@@ -4,7 +4,7 @@ import 'package:hi_doctor_v2/app/common/util/status.dart';
 
 class MessageController extends GetxController {
   ScrollController scrollController = ScrollController();
-  Rx<Status> _rxLoadingStatus = Status.init.obs;
+  final Rx<Status> _rxLoadingStatus = Status.init.obs;
   int itemCount = 10;
 
   Status get loadingStatus => _rxLoadingStatus.value;

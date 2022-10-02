@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:table_calendar/table_calendar.dart';
+
 import 'package:hi_doctor_v2/app/common/util/extensions.dart';
 import 'package:hi_doctor_v2/app/common/util/utils.dart';
 import 'package:hi_doctor_v2/app/common/values/colors.dart';
 import 'package:hi_doctor_v2/app/common/values/strings.dart';
+import 'package:hi_doctor_v2/app/models/doctor.dart';
 import 'package:hi_doctor_v2/app/modules/appointment/controllers/booking/booking_controller.dart';
 import 'package:hi_doctor_v2/app/modules/appointment/models/working_hour_item.dart';
-import 'package:hi_doctor_v2/app/modules/home/controllers/doctor_controller.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/base_page.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/custom_bottom_sheet.dart';
 import 'package:hi_doctor_v2/app/modules/appointment/widgets/hour_item.dart';
@@ -18,19 +20,20 @@ import 'package:intl/intl.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 // ignore: must_be_immutable
-class BookingAppointmentPage extends StatelessWidget {
-  BookingAppointmentPage({Key? key}) : super(key: key);
+class BookingDateTimePage extends StatelessWidget {
+  BookingDateTimePage({Key? key}) : super(key: key);
 
   DateTime currentDate = DateTime.now();
 
-  final _c = Get.put(BookingController());
-  final doctorController = Get.find<DoctorController>();
+  final _cBooking = Get.put(BookingController());
+  final doctor = Get.arguments as Doctor;
 
   List<WorkingHour>? getAvailableSlot(int weekDay) {
-    final listShift = doctorController.rxDoctor.value.shifts;
+    _cBooking.setDoctor(doctor);
+    final listShift = doctor.shifts;
     print(listShift);
     if (listShift != null) {
-      final shift = listShift[weekDay - 1];
+      final shift = listShift[weekDay > 6 ? 0 : weekDay];
       final isActive = shift['isActive'] as bool;
       if (isActive) {
         print(shift['startTime']);
@@ -84,6 +87,10 @@ class BookingAppointmentPage extends StatelessWidget {
       bottomSheet: CustomBottomSheet(
         buttonText: Strings.kContinue.tr,
         onPressed: () {
+          if (_cBooking.selectedTime.isEmpty) {
+            Utils.showAlertDialog('Please choose your booking time');
+            return;
+          }
           Get.toNamed(Routes.BOOKING_PACKAGE, preventDuplicates: true);
         },
       ),
@@ -113,7 +120,7 @@ class BookingAppointmentPage extends StatelessWidget {
               ],
             ),
             child: GetBuilder<BookingController>(
-              init: _c,
+              init: _cBooking,
               builder: (c) {
                 return TableCalendar(
                   shouldFillViewport: true,
@@ -192,8 +199,8 @@ class BookingAppointmentPage extends StatelessWidget {
                   WorkingHour e = slots[index];
                   return GestureDetector(
                     onTap: () {
-                      _c.setSelectedTimeId(e.id!);
-                      _c.selectedTime = e.value!;
+                      _cBooking.setSelectedTimeId(e.id!);
+                      _cBooking.setSelectedTime(e.value!);
                     },
                     child: ObxValue<RxInt>(
                         (data) => HourItem(
@@ -201,13 +208,13 @@ class BookingAppointmentPage extends StatelessWidget {
                               id: e.id!,
                               isSelected: data.value == e.id ? true : false,
                             ),
-                        _c.rxSelectedTimeId),
+                        _cBooking.rxSelectedTimeId),
                   );
                 },
               );
             }
-            return Text('No slot on week day ${DateFormat('EEEE').format(data.value)}');
-          }, _c.rxSelectedDate),
+            return Text('No slot on week day ${data.value.weekday}');
+          }, _cBooking.rxSelectedDate),
           SizedBox(height: 90.sp),
         ],
       ),

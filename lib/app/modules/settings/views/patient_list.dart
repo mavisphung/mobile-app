@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:hi_doctor_v2/app/common/constants.dart';
-import 'package:hi_doctor_v2/app/common/values/colors.dart';
 
+import 'package:hi_doctor_v2/app/common/constants.dart';
 import 'package:hi_doctor_v2/app/modules/settings/controllers/patient_profile_controller.dart';
 import 'package:hi_doctor_v2/app/modules/settings/widgets/patient_item.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/my_appbar.dart';
+import 'package:hi_doctor_v2/app/routes/app_pages.dart';
 
 class PatientListPage extends StatelessWidget {
-  const PatientListPage({Key? key}) : super(key: key);
+  final _c = Get.put(PatientProfileController());
+  PatientListPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final _c = Get.put(PatientProfileController());
     return Scaffold(
       appBar: const MyAppBar(title: 'Patient profile'),
       body: Padding(
@@ -21,7 +21,7 @@ class PatientListPage extends StatelessWidget {
         child: Column(
           children: [
             GestureDetector(
-              // onTap: () => Get.toNamed(Routes.),
+              onTap: () => Get.toNamed(Routes.PATIENT_PROFILE_DETAIL),
               child: Padding(
                 padding: EdgeInsets.only(
                   top: 8.sp,

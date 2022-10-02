@@ -21,7 +21,7 @@ class DoctorDetailPage extends StatelessWidget {
 
   final doctorId = Get.arguments as int;
 
-  final doctorController = Get.put(DoctorController());
+  final _cDoctor = Get.put(DoctorController());
 
   @override
   Widget build(BuildContext context) {
@@ -32,14 +32,14 @@ class DoctorDetailPage extends StatelessWidget {
           Obx(
             () => GestureDetector(
               onTap: () {
-                doctorController.setFavorite(!doctorController.isFavorite.value);
+                _cDoctor.setFavorite(!_cDoctor.isFavorite.value);
               },
               child: Container(
                 padding: EdgeInsets.only(
                   right: 12.sp,
                   left: 12.sp,
                 ),
-                child: doctorController.isFavorite.value
+                child: _cDoctor.isFavorite.value
                     ? SvgPicture.asset(
                         'assets/icons/star.svg',
                         color: Colors.amber,
@@ -56,7 +56,7 @@ class DoctorDetailPage extends StatelessWidget {
         ],
       ),
       body: FutureBuilder(
-        future: doctorController.getDoctorWithId(doctorId),
+        future: _cDoctor.getDoctorWithId(doctorId),
         builder: (_, snapshot) {
           if (snapshot.hasData) {
             if (true) {
@@ -91,7 +91,7 @@ class DoctorDetailPage extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.stretch,
                               children: [
                                 Text(
-                                  'Bs. ${doctorController.doctor.firstName} ${doctorController.doctor.lastName}',
+                                  'Dr. ${_cDoctor.doctor.firstName} ${_cDoctor.doctor.lastName}',
                                   style: TextStyle(
                                     fontSize: 14.sp,
                                     fontWeight: FontWeight.bold,
@@ -179,7 +179,7 @@ class DoctorDetailPage extends StatelessWidget {
                               color: Colors.black,
                               height: 1.25.sp, // Line height
                             ),
-                            text: 'Dr. ${doctorController.doctor.firstName} ${doctorController.doctor.lastName} là một trong những bác sĩ '
+                            text: 'Dr. ${_cDoctor.doctor.firstName} ${_cDoctor.doctor.lastName} là một trong những bác sĩ '
                                 'giỏi nhất trong khoa tổng hợp của bệnh viện Hùng Vương, TP. HCM. '
                                 'Đã từng đạt nhiều mạng người trên tay từ thời gian thực tập. '
                                 'Tôi đã hành nghề này được hơn 10 năm...',
@@ -266,7 +266,7 @@ class DoctorDetailPage extends StatelessWidget {
                                           shape: BoxShape.circle,
                                           image: DecorationImage(
                                             fit: BoxFit.cover,
-                                            image: NetworkImage(doctorController.doctor.avatar!),
+                                            image: NetworkImage(_cDoctor.doctor.avatar!),
                                           ),
                                         ),
                                       ),
@@ -345,8 +345,11 @@ class DoctorDetailPage extends StatelessWidget {
         },
       ),
       bottomSheet: CustomBottomSheet(
-        buttonText: 'Tạo Lịch Hẹn',
-        onPressed: () => Get.toNamed(Routes.BOOKING),
+        buttonText: 'Make an appointment',
+        onPressed: () => Get.toNamed(
+          Routes.BOOKING,
+          arguments: _cDoctor.doctor,
+        ),
       ),
     );
   }

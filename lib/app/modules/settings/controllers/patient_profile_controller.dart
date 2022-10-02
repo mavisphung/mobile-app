@@ -43,6 +43,16 @@ class PatientProfileController extends GetxController {
     super.dispose();
   }
 
+  Future<bool> emptyField() {
+    firstName.text = '';
+    lastName.text = '';
+    dob.text = '';
+    gender.value = userGender.first['value']!;
+    address.text = '';
+    avatar.value = '';
+    return Future.value(true);
+  }
+
   String? isEmpty(String? value) {
     if (value == null || value.isEmpty) {
       return null;
@@ -67,22 +77,24 @@ class PatientProfileController extends GetxController {
 
     Map<String, dynamic> result = ApiResponse.getResponse(response);
     ResponseModel2 model = ResponseModel2.fromMap(result);
-    var data = model.data as dynamic;
+    List<dynamic> data = model.data;
 
     if (data.isNotEmpty) {
-      patientList.addAll(data.map<Patient>(
-        (e) => Patient(
-          id: e['id'],
-          firstName: e['firstName'],
-          lastName: e['lastName'],
-          dob: e['dob'],
-          address: e['address'],
-          gender: e['gender'],
-          avatar: e['avatar'],
-          supervisorId: e['supervisor_id'],
-          oldHealthRecords: e['old_health_records'],
-        ),
-      ));
+      patientList.value = data
+          .map<Patient>(
+            (e) => Patient(
+              id: e['id'],
+              firstName: e['firstName'],
+              lastName: e['lastName'],
+              dob: e['dob'],
+              address: e['address'],
+              gender: e['gender'],
+              avatar: e['avatar'],
+              supervisorId: e['supervisor_id'],
+              oldHealthRecords: e['old_health_records'],
+            ),
+          )
+          .toList();
       return true;
     }
     return false;
@@ -100,7 +112,7 @@ class PatientProfileController extends GetxController {
         gender.value = patient.gender!;
       }
       address.text = patient.address ?? '';
-      avatar.value = patient.avatar ?? Constants.defaultAvatar;
+      avatar.value = patient.avatar ?? '';
       return true;
     }
     return false;
@@ -113,25 +125,43 @@ class PatientProfileController extends GetxController {
   }
 
   void addPatientProfile() async {
-    if (avatar.value.isEmpty) {
-      Utils.showAlertDialog('Avatar of patient is missing');
-      return;
-    }
     setStatusLoading();
 
-    Patient info = Patient(
-      firstName: firstName.value.text,
-      lastName: lastName.value.text,
-      dob: '2002-05-08',
-      address: address.value.text,
+    Patient data = Patient(
+      firstName: firstName.text,
+      lastName: lastName.text,
+      dob: Utils.toYmd(dob.text),
+      address: address.text,
       gender: gender.value,
       avatar: avatar.value,
     );
-    var response = await _provider.postPatientProfile(info).futureValue();
+    var response = await _provider.postPatientProfile(data).futureValue();
     if (response != null && response.isSuccess == true && response.statusCode == Constants.successPostStatusCode) {
       setStatusSuccess();
       Get.back();
-      Utils.showTopSnackbar('Add patient profile sucessfully', title: 'Notice');
+      Utils.showTopSnackbar('Add patient profile sucessfully');
+    } else {
+      Get.snackbar('Error ${response?.statusCode}', 'Error while adding profile', backgroundColor: Colors.red);
+      setStatusFail();
+    }
+  }
+
+  void updatePatientProfile(int patientId) async {
+    setStatusLoading();
+
+    Patient data = Patient(
+      firstName: firstName.text,
+      lastName: lastName.text,
+      dob: Utils.toYmd(dob.text),
+      address: address.text,
+      gender: gender.value,
+      avatar: avatar.value,
+    );
+    var response = await _provider.putPatientProfile(patientId, data).futureValue();
+    if (response != null && response.isSuccess == true && response.statusCode == Constants.successPostStatusCode) {
+      setStatusSuccess();
+      Get.back();
+      Utils.showTopSnackbar('Update patient profile sucessfully');
     } else {
       Get.snackbar('Error ${response?.statusCode}', 'Error while updating profile', backgroundColor: Colors.red);
       setStatusFail();

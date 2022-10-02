@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import 'package:hi_doctor_v2/app/common/util/validators.dart';
@@ -45,75 +44,82 @@ class Step2 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Form(
-      key: formKey,
-      child: Column(
-        children: [
-          Row(
+    return Column(
+      children: [
+        Form(
+          key: formKey,
+          child: Column(
             children: [
-              Expanded(
-                child: CustomTextFieldWidget(
-                  validator: Validators.validateEmpty,
-                  focusNode: firstNameFocusNode,
-                  controller: firstNameController,
-                  onFieldSubmitted: (_) => FocusScope.of(context).requestFocus(lastNameFocusNode),
-                  labelText: Strings.firstName.tr,
-                ),
-              ),
-              const SizedBox(
-                width: 10.0,
-              ),
-              Expanded(
-                child: CustomTextFieldWidget(
-                  validator: Validators.validateEmpty,
-                  focusNode: lastNameFocusNode,
-                  controller: lastNameController,
-                  onFieldSubmitted: (_) => FocusScope.of(context).requestFocus(addressFocusNode),
-                  labelText: Strings.lastName.tr,
-                ),
-              ),
-            ],
-          ),
-          CustomTextFieldWidget(
-            validator: Validators.validateEmpty,
-            focusNode: addressFocusNode,
-            controller: addressController,
-            onFieldSubmitted: (_) => FocusScope.of(context).requestFocus(phoneNumberFocusNode),
-            labelText: Strings.address.tr,
-          ),
-          CustomTextFieldWidget(
-            validator: Validators.validatePhone,
-            focusNode: phoneNumberFocusNode,
-            controller: phoneNumberController,
-            onFieldSubmitted: (_) => action(),
-            labelText: Strings.phoneNumber.tr,
-            textInputAction: TextInputAction.done,
-            keyboardType: TextInputType.number,
-            maxLength: 10,
-          ),
-          // Dob picker
-          MyDateTimeField(dob: dobController),
-          GenderDropdown(rxGender: _c.gender),
-          Row(
-            children: [
-              Obx(() => Checkbox(
-                    fillColor: MaterialStateProperty.all(Theme.of(context).primaryColor),
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0)),
-                    value: _c.isPolicyAgreed.value,
-                    onChanged: (_) => _toggleIsPolicyAgreed(),
-                  )),
-              Expanded(
-                child: InkWell(
-                  onTap: _toggleIsPolicyAgreed,
-                  child: Text(
-                    Strings.policyAgreementMsg.tr,
+              Row(
+                children: [
+                  Expanded(
+                    child: CustomTextFieldWidget(
+                      validator: Validators.validateEmpty,
+                      focusNode: firstNameFocusNode,
+                      controller: firstNameController,
+                      onFieldSubmitted: (_) => FocusScope.of(context).requestFocus(lastNameFocusNode),
+                      labelText: Strings.firstName.tr,
+                    ),
                   ),
-                ),
-              )
+                  const SizedBox(
+                    width: 10.0,
+                  ),
+                  Expanded(
+                    child: CustomTextFieldWidget(
+                      validator: Validators.validateEmpty,
+                      focusNode: lastNameFocusNode,
+                      controller: lastNameController,
+                      onFieldSubmitted: (_) => FocusScope.of(context).requestFocus(addressFocusNode),
+                      labelText: Strings.lastName.tr,
+                    ),
+                  ),
+                ],
+              ),
+              CustomTextFieldWidget(
+                validator: Validators.validateEmpty,
+                focusNode: addressFocusNode,
+                controller: addressController,
+                onFieldSubmitted: (_) => FocusScope.of(context).requestFocus(phoneNumberFocusNode),
+                labelText: Strings.address.tr,
+              ),
+              CustomTextFieldWidget(
+                validator: Validators.validatePhone,
+                focusNode: phoneNumberFocusNode,
+                controller: phoneNumberController,
+                onFieldSubmitted: (_) => action(),
+                labelText: Strings.phoneNumber.tr,
+                textInputAction: TextInputAction.done,
+                keyboardType: TextInputType.number,
+                maxLength: 10,
+              ),
+              // Dob picker
+              MyDateTimeField(
+                dob: dobController,
+                formKey: formKey,
+              ),
             ],
           ),
-        ],
-      ),
+        ),
+        GenderDropdown(rxGender: _c.gender),
+        Row(
+          children: [
+            Obx(() => Checkbox(
+                  fillColor: MaterialStateProperty.all(Theme.of(context).primaryColor),
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0)),
+                  value: _c.isPolicyAgreed.value,
+                  onChanged: (_) => _toggleIsPolicyAgreed(),
+                )),
+            Expanded(
+              child: InkWell(
+                onTap: _toggleIsPolicyAgreed,
+                child: Text(
+                  Strings.policyAgreementMsg.tr,
+                ),
+              ),
+            )
+          ],
+        ),
+      ],
     );
   }
 }

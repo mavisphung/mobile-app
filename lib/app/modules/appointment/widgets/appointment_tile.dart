@@ -7,7 +7,6 @@ import 'package:hi_doctor_v2/app/common/util/utils.dart';
 import 'package:hi_doctor_v2/app/common/values/colors.dart';
 import 'package:hi_doctor_v2/app/models/appointment.dart';
 import 'package:hi_doctor_v2/app/modules/appointment/widgets/appointment_tile_button.dart';
-import 'package:hi_doctor_v2/app/modules/widgets/custom_container.dart';
 
 final Map<AppointmentStatus, Color> statusColors = {
   AppointmentStatus.pending: AppColors.primary,

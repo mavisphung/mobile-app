@@ -16,7 +16,7 @@ import 'package:hi_doctor_v2/app/routes/app_pages.dart';
 
 class LoginPage extends StatelessWidget {
   final _formKey = GlobalKey<FormState>();
-  final _c = Get.find<LoginController>();
+  final _c = Get.put(LoginController());
 
   LoginPage({Key? key}) : super(key: key);
 
@@ -33,7 +33,7 @@ class LoginPage extends StatelessWidget {
     return WillPopScope(
       onWillPop: Utils.onWillPop,
       child: Scaffold(
-        backgroundColor: AppColors.background,
+        backgroundColor: Colors.white,
         body: SafeArea(
           child: Center(
             child: SingleChildScrollView(

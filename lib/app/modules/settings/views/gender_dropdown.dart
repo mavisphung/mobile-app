@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import 'package:hi_doctor_v2/app/common/constants.dart';
+import 'package:hi_doctor_v2/app/common/values/colors.dart';
 import 'package:hi_doctor_v2/app/common/values/strings.dart';
 import 'package:hi_doctor_v2/app/models/user_info.dart';
 
@@ -17,7 +18,6 @@ class GenderDropdown extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.only(
-        top: 25.sp,
         bottom: 35.sp,
       ),
       child: Column(
@@ -42,7 +42,7 @@ class GenderDropdown extends StatelessWidget {
               horizontal: 18.sp,
             ),
             decoration: BoxDecoration(
-              color: Colors.white,
+              color: AppColors.whiteHighlight,
               borderRadius: BorderRadius.circular(Constants.textFieldRadius.sp),
             ),
             child: ObxValue<RxString>(

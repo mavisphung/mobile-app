@@ -4,11 +4,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import 'package:hi_doctor_v2/app/common/constants.dart';
-import 'package:hi_doctor_v2/app/common/storage/storage.dart';
 import 'package:hi_doctor_v2/app/common/values/colors.dart';
 import 'package:hi_doctor_v2/app/common/values/strings.dart';
-import 'package:hi_doctor_v2/app/models/user_info.dart';
-import 'package:hi_doctor_v2/app/modules/home/controllers/doctor_controller.dart';
 import 'package:hi_doctor_v2/app/modules/home/controllers/home_controller.dart';
 import 'package:hi_doctor_v2/app/modules/home/views/category_item.dart';
 import 'package:hi_doctor_v2/app/modules/home/views/doctor_item.dart';
@@ -23,7 +20,6 @@ class HomePage extends StatelessWidget {
   final _categoriesList = categoriesList;
 
   final HomeController _homeController = Get.put(HomeController());
-  final DoctorController _doctorController = Get.put(DoctorController());
   final _settingsController = Get.put(SettingsController());
 
   final _spacing = SizedBox(
@@ -134,7 +130,7 @@ class HomePage extends StatelessWidget {
               CustomTitleSection(title: Strings.latestSearchDoctor.tr),
               FutureBuilder(
                 future: _homeController.getDoctors(),
-                builder: (context, AsyncSnapshot snapshot) {
+                builder: (_, AsyncSnapshot snapshot) {
                   if (snapshot.hasData) {
                     return GetBuilder(
                       init: _homeController,
