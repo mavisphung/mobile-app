@@ -55,11 +55,11 @@ class DoctorDetailPage extends StatelessWidget {
           ),
         ],
       ),
-      body: FutureBuilder(
+      body: FutureBuilder<bool>(
         future: _cDoctor.getDoctorWithId(doctorId),
         builder: (_, snapshot) {
           if (snapshot.hasData) {
-            if (true) {
+            if (snapshot.data == true) {
               return Column(
                 children: [
                   Container(

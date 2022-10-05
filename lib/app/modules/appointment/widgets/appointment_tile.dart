@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:hi_doctor_v2/app/common/constants.dart';
 import 'package:hi_doctor_v2/app/common/util/extensions.dart';
 import 'package:hi_doctor_v2/app/common/util/utils.dart';
 import 'package:hi_doctor_v2/app/common/values/colors.dart';
+import 'package:hi_doctor_v2/app/common/values/strings.dart';
 import 'package:hi_doctor_v2/app/models/appointment.dart';
 import 'package:hi_doctor_v2/app/modules/appointment/widgets/appointment_tile_button.dart';
+import 'package:hi_doctor_v2/app/modules/message/chat_page.dart';
+import 'package:hi_doctor_v2/app/routes/app_pages.dart';
 
 final Map<AppointmentStatus, Color> statusColors = {
   AppointmentStatus.pending: AppColors.primary,
@@ -38,6 +42,7 @@ class AppointmentTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final fullName = '${data.doctor!["firstName"]} ${data.doctor!["lastName"]}';
     return Container(
       width: double.infinity,
       height: 180.sp,
@@ -69,7 +74,7 @@ class AppointmentTile extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Dr. ${data.doctor!["firstName"]} ${data.doctor!["lastName"]}',
+                      '${Strings.doctor.tr} $fullName',
                       overflow: TextOverflow.ellipsis,
                       softWrap: false,
                       style: TextStyle(
@@ -127,7 +132,14 @@ class AppointmentTile extends StatelessWidget {
                 children: [
                   GestureDetector(
                     onTap: () {
-                      'tap tap tap'.debugLog('message');
+                      Get.toNamed(
+                        Routes.CHAT,
+                        arguments: ChatPageArguments(
+                          peerId: data.doctor!['id'],
+                          peerName: fullName,
+                          peerAvatar: data.doctor!['avatar'],
+                        ),
+                      );
                     },
                     child: Container(
                       padding: EdgeInsets.all(9.sp),

@@ -14,6 +14,7 @@ import 'package:hi_doctor_v2/app/modules/auth/splash_page.dart';
 import 'package:hi_doctor_v2/app/modules/bottom_navbar/nav_bar.dart';
 import 'package:hi_doctor_v2/app/modules/home/home_page.dart';
 import 'package:hi_doctor_v2/app/modules/home/views/doctor_detail_page.dart';
+import 'package:hi_doctor_v2/app/modules/message/chat_page.dart';
 import 'package:hi_doctor_v2/app/modules/search/views/search_page.dart';
 import 'package:hi_doctor_v2/app/modules/settings/views/patient_list.dart';
 import 'package:hi_doctor_v2/app/modules/settings/views/patient_profile_detail.dart';
@@ -101,6 +102,13 @@ abstract class AppPages {
     GetPage(
       name: Routes.PATIENT_PROFILE_DETAIL,
       page: () => PatientProfileDetailPage(),
+      preventDuplicates: true,
+      fullscreenDialog: true,
+      transition: Transition.rightToLeftWithFade,
+    ),
+    GetPage(
+      name: Routes.CHAT,
+      page: () => ChatPage(),
       preventDuplicates: true,
       fullscreenDialog: true,
       transition: Transition.rightToLeftWithFade,
