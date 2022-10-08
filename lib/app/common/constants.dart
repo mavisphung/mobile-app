@@ -13,5 +13,19 @@ abstract class Constants {
   static const previousPage = 'previousPage';
   static const totalItems = 'totalItems';
   static const borderRadius = 20;
+  static const textFieldRadius = 15;
   static const padding = 12.5;
+
+  // firebase constants
+  static const pathMessageCollection = 'messages';
+  static const patientId = 'patientId';
+  static const doctorId = 'doctorId';
+  static const lastMessage = 'lastMessage';
+  static const lastTimeStamp = 'lastTimeStamp';
+  static const isChatting = 'isChatting';
+  static const idFrom = 'idFrom';
+  static const idTo = 'idTo';
+  static const timestamp = 'timestamp';
+  static const content = 'content';
+  static const type = 'type';
 }

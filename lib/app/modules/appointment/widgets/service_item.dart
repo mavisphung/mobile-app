@@ -2,24 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
-import 'package:hi_doctor_v2/app/common/util/extensions.dart';
 import 'package:hi_doctor_v2/app/common/values/colors.dart';
 import 'package:hi_doctor_v2/app/modules/appointment/controllers/booking/booking_controller.dart';
 
-class ServiceItem extends StatelessWidget {
-  final String title;
+class PackageItem extends StatelessWidget {
+  final int id;
+  final String name;
   final String description;
-  final int serviceId;
-  final int price;
-  final IconData iconData;
+  final double price;
 
-  ServiceItem({
+  PackageItem({
     Key? key,
-    required this.title,
+    required this.id,
+    required this.name,
     required this.description,
-    required this.serviceId,
     required this.price,
-    required this.iconData,
   }) : super(key: key);
 
   final _c = Get.find<BookingController>();
@@ -29,52 +26,33 @@ class ServiceItem extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         color: AppColors.whiteHighlight,
-        borderRadius: BorderRadius.circular(12.0.sp),
+        borderRadius: BorderRadius.circular(12.sp),
       ),
-      margin: EdgeInsets.only(bottom: 20.0.sp),
-      padding: EdgeInsets.symmetric(horizontal: 16.0.sp, vertical: 16.0.sp),
+      margin: EdgeInsets.only(bottom: 20.sp),
+      padding: EdgeInsets.symmetric(horizontal: 16.sp, vertical: 16.sp),
       child: Row(
         children: [
-          Container(
-            margin: EdgeInsets.only(right: 17.5.sp),
-            padding: EdgeInsets.all(12.5.sp),
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              color: Colors.white,
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withOpacity(0.08),
-                  offset: const Offset(0, 2),
-                  blurRadius: 2.0.sp,
-                ),
-              ],
-            ),
-            child: Icon(
-              iconData,
-              color: AppColors.primary,
-            ),
-          ),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  title,
+                  name,
                   style: TextStyle(
                     color: Colors.black,
-                    fontSize: 14.0.sp,
+                    fontSize: 14.sp,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
                 SizedBox(
-                  height: 5.0.sp,
+                  height: 5.sp,
                 ),
                 Text(
                   description,
                   maxLines: 2,
                   style: TextStyle(
                     color: Colors.black,
-                    fontSize: 10.0.sp,
+                    fontSize: 10.sp,
                     overflow: TextOverflow.fade,
                     // wordSpacing: 0.1,
                   ),
@@ -82,33 +60,23 @@ class ServiceItem extends StatelessWidget {
               ],
             ),
           ),
-          Column(
-            children: [
-              Text(
-                '\$ $price',
-                style: TextStyle(
-                  color: AppColors.primary,
-                  fontSize: 18.0.sp,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-              Text(
-                '/ 30 mins',
-                style: TextStyle(
-                  fontSize: 10.0.sp,
-                ),
-              ),
-            ],
-          ),
-          Obx(
-            () => Radio(
-              onChanged: (int? value) {
-                _c.serviceId = value!;
-                _c.serviceId.toString().debugLog('Service Id');
-              },
-              value: serviceId,
-              groupValue: _c.serviceId,
+          Text(
+            '\$ $price',
+            style: TextStyle(
+              color: AppColors.primary,
+              fontSize: 18.sp,
+              fontWeight: FontWeight.w500,
             ),
+          ),
+          ObxValue<RxInt>(
+            (data) => Radio(
+              onChanged: (int? value) {
+                value != null ? _c.setServiceId(value) : null;
+              },
+              value: id,
+              groupValue: data.value,
+            ),
+            _c.rxServiceId,
           ),
         ],
       ),

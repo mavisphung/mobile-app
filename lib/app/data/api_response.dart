@@ -2,11 +2,10 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:get/get.dart';
-import 'package:get/get_connect/http/src/status/http_status.dart';
 
-import '../common/constants.dart';
-import '../common/values/strings.dart';
-import './errors/api_error.dart';
+import 'package:get/get_connect/http/src/status/http_status.dart';
+import 'package:hi_doctor_v2/app/common/values/strings.dart';
+import 'package:hi_doctor_v2/app/data/errors/api_error.dart';
 
 abstract class ApiResponse {
   static T? getResponse<T>(Response<T> response) {
@@ -33,13 +32,6 @@ abstract class ApiResponse {
       } else {
         print('NOT OK: ${response.body}');
         if (res['success'] == false && res['status'] == 400) {
-          // if (res['message'].toString() == 'INVALID_INPUT' &&
-          //     res['data']['user'][0].toString().contains('does not exist')) {
-          //   throw ApiError(
-          //     type: ErrorType.failedResponse,
-          //     error: Strings.invalidInputMsg.tr,
-          //   );
-          // }
           return response.body;
         } else if (status.isServerError) {
           print('SERVER ERROR');

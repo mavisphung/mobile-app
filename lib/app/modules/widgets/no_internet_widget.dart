@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class NoInternetWidget extends StatelessWidget {
   final VoidCallback refresh;
@@ -10,7 +11,8 @@ class NoInternetWidget extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          const Text('No internet connection'),
+          SvgPicture.asset('assets/icons/no_internet.svg'),
+          const Text('A network error occurs, please tap the button to reload'),
           OutlinedButton(onPressed: refresh, child: const Text('Try again')),
         ],
       ),

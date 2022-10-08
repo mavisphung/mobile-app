@@ -5,8 +5,6 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 
-import '../../data/api_retry_controller.dart';
-
 abstract class Initializer {
   static void init(VoidCallback runApp) {
     // ErrorWidget.builder = (errorDetails) {
@@ -55,8 +53,8 @@ abstract class Initializer {
 class InitialBindings extends Bindings {
   @override
   void dependencies() {
-    Get.lazyPut<ApiRetryController>(
-      () => ApiRetryController(),
-    );
+    // Get.lazyPut<ApiRetryController>(
+    //   () => ApiRetryController(),
+    // );
   }
 }

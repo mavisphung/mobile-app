@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class MyTitleSection extends StatelessWidget {
+import 'package:hi_doctor_v2/app/common/constants.dart';
+
+class CustomTitleSection extends StatelessWidget {
   final String title;
   final double paddingTop;
   final double paddingLeft;
   final String? suffixText;
   final VoidCallback? suffixAction;
   final TextStyle? suffixTextStyle;
-  const MyTitleSection({
+  const CustomTitleSection({
     Key? key,
     required this.title,
     this.paddingTop = 0,
@@ -24,10 +26,10 @@ class MyTitleSection extends StatelessWidget {
       padding: EdgeInsets.only(
         top: paddingTop,
         left: paddingLeft,
-        bottom: 12.sp,
+        bottom: Constants.padding.sp,
       ),
       child: Row(
-        // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(
             title,

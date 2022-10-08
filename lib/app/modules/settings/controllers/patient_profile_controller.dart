@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -11,8 +9,8 @@ import 'package:hi_doctor_v2/app/data/api_response.dart';
 import 'package:hi_doctor_v2/app/data/response_model.dart';
 import 'package:hi_doctor_v2/app/models/patient.dart';
 import 'package:hi_doctor_v2/app/models/user_info.dart';
+import 'package:hi_doctor_v2/app/modules/settings/controllers/settings_controller.dart';
 import 'package:hi_doctor_v2/app/modules/settings/providers/api_settings_impl.dart';
-import 'package:image_picker/image_picker.dart';
 
 class PatientProfileController extends GetxController {
   final firstNameFocusNode = FocusNode();
@@ -21,7 +19,7 @@ class PatientProfileController extends GetxController {
   final firstName = TextEditingController();
   final lastName = TextEditingController();
   final address = TextEditingController();
-  final dob = DateTime.now().obs;
+  final dob = TextEditingController();
   final gender = userGender.first['value']!.obs;
   final avatar = ''.obs;
 
@@ -29,10 +27,7 @@ class PatientProfileController extends GetxController {
 
   final status = Status.init.obs;
 
-  final _provider = Get.put(ApiSettingsImpl());
-
-  late XFile? file;
-  final ImagePicker _picker = ImagePicker();
+  final _provider = Get.find<ApiSettingsImpl>();
 
   @override
   void dispose() {
@@ -42,10 +37,20 @@ class PatientProfileController extends GetxController {
     firstName.dispose();
     lastName.dispose();
     address.dispose();
-    dob.close();
+    dob.dispose();
     gender.close();
     avatar.close();
     super.dispose();
+  }
+
+  Future<bool> emptyField() {
+    firstName.text = '';
+    lastName.text = '';
+    dob.text = '';
+    gender.value = userGender.first['value']!;
+    address.text = '';
+    avatar.value = '';
+    return Future.value(true);
   }
 
   String? isEmpty(String? value) {
@@ -72,22 +77,24 @@ class PatientProfileController extends GetxController {
 
     Map<String, dynamic> result = ApiResponse.getResponse(response);
     ResponseModel2 model = ResponseModel2.fromMap(result);
-    var data = model.data as dynamic;
+    List<dynamic> data = model.data;
 
     if (data.isNotEmpty) {
-      patientList.addAll(data.map<Patient>(
-        (e) => Patient(
-          id: e['id'],
-          firstName: e['firstName'],
-          lastName: e['lastName'],
-          dob: e['dob'],
-          address: e['address'],
-          gender: e['gender'],
-          avatar: e['avatar'],
-          supervisorId: e['supervisor_id'],
-          oldHealthRecords: e['old_health_records'],
-        ),
-      ));
+      patientList.value = data
+          .map<Patient>(
+            (e) => Patient(
+              id: e['id'],
+              firstName: e['firstName'],
+              lastName: e['lastName'],
+              dob: e['dob'],
+              address: e['address'],
+              gender: e['gender'],
+              avatar: e['avatar'],
+              supervisorId: e['supervisor_id'],
+              oldHealthRecords: e['old_health_records'],
+            ),
+          )
+          .toList();
       return true;
     }
     return false;
@@ -100,63 +107,61 @@ class PatientProfileController extends GetxController {
       final patient = Patient.fromMap(response.data);
       firstName.text = patient.firstName ?? '';
       lastName.text = patient.lastName ?? '';
-      dob.value = Utils.parseStrToDate(patient.dob ?? '') ?? DateTime.now();
+      dob.text = patient.dob ?? Utils.formatDate(DateTime.now());
       if (patient.gender != null) {
         gender.value = patient.gender!;
       }
       address.text = patient.address ?? '';
-      avatar.value = patient.avatar ?? Constants.defaultAvatar;
+      avatar.value = patient.avatar ?? '';
       return true;
     }
     return false;
   }
 
-  void getImage(bool isFromGallery) async {
-    file = isFromGallery
-        ? await _picker.pickImage(source: ImageSource.gallery)
-        : await _picker.pickImage(source: ImageSource.camera);
-    if (file == null) {
-      return;
-    }
-    List<XFile> files = <XFile>[];
-    files.add(file!);
-    var response = await _provider.postPresignedUrls(files);
-    if (response.isOk) {
-      ResponseModel1 resModel = ResponseModel1.fromJson(response.body);
-      String fileExt = file!.name.split('.')[1];
-      String fullUrl = resModel.data['urls'][0];
-      String url = fullUrl.split('?')[0];
-
-      await Utils.upload(fullUrl, File(file!.path), fileExt);
-      try {
-        avatar.value = url;
-      } catch (e) {
-        print('error $e');
-        rethrow;
-      }
-    }
+  void setAvatar(bool isFromCamera) async {
+    final settingsController = Get.find<SettingsController>();
+    final url = await settingsController.getImage(isFromCamera);
+    if (url != null) avatar.value = url;
   }
 
   void addPatientProfile() async {
-    if (avatar.value.isEmpty) {
-      Utils.showAlertDialog('Avatar of patient is missing');
-      return;
-    }
     setStatusLoading();
 
-    Patient info = Patient(
-      firstName: firstName.value.text,
-      lastName: lastName.value.text,
-      dob: '2002-05-08',
-      address: address.value.text,
+    Patient data = Patient(
+      firstName: firstName.text,
+      lastName: lastName.text,
+      dob: Utils.toYmd(dob.text),
+      address: address.text,
       gender: gender.value,
       avatar: avatar.value,
     );
-    var response = await _provider.postPatientProfile(info).futureValue();
+    var response = await _provider.postPatientProfile(data).futureValue();
     if (response != null && response.isSuccess == true && response.statusCode == Constants.successPostStatusCode) {
       setStatusSuccess();
       Get.back();
-      Utils.showTopSnackbar('Add patient profile sucessfully', title: 'Notice');
+      Utils.showTopSnackbar('Add patient profile sucessfully');
+    } else {
+      Get.snackbar('Error ${response?.statusCode}', 'Error while adding profile', backgroundColor: Colors.red);
+      setStatusFail();
+    }
+  }
+
+  void updatePatientProfile(int patientId) async {
+    setStatusLoading();
+
+    Patient data = Patient(
+      firstName: firstName.text,
+      lastName: lastName.text,
+      dob: Utils.toYmd(dob.text),
+      address: address.text,
+      gender: gender.value,
+      avatar: avatar.value,
+    );
+    var response = await _provider.putPatientProfile(patientId, data).futureValue();
+    if (response != null && response.isSuccess == true && response.statusCode == Constants.successPostStatusCode) {
+      setStatusSuccess();
+      Get.back();
+      Utils.showTopSnackbar('Update patient profile sucessfully');
     } else {
       Get.snackbar('Error ${response?.statusCode}', 'Error while updating profile', backgroundColor: Colors.red);
       setStatusFail();

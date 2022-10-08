@@ -18,11 +18,11 @@ class AppointmentFilterPage extends StatelessWidget {
         init: _controller,
         builder: (AppointmentController controller) {
           return Scaffold(
-            appBar: MyAppBar(
+            appBar: const MyAppBar(
               title: 'Filter',
             ),
             body: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16.0.sp),
+              padding: EdgeInsets.symmetric(horizontal: 16.sp),
               child: Column(
                 children: [
                   SizedBox(
@@ -31,16 +31,16 @@ class AppointmentFilterPage extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Types',
+                          'Hình thức',
                           style: TextStyle(
-                            fontSize: 18.0.sp,
+                            fontSize: 18.sp,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
                         Wrap(
                           crossAxisAlignment: WrapCrossAlignment.start,
                           clipBehavior: Clip.hardEdge,
-                          spacing: 8.0.sp,
+                          spacing: 8.sp,
                           children: _controller.types
                               .map(
                                 (e) => MyTypeChip(
@@ -57,7 +57,7 @@ class AppointmentFilterPage extends StatelessWidget {
                     ),
                   ),
                   Divider(
-                    thickness: 1.0.sp,
+                    thickness: 1.sp,
                   ),
                   SizedBox(
                     width: 1.sw,
@@ -65,16 +65,16 @@ class AppointmentFilterPage extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Status',
+                          'Trạng thái',
                           style: TextStyle(
-                            fontSize: 18.0.sp,
+                            fontSize: 18.sp,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
                         Wrap(
                           crossAxisAlignment: WrapCrossAlignment.start,
                           clipBehavior: Clip.hardEdge,
-                          spacing: 8.0.sp,
+                          spacing: 8.sp,
                           children: _controller.statuses
                               .map(
                                 (e) => MyStatusChip(

@@ -1,21 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:hi_doctor_v2/app/common/storage/storage.dart';
 
 import 'package:hi_doctor_v2/app/common/values/colors.dart';
 import 'package:hi_doctor_v2/app/common/values/strings.dart';
-import 'package:hi_doctor_v2/app/models/user_info.dart';
+import 'package:hi_doctor_v2/app/models/patient.dart';
 import 'package:hi_doctor_v2/app/modules/appointment/controllers/booking/booking_controller.dart';
+import 'package:hi_doctor_v2/app/modules/appointment/widgets/patient_tile.dart';
+import 'package:hi_doctor_v2/app/modules/settings/controllers/patient_profile_controller.dart';
+import 'package:hi_doctor_v2/app/modules/widgets/base_page.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/custom_bottom_sheet.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/my_appbar.dart';
-import 'package:hi_doctor_v2/app/modules/widgets/my_section_title.dart';
+import 'package:hi_doctor_v2/app/modules/widgets/custom_title_section.dart';
 import 'package:hi_doctor_v2/app/routes/app_pages.dart';
 
 class BookingPatientDetailPage extends StatelessWidget {
   final _formKey = GlobalKey<FormState>();
 
-  final _c = Get.find<BookingController>();
+  final _cBooking = Get.find<BookingController>();
+  final _cPatientProfile = Get.put(PatientProfileController());
 
   BookingPatientDetailPage({Key? key}) : super(key: key);
 
@@ -31,123 +34,172 @@ class BookingPatientDetailPage extends StatelessWidget {
     );
   }
 
+  void openPatientOptions(BuildContext ctx) {
+    showDialog(
+        context: ctx,
+        builder: (_) {
+          return Dialog(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12.sp),
+            ),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  'Choose a patient',
+                  style: Theme.of(ctx).textTheme.headline6,
+                ),
+                ..._cPatientProfile.patientList
+                    .map((e) => GestureDetector(
+                          onTap: () {
+                            _cBooking.setPatient(e);
+                            Get.back();
+                          },
+                          child: PatientTile(patient: e),
+                        ))
+                    .toList()
+              ],
+            ),
+          );
+        });
+  }
+
   @override
   Widget build(BuildContext context) {
-    final userInfo = Storage.getValue<UserInfo2>(CacheKey.USER_INFO.name);
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      appBar: MyAppBar(title: 'Patient Details'),
-      body: SingleChildScrollView(
-        physics: const BouncingScrollPhysics(),
-        child: Container(
-          margin: EdgeInsets.only(top: 17.5.sp),
-          padding: EdgeInsets.symmetric(horizontal: 12.0.sp),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Container(
-                padding: EdgeInsets.only(top: 15.0.sp),
-                child: Form(
-                  key: _formKey,
-                  child: GetBuilder<BookingController>(
-                    init: _c,
-                    builder: (_) {
-                      return Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          // ------------- Choose patient section -------------
-                          const MyTitleSection(title: 'Patient\'s information'),
-                          Container(
-                            margin: const EdgeInsets.only(bottom: 15.0),
-                            width: double.infinity,
-                            padding: EdgeInsets.symmetric(
-                              vertical: 20.sp,
-                              horizontal: 15.sp,
-                            ),
-                            decoration: BoxDecoration(
-                              color: Colors.grey[100],
-                              borderRadius: BorderRadius.circular(15.0.sp),
-                            ),
-                            child: Column(
-                              children: [
-                                Row(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    _getTitle('Full name:'),
-                                    Flexible(
-                                      child: Text(
-                                        '${userInfo?.lastName} ${userInfo?.firstName}',
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                Row(
-                                  children: [
-                                    _getTitle('Gender:'),
-                                    Text('${userInfo?.gender}'),
-                                  ],
-                                ),
-                                Row(
-                                  children: [
-                                    _getTitle('Day of birth:'),
-                                    const Text('25/6/2000'),
-                                  ],
-                                ),
-                                Row(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    _getTitle('Address:'),
-                                    Flexible(child: Text('${userInfo?.address}')),
-                                  ],
-                                ),
-                              ],
-                            ),
+      appBar: const MyAppBar(title: 'Patient Details'),
+      body: BasePage(
+        body: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(
+              padding: EdgeInsets.only(top: 15.sp),
+              child: Form(
+                key: _formKey,
+                child: GetBuilder<BookingController>(
+                  init: _cBooking,
+                  builder: (_) {
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        // ------------- Choose patient section -------------
+                        CustomTitleSection(
+                          title: Strings.patientInfo.tr,
+                          suffixText: Strings.change.tr,
+                          suffixAction: () => openPatientOptions(context),
+                        ),
+                        Container(
+                          margin: const EdgeInsets.only(bottom: 15.0),
+                          width: double.infinity,
+                          padding: EdgeInsets.symmetric(
+                            vertical: 20.sp,
+                            horizontal: 15.sp,
                           ),
-                          SizedBox(
-                            height: 8.0.sp,
+                          decoration: BoxDecoration(
+                            color: Colors.grey[100],
+                            borderRadius: BorderRadius.circular(15.sp),
                           ),
-                          SizedBox(
-                            height: 16.0.sp,
-                          ),
-                          const MyTitleSection(title: 'Write your problem'),
-                          TextFormField(
-                            validator: (String? value) {
-                              if (value!.length >= 1000) {
-                                return 'Limit 1000 characters';
+                          child: FutureBuilder(
+                            future: _cPatientProfile.getPatientList(),
+                            builder: (_, snapshot) {
+                              if (snapshot.hasData) {
+                                if (snapshot.data == true) {
+                                  _cBooking.setPatient(_cPatientProfile.patientList[0]);
+                                  return ObxValue<Rx<Patient>>(
+                                      (data) => Column(
+                                            children: [
+                                              Row(
+                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                children: [
+                                                  _getTitle(Strings.fullName.tr),
+                                                  Flexible(
+                                                    child: Text(
+                                                      '${data.value.lastName} ${data.value.firstName}',
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                              Row(
+                                                children: [
+                                                  _getTitle(Strings.gender.tr),
+                                                  Text('${data.value.gender}'),
+                                                ],
+                                              ),
+                                              Row(
+                                                children: [
+                                                  _getTitle(Strings.dob.tr),
+                                                  Text('${data.value.dob}'),
+                                                ],
+                                              ),
+                                              Row(
+                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                children: [
+                                                  _getTitle(Strings.address.tr),
+                                                  Flexible(child: Text('${data.value.address}')),
+                                                ],
+                                              ),
+                                            ],
+                                          ),
+                                      _cBooking.rxPatient);
+                                }
                               }
-                              return null;
+                              return const Center(child: CircularProgressIndicator());
                             },
-                            focusNode: FocusNode(),
-                            controller: _c.problemController,
-                            decoration: InputDecoration(
-                              hintText: 'Description your health status, what you are suffering...',
-                              contentPadding: EdgeInsets.only(top: 16.sp, bottom: 16.sp, left: 18.sp, right: -18.sp),
-                              enabledBorder: OutlineInputBorder(
-                                borderSide: BorderSide.none,
-                                borderRadius: BorderRadius.circular(15.0),
-                              ),
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(15.0),
-                              ),
-                              filled: true,
-                              fillColor: AppColors.whiteHighlight,
-                            ),
-                            keyboardType: TextInputType.multiline,
-                            maxLines: 5,
                           ),
-                        ],
-                      );
-                    },
-                  ),
+                        ),
+                        SizedBox(
+                          height: 8.sp,
+                        ),
+                        SizedBox(
+                          height: 16.sp,
+                        ),
+                        CustomTitleSection(title: Strings.healthIssue.tr),
+                        TextFormField(
+                          validator: (String? value) {
+                            if (value == null || value.isEmpty) {
+                              return Strings.fieldCantBeEmpty.tr;
+                            }
+                            if (value.length >= 1000) {
+                              return Strings.problemLengthMsg.tr;
+                            }
+                            return null;
+                          },
+                          focusNode: FocusNode(),
+                          controller: _cBooking.problemController,
+                          decoration: InputDecoration(
+                            hintText: Strings.problemMsg.tr,
+                            contentPadding: EdgeInsets.only(top: 16.sp, bottom: 16.sp, left: 18.sp, right: -18.sp),
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide.none,
+                              borderRadius: BorderRadius.circular(15.0),
+                            ),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(15.0),
+                            ),
+                            filled: true,
+                            fillColor: AppColors.whiteHighlight,
+                          ),
+                          keyboardType: TextInputType.multiline,
+                          maxLines: 5,
+                        ),
+                      ],
+                    );
+                  },
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
       bottomSheet: CustomBottomSheet(
         buttonText: Strings.kContinue.tr,
-        onPressed: () => Get.toNamed(Routes.BOOKING_SUMMARY),
+        onPressed: () {
+          _formKey.currentState?.save();
+          if (_formKey.currentState?.validate() ?? false) {
+            Get.toNamed(Routes.BOOKING_SUMMARY);
+          }
+        },
       ),
     );
   }

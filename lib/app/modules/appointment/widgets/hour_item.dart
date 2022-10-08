@@ -19,21 +19,21 @@ class HourItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.symmetric(
-        vertical: 5.0.sp,
-        horizontal: 16.0.sp,
+        vertical: 5.sp,
+        horizontal: 16.sp,
       ),
       decoration: BoxDecoration(
         // border: Border.all(
         //   color: AppColors.primary,
         //   width: 2.5.sp,
         // ),
-        borderRadius: BorderRadius.circular(10.0.sp),
+        borderRadius: BorderRadius.circular(10.sp),
         color: isSelected ? AppColors.primary : Colors.white,
         boxShadow: [
           BoxShadow(
             color: Colors.black.withOpacity(0.12),
             offset: const Offset(0, 2),
-            blurRadius: 4.0.sp,
+            blurRadius: 4.sp,
           ),
         ],
       ),
@@ -41,7 +41,7 @@ class HourItem extends StatelessWidget {
         text,
         textAlign: TextAlign.center,
         style: TextStyle(
-          fontSize: 12.0.sp,
+          fontSize: 12.sp,
           fontWeight: FontWeight.w400,
           color: isSelected ? Colors.white : Colors.black,
         ),

@@ -8,13 +8,13 @@ import 'package:hi_doctor_v2/app/common/values/strings.dart';
 import 'package:hi_doctor_v2/app/models/user_info.dart';
 import 'package:hi_doctor_v2/app/modules/auth/providers/api_auth.dart';
 import 'package:hi_doctor_v2/app/modules/auth/providers/api_auth_impl.dart';
+import 'package:hi_doctor_v2/app/modules/auth/providers/req_auth_model.dart';
 import 'package:hi_doctor_v2/app/routes/app_pages.dart';
 
 class RegisterController extends GetxController {
   late final ApiAuth _apiAuth;
   final nextStatus = Status.init.obs;
   final dynamic isEmailDuplicated = false.obs;
-  final dob = DateTime.now().obs;
   final gender = userGender.first['value']!.obs;
   final isPolicyAgreed = false.obs;
   String email = '';
@@ -41,16 +41,7 @@ class RegisterController extends GetxController {
     return null;
   }
 
-  Future<bool> register(
-    String email,
-    String password,
-    String confirmPassword,
-    String firstName,
-    String lastName,
-    String phoneNumber,
-    String address,
-    String gender,
-  ) async {
+  Future<bool> register(RequestRegisterModel reqBody) async {
     Utils.unfocus();
     if (!isPolicyAgreed.value) {
       Utils.showAlertDialog(
@@ -59,18 +50,7 @@ class RegisterController extends GetxController {
       return false;
     }
     nextStatus.value = Status.loading;
-    final response = await _apiAuth
-        .postRegister(
-          email,
-          password,
-          confirmPassword,
-          firstName,
-          lastName,
-          phoneNumber,
-          address,
-          gender,
-        )
-        .futureValue();
+    final response = await _apiAuth.postRegister(reqBody).futureValue();
 
     if (response != null && response.isSuccess == true && response.statusCode == Constants.successPostStatusCode) {
       nextStatus.value = Status.success;
@@ -93,12 +73,12 @@ class RegisterController extends GetxController {
         !response.isSuccess &&
         response.statusCode == 400 &&
         response.message == 'NO_MATCHED_CODE') {
-      Utils.showBottomSnackbar(Strings.otpErrorMsg.trParams({'code': otpCode.value}));
+      Utils.showTopSnackbar(Strings.otpErrorMsg.trParams({'code': otpCode.value}));
     } else if (response != null &&
         !response.isSuccess &&
         response.statusCode == 400 &&
         response.message == 'VERIFY_CODE_EXPIRED') {
-      Utils.showBottomSnackbar(Strings.otpExpiredMsg.tr);
+      Utils.showTopSnackbar(Strings.otpExpiredMsg.tr);
     }
     nextStatus.value = Status.fail;
   }

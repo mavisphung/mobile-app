@@ -7,7 +7,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:hi_doctor_v2/app/common/util/initializer.dart';
 import 'package:hi_doctor_v2/app/common/util/messages.dart';
 import 'package:hi_doctor_v2/app/common/values/strings.dart';
-import 'package:hi_doctor_v2/app/modules/settings/controllers/settings_controller.dart';
+import 'package:hi_doctor_v2/app/data/custom_controller.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/base_widget.dart';
 import 'package:hi_doctor_v2/app/routes/app_pages.dart';
 
@@ -63,19 +63,29 @@ void main() {
     WidgetsFlutterBinding.ensureInitialized();
     await Firebase.initializeApp();
     registerNotification();
-    // FirebaseMessaging.instance.getToken().then((value) {
-    //   print('Firebase token on this device: ');
-    //   print(value);
-    // }).onError((error, stackTrace) {
-    //   print('-------------------------- ERROR WHILE GET FIREBASE TOKEN --------------------------');
-    //   print(error);
-    // });
+    FirebaseMessaging.instance.getToken().then((value) {
+      print('Firebase token on this device: ');
+      print(value);
+    }).onError((error, stackTrace) {
+      print('-------------------------- ERROR WHILE GET FIREBASE TOKEN --------------------------');
+      print(error);
+    });
     runApp(const MyApp());
   });
 }
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
+
+  TextTheme? getTextTheme(bool isEnglish) {
+    return isEnglish
+        ? null
+        : ThemeData.light().textTheme.copyWith(
+              titleMedium: const TextStyle(
+                fontWeight: FontWeight.w500,
+              ),
+            );
+  }
 
   // This widget is the root of your application.
   @override
@@ -84,23 +94,18 @@ class MyApp extends StatelessWidget {
       useInheritedMediaQuery: true,
       designSize: const Size(375, 812),
       builder: (_, __) {
-        final c = Get.put(SettingsController());
+        final c = Get.put(CustomController());
         return ObxValue<RxBool>(
             (data) => GetMaterialApp(
                   title: Strings.appName,
                   debugShowCheckedModeBanner: false,
                   theme: ThemeData(
                     primarySwatch: Colors.indigo,
-                    fontFamily: data.value ? 'Poppins' : 'Opensans',
+                    fontFamily: data.value ? 'Poppins' : 'Quicksand',
                     bottomSheetTheme: const BottomSheetThemeData(
                       backgroundColor: Colors.transparent,
                     ),
-                    // textTheme: ThemeData.light().textTheme.copyWith(
-                    //   bodyText1: const TextStyle(
-                    //     fontFamily: 'Poppins',
-                    //     fontWeight: FontWeight.bold,
-                    //     fontSize: 20,
-                    //   ),
+                    textTheme: getTextTheme(data.value),
                     //   button: const TextStyle(
                     //     color: Colors.amber,
                     //     fontFamily: 'Poppins',
@@ -112,7 +117,7 @@ class MyApp extends StatelessWidget {
                   defaultTransition: Transition.cupertino,
                   initialRoute: AppPages.INITIAL,
                   getPages: AppPages.routes,
-                  initialBinding: InitialBindings(),
+                  // initialBinding: InitialBindings(),
                   builder: (_, child) => BaseWidget(
                     child: child ?? const SizedBox.shrink(),
                   ),

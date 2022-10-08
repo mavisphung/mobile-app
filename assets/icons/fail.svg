@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svgjs="http://svgjs.com/svgjs" version="1.1" width="512" height="512" x="0" y="0" viewBox="0 0 189.524 189.524" style="enable-background:new 0 0 512 512" xml:space="preserve" class="">
+  <g>
+    <g xmlns="http://www.w3.org/2000/svg">
+      <g>
+        <path clip-rule="evenodd" d="m121.564 67.959c1.851 1.85 1.851 4.85 0 6.701l-46.904 46.904c-1.85 1.851-4.85 1.851-6.701 0-1.85-1.851-1.85-4.85 0-6.701l46.905-46.905c1.85-1.849 4.85-1.849 6.7.001z" fill-rule="evenodd" fill="#ff9900" data-original="#000000"/>
+      </g>
+      <g>
+        <path clip-rule="evenodd" d="m67.959 67.959c1.85-1.85 4.85-1.85 6.701 0l46.905 46.904c1.851 1.851 1.851 4.851 0 6.702-1.851 1.85-4.85 1.85-6.701 0l-46.905-46.905c-1.85-1.85-1.85-4.85 0-6.701z" fill-rule="evenodd" fill="#ff9900" data-original="#000000"/>
+      </g>
+      <g>
+        <path clip-rule="evenodd" d="m94.762 180.048c47.102 0 85.286-38.183 85.286-85.286 0-47.102-38.183-85.286-85.286-85.286-47.102 0-85.286 38.184-85.286 85.286s38.184 85.286 85.286 85.286zm0 9.476c52.335 0 94.762-42.427 94.762-94.762 0-52.336-42.427-94.762-94.762-94.762-52.336 0-94.762 42.426-94.762 94.762 0 52.335 42.426 94.762 94.762 94.762z" fill-rule="evenodd" fill="#ff9900" data-original="#000000"/>
+      </g>
+    </g>
+  </g>
+</svg>

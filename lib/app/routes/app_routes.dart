@@ -8,6 +8,7 @@ abstract class Routes {
   static const LOGIN = '/login';
   static const REGISTER = '/register';
   static const NAVBAR = '/navbar';
+  static const MESSAGE = '/message';
   static const HISTORY = '/history';
   static const USER_PROFILE_DETAIL = '/userProfileDetail';
   static const SEARCH = '/search';
@@ -18,4 +19,5 @@ abstract class Routes {
   static const BOOKING_SUMMARY = '/bookingSummary';
   static const PATIENT_LIST = '/patientList';
   static const PATIENT_PROFILE_DETAIL = '/patientProfileDetail';
+  static const CHAT = '/chat';
 }

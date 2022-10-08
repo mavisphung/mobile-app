@@ -4,22 +4,19 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
-import '../../common/util/status.dart';
-import '../../common/util/utils.dart';
-import '../../common/util/validators.dart';
-import '../../common/values/colors.dart';
-import '../../common/values/strings.dart';
-import '../../routes/app_pages.dart';
-import '../widgets/custom_elevate_btn_widget.dart';
-import '../widgets/custom_textfield_widget.dart';
-import './controllers/login_controller.dart';
+import 'package:hi_doctor_v2/app/common/util/status.dart';
+import 'package:hi_doctor_v2/app/common/util/utils.dart';
+import 'package:hi_doctor_v2/app/common/util/validators.dart';
+import 'package:hi_doctor_v2/app/common/values/colors.dart';
+import 'package:hi_doctor_v2/app/common/values/strings.dart';
+import 'package:hi_doctor_v2/app/modules/auth/controllers/login_controller.dart';
+import 'package:hi_doctor_v2/app/modules/widgets/custom_elevate_btn_widget.dart';
+import 'package:hi_doctor_v2/app/modules/widgets/custom_textfield_widget.dart';
+import 'package:hi_doctor_v2/app/routes/app_pages.dart';
 
-class LoginPage extends GetView<LoginController> {
+class LoginPage extends StatelessWidget {
   final _formKey = GlobalKey<FormState>();
-  final _emailFocusNode = FocusNode();
-  final _passwordFocusNode = FocusNode();
-  final _emailController = TextEditingController();
-  final _passwordController = TextEditingController();
+  final _c = Get.put(LoginController());
 
   LoginPage({Key? key}) : super(key: key);
 
@@ -28,7 +25,7 @@ class LoginPage extends GetView<LoginController> {
 
     _formKey.currentState!.save();
 
-    controller.login(_emailController.text, _passwordController.text);
+    _c.login(_c.emailController.text, _c.passwordController.text);
   }
 
   @override
@@ -36,12 +33,13 @@ class LoginPage extends GetView<LoginController> {
     return WillPopScope(
       onWillPop: Utils.onWillPop,
       child: Scaffold(
+        backgroundColor: Colors.white,
         body: SafeArea(
           child: Center(
             child: SingleChildScrollView(
               physics: const BouncingScrollPhysics(),
-              child: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 35.0),
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 35.sp),
                 child: Column(
                   children: [
                     Container(
@@ -66,13 +64,14 @@ class LoginPage extends GetView<LoginController> {
                           CustomTextFieldWidget(
                             withAsterisk: false,
                             validator: (value) => Validators.validateEmail(value, false),
-                            focusNode: _emailFocusNode,
-                            controller: _emailController,
-                            onFieldSubmitted: (_) => FocusScope.of(context).requestFocus(_passwordFocusNode),
+                            focusNode: _c.emailFocusNode,
+                            controller: _c.emailController,
+                            onFieldSubmitted: (_) => FocusScope.of(context).requestFocus(_c.passwordFocusNode),
                             hintText: Strings.email.tr,
                             prefixIcon: const Icon(
                               CupertinoIcons.mail_solid,
                             ),
+                            keyboardType: TextInputType.emailAddress,
                           ),
                           CustomTextFieldWidget(
                             withAsterisk: false,
@@ -80,8 +79,8 @@ class LoginPage extends GetView<LoginController> {
                             hasClearIcon: false,
                             validator: Validators.validatePassword,
                             textInputAction: TextInputAction.done,
-                            focusNode: _passwordFocusNode,
-                            controller: _passwordController,
+                            focusNode: _c.passwordFocusNode,
+                            controller: _c.passwordController,
                             onFieldSubmitted: (_) => _submitLogin(),
                             hintText: Strings.pasword.tr,
                             prefixIcon: const Icon(CupertinoIcons.lock_fill),
@@ -94,10 +93,10 @@ class LoginPage extends GetView<LoginController> {
                       alignment: Alignment.centerRight,
                       child: GestureDetector(
                         onTap: () {
-                          if (controller.loginStatus.value != Status.loading) {}
+                          if (_c.loginStatus.value != Status.loading) {}
                         },
                         child: Text(
-                          'Forgot password?',
+                          Strings.forgotPassword.tr,
                           style: TextStyle(
                             color: AppColors.primary,
                           ),
@@ -115,7 +114,7 @@ class LoginPage extends GetView<LoginController> {
                                 status: data.value,
                                 onPressed: _submitLogin,
                               ),
-                          controller.loginStatus),
+                          _c.loginStatus),
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -158,9 +157,9 @@ class LoginPage extends GetView<LoginController> {
                           width: 23.0,
                           height: 23.0,
                         ),
-                        label: const Text(
-                          'Sign in with Google',
-                          style: TextStyle(
+                        label: Text(
+                          Strings.signInGg.tr,
+                          style: const TextStyle(
                             color: Colors.black,
                           ),
                         ),
@@ -174,7 +173,7 @@ class LoginPage extends GetView<LoginController> {
                           ),
                         ),
                         onPressed: () {
-                          if (controller.loginStatus.value != Status.loading) {}
+                          if (_c.loginStatus.value != Status.loading) {}
                         },
                       ),
                     ),
@@ -183,11 +182,11 @@ class LoginPage extends GetView<LoginController> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          const Text('Don\'t have an account yet?'),
+                          Text(Strings.notAccountYet.tr),
                           SizedBox(width: 5.sp),
                           GestureDetector(
                             onTap: () {
-                              if (controller.loginStatus.value != Status.loading) {
+                              if (_c.loginStatus.value != Status.loading) {
                                 Get.toNamed(Routes.REGISTER);
                               }
                             },

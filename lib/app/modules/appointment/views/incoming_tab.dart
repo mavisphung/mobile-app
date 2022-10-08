@@ -5,7 +5,6 @@ import 'package:get/get.dart';
 import '../../../models/appointment.dart';
 import '../controllers/incoming_controller.dart';
 import '../widgets/appointment_tile.dart';
-import './appointment_filter_page.dart';
 
 class IncomingTab extends StatefulWidget {
   IncomingTab({
@@ -40,11 +39,11 @@ class _IncomingTabState extends State<IncomingTab> with AutomaticKeepAliveClient
             primary: false,
             physics: const BouncingScrollPhysics(),
             child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 12.0.sp),
+              padding: EdgeInsets.symmetric(horizontal: 12.sp),
               child: Column(
                 children: [
                   SizedBox(
-                    height: 18.0.sp,
+                    height: 18.sp,
                   ),
                   Row(
                     children: [
@@ -55,29 +54,6 @@ class _IncomingTabState extends State<IncomingTab> with AutomaticKeepAliveClient
                         child: const Text('Clear'),
                       ),
                       const Spacer(),
-                      GestureDetector(
-                        onTap: () {
-                          Get.to(() => AppointmentFilterPage(), fullscreenDialog: true);
-                        },
-                        child: Container(
-                          padding: EdgeInsets.symmetric(
-                            horizontal: 9.0.sp,
-                            vertical: 6.0.sp,
-                          ),
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(5.0.sp),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.black.withOpacity(0.12),
-                                offset: const Offset(0, 2),
-                                blurRadius: 4.0.sp,
-                              ),
-                            ],
-                          ),
-                          child: const Icon(Icons.sort_rounded),
-                        ),
-                      ),
                     ],
                   ),
                   //--------------------------------------------------------
@@ -88,10 +64,10 @@ class _IncomingTabState extends State<IncomingTab> with AutomaticKeepAliveClient
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
-                            'No appointments found!',
+                            'Hiện tại chưa có cuộc hẹn nào!',
                             textAlign: TextAlign.center,
                             style: TextStyle(
-                              fontSize: 18.0.sp,
+                              fontSize: 18.sp,
                               fontWeight: FontWeight.bold,
                             ),
                           ),

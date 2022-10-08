@@ -23,8 +23,8 @@ class ReminderCard extends StatelessWidget {
             Row(
               children: [
                 Container(
-                  width: 53.0.sp,
-                  height: 53.0.sp,
+                  width: 53.sp,
+                  height: 53.sp,
                   decoration: const BoxDecoration(
                     shape: BoxShape.circle,
                     image: DecorationImage(
@@ -70,7 +70,7 @@ class ReminderCard extends StatelessWidget {
                     color: Colors.white,
                   ),
                   Padding(
-                    padding: EdgeInsets.only(left: 8.0.sp),
+                    padding: EdgeInsets.only(left: 8.sp),
                     child: const Text(
                       'Monday, July 29',
                       style: TextStyle(color: Colors.white),
