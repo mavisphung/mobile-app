@@ -1,37 +1,38 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-// class ChatMessages {
-//   String idFrom;
-//   String idTo;
-//   String timestamp;
-//   String content;
-//   int type;
+import 'package:hi_doctor_v2/app/common/constants.dart';
 
-//   ChatMessages({
-//     required this.idFrom,
-//     required this.idTo,
-//     required this.timestamp,
-//     required this.content,
-//     required this.type,
-//   });
+class ChatMessage {
+  int idFrom;
+  int idTo;
+  String timestamp;
+  String content;
+  int type;
 
-//   Map<String, dynamic> toJson() {
-//     return {
-//       FirestoreConstants.idFrom: idFrom,
-//       FirestoreConstants.idTo: idTo,
-//       FirestoreConstants.timestamp: timestamp,
-//       FirestoreConstants.content: content,
-//       FirestoreConstants.type: type,
-//     };
-//   }
+  ChatMessage({
+    required this.idFrom,
+    required this.idTo,
+    required this.timestamp,
+    required this.content,
+    required this.type,
+  });
 
-//   factory ChatMessages.fromDocument(DocumentSnapshot documentSnapshot) {
-//     String idFrom = documentSnapshot.get(FirestoreConstants.idFrom);
-//     String idTo = documentSnapshot.get(FirestoreConstants.idTo);
-//     String timestamp = documentSnapshot.get(FirestoreConstants.timestamp);
-//     String content = documentSnapshot.get(FirestoreConstants.content);
-//     int type = documentSnapshot.get(FirestoreConstants.type);
+  Map<String, dynamic> toJson() {
+    return {
+      Constants.idFrom: idFrom,
+      Constants.idTo: idTo,
+      Constants.timestamp: timestamp,
+      Constants.content: content,
+      Constants.type: type,
+    };
+  }
 
-//     return ChatMessages(idFrom: idFrom, idTo: idTo, timestamp: timestamp, content: content, type: type);
-//   }
-// }
+  factory ChatMessage.fromDocument(DocumentSnapshot doc) {
+    int idFrom = doc.get(Constants.idFrom);
+    int idTo = doc.get(Constants.idTo);
+    String timestamp = doc.get(Constants.timestamp);
+    String content = doc.get(Constants.content);
+    int type = doc.get(Constants.type);
+    return ChatMessage(idFrom: idFrom, idTo: idTo, timestamp: timestamp, content: content, type: type);
+  }
+}

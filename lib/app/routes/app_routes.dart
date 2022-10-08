@@ -19,4 +19,5 @@ abstract class Routes {
   static const BOOKING_SUMMARY = '/bookingSummary';
   static const PATIENT_LIST = '/patientList';
   static const PATIENT_PROFILE_DETAIL = '/patientProfileDetail';
+  static const CHAT = '/chat';
 }
