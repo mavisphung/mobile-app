@@ -1,12 +1,10 @@
-
 import 'package:get/get.dart';
-import 'package:hi_doctor_v2/app/common/constants.dart';
-import 'package:hi_doctor_v2/app/common/storage/storage.dart';
 
-class ApiDoctorImpl extends GetConnect{
-  final Map<String, String> headers = {
-    'Authorization': 'Bearer ${Storage.getValue(CacheKey.TOKEN.name) ?? ""}',
-  };
+import 'package:hi_doctor_v2/app/common/constants.dart';
+import 'package:hi_doctor_v2/app/common/storage/box.dart';
+
+class ApiDoctorImpl extends GetConnect {
+  final headers = Box.headers;
 
   @override
   void onInit() {

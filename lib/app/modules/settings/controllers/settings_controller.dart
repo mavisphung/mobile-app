@@ -1,8 +1,8 @@
 import 'dart:io';
 
 import 'package:get/get.dart';
+import 'package:hi_doctor_v2/app/common/storage/box.dart';
 
-import 'package:hi_doctor_v2/app/common/storage/storage.dart';
 import 'package:hi_doctor_v2/app/common/util/utils.dart';
 import 'package:hi_doctor_v2/app/data/response_model.dart';
 import 'package:hi_doctor_v2/app/models/user_info.dart';
@@ -14,7 +14,7 @@ class SettingsController extends GetxController {
   final userInfo = UserInfo2().obs;
 
   void getUserInfo() {
-    final data = Storage.getValue<UserInfo2>(CacheKey.USER_INFO.name);
+    final data = Box.userInfo;
     userInfo.value = UserInfo2(
       id: data?.id,
       email: data?.email,

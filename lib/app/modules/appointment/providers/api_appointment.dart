@@ -1,12 +1,11 @@
 import 'package:get/get.dart';
+
 import 'package:hi_doctor_v2/app/common/constants.dart';
-import 'package:hi_doctor_v2/app/common/storage/storage.dart';
+import 'package:hi_doctor_v2/app/common/storage/box.dart';
 import 'package:hi_doctor_v2/app/common/util/extensions.dart';
 
 class ApiAppointmentImpl extends GetConnect {
-  final Map<String, String> headers = {
-    'Authorization': 'Bearer ${Storage.getValue(CacheKey.TOKEN.name) ?? ""}',
-  };
+  final headers = Box.headers;
 
   @override
   void onInit() {

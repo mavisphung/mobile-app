@@ -82,12 +82,12 @@ class ChatTile extends StatelessWidget {
                                   style: _textStyle,
                                 ),
                               ),
-                              Text(
-                                DateFormat('dd MMM kk:mm')
-                                    .format(DateTime.fromMillisecondsSinceEpoch(int.parse(chatPeer.lastTimeStamp))),
-                                style:
-                                    TextStyle(color: Colors.blueGrey[300], fontSize: 12, fontStyle: FontStyle.italic),
-                              ),
+                              // Text(
+                              //   DateFormat('dd MMM kk:mm')
+                              //       .format(DateTime.fromMillisecondsSinceEpoch(int.parse(chatPeer.lastTimeStamp))),
+                              //   style:
+                              //       TextStyle(color: Colors.blueGrey[300], fontSize: 12, fontStyle: FontStyle.italic),
+                              // ),
                             ],
                           ),
                         ],

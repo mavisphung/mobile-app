@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
 import 'package:hi_doctor_v2/app/common/constants.dart';
+import 'package:hi_doctor_v2/app/common/storage/box.dart';
 import 'package:hi_doctor_v2/app/common/storage/storage.dart';
 import 'package:hi_doctor_v2/app/common/util/extensions.dart';
 import 'package:hi_doctor_v2/app/common/util/status.dart';
@@ -118,7 +120,7 @@ class UserProfileController extends GetxController {
     if (response.isOk) {
       _profile = info;
 
-      final oldData = Storage.getValue<UserInfo2>(CacheKey.USER_INFO.name);
+      final oldData = Box.userInfo;
       final userInfo = info.copyWith(
         id: oldData?.id,
         email: oldData?.email,

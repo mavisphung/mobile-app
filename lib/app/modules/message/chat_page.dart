@@ -40,7 +40,7 @@ class ChatPageState extends State<ChatPage> {
   List<QueryDocumentSnapshot> listMessage = [];
   int _limit = 20;
   final int _limitIncrement = 20;
-  String groupChatId = "";
+  late String groupChatId;
 
   final TextEditingController textEditingController = TextEditingController();
   final ScrollController listScrollController = ScrollController();
@@ -50,9 +50,10 @@ class ChatPageState extends State<ChatPage> {
   void initState() {
     super.initState();
     _cMessage = MessageController();
+    groupChatId = '${_cMessage.userId}-${widget.arguments.peerId}';
 
     listScrollController.addListener(_scrollListener);
-    readLocal();
+    // _readLocal();
   }
 
   _scrollListener() {
@@ -66,30 +67,47 @@ class ChatPageState extends State<ChatPage> {
     }
   }
 
-  void readLocal() {
-    int peerId = widget.arguments.peerId;
-    groupChatId = '${_cMessage.userId}-$peerId';
-
-    _cMessage.updateDataFirestore(
+  void _readLocal() async {
+    await _cMessage.updateDataFirestore(
       Constants.pathMessageCollection,
       groupChatId,
       {
-        Constants.isChatting: true,
+        Constants.isChatting: false,
       },
     );
   }
 
-  void onSendMessage(String content, int type) {
+  void onSendMessage(String content, int type) async {
+    int peerId = widget.arguments.peerId;
+    groupChatId = '${_cMessage.userId}-$peerId';
     if (content.trim().isNotEmpty) {
       textEditingController.clear();
-      _cMessage.sendMessage(content, type, groupChatId, _cMessage.userId, widget.arguments.peerId);
-      _cMessage.updateDataFirestore(
+      await _cMessage.sendMessage(content, type, groupChatId, _cMessage.userId, widget.arguments.peerId);
+      await _cMessage.updateDataFirestore(
+        Constants.pathMessageCollection,
+        groupChatId,
+        {
+          Constants.isChatting: true,
+        },
+      );
+      await _cMessage.updateDataFirestore(
         Constants.pathMessageCollection,
         groupChatId,
         {
           Constants.patientId: _cMessage.userId,
-          Constants.doctorId: widget.arguments.peerId,
-          Constants.lastMessage: context,
+        },
+      );
+      await _cMessage.updateDataFirestore(
+        Constants.pathMessageCollection,
+        groupChatId,
+        {
+          Constants.lastMessage: content,
+        },
+      );
+      await _cMessage.updateDataFirestore(
+        Constants.pathMessageCollection,
+        groupChatId,
+        {
           Constants.lastTimeStamp: DateTime.now().millisecondsSinceEpoch.toString(),
         },
       );
