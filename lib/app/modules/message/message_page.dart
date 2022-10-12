@@ -28,9 +28,8 @@ class MessagePage extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.all(10),
               child: StreamBuilder<QuerySnapshot>(
-                stream: _cMessage.getGroupChatStream(20),
+                stream: _cMessage.getAllGroupChatStream(20),
                 builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-                  if (!snapshot.hasData) print('NO DATA');
                   if (snapshot.hasData) {
                     if (snapshot.data!.docs.isNotEmpty) {
                       return ListView.builder(

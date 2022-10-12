@@ -10,6 +10,7 @@ import 'package:hi_doctor_v2/app/common/values/strings.dart';
 import 'package:hi_doctor_v2/app/models/appointment.dart';
 import 'package:hi_doctor_v2/app/modules/appointment/widgets/appointment_tile_button.dart';
 import 'package:hi_doctor_v2/app/modules/message/chat_page.dart';
+import 'package:hi_doctor_v2/app/modules/message/controllers/message_controller.dart';
 import 'package:hi_doctor_v2/app/routes/app_pages.dart';
 
 final Map<AppointmentStatus, Color> statusColors = {
@@ -43,158 +44,177 @@ class AppointmentTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final fullName = '${data.doctor!["firstName"]} ${data.doctor!["lastName"]}';
-    return Container(
-      width: double.infinity,
-      height: 180.sp,
-      margin: EdgeInsets.symmetric(vertical: 10.sp),
-      padding: EdgeInsets.all(12.5.sp),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(22.sp),
-      ),
-      child: Column(
-        children: [
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              ClipRRect(
-                borderRadius: BorderRadius.circular(15.sp),
-                child: Image.network(
-                  Constants.defaultAvatar,
-                  fit: BoxFit.fill,
-                  width: 83.sp,
-                  height: 83.sp,
+    return GestureDetector(
+      onTap: () {
+        data.id != null
+            ? Get.toNamed(Routes.MEETING_DETAIL, arguments: data.id)
+            : Utils.showAlertDialog('Error to get appointment information');
+      },
+      child: Container(
+        width: double.infinity,
+        height: 180.sp,
+        margin: EdgeInsets.symmetric(vertical: 10.sp),
+        padding: EdgeInsets.all(12.5.sp),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(22.sp),
+        ),
+        child: Column(
+          children: [
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(15.sp),
+                  child: Image.network(
+                    Constants.defaultAvatar,
+                    fit: BoxFit.fill,
+                    width: 83.sp,
+                    height: 83.sp,
+                  ),
                 ),
-              ),
-              SizedBox(
-                width: 12.sp,
-              ),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      '${Strings.doctor.tr} $fullName',
-                      overflow: TextOverflow.ellipsis,
-                      softWrap: false,
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 15.5.sp,
+                SizedBox(
+                  width: 12.sp,
+                ),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        '${Strings.doctor.tr} $fullName',
+                        overflow: TextOverflow.ellipsis,
+                        softWrap: false,
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 15.5.sp,
+                        ),
                       ),
-                    ),
-                    Container(
-                      margin: EdgeInsets.symmetric(vertical: 8.sp),
-                      child: Row(
-                        children: [
-                          Text(
-                            data.type.toString().enumType.label,
-                            style: TextStyle(
-                              // color: data.type == AppointmentType.online.value ? Colors.green : Colors.red,
-                              fontSize: 12.sp,
-                            ),
-                          ),
-                          Container(
-                            margin: EdgeInsets.symmetric(horizontal: 12.sp),
-                            width: 12.sp,
-                            child: Divider(
-                              // color: Colors.red,
-                              thickness: 1.5.sp,
-                            ),
-                          ),
-                          Container(
-                            padding: EdgeInsets.symmetric(horizontal: 12.sp, vertical: 4.sp),
-                            decoration: BoxDecoration(
-                              border: Border.all(
-                                color: statusColors[data.status.toString().enumStatus]!,
-                                width: 1.6.sp,
-                              ),
-                              borderRadius: BorderRadius.circular(8.sp),
-                            ),
-                            child: Text(
-                              data.status.toString().enumStatus.label,
+                      Container(
+                        margin: EdgeInsets.symmetric(vertical: 8.sp),
+                        child: Row(
+                          children: [
+                            Text(
+                              data.type.toString().enumType.label,
                               style: TextStyle(
-                                color: statusColors[data.status.toString().enumStatus]!,
+                                // color: data.type == AppointmentType.online.value ? Colors.green : Colors.red,
                                 fontSize: 12.sp,
-                                fontWeight: FontWeight.w500,
                               ),
                             ),
+                            Container(
+                              margin: EdgeInsets.symmetric(horizontal: 12.sp),
+                              width: 12.sp,
+                              child: Divider(
+                                // color: Colors.red,
+                                thickness: 1.5.sp,
+                              ),
+                            ),
+                            Container(
+                              padding: EdgeInsets.symmetric(horizontal: 12.sp, vertical: 4.sp),
+                              decoration: BoxDecoration(
+                                border: Border.all(
+                                  color: statusColors[data.status.toString().enumStatus]!,
+                                  width: 1.6.sp,
+                                ),
+                                borderRadius: BorderRadius.circular(8.sp),
+                              ),
+                              child: Text(
+                                data.status.toString().enumStatus.label,
+                                style: TextStyle(
+                                  color: statusColors[data.status.toString().enumStatus]!,
+                                  fontSize: 12.sp,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      buildDay(data.bookedAt!),
+                    ],
+                  ),
+                ),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    GestureDetector(
+                      onTap: () async {
+                        final _cMessage = MessageController();
+                        final groupChatId = '${_cMessage.userId}-${data.doctor!['id']}';
+                        final hasGroupChatDoc = await _cMessage.hasGroupChatDocument(groupChatId);
+                        if (!hasGroupChatDoc) {
+                          _cMessage.insertDataFirestore(
+                            Constants.pathMessageCollection,
+                            groupChatId,
+                            {
+                              Constants.doctorId: data.doctor!['id'],
+                            },
+                          );
+                        }
+                        Get.toNamed(
+                          Routes.CHAT,
+                          arguments: ChatPageArguments(
+                            peerId: data.doctor!['id'],
+                            peerName: fullName,
+                            peerAvatar: data.doctor!['avatar'],
                           ),
-                        ],
+                        );
+                      },
+                      child: Container(
+                        padding: EdgeInsets.all(9.sp),
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(
+                          color: Colors.grey[100]?.withOpacity(0.7),
+                          borderRadius: BorderRadius.circular(20.sp),
+                        ),
+                        child: data.type.toString().enumType == AppointmentType.online
+                            ? Icon(
+                                PhosphorIcons.phone,
+                                color: AppColors.primary,
+                              )
+                            : Icon(
+                                PhosphorIcons.messenger_logo,
+                                color: AppColors.primary,
+                              ),
                       ),
                     ),
-                    buildDay(data.bookedAt!),
                   ],
                 ),
-              ),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  GestureDetector(
+              ],
+            ),
+            const Expanded(
+              child: Divider(),
+            ),
+            Row(
+              children: [
+                Expanded(
+                  child: AppointmentButton(
                     onTap: () {
-                      Get.toNamed(
-                        Routes.CHAT,
-                        arguments: ChatPageArguments(
-                          peerId: data.doctor!['id'],
-                          peerName: fullName,
-                          peerAvatar: data.doctor!['avatar'],
-                        ),
-                      );
+                      'Cancelling appointment'.debugLog('Cancellation');
                     },
-                    child: Container(
-                      padding: EdgeInsets.all(9.sp),
-                      alignment: Alignment.center,
-                      decoration: BoxDecoration(
-                        color: Colors.grey[100]?.withOpacity(0.7),
-                        borderRadius: BorderRadius.circular(20.sp),
-                      ),
-                      child: data.type.toString().enumType == AppointmentType.online
-                          ? Icon(
-                              PhosphorIcons.phone,
-                              color: AppColors.primary,
-                            )
-                          : Icon(
-                              PhosphorIcons.messenger_logo,
-                              color: AppColors.primary,
-                            ),
-                    ),
+                    textColor: Colors.red,
+                    borderColor: Colors.red,
+                    label: 'Hủy cuộc hẹn',
                   ),
-                ],
-              ),
-            ],
-          ),
-          const Expanded(
-            child: Divider(),
-          ),
-          Row(
-            children: [
-              Expanded(
-                child: AppointmentButton(
-                  onTap: () {
-                    'Cancelling appointment'.debugLog('Cancellation');
-                  },
-                  textColor: Colors.red,
-                  borderColor: Colors.red,
-                  label: 'Hủy cuộc hẹn',
                 ),
-              ),
-              SizedBox(
-                width: 10.sp,
-              ),
-              Expanded(
-                child: AppointmentButton(
-                  onTap: () {
-                    'Rescheduling appointment'.debugLog('Reschedule');
-                  },
-                  textColor: Colors.white,
-                  backgroundColor: AppColors.primary,
-                  borderColor: AppColors.primary,
-                  label: 'Đặt lại lịch hẹn',
+                SizedBox(
+                  width: 10.sp,
                 ),
-              ),
-            ],
-          ),
-        ],
+                Expanded(
+                  child: AppointmentButton(
+                    onTap: () {
+                      'Rescheduling appointment'.debugLog('Reschedule');
+                    },
+                    textColor: Colors.white,
+                    backgroundColor: AppColors.primary,
+                    borderColor: AppColors.primary,
+                    label: 'Đặt lại lịch hẹn',
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }

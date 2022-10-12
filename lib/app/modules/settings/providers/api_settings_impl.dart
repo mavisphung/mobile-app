@@ -4,21 +4,20 @@ import 'dart:io';
 import 'package:get/get.dart';
 
 import 'package:hi_doctor_v2/app/common/constants.dart';
-import 'package:hi_doctor_v2/app/common/storage/storage.dart';
+import 'package:hi_doctor_v2/app/common/storage/box.dart';
 import 'package:hi_doctor_v2/app/models/patient.dart';
 import 'package:hi_doctor_v2/app/models/user_info.dart';
 import 'package:hi_doctor_v2/app/modules/settings/providers/api_settings.dart';
 import 'package:image_picker/image_picker.dart';
 
 class ApiSettingsImpl extends GetConnect with ApiSettings {
-  final Map<String, String> headers = {
-    'Authorization': 'Bearer ${Storage.getValue<String>(CacheKey.TOKEN.name)}',
-  };
+  final headers = Box.headers;
 
   @override
   void onInit() {
     httpClient.baseUrl = Constants.baseUrl;
     httpClient.timeout = Constants.timeout;
+    super.onInit();
   }
 
   Future<Response> getProfile() {
@@ -79,7 +78,7 @@ class ApiSettingsImpl extends GetConnect with ApiSettings {
   @override
   Future<Response> getPatientProfile(int patientId) {
     return get(
-      '/user/patients/$patientId',
+      '/user/patients/$patientId/',
       headers: headers,
     );
   }

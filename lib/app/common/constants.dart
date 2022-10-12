@@ -2,6 +2,8 @@ abstract class Constants {
   static const String baseUrl = 'http://capstone-elb-1141242582.ap-southeast-1.elb.amazonaws.com';
   // static const String baseUrl = 'http://localhost:8000';
   static const String baseUrl2 = 'capstone-elb-1141242582.ap-southeast-1.elb.amazonaws.com';
+  // static const appId = '2379244a079c45098b6d9040bb37aa85';
+  static const appId = '1ebd61600977424fba66c122d5c22576';
   static const timeout = Duration(seconds: 30);
   static const successGetStatusCode = 200;
   static const successPostStatusCode = 201;

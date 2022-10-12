@@ -20,4 +20,6 @@ abstract class Routes {
   static const PATIENT_LIST = '/patientList';
   static const PATIENT_PROFILE_DETAIL = '/patientProfileDetail';
   static const CHAT = '/chat';
+  static const CHANNEL = '/channel';
+  static const MEETING_DETAIL = '/meetingDetail';
 }

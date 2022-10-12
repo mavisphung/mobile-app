@@ -14,6 +14,8 @@ import 'package:hi_doctor_v2/app/modules/auth/splash_page.dart';
 import 'package:hi_doctor_v2/app/modules/bottom_navbar/nav_bar.dart';
 import 'package:hi_doctor_v2/app/modules/home/home_page.dart';
 import 'package:hi_doctor_v2/app/modules/home/views/doctor_detail_page.dart';
+import 'package:hi_doctor_v2/app/modules/meeting/channel.dart';
+import 'package:hi_doctor_v2/app/modules/meeting/meeting_detail.dart';
 import 'package:hi_doctor_v2/app/modules/message/chat_page.dart';
 import 'package:hi_doctor_v2/app/modules/search/views/search_page.dart';
 import 'package:hi_doctor_v2/app/modules/settings/views/patient_list.dart';
@@ -109,6 +111,20 @@ abstract class AppPages {
     GetPage(
       name: Routes.CHAT,
       page: () => ChatPage(),
+      preventDuplicates: true,
+      fullscreenDialog: true,
+      transition: Transition.rightToLeftWithFade,
+    ),
+    GetPage(
+      name: Routes.MEETING_DETAIL,
+      page: () => MeetingDetailPage(),
+      preventDuplicates: true,
+      fullscreenDialog: true,
+      transition: Transition.rightToLeftWithFade,
+    ),
+    GetPage(
+      name: Routes.CHANNEL,
+      page: () => const ChannelPage(),
       preventDuplicates: true,
       fullscreenDialog: true,
       transition: Transition.rightToLeftWithFade,
