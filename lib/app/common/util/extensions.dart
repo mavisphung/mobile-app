@@ -210,7 +210,7 @@ extension DateTimeConverter on DateTime {
     DateTime.friday: 6,
     DateTime.saturday: 7,
   };
-  int getWeekday(int flutterWeekday) {
-    return weekdays[flutterWeekday]!;
+  int getWeekday() {
+    return weekdays[weekday]!;
   }
 }

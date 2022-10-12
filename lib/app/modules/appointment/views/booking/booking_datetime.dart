@@ -178,11 +178,11 @@ class BookingDateTimePage extends StatelessWidget {
           ),
           // -------------------------------------------------------------------------------
           CustomTitleSection(
-            title: 'Select hour',
+            title: 'Chọn giờ',
             paddingLeft: 8.sp,
           ),
           ObxValue<Rx<DateTime>>((data) {
-            final slots = getAvailableSlot(data.value.getWeekday(data.value.weekday));
+            final slots = getAvailableSlot(data.value.weekday);
             if (slots != null) {
               return GridView.builder(
                 padding: EdgeInsets.only(bottom: 5.sp),
