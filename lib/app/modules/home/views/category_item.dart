@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:hi_doctor_v2/app/common/values/colors.dart';
 
 class CategoryItem extends StatelessWidget {
   final String label;
@@ -25,7 +26,7 @@ class CategoryItem extends StatelessWidget {
           children: [
             SvgPicture.asset(
               image,
-              color: Colors.amber,
+              color: AppColors.primary,
               fit: BoxFit.cover,
               width: 33.0,
               height: 33.0,

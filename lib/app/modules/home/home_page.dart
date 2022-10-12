@@ -111,19 +111,49 @@ class HomePage extends StatelessWidget {
               const ReminderCard(),
               _spacing,
               CustomTitleSection(title: Strings.category.tr),
-              SizedBox(
-                height: 80.sp,
-                child: ListView.separated(
-                  scrollDirection: Axis.horizontal,
-                  physics: const BouncingScrollPhysics(),
-                  itemBuilder: (_, index) => CategoryItem(
-                    label: _categoriesList[index].label,
-                    image: _categoriesList[index].image,
-                  ),
-                  separatorBuilder: (_, __) => SizedBox(
-                    width: 3.sp,
-                  ),
-                  itemCount: _categoriesList.length,
+              Obx(
+                () => SizedBox(
+                  height: 80.sp,
+                  child: _homeController.specialistList.isNotEmpty
+                      ? ListView.separated(
+                          scrollDirection: Axis.horizontal,
+                          physics: const BouncingScrollPhysics(),
+                          itemBuilder: (_, index) {
+                            var temp = _homeController.specialistList[index];
+                            return CategoryItem(
+                              label: temp.name!,
+                              image: 'assets/icons/specs/cardio2.svg',
+                            );
+                          },
+                          separatorBuilder: (_, __) => SizedBox(
+                            width: 3.sp,
+                          ),
+                          itemCount: _homeController.specialistList.length,
+                        )
+                      : const Center(child: CircularProgressIndicator()),
+                ),
+              ),
+              _spacing,
+              const CustomTitleSection(title: 'Gần khu vực'),
+              Obx(
+                () => SizedBox(
+                  height: 150.sp,
+                  width: double.infinity,
+                  child: _homeController.nearestList.isNotEmpty
+                      ? ListView.separated(
+                          scrollDirection: Axis.horizontal,
+                          itemCount: _homeController.nearestList.length,
+                          itemBuilder: (_, index) {
+                            var realDoctor = _homeController.nearestList[index];
+                            return DoctorItem(
+                              doctor: realDoctor,
+                            );
+                          },
+                          separatorBuilder: (_, __) => SizedBox(
+                            width: 10.sp,
+                          ),
+                        )
+                      : const Center(child: CircularProgressIndicator()),
                 ),
               ),
               _spacing,
@@ -148,14 +178,6 @@ class HomePage extends StatelessWidget {
                               return DoctorItem(
                                 doctor: realDoctor,
                               );
-                              // var doctor = _doctorList[index];
-                              // return DoctorItem(
-                              //   fullName: doctor.fullName,
-                              //   service: doctor.service,
-                              //   experienceYears: doctor.experienceYears,
-                              //   rating: doctor.rating,
-                              //   reviewNumber: doctor.reviewNumber,
-                              // );
                             },
                             separatorBuilder: (_, __) => SizedBox(
                               width: 10.sp,

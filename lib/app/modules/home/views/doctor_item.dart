@@ -89,7 +89,7 @@ class DoctorItem extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Dr. ${doctor.firstName} ${doctor.lastName}',
+                        'Bs. ${doctor.lastName} ${doctor.firstName}',
                         maxLines: 1,
                         style: TextStyle(
                           fontSize: 14.sp,
@@ -97,14 +97,6 @@ class DoctorItem extends StatelessWidget {
                           overflow: TextOverflow.ellipsis,
                         ),
                       ),
-                      // Text(
-                      //   service,
-                      //   overflow: TextOverflow.fade,
-                      //   style: TextStyle(
-                      //     fontSize: 12.sp,
-                      //     color: Colors.grey,
-                      //   ),
-                      // ),
                       Divider(
                         color: Colors.grey[300],
                         thickness: 0.5.sp,
@@ -114,6 +106,8 @@ class DoctorItem extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
                             _getDescription(Strings.expYrs.tr, '${doctor.experienceYears?.toStringAsFixed(0)}'),
+                            _getDescription('Chuyên khoa', '${doctor.specialists![0]["name"]}'),
+                            if (doctor.distance != null) _getDescription('Khoảng cách', '${doctor.distance?["text"]}'),
                             Row(
                               crossAxisAlignment: CrossAxisAlignment.end,
                               children: [

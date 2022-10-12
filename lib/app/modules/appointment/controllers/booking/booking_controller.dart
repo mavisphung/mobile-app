@@ -12,6 +12,7 @@ import 'package:hi_doctor_v2/app/modules/appointment/providers/api_book_appointm
 import 'package:hi_doctor_v2/app/modules/appointment/providers/req_appointment_model.dart';
 import 'package:hi_doctor_v2/app/modules/appointment/views/booking/booking_package_page.dart';
 import 'package:hi_doctor_v2/app/modules/appointment/widgets/service_item.dart';
+import 'package:hi_doctor_v2/app/routes/app_pages.dart';
 
 class BookingController extends GetxController {
   // select booking date time
@@ -105,15 +106,21 @@ class BookingController extends GetxController {
     return packageList;
   }
 
-  void createAppointment(ReqAppointmentModel reqModel) async {
+  Future<Map<String, dynamic>> createAppointment(ReqAppointmentModel reqModel) async {
+    'Creating appointment'.debugLog('BookingController');
     final response = await _apiBookAppointment.postAppointment(reqModel).futureValue();
+    response.toString().debugLog('BookingController.response');
+    Map<String, dynamic> result = {};
     if (response != null) {
-      if (response.isSuccess == true && response.statusCode == Constants.successGetStatusCode) {
-        Utils.showAlertDialog(response.toString());
-        return;
+      if (response.isSuccess == true && response.statusCode == 201) {
+        result['status'] = 200;
+        result['message'] = 'APPOINTMENT_CREATED_SUCCEEDED';
+      } else if (response.message == 'APPOINTMENT_DUPLICATED') {
+        result['status'] = 400;
+        result['message'] = response.message;
       }
     }
-    Utils.showAlertDialog(response.toString());
+    return result;
   }
 
   @override

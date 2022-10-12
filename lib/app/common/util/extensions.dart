@@ -25,7 +25,7 @@ extension FutureExt<T> on Future<Response<T>> {
       },
     ).then((value) {
       final responseBody = ApiResponse.getResponse<T>(value);
-      print('RESPONSE BODY: $responseBody');
+      // print('RESPONSE BODY: $responseBody');
       if (responseBody != null) {
         final responseModel1 = ResponseModel1.fromJson(responseBody as Map<String, dynamic>);
         return responseModel1;

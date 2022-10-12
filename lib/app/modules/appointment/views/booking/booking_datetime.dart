@@ -28,54 +28,66 @@ class BookingDateTimePage extends StatelessWidget {
   final _cBooking = Get.put(BookingController());
   final doctor = Get.arguments as Doctor;
 
-  List<WorkingHour>? getAvailableSlot(int weekDay) {
-    _cBooking.setDoctor(doctor);
-    final listShift = doctor.shifts;
-    print(listShift);
-    if (listShift != null) {
-      final shift = listShift[weekDay > 6 ? 0 : weekDay];
-      final isActive = shift['isActive'] as bool;
-      if (isActive) {
-        print(shift['startTime']);
-        final dateStr = '${currentDate.year}-${currentDate.month}-${currentDate.day}';
-        final start = shift['startTime'] as String;
-        final end = shift['endTime'] as String;
-        final startTime = Utils.parseStrToDateTime('$dateStr ${start.replaceRange(5, null, "")}');
-        print('start: $startTime');
-        final endTime = Utils.parseStrToDateTime('$dateStr ${end.replaceRange(5, null, "")}');
-        print('end: $endTime');
-        if (startTime != null && endTime != null) {
-          List<WorkingHour> slots = [];
-          DateTime endSlot;
-          int id = 1;
-          endSlot = startTime;
-          String label;
-          do {
-            label = 'AM';
-            final midTime = DateTime(currentDate.year, currentDate.month, currentDate.day, 12);
-            if (endTime.isAfter(midTime)) {
-              label = 'PM';
-            }
-            slots.add(WorkingHour(
-              id: id++,
-              title: '${Utils.formatTime(endSlot)} $label',
-              value: '${Utils.formatTime(endSlot)}:00',
-            ));
-            endSlot = DateTime(
-              currentDate.year,
-              currentDate.month,
-              currentDate.day,
-              endSlot.hour,
-              endSlot.minute,
-            ).add(const Duration(minutes: 30));
-            print('endSlot: $endSlot');
-          } while (endSlot.isBefore(endTime) || endSlot.compareTo(endTime) == 0);
-
-          return slots;
-        }
+  Map<String, dynamic>? _getShift(int weekday) {
+    for (var shift in doctor.shifts!) {
+      Map<String, dynamic> temp = shift as Map<String, dynamic>;
+      if (shift['weekday'] == weekday) {
+        return temp;
       }
     }
     return null;
+  }
+
+  List<WorkingHour>? getAvailableSlot(int weekDay) {
+    _cBooking.setDoctor(doctor);
+    final listShift = doctor.shifts;
+    if (listShift == null || listShift.isEmpty) {
+      return null;
+    }
+    final shift = _getShift(weekDay);
+
+    if (shift == null) return null;
+
+    final isActive = shift['isActive'] as bool;
+    if (isActive) {
+      // print(shift['startTime']);
+      final dateStr = '${currentDate.year}-${currentDate.month}-${currentDate.day}';
+      final start = shift['startTime'] as String;
+      final end = shift['endTime'] as String;
+      final startTime = Utils.parseStrToDateTime('$dateStr ${start.replaceRange(5, null, "")}');
+      // print('start: $startTime');
+      final endTime = Utils.parseStrToDateTime('$dateStr ${end.replaceRange(5, null, "")}');
+      // print('end: $endTime');
+      if (startTime != null && endTime != null) {
+        List<WorkingHour> slots = [];
+        DateTime endSlot;
+        int id = 1;
+        endSlot = startTime;
+        String label;
+        do {
+          label = 'AM';
+          final midTime = DateTime(currentDate.year, currentDate.month, currentDate.day, 12);
+          if (endTime.isAfter(midTime)) {
+            label = 'PM';
+          }
+          slots.add(WorkingHour(
+            id: id++,
+            title: '${Utils.formatTime(endSlot)} $label',
+            value: '${Utils.formatTime(endSlot)}:00',
+          ));
+          endSlot = DateTime(
+            currentDate.year,
+            currentDate.month,
+            currentDate.day,
+            endSlot.hour,
+            endSlot.minute,
+          ).add(const Duration(minutes: 30));
+          // print('endSlot: $endSlot');
+        } while (endSlot.isBefore(endTime) || endSlot.compareTo(endTime) == 0);
+
+        return slots;
+      }
+    }
   }
 
   @override
@@ -182,7 +194,7 @@ class BookingDateTimePage extends StatelessWidget {
             paddingLeft: 8.sp,
           ),
           ObxValue<Rx<DateTime>>((data) {
-            final slots = getAvailableSlot(data.value.weekday);
+            final slots = getAvailableSlot(data.value.getWeekday());
             if (slots != null) {
               return GridView.builder(
                 padding: EdgeInsets.only(bottom: 5.sp),

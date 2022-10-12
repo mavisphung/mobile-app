@@ -23,18 +23,18 @@ abstract class ApiResponse {
     try {
       final res = jsonDecode(response.bodyString!);
 
-      print('STATUS CODE: ${response.statusCode}, ${res["success"]}, ${res["status"]}');
+      // print('STATUS CODE: ${response.statusCode}, ${res["success"]}, ${res["status"]}');
       if (response.isOk) {
         if (res['success'] == true) {
-          print('OK: ${response.body}');
+          // print('OK: ${response.body}');
           return response.body;
         }
       } else {
-        print('NOT OK: ${response.body}');
+        // print('NOT OK: ${response.body}');
         if (res['success'] == false && res['status'] == 400) {
           return response.body;
         } else if (status.isServerError) {
-          print('SERVER ERROR');
+          // print('SERVER ERROR');
           throw const ApiError();
         } else if (status.code == HttpStatus.requestTimeout) {
           throw ApiError(

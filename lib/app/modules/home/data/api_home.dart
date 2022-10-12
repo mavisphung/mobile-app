@@ -23,4 +23,31 @@ class ApiHomeImpl extends GetConnect {
       },
     );
   }
+
+  Future<Response> getSpecialists({int page = 1, int limit = 10}) {
+    return get(
+      '/specialists/',
+      headers: headers,
+      query: {
+        'page': page.toString(),
+        'limit': limit.toString(),
+      },
+    );
+  }
+
+  Future<Response> getNearestDoctors({
+    String address = '218 Hồng Bàng, Phường 15, Quận 5, Thành phố Hồ Chí Minh, Việt Nam',
+    int page = 1,
+    int limit = 10,
+  }) {
+    return get(
+      '/doctors/nearest/',
+      headers: headers,
+      query: {
+        'page': page.toString(),
+        'limit': limit.toString(),
+        'address': address,
+      },
+    );
+  }
 }

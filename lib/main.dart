@@ -1,68 +1,22 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:firebase_core/firebase_core.dart';
 
 import 'package:hi_doctor_v2/app/common/util/initializer.dart';
 import 'package:hi_doctor_v2/app/common/util/messages.dart';
 import 'package:hi_doctor_v2/app/common/values/strings.dart';
 import 'package:hi_doctor_v2/app/data/custom_controller.dart';
+import 'package:hi_doctor_v2/app/modules/firebase/core.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/base_widget.dart';
 import 'package:hi_doctor_v2/app/routes/app_pages.dart';
-
-Future<void> processBackgroundMessage(RemoteMessage message) async {
-  await Firebase.initializeApp();
-  print('background message run');
-  // Get.snackbar(
-  //   message.notification!.title!.toString(),
-  //   message.notification!.body!.toString(),
-  //   backgroundColor: Colors.redAccent,
-  // );
-}
-
-void registerNotification() async {
-  // 1. Initialize the Firebase app
-  // await Firebase.initializeApp();
-
-  // 2. Instantiate Firebase Messaging
-  var _messaging = FirebaseMessaging.instance;
-
-  // 3. On iOS, this helps to take the user permissions
-  NotificationSettings settings = await _messaging.requestPermission(
-    alert: true,
-    badge: true,
-    provisional: false,
-    sound: true,
-  );
-  // FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-  //   Get.snackbar(message.notification!.title!.toString(), message.notification!.body!.toString());
-  // });
-  print('User granted permission: ${settings.authorizationStatus} ---------------------');
-  if (settings.authorizationStatus == AuthorizationStatus.authorized) {
-    print('User granted permission');
-
-    // TODO: handle the received notifications
-    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-      print('From message opened app');
-      Get.snackbar(
-        message.notification!.title!.toString(),
-        message.notification!.body!.toString(),
-        backgroundColor: Colors.redAccent,
-      );
-    });
-
-    FirebaseMessaging.onBackgroundMessage(processBackgroundMessage);
-  } else {
-    print('User declined or has not accepted permission');
-  }
-}
 
 void main() {
   Initializer.init(() async {
     WidgetsFlutterBinding.ensureInitialized();
     await Firebase.initializeApp();
-    registerNotification();
+    FirebaseHandler.registerNotification();
     FirebaseMessaging.instance.getToken().then((value) {
       print('Firebase token on this device: ');
       print(value);

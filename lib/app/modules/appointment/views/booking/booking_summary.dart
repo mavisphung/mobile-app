@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:hi_doctor_v2/app/common/util/utils.dart';
+import 'package:hi_doctor_v2/app/routes/app_pages.dart';
 import 'package:intl/intl.dart';
 
 import 'package:hi_doctor_v2/app/common/storage/storage.dart';
@@ -54,7 +56,7 @@ class BookingSummary extends StatelessWidget {
     return supervisor!.phoneNumber!.replaceRange(0, 6, '******');
   }
 
-  void createAppointment() {
+  void createAppointment() async {
     final reqModel = ReqAppointmentModel(
       _cBooking.doctor.id!,
       _cBooking.patient.id!,
@@ -63,7 +65,16 @@ class BookingSummary extends StatelessWidget {
       _cBooking.serviceType,
       _cBooking.problemController.text.trim(),
     );
-    _cBooking.createAppointment(reqModel);
+    var result = await _cBooking.createAppointment(reqModel);
+    if (result.containsKey('status') && result.containsKey('message')) {
+      if (result['status'] == 200 && result['message'] == 'APPOINTMENT_CREATED_SUCCEEDED') {
+        Get.offAllNamed(Routes.NAVBAR);
+      } else if (result['status'] == 400 && result['message'] == 'APPOINTMENT_DUPLICATED') {
+        Utils.showAlertDialog('Lịch bị trùng, vui lòng đặt lại');
+      }
+      return;
+    }
+    Utils.showAlertDialog('Lỗi hệ thống!');
   }
 
   @override

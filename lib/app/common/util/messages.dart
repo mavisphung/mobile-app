@@ -25,8 +25,7 @@ class Messages extends Translations {
           Strings.appointment: 'Appointment',
           Strings.message: 'Message',
           Strings.settings: 'Settings',
-          Strings.policyAgreementMsg:
-              'Creating an account means you\'re agreed with our Terms of Service, Privacy Policy, and our default Notification Settings.',
+          Strings.policyAgreementMsg: 'Creating an account means you\'re agreed with our Terms of Service, Privacy Policy, and our default Notification Settings.',
           Strings.upcomingAppointment: 'Upcoming appointment',
           Strings.category: 'Categories',
           Strings.latestSearchDoctor: 'Latest search doctors',
@@ -140,11 +139,11 @@ class Messages extends Translations {
           Strings.appointment: 'Cuộc hẹn',
           Strings.message: 'Tin nhắn',
           Strings.settings: 'Cài đặt',
-          Strings.policyAgreementMsg:
-              'Creating an account means you\'re agreed with our Terms of Service, Privacy Policy, and our default Notification Settings.',
+          Strings.policyAgreementMsg: 'Creating an account means you\'re agreed with our Terms of Service, Privacy Policy, and our default Notification Settings.',
           Strings.upcomingAppointment: 'Upcoming appointment',
-          Strings.category: 'Thể loại',
+          Strings.category: 'Phân loại chuyên khoa',
           Strings.latestSearchDoctor: 'Bác sĩ đã xem gần đây',
+          Strings.recentViewDoctor: 'Bác sĩ đã xem gần đây',
           Strings.dob: 'Ngày sinh',
 
           // Verb, Adjective

@@ -22,6 +22,7 @@ abstract class Strings {
   static String get upcomingAppointment => 'Upcoming appointment';
   static String get category => 'Categories';
   static String get latestSearchDoctor => 'Latest search doctor';
+  static String get recentViewDoctor => 'Recently';
   static String get dob => 'Dob';
 
   // Verb, Adjective

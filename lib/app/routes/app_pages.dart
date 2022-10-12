@@ -17,6 +17,7 @@ import 'package:hi_doctor_v2/app/modules/home/views/doctor_detail_page.dart';
 import 'package:hi_doctor_v2/app/modules/meeting/channel.dart';
 import 'package:hi_doctor_v2/app/modules/meeting/meeting_detail.dart';
 import 'package:hi_doctor_v2/app/modules/message/chat_page.dart';
+import 'package:hi_doctor_v2/app/modules/notification/notification_page.dart';
 import 'package:hi_doctor_v2/app/modules/search/views/search_page.dart';
 import 'package:hi_doctor_v2/app/modules/settings/views/patient_list.dart';
 import 'package:hi_doctor_v2/app/modules/settings/views/patient_profile_detail.dart';
@@ -49,6 +50,10 @@ abstract class AppPages {
     GetPage(
       name: Routes.NAVBAR,
       page: () => NavBar(),
+    ),
+    GetPage(
+      name: Routes.NOTIFICATION_PAGE,
+      page: () => NotificationPage(),
     ),
     GetPage(
       name: Routes.HISTORY,

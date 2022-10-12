@@ -10,6 +10,7 @@ import 'package:hi_doctor_v2/app/modules/message/message_page.dart';
 import 'package:hi_doctor_v2/app/modules/appointment/appointment_page.dart';
 import 'package:hi_doctor_v2/app/modules/bottom_navbar/controllers/navbar_controller.dart';
 import 'package:hi_doctor_v2/app/modules/home/home_page.dart';
+import 'package:hi_doctor_v2/app/modules/notification/notification_page.dart';
 import 'package:hi_doctor_v2/app/modules/settings/settings_page.dart';
 
 class NavBar extends StatelessWidget {
@@ -26,6 +27,8 @@ class NavBar extends StatelessWidget {
       case 2:
         return MessagePage();
       case 3:
+        return NotificationPage();
+      case 4:
         return SettingsPage();
       default:
         return HomePage();
@@ -65,6 +68,11 @@ class NavBar extends StatelessWidget {
                 _bottomNavigationBarItem(
                   icon: CupertinoIcons.chat_bubble_2,
                   activeIcon: CupertinoIcons.chat_bubble_2_fill,
+                  label: Strings.message.tr,
+                ),
+                _bottomNavigationBarItem(
+                  icon: Icons.notifications_none_outlined,
+                  activeIcon: Icons.notifications,
                   label: Strings.message.tr,
                 ),
                 _bottomNavigationBarItem(

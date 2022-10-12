@@ -22,4 +22,5 @@ abstract class Routes {
   static const CHAT = '/chat';
   static const CHANNEL = '/channel';
   static const MEETING_DETAIL = '/meetingDetail';
+  static const NOTIFICATION_PAGE = '/notification';
 }
