@@ -25,7 +25,10 @@ class HomeController extends GetxController {
     getNearestDoctorsApi(address: userInfo?.address);
   }
 
-  void getNearestDoctorsApi({String? address = '218 Hồng Bàng, Phường 15, Quận 5, Thành phố Hồ Chí Minh, Việt Nam', int page = 1, int limit = 10}) async {
+  void getNearestDoctorsApi(
+      {String? address = '218 Hồng Bàng, Phường 15, Quận 5, Thành phố Hồ Chí Minh, Việt Nam',
+      int page = 1,
+      int limit = 10}) async {
     'Fetching nearest doctors'.debugLog('HomeController');
     final result = await apiHome.getNearestDoctors(page: page, limit: limit);
     final Map<String, dynamic> response = ApiResponse.getResponse(result);
@@ -41,23 +44,7 @@ class HomeController extends GetxController {
     final Map<String, dynamic> response = ApiResponse.getResponse(result);
     final model = ResponseModel2.fromMap(response);
     final data = model.data as List<dynamic>;
-    doctorList.value += data
-        .map(
-          (e) => Doctor(
-            id: e['id'],
-            email: e['email'],
-            avatar: e['avatar'],
-            firstName: e['firstName'],
-            lastName: e['lastName'],
-            dob: e['dob'],
-            age: e['age'],
-            phoneNumber: e['phoneNumber'],
-            experienceYears: e['experienceYears'],
-            gender: e['gender'],
-            specialists: e['specialists'],
-          ),
-        )
-        .toList();
+    doctorList.value += data.map((e) => Doctor.fromMap(e)).toList();
     update();
   }
 

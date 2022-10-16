@@ -54,7 +54,7 @@ class MyApp extends StatelessWidget {
                   title: Strings.appName,
                   debugShowCheckedModeBanner: false,
                   theme: ThemeData(
-                    primarySwatch: Colors.indigo,
+                    primarySwatch: Colors.lightBlue,
                     fontFamily: data.value ? 'Poppins' : 'Quicksand',
                     bottomSheetTheme: const BottomSheetThemeData(
                       backgroundColor: Colors.transparent,

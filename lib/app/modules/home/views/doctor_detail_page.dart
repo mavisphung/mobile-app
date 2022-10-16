@@ -7,11 +7,16 @@ import 'package:get/get.dart';
 
 import 'package:hi_doctor_v2/app/common/constants.dart';
 import 'package:hi_doctor_v2/app/common/util/extensions.dart';
+import 'package:hi_doctor_v2/app/common/util/transformation.dart';
 import 'package:hi_doctor_v2/app/common/values/colors.dart';
+import 'package:hi_doctor_v2/app/common/values/strings.dart';
 import 'package:hi_doctor_v2/app/modules/home/controllers/doctor_controller.dart';
+import 'package:hi_doctor_v2/app/modules/home/views/items.dart';
 import 'package:hi_doctor_v2/app/modules/home/widgets/doctor_tile.dart';
+import 'package:hi_doctor_v2/app/modules/settings/widgets/setting_item.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/base_page.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/custom_bottom_sheet.dart';
+import 'package:hi_doctor_v2/app/modules/widgets/custom_container.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/my_appbar.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/custom_title_section.dart';
 import 'package:hi_doctor_v2/app/routes/app_pages.dart';
@@ -62,15 +67,7 @@ class DoctorDetailPage extends StatelessWidget {
             if (snapshot.data == true) {
               return Column(
                 children: [
-                  Container(
-                    margin: EdgeInsets.only(top: 8.sp),
-                    padding: EdgeInsets.all(12.sp),
-                    width: Get.width,
-                    decoration: BoxDecoration(
-                      // border: Border.all(color: Colors.grey[200]!),
-                      color: Colors.black.withOpacity(0.011),
-                      borderRadius: BorderRadius.circular(20.sp),
-                    ),
+                  CustomContainer(
                     child: Row(
                       children: [
                         Container(
@@ -78,7 +75,7 @@ class DoctorDetailPage extends StatelessWidget {
                           height: 120.sp,
                           decoration: BoxDecoration(
                             shape: BoxShape.rectangle,
-                            borderRadius: BorderRadius.circular(15.sp),
+                            borderRadius: BorderRadius.circular(Constants.borderRadius.sp),
                             image: const DecorationImage(
                               image: NetworkImage(Constants.defaultAvatar),
                             ),
@@ -91,32 +88,68 @@ class DoctorDetailPage extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.stretch,
                               children: [
                                 Text(
-                                  'Dr. ${_cDoctor.doctor.firstName} ${_cDoctor.doctor.lastName}',
+                                  '${Strings.doctor.tr} ${Tx.getFullName(_cDoctor.doctor.lastName, _cDoctor.doctor.firstName)}',
                                   style: TextStyle(
-                                    fontSize: 14.sp,
-                                    fontWeight: FontWeight.bold,
+                                    fontSize: 17.sp,
+                                    fontWeight: FontWeight.w500,
                                   ),
                                 ),
                                 Divider(
-                                  color: AppColors.primary,
-                                  thickness: 0.65.sp,
-                                ),
-                                SizedBox(
-                                  height: 30.sp,
-                                  child: Text(
-                                    'Bác sĩ khoa tổng hợp',
-                                    style: TextStyle(fontSize: 11.5.sp),
-                                  ),
+                                  color: AppColors.greyDivider,
+                                  thickness: 0.3.sp,
                                 ),
                                 Text(
-                                  'Bệnh viện Hùng Vương, Tp. HCM, VN',
+                                  'Bác sĩ khoa tổng hợp',
                                   style: TextStyle(fontSize: 11.5.sp),
+                                ),
+                                Padding(
+                                  padding: EdgeInsets.only(top: 5.sp),
+                                  child: Text(
+                                    'Bệnh viện Hùng Vương, Tp. HCM, VN dkf dnfkd dknfk  sdkf dfk dfknskf knfk d knkd ',
+                                    maxLines: 2,
+                                    style: TextStyle(
+                                      fontSize: 11.5.sp,
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                  ),
                                 ),
                               ],
                             ),
                           ),
                         ),
                       ],
+                    ),
+                  ),
+                  SizedBox(height: 20.sp),
+                  CustomContainer(
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(vertical: 8.sp),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: const [
+                          Item1(
+                            assetName: 'assets/icons/medicine.svg',
+                            label: 'Bệnh nhân',
+                            value: '5,000+',
+                          ),
+                          Item1(
+                            assetName: 'assets/icons/instruction.svg',
+                            label: 'Năm kinh nghiệm',
+                            value: '10+',
+                          ),
+                          Item1(
+                            assetName: 'assets/icons/health_record.svg',
+                            label: 'Điểm đánh giá',
+                            value: '4.8',
+                          ),
+                          Item1(
+                            assetName: 'assets/icons/health_record.svg',
+                            label: 'Lượt đánh giá',
+                            value: '3221',
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                   Container(
@@ -141,7 +174,7 @@ class DoctorDetailPage extends StatelessWidget {
                             color: AppColors.primary,
                           ),
                           middleText: '10+',
-                          bottomText: 'Năm',
+                          bottomText: 'Năm lam viec',
                         ),
                         DoctorTile(
                           icon: Icon(
@@ -179,7 +212,8 @@ class DoctorDetailPage extends StatelessWidget {
                               color: Colors.black,
                               height: 1.25.sp, // Line height
                             ),
-                            text: 'Dr. ${_cDoctor.doctor.firstName} ${_cDoctor.doctor.lastName} là một trong những bác sĩ '
+                            text:
+                                '${Strings.doctor.tr} ${Tx.getFullName(_cDoctor.doctor.lastName, _cDoctor.doctor.firstName)} là một trong những bác sĩ '
                                 'giỏi nhất trong khoa tổng hợp của bệnh viện Hùng Vương, TP. HCM. '
                                 'Đã từng đạt nhiều mạng người trên tay từ thời gian thực tập. '
                                 'Tôi đã hành nghề này được hơn 10 năm...',
@@ -312,7 +346,8 @@ class DoctorDetailPage extends StatelessWidget {
                                         fontSize: 14.sp,
                                         color: Colors.black,
                                       ),
-                                      text: 'Tôi có thể thấy rằng đây có thể giải quyết cho cái lưng đau của tôi một cách triệt để',
+                                      text:
+                                          'Tôi có thể thấy rằng đây có thể giải quyết cho cái lưng đau của tôi một cách triệt để',
                                     ),
                                   ),
                                   Container(

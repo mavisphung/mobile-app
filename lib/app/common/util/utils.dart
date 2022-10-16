@@ -228,7 +228,7 @@ abstract class Utils {
       message: message,
       borderRadius: 8.0,
       backgroundColor: CupertinoColors.darkBackgroundGray,
-      margin: const EdgeInsets.all(15.0),
+      margin: const EdgeInsets.all(20),
     );
   }
 

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:hi_doctor_v2/app/common/util/transformation.dart';
 
 import 'package:hi_doctor_v2/app/models/patient.dart';
 
@@ -24,7 +25,7 @@ class PatientTile extends StatelessWidget {
           ),
         ),
       ),
-      title: Text('${patient.lastName} ${patient.firstName}'),
+      title: Text(Tx.getFullName(patient.lastName, patient.firstName)),
       subtitle: Text('${patient.gender}'),
     );
   }

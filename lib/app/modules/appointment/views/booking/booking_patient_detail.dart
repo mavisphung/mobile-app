@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:hi_doctor_v2/app/common/util/transformation.dart';
 
 import 'package:hi_doctor_v2/app/common/values/colors.dart';
 import 'package:hi_doctor_v2/app/common/values/strings.dart';
@@ -115,7 +116,7 @@ class BookingPatientDetailPage extends StatelessWidget {
                                                   _getTitle(Strings.fullName.tr),
                                                   Flexible(
                                                     child: Text(
-                                                      '${data.value.lastName} ${data.value.firstName}',
+                                                      Tx.getFullName(data.value.lastName, data.value.firstName),
                                                     ),
                                                   ),
                                                 ],

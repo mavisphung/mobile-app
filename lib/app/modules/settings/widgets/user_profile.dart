@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import 'package:hi_doctor_v2/app/common/constants.dart';
+import 'package:hi_doctor_v2/app/common/util/transformation.dart';
 import 'package:hi_doctor_v2/app/common/values/colors.dart';
 import 'package:hi_doctor_v2/app/models/user_info.dart';
 import 'package:hi_doctor_v2/app/modules/settings/controllers/settings_controller.dart';
@@ -61,22 +62,21 @@ class UserProfile extends StatelessWidget {
         ),
         ObxValue<Rx<UserInfo2>>(
           (data) => Text(
-            '${data.value.firstName} ${data.value.lastName}',
+            Tx.getFullName(data.value.lastName, data.value.firstName),
             style: TextStyle(
               color: Colors.black,
-              fontSize: 17.sp,
-              fontWeight: FontWeight.bold,
+              fontSize: 18.sp,
+              fontWeight: FontWeight.w500,
             ),
           ),
           _settingsController.userInfo,
         ),
+        SizedBox(height: 5.sp),
         Text(
           _settingsController.userInfo.value.email!,
           style: TextStyle(
-            color: Colors.grey,
-            fontSize: 12.sp,
+            color: Colors.grey[600],
           ),
-          overflow: TextOverflow.clip,
         ),
       ],
     );

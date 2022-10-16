@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import 'package:hi_doctor_v2/app/common/constants.dart';
+import 'package:hi_doctor_v2/app/common/util/transformation.dart';
 import 'package:hi_doctor_v2/app/common/values/colors.dart';
 import 'package:hi_doctor_v2/app/common/values/strings.dart';
 import 'package:hi_doctor_v2/app/modules/home/controllers/doctor_controller.dart';
@@ -30,7 +31,8 @@ class ChatTile extends StatelessWidget {
       builder: (_, snapshot) {
         if (snapshot.hasData) {
           if (snapshot.data == true) {
-            final fullName = '${_cDoctor.doctor.lastName} ${_cDoctor.doctor.firstName}';
+            final fullName =
+                '${Strings.doctor.tr} ${Tx.getFullName(_cDoctor.doctor.lastName, _cDoctor.doctor.firstName)}';
             return GestureDetector(
               onTap: () => Get.toNamed(
                 Routes.CHAT,

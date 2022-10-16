@@ -1,16 +1,18 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
-class SettingItem extends StatelessWidget {
+class SettingItem1 extends StatelessWidget {
   final String title;
   final Widget icon;
   final Color? color;
   final VoidCallback? function;
   final bool isNavigator;
+  final double? padding;
   final Widget? suffix;
 
-  const SettingItem({
+  const SettingItem1({
     Key? key,
     required this.title,
     required this.icon,
@@ -18,6 +20,7 @@ class SettingItem extends StatelessWidget {
     this.function,
     this.isNavigator = true,
     this.suffix,
+    this.padding,
   })  : assert(suffix == null || isNavigator == false, 'Cannot provide both a suffix and a navigator'),
         super(key: key);
 
@@ -26,10 +29,11 @@ class SettingItem extends StatelessWidget {
     return Material(
       child: InkWell(
         onTap: function,
+        borderRadius: BorderRadius.circular(8.sp),
         child: Ink(
           color: Colors.white,
           child: Padding(
-            padding: EdgeInsets.all(10.sp),
+            padding: EdgeInsets.all(padding ?? 10.sp),
             child: Row(
               children: [
                 icon,
@@ -41,7 +45,6 @@ class SettingItem extends StatelessWidget {
                     title,
                     style: TextStyle(
                       fontSize: 14.sp,
-                      fontWeight: FontWeight.w500,
                       color: color,
                     ),
                   ),
@@ -49,13 +52,49 @@ class SettingItem extends StatelessWidget {
                 if (isNavigator)
                   Icon(
                     CupertinoIcons.chevron_right,
-                    size: 18.sp,
+                    size: 15.sp,
+                    color: Colors.grey[700],
                   ),
                 if (suffix != null) suffix!,
               ],
             ),
           ),
         ),
+      ),
+    );
+  }
+}
+
+class SettingItem2 extends StatelessWidget {
+  final String assetName;
+  final String label;
+
+  const SettingItem2({
+    super.key,
+    required this.assetName,
+    required this.label,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: 100.sp,
+      child: Column(
+        children: [
+          SvgPicture.asset(
+            assetName,
+            width: 40.sp,
+            height: 40.sp,
+          ),
+          SizedBox(height: 10.sp),
+          Text(
+            label,
+            style: TextStyle(
+              fontSize: 12.5.sp,
+              overflow: TextOverflow.ellipsis,
+            ),
+          ),
+        ],
       ),
     );
   }

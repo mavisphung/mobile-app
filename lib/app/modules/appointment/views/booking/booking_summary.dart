@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:hi_doctor_v2/app/common/util/transformation.dart';
 import 'package:hi_doctor_v2/app/common/util/utils.dart';
 import 'package:hi_doctor_v2/app/routes/app_pages.dart';
 import 'package:intl/intl.dart';
@@ -111,7 +112,7 @@ class BookingSummary extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          '${Strings.dr.tr} ${doctor.firstName} ${doctor.lastName}',
+                          '${Strings.dr.tr} ${Tx.getFullName(doctor.lastName, doctor.firstName)}',
                           style: const TextStyle(
                             fontWeight: FontWeight.w500,
                           ),
@@ -172,7 +173,7 @@ class BookingSummary extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          '${patient.lastName} ${patient.firstName}',
+                          Tx.getFullName(patient.lastName, patient.firstName),
                           style: const TextStyle(
                             fontWeight: FontWeight.w500,
                           ),

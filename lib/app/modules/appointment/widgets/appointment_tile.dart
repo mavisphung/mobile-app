@@ -57,7 +57,14 @@ class AppointmentTile extends StatelessWidget {
         padding: EdgeInsets.all(12.5.sp),
         decoration: BoxDecoration(
           color: Colors.white,
-          borderRadius: BorderRadius.circular(22.sp),
+          borderRadius: BorderRadius.circular(Constants.borderRadius.sp),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.05),
+              offset: const Offset(0, 2),
+              blurRadius: 4.sp,
+            ),
+          ],
         ),
         child: Column(
           children: [
@@ -65,7 +72,7 @@ class AppointmentTile extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 ClipRRect(
-                  borderRadius: BorderRadius.circular(15.sp),
+                  borderRadius: BorderRadius.circular(Constants.borderRadius.sp),
                   child: Image.network(
                     Constants.defaultAvatar,
                     fit: BoxFit.fill,
@@ -101,11 +108,11 @@ class AppointmentTile extends StatelessWidget {
                               ),
                             ),
                             Container(
-                              margin: EdgeInsets.symmetric(horizontal: 12.sp),
-                              width: 12.sp,
+                              margin: EdgeInsets.symmetric(horizontal: 8.sp),
+                              width: 8.sp,
                               child: Divider(
-                                // color: Colors.red,
-                                thickness: 1.5.sp,
+                                color: Colors.grey[350],
+                                thickness: 1.2.sp,
                               ),
                             ),
                             Container(
@@ -113,9 +120,9 @@ class AppointmentTile extends StatelessWidget {
                               decoration: BoxDecoration(
                                 border: Border.all(
                                   color: statusColors[data.status.toString().enumStatus]!,
-                                  width: 1.6.sp,
+                                  width: 1.sp,
                                 ),
-                                borderRadius: BorderRadius.circular(8.sp),
+                                borderRadius: BorderRadius.circular(5.sp),
                               ),
                               child: Text(
                                 data.status.toString().enumStatus.label,
@@ -249,7 +256,7 @@ class HistoryAppointmentTile extends StatelessWidget {
       padding: EdgeInsets.all(12.5.sp),
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(22.sp),
+        borderRadius: BorderRadius.circular(Constants.borderRadius.sp),
       ),
       child: Column(
         children: [
@@ -257,7 +264,7 @@ class HistoryAppointmentTile extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               ClipRRect(
-                borderRadius: BorderRadius.circular(15.sp),
+                borderRadius: BorderRadius.circular(Constants.borderRadius.sp),
                 child: Image.network(
                   Constants.defaultAvatar,
                   fit: BoxFit.fill,

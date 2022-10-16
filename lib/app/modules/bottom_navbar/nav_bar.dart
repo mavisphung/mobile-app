@@ -58,12 +58,13 @@ class NavBar extends StatelessWidget {
                   icon: CupertinoIcons.home,
                   activeIcon: CupertinoIcons.house_fill,
                   label: Strings.home.tr,
+                  size: 20.sp,
                 ),
                 _bottomNavigationBarItem(
                   icon: Icons.calendar_today,
                   activeIcon: Icons.calendar_today_rounded,
                   label: Strings.appointment.tr,
-                  size: 19.sp,
+                  size: 18.sp,
                 ),
                 _bottomNavigationBarItem(
                   icon: CupertinoIcons.chat_bubble_2,

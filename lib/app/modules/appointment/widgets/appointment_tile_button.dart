@@ -30,7 +30,7 @@ class AppointmentButton extends StatelessWidget {
             color: borderColor,
             width: 0.8.sp,
           ),
-          borderRadius: BorderRadius.circular(10.sp),
+          borderRadius: BorderRadius.circular(5.sp),
         ),
         child: Text(
           label,

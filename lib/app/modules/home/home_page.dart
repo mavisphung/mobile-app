@@ -134,10 +134,10 @@ class HomePage extends StatelessWidget {
                 ),
               ),
               _spacing,
-              const CustomTitleSection(title: 'Gần khu vực'),
+              const CustomTitleSection(title: 'Bác sĩ gần khu vực'),
               Obx(
                 () => SizedBox(
-                  height: 150.sp,
+                  height: 155.sp,
                   width: double.infinity,
                   child: _homeController.nearestList.isNotEmpty
                       ? ListView.separated(
@@ -166,8 +166,7 @@ class HomePage extends StatelessWidget {
                       init: _homeController,
                       builder: (_) {
                         return SizedBox(
-                          height: 150.sp,
-                          width: double.infinity,
+                          height: 145.sp,
                           child: ListView.separated(
                             scrollDirection: Axis.horizontal,
                             itemCount: _homeController.doctorList.length,
