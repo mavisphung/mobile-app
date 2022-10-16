@@ -16,8 +16,6 @@ import 'package:hi_doctor_v2/app/modules/appointment/widgets/hour_item.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/my_appbar.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/custom_title_section.dart';
 import 'package:hi_doctor_v2/app/routes/app_pages.dart';
-import 'package:intl/intl.dart';
-import 'package:table_calendar/table_calendar.dart';
 
 // ignore: must_be_immutable
 class BookingDateTimePage extends StatelessWidget {

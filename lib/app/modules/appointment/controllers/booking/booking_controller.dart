@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 
 import 'package:hi_doctor_v2/app/common/constants.dart';
 import 'package:hi_doctor_v2/app/common/util/extensions.dart';
-import 'package:hi_doctor_v2/app/common/util/utils.dart';
 import 'package:hi_doctor_v2/app/data/api_response.dart';
 import 'package:hi_doctor_v2/app/data/response_model.dart';
 import 'package:hi_doctor_v2/app/models/doctor.dart';
@@ -12,7 +11,6 @@ import 'package:hi_doctor_v2/app/modules/appointment/providers/api_book_appointm
 import 'package:hi_doctor_v2/app/modules/appointment/providers/req_appointment_model.dart';
 import 'package:hi_doctor_v2/app/modules/appointment/views/booking/booking_package_page.dart';
 import 'package:hi_doctor_v2/app/modules/appointment/widgets/service_item.dart';
-import 'package:hi_doctor_v2/app/routes/app_pages.dart';
 
 class BookingController extends GetxController {
   // select booking date time

@@ -259,6 +259,8 @@ abstract class Utils {
 
   static String formatDate(DateTime date) => DateFormat('dd-MM-yyyy').format(date);
 
+  static String formatDateApi(DateTime date) => DateFormat('yyyy-MM-dd').format(date);
+
   static String formatTime(DateTime date) => DateFormat('HH:mm').format(date);
 
   static DateTime? parseStrToDateTime(String str) {
@@ -271,7 +273,7 @@ abstract class Utils {
 
   static DateTime? parseStrToDate(String str) {
     try {
-      return DateFormat('dd-MM-yyyy').parse(str);
+      return DateFormat('yyyy-MM-dd').parse(str);
     } catch (e) {
       return null;
     }
