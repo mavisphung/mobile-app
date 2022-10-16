@@ -37,6 +37,7 @@ class LoginController extends GetxController {
         phoneNumber: response.data['phoneNumber'],
         gender: response.data['gender'],
         avatar: response.data['avatar'],
+        dob: response.data['dob'],
       );
       await Storage.saveValue(CacheKey.USER_INFO.name, userInfo);
 

@@ -12,8 +12,9 @@ import 'package:hi_doctor_v2/app/common/values/strings.dart';
 class MyDateTimeField extends StatelessWidget {
   final TextEditingController dob;
   final GlobalKey<FormState> formKey;
+  DateTime? selectedDate;
 
-  const MyDateTimeField({
+  MyDateTimeField({
     Key? key,
     required this.dob,
     required this.formKey,
@@ -23,7 +24,7 @@ class MyDateTimeField extends StatelessWidget {
   Widget build(BuildContext context) {
     final isValid = true.obs;
     String? warningText;
-    DateTime selectedDate = Utils.parseStrToDate(dob.text) ?? DateTime.now();
+    selectedDate = Utils.parseStrToDate(dob.text) ?? DateTime.now();
     selectedDate.toString().debugLog('SELECTED DATE');
     return GestureDetector(
       onTap: () {
@@ -60,7 +61,7 @@ class MyDateTimeField extends StatelessWidget {
                         ),
                       ),
                       onPressed: () {
-                        dob.text = Utils.formatDate(selectedDate);
+                        dob.text = Utils.formatDateApi(selectedDate!);
                         dob.text.toString().debugLog('Picked date');
                         Get.back();
                       },
@@ -113,9 +114,7 @@ class MyDateTimeField extends StatelessWidget {
                           right: 18.sp,
                         ),
                         disabledBorder: OutlineInputBorder(
-                          borderSide: data.value
-                              ? BorderSide.none
-                              : BorderSide(color: Colors.red[700] ?? const Color(0xFFD32F2F)),
+                          borderSide: data.value ? BorderSide.none : BorderSide(color: Colors.red[700] ?? const Color(0xFFD32F2F)),
                           borderRadius: BorderRadius.circular(15.sp),
                         ),
                         filled: true,
