@@ -27,7 +27,8 @@ class PatientItem extends StatelessWidget {
             ),
           ),
           Text(
-            detail,
+            detail.length >= 25 ? '${detail.substring(0, 25)}...' : detail,
+            overflow: TextOverflow.fade,
             style: TextStyle(
               fontSize: 11.sp,
               color: Colors.grey,

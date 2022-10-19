@@ -154,7 +154,6 @@ class NotificationPage extends StatelessWidget {
     switch (status) {
       case Status.success:
         return ListView.builder(
-          controller: _controller.scrollController,
           physics: const AlwaysScrollableScrollPhysics(),
           shrinkWrap: true,
           itemBuilder: (_, index) {

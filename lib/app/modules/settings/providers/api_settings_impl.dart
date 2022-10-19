@@ -78,7 +78,7 @@ class ApiSettingsImpl extends GetConnect with ApiSettings {
   @override
   Future<Response> getPatientProfile(int patientId) {
     return get(
-      '/user/patients/$patientId/',
+      '/user/patients/$patientId',
       headers: headers,
     );
   }
