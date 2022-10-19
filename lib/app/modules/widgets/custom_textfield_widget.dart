@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:hi_doctor_v2/app/common/values/colors.dart';
 
-import '../../common/util/validators.dart';
+import 'package:hi_doctor_v2/app/common/util/validators.dart';
+import 'package:hi_doctor_v2/app/common/values/colors.dart';
 
 class CustomTextFieldWidget extends StatelessWidget {
   final String? labelText, hintText, initialValue;
@@ -19,7 +19,7 @@ class CustomTextFieldWidget extends StatelessWidget {
   final int? maxLength, maxLines;
   final FormFieldValidator<String?>? validator;
   final void Function(String?)? onChanged, onSaved, onFieldSubmitted;
-  final Function()? onTap;
+  final VoidCallback? onTap;
   final TextStyle? textStyle;
   final TextAlign textAlign;
   final InputDecoration? inputDecoration;

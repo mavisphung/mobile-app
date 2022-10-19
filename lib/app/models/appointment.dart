@@ -2,21 +2,21 @@
 import 'dart:convert';
 
 class Appointment {
-  int? id;
-  String? bookedAt;
-  String? beginAt;
-  String? endAt;
-  String? estEndAt;
-  String? checkInCode;
-  String? type;
-  String? status;
-  String? cancelReason;
-  String? diseaseDescription;
-  Map<String, dynamic>? patient;
-  Map<String, dynamic>? doctor;
-  Map<String, dynamic>? booker;
-  Map<String, dynamic>? historical;
-  Map<String, dynamic>? package;
+  final int? id;
+  final String? bookedAt;
+  final String? beginAt;
+  final String? endAt;
+  final String? estEndAt;
+  final String? checkInCode;
+  final String? type;
+  final String? status;
+  final String? cancelReason;
+  final String? diseaseDescription;
+  final Map<String, dynamic>? patient;
+  final Map<String, dynamic>? doctor;
+  final Map<String, dynamic>? booker;
+  final Map<String, dynamic>? historical;
+  final Map<String, dynamic>? package;
 
   Appointment({
     this.id,

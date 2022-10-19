@@ -12,12 +12,12 @@ import 'package:hi_doctor_v2/app/modules/home/views/doctor_item.dart';
 import 'package:hi_doctor_v2/app/modules/home/views/reminder_card.dart';
 import 'package:hi_doctor_v2/app/modules/settings/controllers/settings_controller.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/base_page.dart';
+import 'package:hi_doctor_v2/app/modules/widgets/custom_container.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/custom_icon_button.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/custom_title_section.dart';
 
 class HomePage extends StatelessWidget {
   HomePage({Key? key}) : super(key: key);
-  final _categoriesList = categoriesList;
 
   final HomeController _homeController = Get.put(HomeController());
   final _settingsController = Get.put(SettingsController());
@@ -31,9 +31,9 @@ class HomePage extends StatelessWidget {
     final userInfo = _settingsController.userInfo.value;
     return BasePage(
       appBar: null,
+      paddingTop: 18.sp,
       body: Column(
         children: [
-          _spacing,
           Row(
             children: [
               Container(
@@ -112,7 +112,7 @@ class HomePage extends StatelessWidget {
               _spacing,
               CustomTitleSection(title: Strings.category.tr),
               Obx(
-                () => SizedBox(
+                () => CustomContainer(
                   height: 80.sp,
                   child: _homeController.specialistList.isNotEmpty
                       ? ListView.separated(
@@ -137,7 +137,7 @@ class HomePage extends StatelessWidget {
               const CustomTitleSection(title: 'Bác sĩ gần khu vực'),
               Obx(
                 () => SizedBox(
-                  height: 155.sp,
+                  height: 135.sp,
                   width: double.infinity,
                   child: _homeController.nearestList.isNotEmpty
                       ? ListView.separated(
@@ -166,7 +166,7 @@ class HomePage extends StatelessWidget {
                       init: _homeController,
                       builder: (_) {
                         return SizedBox(
-                          height: 145.sp,
+                          height: 125.sp,
                           child: ListView.separated(
                             scrollDirection: Axis.horizontal,
                             itemCount: _homeController.doctorList.length,

@@ -2,24 +2,24 @@
 import 'dart:convert';
 
 class Doctor {
-  int? id;
-  String? email;
-  String? firstName;
-  String? lastName;
-  int? age;
-  String? dob;
-  String? phoneNumber;
-  bool? isApproved;
-  String? avatar;
-  double? experienceYears;
-  String? gender;
-  double? ratingPoints;
-  int? ratingTurns;
-  String? address;
-  List<dynamic>? shifts;
-  List<dynamic>? specialists;
-  Map<String, dynamic>? distance;
-  Map<String, dynamic>? duration;
+  final int? id;
+  final String? email;
+  final String? firstName;
+  final String? lastName;
+  final int? age;
+  final String? dob;
+  final String? phoneNumber;
+  final bool? isApproved;
+  final String? avatar;
+  final double? experienceYears;
+  final String? gender;
+  final double? ratingPoints;
+  final int? ratingTurns;
+  final String? address;
+  final List<dynamic>? shifts;
+  final List<dynamic>? specialists;
+  final Map<String, dynamic>? distance;
+  final Map<String, dynamic>? duration;
 
   Doctor({
     this.id,

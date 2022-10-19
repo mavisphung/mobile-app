@@ -68,25 +68,29 @@ class SettingItem1 extends StatelessWidget {
 class SettingItem2 extends StatelessWidget {
   final String assetName;
   final String label;
+  final double? space;
 
   const SettingItem2({
     super.key,
     required this.assetName,
     required this.label,
+    this.space,
   });
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       width: 100.sp,
+      height: 58.sp,
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.end,
         children: [
           SvgPicture.asset(
             assetName,
-            width: 40.sp,
-            height: 40.sp,
+            width: 30.sp,
+            height: 30.sp,
           ),
-          SizedBox(height: 10.sp),
+          SizedBox(height: space ?? 10.sp),
           Text(
             label,
             style: TextStyle(

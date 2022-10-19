@@ -8,7 +8,6 @@ import 'package:hi_doctor_v2/app/common/util/utils.dart';
 import 'package:hi_doctor_v2/app/common/util/validators.dart';
 import 'package:hi_doctor_v2/app/common/values/strings.dart';
 import 'package:hi_doctor_v2/app/modules/appointment/widgets/date_time_field_widget.dart';
-import 'package:hi_doctor_v2/app/modules/settings/controllers/settings_controller.dart';
 import 'package:hi_doctor_v2/app/modules/settings/controllers/user_profile_controller.dart';
 import 'package:hi_doctor_v2/app/modules/settings/views/gender_dropdown.dart';
 import 'package:hi_doctor_v2/app/modules/settings/widgets/image_picker_widget.dart';
@@ -132,7 +131,7 @@ class UserProfileDetailPage extends StatelessWidget {
                                   onPressed: () {
                                     _formKey.currentState?.save();
                                     if (_formKey.currentState?.validate() ?? false) {
-                                      _c.updateUserProfile(Get.find<SettingsController>());
+                                      _c.updateUserProfile();
                                     }
                                   },
                                 ),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:hi_doctor_v2/app/common/values/colors.dart';
+import 'package:hi_doctor_v2/app/common/values/strings.dart';
 
 import 'package:hi_doctor_v2/app/modules/appointment/controllers/appointment_controller.dart';
 import 'package:hi_doctor_v2/app/modules/appointment/controllers/tab_controller.dart';
@@ -25,16 +26,14 @@ class _AppoinmentPageState extends State<AppoinmentPage> with SingleTickerProvid
   void initState() {
     super.initState();
 
-    tabs = const <Tab>[
+    tabs = <Tab>[
       Tab(
-        child: Text(
-          'Đang chờ',
-        ),
+        height: 29.sp,
+        text: 'Đang chờ',
       ),
       Tab(
-        child: Text(
-          'Lịch sử',
-        ),
+        height: 29.sp,
+        text: 'Lịch sử',
       ),
     ];
     tabx = Get.put(MyTabController(length: tabs.length, tabs: tabs));
@@ -53,23 +52,20 @@ class _AppoinmentPageState extends State<AppoinmentPage> with SingleTickerProvid
           ),
           body: Column(
             children: [
-              Container(
-                margin: EdgeInsets.symmetric(horizontal: 12.sp),
-                padding: EdgeInsets.symmetric(vertical: 2.8.sp, horizontal: 3.8.sp),
-                decoration: BoxDecoration(
-                  color: const Color(0xFFE0E5FB),
-                  borderRadius: BorderRadius.circular(12.8.sp),
-                ),
+              SizedBox(
+                width: 180.sp,
                 child: TabBar(
-                  indicatorColor: Colors.white,
-                  indicator: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(10.sp),
+                  indicatorSize: TabBarIndicatorSize.label,
+                  indicator: UnderlineTabIndicator(
+                    borderSide: BorderSide(
+                      width: 3.sp,
+                      color: AppColors.primary,
+                    ),
                   ),
-                  labelColor: Colors.indigo,
-                  unselectedLabelColor: Colors.white,
+                  labelColor: Colors.black87,
+                  unselectedLabelColor: Colors.black87,
                   labelStyle: TextStyle(
-                    fontSize: 14.sp,
+                    fontSize: 12.sp,
                     fontWeight: FontWeight.w500,
                   ),
                   controller: tabx.controller,

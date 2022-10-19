@@ -22,27 +22,24 @@ class DoctorItem extends StatelessWidget {
     String title,
     String detail,
   ) {
-    return Padding(
-      padding: EdgeInsets.only(top: 4.sp),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            title,
-            style: TextStyle(color: Colors.grey[600]),
-          ),
-          Expanded(
-            child: Text(
-              detail,
-              maxLines: 3,
-              style: const TextStyle(
-                overflow: TextOverflow.ellipsis,
-                color: Colors.black,
-              ),
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          title,
+          style: TextStyle(color: Colors.grey[600]),
+        ),
+        Expanded(
+          child: Text(
+            detail,
+            maxLines: 3,
+            style: const TextStyle(
+              overflow: TextOverflow.ellipsis,
+              color: Colors.black,
             ),
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 
@@ -50,7 +47,7 @@ class DoctorItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return CustomInkWell(
       width: 330.sp,
-      borderRadius: 5.sp,
+      borderRadius: 20.sp,
       onTap: () {
         'Call api get doctor with id ${doctor.id}'.debugLog('Doctor instance');
         Get.toNamed(Routes.DOCTOR_DETAIL, arguments: doctor.id);
@@ -58,49 +55,17 @@ class DoctorItem extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Column(
-            children: [
-              Container(
-                width: 80.sp,
-                height: 80.sp,
-                margin: EdgeInsets.only(bottom: 5.sp),
-                decoration: BoxDecoration(
-                  color: Colors.amber,
-                  borderRadius: BorderRadius.circular(17.sp),
-                  image: DecorationImage(
-                    image: NetworkImage(doctor.avatar!),
-                    fit: BoxFit.cover,
-                  ),
-                ),
+          Container(
+            width: 100.sp,
+            height: 100.sp,
+            decoration: BoxDecoration(
+              color: Colors.amber,
+              borderRadius: BorderRadius.circular(17.sp),
+              image: DecorationImage(
+                image: NetworkImage(doctor.avatar!),
+                fit: BoxFit.cover,
               ),
-              Row(
-                children: [
-                  SvgPicture.asset(
-                    'assets/icons/star.svg',
-                    width: 15.sp,
-                    height: 15.sp,
-                  ),
-                  SizedBox(width: 6.sp),
-                  Text(
-                    '${doctor.ratingPoints}',
-                    style: TextStyle(
-                      fontSize: 12.sp,
-                      // color: Colors.grey,
-                      // fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                ],
-              ),
-              Padding(
-                padding: EdgeInsets.only(top: 2.sp),
-                child: Text(
-                  '(3.9k bình luận)',
-                  style: TextStyle(
-                    fontSize: 12.sp,
-                  ),
-                ),
-              ),
-            ],
+            ),
           ),
           Expanded(
             child: Padding(
@@ -109,7 +74,6 @@ class DoctorItem extends StatelessWidget {
                 left: 10.sp,
               ),
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
@@ -124,15 +88,47 @@ class DoctorItem extends StatelessWidget {
                   Divider(
                     color: Colors.grey[300],
                     thickness: 0.5.sp,
-                    height: 10.sp,
+                    height: 20.sp,
                   ),
-                  Column(
-                    children: [
-                      _getDescription('Chuyên ngành: ', '${doctor.specialists?[0]["name"]}'),
-                      _getDescription('Địa chỉ: ', '${doctor.address}'),
-                      if (doctor.distance != null)
-                        _getDescription('Khoảng cách: ', 'cách bạn ${doctor.distance?["text"]}'),
-                    ],
+                  Expanded(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        _getDescription('Chuyên ngành: ', '${doctor.specialists?[0]["name"]}'),
+                        if (doctor.distance != null)
+                          Padding(
+                            padding: EdgeInsets.only(top: 8.sp),
+                            child: _getDescription('Khoảng cách: ', 'cách bạn ${doctor.distance?["text"]}'),
+                          ),
+                        Padding(
+                          padding: EdgeInsets.only(top: 8.sp),
+                          child: Row(
+                            children: [
+                              SvgPicture.asset(
+                                'assets/icons/star.svg',
+                                width: 15.sp,
+                                height: 15.sp,
+                              ),
+                              SizedBox(width: 6.sp),
+                              Text(
+                                '${doctor.ratingPoints}',
+                                style: TextStyle(
+                                  fontSize: 12.sp,
+                                  // color: Colors.grey,
+                                  // fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                              Text(
+                                ' (3.9k bình luận)',
+                                style: TextStyle(
+                                  fontSize: 12.sp,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ],
               ),

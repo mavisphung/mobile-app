@@ -20,14 +20,9 @@ class DoctorTile extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        Container(
-          margin: EdgeInsets.only(bottom: 10.sp),
-          padding: EdgeInsets.all(15.sp),
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            color: AppColors.primary.withOpacity(0.125),
-          ),
-          child: icon,
+        icon!,
+        SizedBox(
+          height: 5.sp,
         ),
         SizedBox(
           height: 28.sp,

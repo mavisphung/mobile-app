@@ -6,10 +6,10 @@ import 'package:hi_doctor_v2/app/common/util/extensions.dart';
 import 'package:hi_doctor_v2/app/common/util/status.dart';
 import 'package:hi_doctor_v2/app/common/util/utils.dart';
 import 'package:hi_doctor_v2/app/data/api_response.dart';
+import 'package:hi_doctor_v2/app/data/custom_controller.dart';
 import 'package:hi_doctor_v2/app/data/response_model.dart';
 import 'package:hi_doctor_v2/app/models/patient.dart';
 import 'package:hi_doctor_v2/app/models/user_info.dart';
-import 'package:hi_doctor_v2/app/modules/settings/controllers/settings_controller.dart';
 import 'package:hi_doctor_v2/app/modules/settings/providers/api_settings_impl.dart';
 
 class PatientProfileController extends GetxController {
@@ -27,7 +27,7 @@ class PatientProfileController extends GetxController {
 
   final status = Status.init.obs;
 
-  final _provider = Get.find<ApiSettingsImpl>();
+  final _provider = Get.put(ApiSettingsImpl());
 
   @override
   void dispose() {
@@ -119,8 +119,8 @@ class PatientProfileController extends GetxController {
   }
 
   void setAvatar(bool isFromCamera) async {
-    final settingsController = Get.find<SettingsController>();
-    final url = await settingsController.getImage(isFromCamera);
+    final cCustom = Get.find<CustomController>();
+    final url = await cCustom.getImage(isFromCamera);
     if (url != null) avatar.value = url;
   }
 

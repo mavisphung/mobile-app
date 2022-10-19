@@ -2,7 +2,6 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 
 import 'package:hi_doctor_v2/app/common/constants.dart';
@@ -11,7 +10,6 @@ import 'package:hi_doctor_v2/app/common/util/transformation.dart';
 import 'package:hi_doctor_v2/app/common/values/colors.dart';
 import 'package:hi_doctor_v2/app/common/values/strings.dart';
 import 'package:hi_doctor_v2/app/modules/home/controllers/doctor_controller.dart';
-import 'package:hi_doctor_v2/app/modules/home/views/items.dart';
 import 'package:hi_doctor_v2/app/modules/home/widgets/doctor_tile.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/base_page.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/custom_bottom_sheet.dart';
@@ -44,15 +42,13 @@ class DoctorDetailPage extends StatelessWidget {
                   left: 12.sp,
                 ),
                 child: _cDoctor.isFavorite.value
-                    ? SvgPicture.asset(
-                        'assets/icons/star.svg',
+                    ? const Icon(
+                        PhosphorIcons.star,
                         color: Colors.amber,
                       )
-                    : SvgPicture.asset(
-                        'assets/icons/star_fill.svg',
+                    : const Icon(
+                        PhosphorIcons.star_fill,
                         color: Colors.amber,
-                        width: 23.sp,
-                        height: 23.sp,
                       ),
               ),
             ),
@@ -67,6 +63,7 @@ class DoctorDetailPage extends StatelessWidget {
               return Column(
                 children: [
                   CustomContainer(
+                    borderRadius: 8.sp,
                     child: Row(
                       children: [
                         Container(
@@ -119,81 +116,53 @@ class DoctorDetailPage extends StatelessWidget {
                       ],
                     ),
                   ),
-                  SizedBox(height: 20.sp),
+                  SizedBox(height: 8.sp),
                   CustomContainer(
+                    borderRadius: 8.sp,
                     child: Padding(
                       padding: EdgeInsets.symmetric(vertical: 8.sp),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         crossAxisAlignment: CrossAxisAlignment.start,
-                        children: const [
-                          Item1(
-                            assetName: 'assets/icons/medicine.svg',
-                            label: 'Bệnh nhân',
-                            value: '5,000+',
+                        children: [
+                          DoctorTile(
+                            icon: Icon(
+                              PhosphorIcons.users_thin,
+                              size: 30.sp,
+                              color: AppColors.primary,
+                            ),
+                            middleText: '5,000+',
+                            bottomText: 'Bệnh nhân',
                           ),
-                          Item1(
-                            assetName: 'assets/icons/instruction.svg',
-                            label: 'Năm kinh nghiệm',
-                            value: '10+',
+                          DoctorTile(
+                            icon: Icon(
+                              PhosphorIcons.chart_line_up_thin,
+                              size: 30.sp,
+                              color: AppColors.primary,
+                            ),
+                            middleText: '10+',
+                            bottomText: 'Năm lam viec',
                           ),
-                          Item1(
-                            assetName: 'assets/icons/health_record.svg',
-                            label: 'Điểm đánh giá',
-                            value: '4.8',
+                          DoctorTile(
+                            icon: Icon(
+                              PhosphorIcons.star_thin,
+                              size: 30.sp,
+                              color: AppColors.primary,
+                            ),
+                            middleText: '4.8',
+                            bottomText: 'Đánh giá',
                           ),
-                          Item1(
-                            assetName: 'assets/icons/health_record.svg',
-                            label: 'Lượt đánh giá',
-                            value: '3221',
+                          DoctorTile(
+                            icon: Icon(
+                              PhosphorIcons.chat_teardrop_text_thin,
+                              size: 30.sp,
+                              color: AppColors.primary,
+                            ),
+                            middleText: '321',
+                            bottomText: 'Lượt review',
                           ),
                         ],
                       ),
-                    ),
-                  ),
-                  Container(
-                    margin: EdgeInsets.only(top: 25.sp),
-                    padding: EdgeInsets.symmetric(horizontal: 12.sp),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        DoctorTile(
-                          icon: Icon(
-                            PhosphorIcons.users,
-                            size: 30.sp,
-                            color: AppColors.primary,
-                          ),
-                          middleText: '5,000+',
-                          bottomText: 'Bệnh nhân',
-                        ),
-                        DoctorTile(
-                          icon: Icon(
-                            PhosphorIcons.chart_line_up,
-                            size: 30.sp,
-                            color: AppColors.primary,
-                          ),
-                          middleText: '10+',
-                          bottomText: 'Năm lam viec',
-                        ),
-                        DoctorTile(
-                          icon: Icon(
-                            Icons.star_half,
-                            size: 30.sp,
-                            color: AppColors.primary,
-                          ),
-                          middleText: '4.8',
-                          bottomText: 'Đánh giá',
-                        ),
-                        DoctorTile(
-                          icon: Icon(
-                            PhosphorIcons.chat_centered_text,
-                            size: 30.sp,
-                            color: AppColors.primary,
-                          ),
-                          middleText: '321',
-                          bottomText: 'Lượt review',
-                        ),
-                      ],
                     ),
                   ),
                   Container(

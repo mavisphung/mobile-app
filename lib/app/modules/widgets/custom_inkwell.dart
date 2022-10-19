@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:hi_doctor_v2/app/common/constants.dart';
+import 'package:hi_doctor_v2/app/common/values/colors.dart';
 
 class CustomInkWell extends StatelessWidget {
   final VoidCallback onTap;
@@ -40,9 +41,9 @@ class CustomInkWell extends StatelessWidget {
           borderRadius: BorderRadius.circular(borderRadius ?? Constants.borderRadius.sp),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.05),
-              offset: const Offset(0, 2),
-              blurRadius: 4.sp,
+              color: AppColors.shadow,
+              offset: const Offset(2, 2),
+              blurRadius: 8.sp,
             ),
           ],
         ),

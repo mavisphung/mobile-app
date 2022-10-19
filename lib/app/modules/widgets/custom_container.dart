@@ -3,10 +3,15 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hi_doctor_v2/app/common/constants.dart';
 
 class CustomContainer extends StatelessWidget {
+  final double? width;
+  final double? height;
   final Widget child;
   final double? borderRadius;
+
   const CustomContainer({
     Key? key,
+    this.width,
+    this.height,
     required this.child,
     this.borderRadius,
   }) : super(key: key);
@@ -14,15 +19,17 @@ class CustomContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      width: width,
+      height: height,
       padding: EdgeInsets.all(12.sp),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(borderRadius ?? Constants.borderRadius.sp),
         boxShadow: [
           BoxShadow(
-            color: Colors.blue[50]?.withOpacity(0.3) ?? const Color(0xFFE3F2FD),
-            offset: const Offset(4, 2),
-            blurRadius: 2,
+            color: Colors.blue.withOpacity(0.03),
+            offset: const Offset(0, 4),
+            blurRadius: 8.sp,
           ),
         ],
       ),

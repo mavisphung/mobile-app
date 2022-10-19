@@ -7,6 +7,7 @@ enum CacheKey {
   IS_LOGGED,
   USER_INFO,
   LOCALE,
+  RECORDS,
 }
 
 abstract class Storage {

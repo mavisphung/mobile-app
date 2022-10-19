@@ -2,9 +2,9 @@
 import 'dart:convert';
 
 class Specialist {
-  int? id;
-  String? name;
-  String? description;
+  final int? id;
+  final String? name;
+  final String? description;
 
   Specialist({
     this.id,

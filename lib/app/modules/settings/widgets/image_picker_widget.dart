@@ -22,7 +22,7 @@ class ImagePickerWidget extends StatelessWidget {
           confirmText: Strings.camera.tr,
         );
         if (isFromCamera != null) {
-          isFromCamera ? getImageFucntion(true) : getImageFucntion(false);
+          getImageFucntion(isFromCamera);
         }
       },
       child: Container(

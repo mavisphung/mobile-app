@@ -2,12 +2,12 @@
 import 'dart:convert';
 
 class PagingModel {
-  int? currentPage;
-  int? totalItems;
-  int? nextPage;
-  int? previousPage;
-  int? totalPages;
-  int? limit;
+  final int? currentPage;
+  final int? totalItems;
+  final int? nextPage;
+  final int? previousPage;
+  final int? totalPages;
+  final int? limit;
 
   PagingModel({
     this.currentPage,

@@ -12,6 +12,8 @@ import 'package:hi_doctor_v2/app/modules/auth/login_page.dart';
 import 'package:hi_doctor_v2/app/modules/auth/register_page.dart';
 import 'package:hi_doctor_v2/app/modules/auth/splash_page.dart';
 import 'package:hi_doctor_v2/app/modules/bottom_navbar/nav_bar.dart';
+import 'package:hi_doctor_v2/app/modules/health_record/add_health_record_page.dart';
+import 'package:hi_doctor_v2/app/modules/health_record/health_record_page.dart';
 import 'package:hi_doctor_v2/app/modules/home/home_page.dart';
 import 'package:hi_doctor_v2/app/modules/home/views/doctor_detail_page.dart';
 import 'package:hi_doctor_v2/app/modules/meeting/channel.dart';
@@ -130,6 +132,20 @@ abstract class AppPages {
     GetPage(
       name: Routes.CHANNEL,
       page: () => const ChannelPage(),
+      preventDuplicates: true,
+      fullscreenDialog: true,
+      transition: Transition.rightToLeftWithFade,
+    ),
+    GetPage(
+      name: Routes.HEALTH_RECORDS,
+      page: () => const HealthRecordPage(),
+      preventDuplicates: true,
+      fullscreenDialog: true,
+      transition: Transition.rightToLeftWithFade,
+    ),
+    GetPage(
+      name: Routes.EDIT_HEALTH_RECORD,
+      page: () => AddHealthRecordPage(),
       preventDuplicates: true,
       fullscreenDialog: true,
       transition: Transition.rightToLeftWithFade,

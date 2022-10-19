@@ -16,42 +16,37 @@ class MessagePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.background,
+      backgroundColor: Colors.white,
       appBar: MyAppBar(
         title: Strings.message.tr,
         hasBackBtn: false,
       ),
       body: Column(
         children: [
-          const Text('HELOO'),
           Expanded(
-            child: Padding(
-              padding: const EdgeInsets.all(10),
-              child: StreamBuilder<QuerySnapshot>(
-                stream: _cMessage.getAllGroupChatStream(20),
-                builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-                  if (snapshot.hasData) {
-                    if (snapshot.data!.docs.isNotEmpty) {
-                      return ListView.builder(
-                        padding: const EdgeInsets.all(10),
-                        itemBuilder: (context, index) => ChatTile(document: snapshot.data!.docs[index]),
-                        itemCount: snapshot.data?.docs.length,
-                      );
-                    } else {
-                      return const Center(
-                        child: Text("No users"),
-                      );
-                    }
+            child: StreamBuilder<QuerySnapshot>(
+              stream: _cMessage.getAllGroupChatStream(20),
+              builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+                if (snapshot.hasData) {
+                  if (snapshot.data!.docs.isNotEmpty) {
+                    return ListView.builder(
+                      itemBuilder: (context, index) => ChatTile(document: snapshot.data!.docs[0]),
+                      itemCount: (snapshot.data?.docs.length ?? 0) * 5,
+                    );
                   } else {
                     return const Center(
-                      child: CircularProgressIndicator(
-                        color: Colors.blueGrey,
-                        strokeWidth: 10.0,
-                      ),
+                      child: Text("No users"),
                     );
                   }
-                },
-              ),
+                } else {
+                  return const Center(
+                    child: CircularProgressIndicator(
+                      color: Colors.blueGrey,
+                      strokeWidth: 10.0,
+                    ),
+                  );
+                }
+              },
             ),
           ),
         ],

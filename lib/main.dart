@@ -60,13 +60,6 @@ class MyApp extends StatelessWidget {
                       backgroundColor: Colors.transparent,
                     ),
                     textTheme: getTextTheme(data.value),
-                    //   button: const TextStyle(
-                    //     color: Colors.amber,
-                    //     fontFamily: 'Poppins',
-                    //     fontStyle: FontStyle.italic,
-                    //     fontSize: 20,
-                    //   ),
-                    // ),
                   ),
                   defaultTransition: Transition.cupertino,
                   initialRoute: AppPages.INITIAL,

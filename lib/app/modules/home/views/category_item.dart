@@ -18,11 +18,9 @@ class CategoryItem extends StatelessWidget {
     return InkWell(
       onTap: () {},
       borderRadius: BorderRadius.circular(8.sp),
-      child: Container(
+      child: SizedBox(
         width: 90.sp,
-        padding: EdgeInsets.all(8.sp),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             SvgPicture.asset(
               image,

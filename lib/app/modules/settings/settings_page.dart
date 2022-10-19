@@ -44,7 +44,7 @@ class SettingsPage extends StatelessWidget {
       child: Text(
         label,
         style: TextStyle(
-          fontSize: 14.sp,
+          fontSize: 12.sp,
           fontWeight: FontWeight.w500,
           color: Colors.grey[800],
         ),
@@ -62,7 +62,6 @@ class SettingsPage extends StatelessWidget {
 
   Widget getSettingItem1({required Widget child}) {
     return CustomContainer(
-      borderRadius: 5.sp,
       child: child,
     );
   }
@@ -77,28 +76,29 @@ class SettingsPage extends StatelessWidget {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Center(child: UserProfile()),
+          UserProfile(),
           _spacing,
           getSettingItem1(
-            child: Padding(
-              padding: EdgeInsets.symmetric(vertical: 8.sp),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: const [
-                  SettingItem2(
-                    assetName: 'assets/icons/medicine.svg',
-                    label: 'Đơn thuốc',
-                  ),
-                  SettingItem2(
-                    assetName: 'assets/icons/instruction.svg',
-                    label: 'Y lệnh',
-                  ),
-                  SettingItem2(
-                    assetName: 'assets/icons/health_record.svg',
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                const SettingItem2(
+                  assetName: 'assets/icons/medicine1.svg',
+                  label: 'Đơn thuốc',
+                ),
+                const SettingItem2(
+                  assetName: 'assets/icons/instruction1.svg',
+                  label: 'Y lệnh',
+                ),
+                GestureDetector(
+                  onTap: () => Get.toNamed(Routes.HEALTH_RECORDS),
+                  child: const SettingItem2(
+                    assetName: 'assets/icons/health_record1.svg',
                     label: 'Hồ sơ sức khỏe',
+                    space: 2,
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
           getLabel('Chung'),

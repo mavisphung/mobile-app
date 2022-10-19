@@ -1,11 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
-import 'package:hi_doctor_v2/app/common/constants.dart';
 import 'package:hi_doctor_v2/app/common/util/transformation.dart';
-import 'package:hi_doctor_v2/app/common/values/colors.dart';
 import 'package:hi_doctor_v2/app/common/values/strings.dart';
 import 'package:hi_doctor_v2/app/modules/home/controllers/doctor_controller.dart';
 import 'package:hi_doctor_v2/app/modules/message/chat_page.dart';
@@ -33,7 +32,7 @@ class ChatTile extends StatelessWidget {
           if (snapshot.data == true) {
             final fullName =
                 '${Strings.doctor.tr} ${Tx.getFullName(_cDoctor.doctor.lastName, _cDoctor.doctor.firstName)}';
-            return GestureDetector(
+            return InkWell(
               onTap: () => Get.toNamed(
                 Routes.CHAT,
                 arguments: ChatPageArguments(
@@ -42,12 +41,10 @@ class ChatTile extends StatelessWidget {
                   peerAvatar: _cDoctor.doctor.avatar!,
                 ),
               ),
-              child: Container(
-                height: 75.sp,
-                padding: EdgeInsets.all(12.sp),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(Constants.textFieldRadius.sp),
+              child: Padding(
+                padding: EdgeInsets.symmetric(
+                  vertical: 7.sp,
+                  horizontal: 15.sp,
                 ),
                 child: Row(
                   children: [
@@ -56,20 +53,22 @@ class ChatTile extends StatelessWidget {
                       height: 55.sp,
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
-                        color: AppColors.primary,
+                        color: Colors.grey[100],
+                        image: DecorationImage(
+                          image: NetworkImage(_cDoctor.doctor.avatar!),
+                        ),
                       ),
                     ),
                     SizedBox(width: 10.sp),
                     Expanded(
                       child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
                             '${Strings.doctor.tr} $fullName',
                             overflow: TextOverflow.ellipsis,
                             style: TextStyle(
-                              fontSize: 16.sp,
-                              fontWeight: FontWeight.w500,
+                              fontSize: 15.sp,
                             ),
                           ),
                           SizedBox(
@@ -77,24 +76,28 @@ class ChatTile extends StatelessWidget {
                           ),
                           Row(
                             children: [
-                              Expanded(
-                                child: Text(
-                                  chatPeer.lastMessage,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: _textStyle,
+                              Text(
+                                chatPeer.lastMessage,
+                                overflow: TextOverflow.ellipsis,
+                                style: _textStyle,
+                              ),
+                              Text(
+                                ' - ${DateFormat('dd MMM kk:mm').format(DateTime.fromMillisecondsSinceEpoch(int.parse(chatPeer.lastTimeStamp)))}',
+                                style: TextStyle(
+                                  color: Colors.blueGrey[300],
+                                  fontSize: 12,
                                 ),
                               ),
-                              // Text(
-                              //   DateFormat('dd MMM kk:mm')
-                              //       .format(DateTime.fromMillisecondsSinceEpoch(int.parse(chatPeer.lastTimeStamp))),
-                              //   style:
-                              //       TextStyle(color: Colors.blueGrey[300], fontSize: 12, fontStyle: FontStyle.italic),
-                              // ),
                             ],
                           ),
                         ],
                       ),
                     ),
+                    Icon(
+                      PhosphorIcons.check_circle_thin,
+                      color: Colors.grey,
+                      size: 20.sp,
+                    )
                   ],
                 ),
               ),

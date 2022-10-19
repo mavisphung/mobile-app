@@ -43,7 +43,7 @@ class NotificationListTile extends StatelessWidget {
           if (description != null)
             Text(
               description!,
-              style: TextStyle(
+              style: const TextStyle(
                 color: Colors.black,
               ),
             ),

@@ -8,6 +8,7 @@ import 'package:hi_doctor_v2/app/common/util/extensions.dart';
 import 'package:hi_doctor_v2/app/common/util/status.dart';
 import 'package:hi_doctor_v2/app/common/util/utils.dart';
 import 'package:hi_doctor_v2/app/common/values/strings.dart';
+import 'package:hi_doctor_v2/app/data/custom_controller.dart';
 import 'package:hi_doctor_v2/app/models/user_info.dart';
 import 'package:hi_doctor_v2/app/modules/settings/controllers/settings_controller.dart';
 import 'package:hi_doctor_v2/app/modules/settings/providers/api_settings_impl.dart';
@@ -28,7 +29,7 @@ class UserProfileController extends GetxController {
   var _profile = UserInfo2();
   final status = Status.init.obs;
 
-  final _provider = Get.find<ApiSettingsImpl>();
+  final _provider = Get.put(ApiSettingsImpl());
 
   UserInfo2 get profile => _profile;
 
@@ -103,12 +104,12 @@ class UserProfileController extends GetxController {
   }
 
   void setAvatar(bool isFromCamera) async {
-    final settingsController = Get.find<SettingsController>();
-    final url = await settingsController.getImage(isFromCamera);
+    final cCustom = Get.find<CustomController>();
+    final url = await cCustom.getImage(isFromCamera);
     if (url != null) avatar.value = url;
   }
 
-  Future<void> updateUserProfile(SettingsController settingsController) async {
+  Future<void> updateUserProfile() async {
     setStatusLoading();
 
     UserInfo2 info = UserInfo2(
@@ -131,7 +132,8 @@ class UserProfileController extends GetxController {
       );
 
       await Storage.saveValue(CacheKey.USER_INFO.name, userInfo);
-      settingsController.userInfo.value = userInfo;
+      final cSettings = Get.find<SettingsController>();
+      cSettings.userInfo.value = userInfo;
       setStatusSuccess();
       Get.back();
       Utils.showTopSnackbar(Strings.updateProfileMsg.tr, title: 'Notice');
