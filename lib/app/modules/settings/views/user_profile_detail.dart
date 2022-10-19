@@ -33,92 +33,33 @@ class UserProfileDetailPage extends StatelessWidget {
       body: FutureBuilder<bool>(
         future: _c.getProfile(),
         builder: (ctx, snapshot) {
-          if (snapshot.hasData) {
-            if (snapshot.data == true) {
-              return Column(
+          if (!snapshot.hasData) {
+            return const Center(child: Text('Loading..'));
+          }
+
+          if (snapshot.data == true) {
+            return const Center(child: Text('System Error..'));
+          }
+
+          return Column(
+            children: [
+              Column(
                 children: [
-                  Column(
+                  Stack(
                     children: [
-                      Stack(
-                        children: [
-                          ObxValue<RxString>(
-                            (data) => Container(
-                              width: Get.width.sp / 3,
-                              height: Get.width.sp / 2.5,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(5.sp),
-                                image: DecorationImage(
-                                  image:
-                                      NetworkImage(data.value.isEmpty == true ? Constants.defaultAvatar : data.value),
-                                  fit: BoxFit.cover,
-                                ),
-                              ),
-                            ),
-                            _c.avatar,
-                          ),
-                          Positioned(
-                            bottom: 0,
-                            right: 0,
-                            child: ImagePickerWidget(
-                              getImageFucntion: _c.setAvatar,
+                      ObxValue<RxString>(
+                        (data) => Container(
+                          width: Get.width.sp / 3,
+                          height: Get.width.sp / 2.5,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(5.sp),
+                            image: DecorationImage(
+                              image: NetworkImage(data.value.isEmpty == true ? Constants.defaultAvatar : data.value),
+                              fit: BoxFit.cover,
                             ),
                           ),
-                        ],
-                      ),
-                      SizedBox(
-                        height: 35.sp,
-                      ),
-                      Form(
-                        key: _formKey,
-                        child: Column(
-                          children: [
-                            Row(
-                              children: [
-                                Expanded(
-                                  child: CustomTextFieldWidget(
-                                    validator: Validators.validateEmpty,
-                                    focusNode: _c.firstNameFocusNode,
-                                    controller: _c.firstName,
-                                    onFieldSubmitted: (_) => FocusScope.of(context).requestFocus(_c.lastNameFocusNode),
-                                    labelText: Strings.firstName.tr,
-                                  ),
-                                ),
-                                const SizedBox(
-                                  width: 10.0,
-                                ),
-                                Expanded(
-                                  child: CustomTextFieldWidget(
-                                    validator: Validators.validateEmpty,
-                                    focusNode: _c.lastNameFocusNode,
-                                    controller: _c.lastName,
-                                    onFieldSubmitted: (_) => FocusScope.of(context).requestFocus(_c.addressFocusNode),
-                                    labelText: Strings.lastName.tr,
-                                  ),
-                                ),
-                              ],
-                            ),
-                            CustomTextFieldWidget(
-                              validator: Validators.validateEmpty,
-                              focusNode: _c.addressFocusNode,
-                              controller: _c.address,
-                              onFieldSubmitted: (_) => FocusScope.of(context).requestFocus(_c.phoneNumberFocusNode),
-                              labelText: Strings.address.tr,
-                            ),
-                            CustomTextFieldWidget(
-                              validator: Validators.validatePhone,
-                              focusNode: _c.phoneNumberFocusNode,
-                              controller: _c.phoneNumber,
-                              onFieldSubmitted: (_) => Utils.unfocus(),
-                              labelText: Strings.phoneNumber.tr,
-                              keyboardType: TextInputType.number,
-                              maxLength: 10,
-                            ),
-                            MyDateTimeField(
-                              dob: _c.dob,
-                              formKey: _formKey,
-                            ),
-                          ],
                         ),
+                        _c.avatar,
                       ),
                       GenderDropdown(rxGender: _c.gender),
                       // -------------------------------------------
@@ -142,14 +83,85 @@ class UserProfileDetailPage extends StatelessWidget {
                       ),
                     ],
                   ),
+                  SizedBox(
+                    height: 35.sp,
+                  ),
+                  Form(
+                    key: _formKey,
+                    child: Column(
+                      children: [
+                        Row(
+                          children: [
+                            Expanded(
+                              child: CustomTextFieldWidget(
+                                validator: Validators.validateEmpty,
+                                focusNode: _c.firstNameFocusNode,
+                                controller: _c.firstName,
+                                onFieldSubmitted: (_) => FocusScope.of(context).requestFocus(_c.lastNameFocusNode),
+                                labelText: Strings.firstName.tr,
+                              ),
+                            ),
+                            const SizedBox(
+                              width: 10.0,
+                            ),
+                            Expanded(
+                              child: CustomTextFieldWidget(
+                                validator: Validators.validateEmpty,
+                                focusNode: _c.lastNameFocusNode,
+                                controller: _c.lastName,
+                                onFieldSubmitted: (_) => FocusScope.of(context).requestFocus(_c.addressFocusNode),
+                                labelText: Strings.lastName.tr,
+                              ),
+                            ),
+                          ],
+                        ),
+                        CustomTextFieldWidget(
+                          validator: Validators.validateEmpty,
+                          focusNode: _c.addressFocusNode,
+                          controller: _c.address,
+                          onFieldSubmitted: (_) => FocusScope.of(context).requestFocus(_c.phoneNumberFocusNode),
+                          labelText: Strings.address.tr,
+                        ),
+                        CustomTextFieldWidget(
+                          validator: Validators.validatePhone,
+                          focusNode: _c.phoneNumberFocusNode,
+                          controller: _c.phoneNumber,
+                          onFieldSubmitted: (_) => Utils.unfocus(),
+                          labelText: Strings.phoneNumber.tr,
+                          keyboardType: TextInputType.number,
+                          maxLength: 10,
+                        ),
+                        MyDateTimeField(
+                          dob: _c.dob,
+                          formKey: _formKey,
+                        ),
+                      ],
+                    ),
+                  ),
+                  GenderDropdown(rxGender: _c.gender),
+                  // -------------------------------------------
+                  SizedBox(
+                    width: 1.sw,
+                    child: ObxValue<Rx<Status>>(
+                        (data) => CustomElevatedButtonWidget(
+                              textChild: Strings.saveProfile.tr,
+                              status: data.value,
+                              onPressed: () {
+                                _formKey.currentState?.save();
+                                if (_formKey.currentState?.validate() ?? false) {
+                                  _c.updateUserProfile();
+                                }
+                              },
+                            ),
+                        _c.status),
+                  ),
+                  SizedBox(
+                    height: 35.sp,
+                  ),
                 ],
-              );
-            } else {
-              return const Center(child: Text('System Error..'));
-            }
-          } else {
-            return const Center(child: Text('Loading..'));
-          }
+              ),
+            ],
+          );
         },
       ),
     );

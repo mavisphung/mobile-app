@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import 'package:hi_doctor_v2/app/common/constants.dart';
+import 'package:hi_doctor_v2/app/common/util/status.dart';
 import 'package:hi_doctor_v2/app/modules/settings/controllers/patient_profile_controller.dart';
 import 'package:hi_doctor_v2/app/modules/settings/widgets/patient_item.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/my_appbar.dart';
@@ -15,7 +16,7 @@ class PatientListPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const MyAppBar(title: 'Patient profile'),
+      appBar: const MyAppBar(title: 'Hồ sơ bệnh nhân'),
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: Constants.padding.sp),
         child: Column(
@@ -37,7 +38,7 @@ class PatientListPage extends StatelessWidget {
                       width: 7.sp,
                     ),
                     Text(
-                      'Add new patient profile',
+                      'Thêm hồ sơ',
                       style: TextStyle(
                         color: Colors.blue,
                         fontSize: 14.sp,
@@ -51,27 +52,45 @@ class PatientListPage extends StatelessWidget {
             Expanded(
               child: Padding(
                 padding: EdgeInsets.symmetric(vertical: 15.sp),
-                child: FutureBuilder(
-                  future: _c.getPatientList(),
-                  builder: (context, AsyncSnapshot snapshot) {
-                    if (snapshot.hasData) {
-                      if (snapshot.data == true) {
-                        return ListView.separated(
-                          physics: const BouncingScrollPhysics(),
-                          itemCount: _c.patientList.length,
-                          itemBuilder: (_, index) {
-                            var patient = _c.patientList[index];
-                            return PatientItem(
-                              patient: patient,
-                            );
-                          },
-                          separatorBuilder: (_, __) => SizedBox(height: 20.sp),
-                        );
-                      } else {
-                        return const Center(
-                          child: Text('No patient yet'),
-                        );
-                      }
+                // child: FutureBuilder(
+                //   future: _c.getPatientList(),
+                //   builder: (context, AsyncSnapshot snapshot) {
+                //     if (snapshot.hasData) {
+                //       if (snapshot.data == true) {
+                //         return ListView.separated(
+                //           physics: const BouncingScrollPhysics(),
+                //           itemCount: _c.patientList.length,
+                //           itemBuilder: (_, index) {
+                //             var patient = _c.patientList[index];
+                //             return PatientItem(
+                //               patient: patient,
+                //             );
+                //           },
+                //           separatorBuilder: (_, __) => SizedBox(height: 20.sp),
+                //         );
+                //       } else {
+                //         return const Center(
+                //           child: Text('No patient yet'),
+                //         );
+                //       }
+                //     }
+                //     return const Center(child: CircularProgressIndicator());
+                //   },
+                // ),
+                child: GetBuilder(
+                  init: _c,
+                  builder: (PatientProfileController controller) {
+                    if (controller.patientList.isNotEmpty) {
+                      return ListView.builder(
+                        physics: const BouncingScrollPhysics(),
+                        itemCount: controller.patientList.length,
+                        itemBuilder: (_, index) {
+                          var patient = controller.patientList[index];
+                          return PatientItem(
+                            patient: patient,
+                          );
+                        },
+                      );
                     }
                     return const Center(child: CircularProgressIndicator());
                   },

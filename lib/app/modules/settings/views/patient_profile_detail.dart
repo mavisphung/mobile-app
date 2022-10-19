@@ -31,111 +31,109 @@ class PatientProfileDetailPage extends StatelessWidget {
       body: FutureBuilder<bool>(
         future: _patientId == null ? _c.emptyField() : _c.getPatientWithId(_patientId!),
         builder: (ctx, snapshot) {
-          if (snapshot.hasData) {
-            if (snapshot.data == true) {
-              return Column(
+          if (!snapshot.hasData) {
+            return const Center(child: Text('Loading..'));
+          }
+          if (snapshot.data != true) {
+            return const Center(child: Text('System Error..'));
+          }
+          return Column(
+            children: [
+              Stack(
                 children: [
-                  Stack(
-                    children: [
-                      ObxValue<RxString>(
-                        (data) => Container(
-                          width: Get.width.sp / 3,
-                          height: Get.width.sp / 2.5,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(5.sp),
-                            image: DecorationImage(
-                              image: NetworkImage(data.value.isEmpty ? Constants.defaultAvatar : data.value),
-                              fit: BoxFit.cover,
-                            ),
+                  ObxValue<RxString>(
+                    (data) => Container(
+                      width: Get.width.sp / 3,
+                      height: Get.width.sp / 2.5,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(5.sp),
+                        image: DecorationImage(
+                          image: NetworkImage(data.value.isEmpty ? Constants.defaultAvatar : data.value),
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                    ),
+                    _c.avatar,
+                  ),
+                  Positioned(
+                    bottom: 0,
+                    right: 0,
+                    child: ImagePickerWidget(
+                      getImageFucntion: _c.setAvatar,
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(
+                height: 28.sp,
+              ),
+              Form(
+                key: _formKey,
+                child: Column(
+                  children: [
+                    Row(
+                      children: [
+                        Expanded(
+                          child: CustomTextFieldWidget(
+                            validator: Validators.validateEmpty,
+                            focusNode: _c.firstNameFocusNode,
+                            controller: _c.firstName,
+                            onFieldSubmitted: (_) => FocusScope.of(context).requestFocus(_c.lastNameFocusNode),
+                            labelText: Strings.firstName.tr,
                           ),
                         ),
-                        _c.avatar,
-                      ),
-                      Positioned(
-                        bottom: 0,
-                        right: 0,
-                        child: ImagePickerWidget(
-                          getImageFucntion: _c.setAvatar,
+                        const SizedBox(
+                          width: 10.0,
                         ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(
-                    height: 28.sp,
-                  ),
-                  Form(
-                    key: _formKey,
-                    child: Column(
-                      children: [
-                        Row(
-                          children: [
-                            Expanded(
-                              child: CustomTextFieldWidget(
-                                validator: Validators.validateEmpty,
-                                focusNode: _c.firstNameFocusNode,
-                                controller: _c.firstName,
-                                onFieldSubmitted: (_) => FocusScope.of(context).requestFocus(_c.lastNameFocusNode),
-                                labelText: Strings.firstName.tr,
-                              ),
-                            ),
-                            const SizedBox(
-                              width: 10.0,
-                            ),
-                            Expanded(
-                              child: CustomTextFieldWidget(
-                                validator: Validators.validateEmpty,
-                                focusNode: _c.lastNameFocusNode,
-                                controller: _c.lastName,
-                                onFieldSubmitted: (_) => FocusScope.of(context).requestFocus(_c.addressFocusNode),
-                                labelText: Strings.lastName.tr,
-                              ),
-                            ),
-                          ],
-                        ),
-                        CustomTextFieldWidget(
-                          validator: Validators.validateEmpty,
-                          focusNode: _c.addressFocusNode,
-                          controller: _c.address,
-                          onFieldSubmitted: (_) => Utils.unfocus(),
-                          labelText: Strings.address.tr,
-                        ),
-                        MyDateTimeField(
-                          dob: _c.dob,
-                          formKey: _formKey,
+                        Expanded(
+                          child: CustomTextFieldWidget(
+                            validator: Validators.validateEmpty,
+                            focusNode: _c.lastNameFocusNode,
+                            controller: _c.lastName,
+                            onFieldSubmitted: (_) => FocusScope.of(context).requestFocus(_c.addressFocusNode),
+                            labelText: Strings.lastName.tr,
+                          ),
                         ),
                       ],
                     ),
-                  ),
-                  GenderDropdown(rxGender: _c.gender),
-                  // -------------------------------------------
-                  SizedBox(
-                    width: 1.sw,
-                    child: ObxValue<Rx<Status>>(
-                        (data) => CustomElevatedButtonWidget(
-                              textChild: _patientId == null ? 'Add patient profile' : Strings.saveProfile.tr,
-                              status: data.value,
-                              onPressed: () {
-                                _formKey.currentState?.save();
-                                final isValidate = _formKey.currentState?.validate() ?? false;
-                                if (_c.avatar.value.isEmpty) {
-                                  Utils.showAlertDialog('Please choose your picture');
-                                  return;
-                                }
-                                if (isValidate) {
-                                  _patientId == null ? _c.addPatientProfile() : _c.updatePatientProfile(_patientId!);
-                                }
-                              },
-                            ),
-                        _c.status),
-                  ),
-                ],
-              );
-            } else {
-              return const Center(child: Text('System Error..'));
-            }
-          } else {
-            return const Center(child: Text('Loading..'));
-          }
+                    CustomTextFieldWidget(
+                      validator: Validators.validateEmpty,
+                      focusNode: _c.addressFocusNode,
+                      controller: _c.address,
+                      onFieldSubmitted: (_) => Utils.unfocus(),
+                      labelText: Strings.address.tr,
+                    ),
+                    MyDateTimeField(
+                      dob: _c.dob,
+                      formKey: _formKey,
+                    ),
+                  ],
+                ),
+              ),
+              GenderDropdown(rxGender: _c.gender),
+              // -------------------------------------------
+              SizedBox(
+                width: 1.sw,
+                child: ObxValue<Rx<Status>>(
+                    (data) => CustomElevatedButtonWidget(
+                          textChild: _patientId == null ? 'Add patient profile' : Strings.saveProfile.tr,
+                          status: data.value,
+                          onPressed: () {
+                            _formKey.currentState?.save();
+                            final isValidate = _formKey.currentState?.validate() ?? false;
+                            if (_c.avatar.value.isEmpty) {
+                              Utils.showAlertDialog('Please choose your picture');
+                              return;
+                            }
+                            if (isValidate) {
+                              _patientId == null ? _c.addPatientProfile() : _c.updatePatientProfile(_patientId!);
+                            }
+                          },
+                        ),
+                    _c.status),
+              ),
+            ],
+          );
         },
       ),
     );

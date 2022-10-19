@@ -27,15 +27,15 @@ class NotificationController extends GetxController {
     final Map<String, dynamic> response = ApiResponse.getResponse(result);
     final ResponseModel2 model = ResponseModel2.fromMap(response);
     // Check if fetch full of the list
-    // if (notifications.length >= model.totalItems!) {
-    //   setStatus(Status.success);
-    //   return;
-    // }
-    // // check is the last page or not
-    // if (model.nextPage != null) {
-    //   currentPage.value = model.nextPage!;
-    // }
-    model.toJson().debugLog('NotificationController');
+    if (notifications.length >= model.totalItems!) {
+      setStatus(Status.success);
+      return;
+    }
+    // check is the last page or not
+    if (model.nextPage != null) {
+      currentPage.value = model.nextPage!;
+    }
+    // model.toJson().debugLog('NotificationController');
     var data = model.data as List<dynamic>;
     notifications += data.map((e) => NotificationModel.fromMap(e)).toList();
     setStatus(Status.success);

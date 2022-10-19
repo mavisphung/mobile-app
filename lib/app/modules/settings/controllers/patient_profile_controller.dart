@@ -21,13 +21,19 @@ class PatientProfileController extends GetxController {
   final address = TextEditingController();
   final dob = TextEditingController();
   final gender = userGender.first['value']!.obs;
-  final avatar = ''.obs;
+  final avatar = Constants.defaultAvatar.obs;
 
-  final RxList<Patient> patientList = <Patient>[].obs;
+  RxList<Patient> patientList = <Patient>[].obs;
 
   final status = Status.init.obs;
 
   final _provider = Get.put(ApiSettingsImpl());
+
+  @override
+  void onInit() {
+    super.onInit();
+    getPatientList();
+  }
 
   @override
   void dispose() {
@@ -62,17 +68,22 @@ class PatientProfileController extends GetxController {
 
   void setStatusLoading() {
     status.value = Status.loading;
+    update();
   }
 
   void setStatusSuccess() {
     status.value = Status.success;
+    update();
   }
 
   void setStatusFail() {
     status.value = Status.fail;
+    update();
   }
 
   Future<bool> getPatientList({int page = 1, int limit = 10}) async {
+    'Get patient list invoked'.debugLog('PatientProfileController');
+    setStatusLoading();
     final response = await _provider.getPatientList(page: page, limit: limit);
 
     Map<String, dynamic> result = ApiResponse.getResponse(response);
@@ -95,6 +106,7 @@ class PatientProfileController extends GetxController {
             ),
           )
           .toList();
+      setStatusSuccess();
       return true;
     }
     return false;
@@ -130,16 +142,18 @@ class PatientProfileController extends GetxController {
     Patient data = Patient(
       firstName: firstName.text,
       lastName: lastName.text,
-      dob: Utils.toYmd(dob.text),
+      // dob: Utils.toYmd(dob.text),
+      dob: dob.text,
       address: address.text,
       gender: gender.value,
       avatar: avatar.value,
     );
     var response = await _provider.postPatientProfile(data).futureValue();
     if (response != null && response.isSuccess == true && response.statusCode == Constants.successPostStatusCode) {
+      await getPatientList();
       setStatusSuccess();
       Get.back();
-      Utils.showTopSnackbar('Add patient profile sucessfully');
+      Utils.showTopSnackbar('Thêm thành công');
     } else {
       Get.snackbar('Error ${response?.statusCode}', 'Error while adding profile', backgroundColor: Colors.red);
       setStatusFail();
@@ -150,18 +164,22 @@ class PatientProfileController extends GetxController {
     setStatusLoading();
 
     Patient data = Patient(
+      id: patientId,
       firstName: firstName.text,
       lastName: lastName.text,
-      dob: Utils.toYmd(dob.text),
+      // dob: Utils.toYmd(dob.text),
+      dob: dob.text,
       address: address.text,
       gender: gender.value,
       avatar: avatar.value,
     );
     var response = await _provider.putPatientProfile(patientId, data).futureValue();
-    if (response != null && response.isSuccess == true && response.statusCode == Constants.successPostStatusCode) {
+    if (response != null && response.isSuccess == true) {
+      // TODO: update lại patient list
+      await getPatientList();
       setStatusSuccess();
       Get.back();
-      Utils.showTopSnackbar('Update patient profile sucessfully');
+      Utils.showTopSnackbar('Cập nhật hồ sơ thành công');
     } else {
       Get.snackbar('Error ${response?.statusCode}', 'Error while updating profile', backgroundColor: Colors.red);
       setStatusFail();
