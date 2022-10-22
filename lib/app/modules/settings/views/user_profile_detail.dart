@@ -37,7 +37,7 @@ class UserProfileDetailPage extends StatelessWidget {
             return const Center(child: Text('Loading..'));
           }
 
-          if (snapshot.data == true) {
+          if (snapshot.data == false) {
             return const Center(child: Text('System Error..'));
           }
 
@@ -61,25 +61,12 @@ class UserProfileDetailPage extends StatelessWidget {
                         ),
                         _c.avatar,
                       ),
-                      GenderDropdown(rxGender: _c.gender),
-                      // -------------------------------------------
-                      SizedBox(
-                        width: 1.sw,
-                        child: ObxValue<Rx<Status>>(
-                            (data) => CustomElevatedButtonWidget(
-                                  textChild: Strings.saveProfile.tr,
-                                  status: data.value,
-                                  onPressed: () {
-                                    _formKey.currentState?.save();
-                                    if (_formKey.currentState?.validate() ?? false) {
-                                      _c.updateUserProfile();
-                                    }
-                                  },
-                                ),
-                            _c.status),
-                      ),
-                      SizedBox(
-                        height: 35.sp,
+                      Positioned(
+                        bottom: 0,
+                        right: 0,
+                        child: ImagePickerWidget(
+                          getImageFucntion: _c.setAvatar,
+                        ),
                       ),
                     ],
                   ),

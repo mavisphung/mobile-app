@@ -34,7 +34,7 @@ class PatientProfileDetailPage extends StatelessWidget {
           if (!snapshot.hasData) {
             return const Center(child: Text('Loading..'));
           }
-          if (snapshot.data != true) {
+          if (snapshot.data == false) {
             return const Center(child: Text('System Error..'));
           }
           return Column(

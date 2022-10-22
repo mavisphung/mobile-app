@@ -79,14 +79,11 @@ class HomePage extends StatelessWidget {
                   ),
                 ),
               ),
-              SizedBox(
-                width: 45.sp,
-                child: CustomIconButton(
-                  onPressed: () {},
-                  icon: Icon(
-                    CupertinoIcons.bell_fill,
-                    color: AppColors.primary,
-                  ),
+              CustomIconButton(
+                onPressed: () {},
+                icon: Icon(
+                  CupertinoIcons.bell_fill,
+                  color: AppColors.primary,
                 ),
               ),
             ],

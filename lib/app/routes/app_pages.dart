@@ -34,121 +34,99 @@ abstract class AppPages {
     GetPage(
       name: Routes.SPLASH,
       page: () => const SplashPage(),
-    ),
+    ).custom(),
     GetPage(
       name: Routes.HOME,
       page: () => HomePage(),
-      // binding: HomeBinding(),
-    ),
+    ).custom(),
     GetPage(
       name: Routes.LOGIN,
       page: () => LoginPage(),
-    ),
+    ).custom(),
     GetPage(
       name: Routes.REGISTER,
       page: () => const RegisterPage(),
       binding: RegisterBinding(),
-    ),
+    ).custom(),
     GetPage(
       name: Routes.NAVBAR,
       page: () => NavBar(),
-    ),
+    ).custom(),
     GetPage(
       name: Routes.NOTIFICATION_PAGE,
       page: () => NotificationPage(),
-    ),
+    ).custom(),
     GetPage(
       name: Routes.HISTORY,
       page: () => const AppoinmentPage(),
-    ),
+    ).custom(),
     GetPage(
       name: Routes.SEARCH,
       page: () => const SearchPage(),
-    ),
+    ).custom(),
     GetPage(
       name: Routes.USER_PROFILE_DETAIL,
       page: () => UserProfileDetailPage(),
-    ),
+    ).custom(),
     GetPage(
       name: Routes.DOCTOR_DETAIL,
       page: () => DoctorDetailPage(),
-    ),
+    ).custom(),
     GetPage(
       name: Routes.BOOKING,
       page: () => BookingDateTimePage(),
-      preventDuplicates: true,
-      fullscreenDialog: true,
-      transition: Transition.rightToLeftWithFade,
-    ),
+    ).custom(),
     GetPage(
       name: Routes.BOOKING_PACKAGE,
       page: () => BookingPackagePage(),
-      preventDuplicates: true,
-      fullscreenDialog: true,
-      transition: Transition.rightToLeftWithFade,
-    ),
+    ).custom(),
     GetPage(
       name: Routes.BOOKING_PATIENT_DETAIL,
       page: () => BookingPatientDetailPage(),
-      preventDuplicates: true,
-      fullscreenDialog: true,
-      transition: Transition.rightToLeftWithFade,
-    ),
+    ).custom(),
     GetPage(
       name: Routes.BOOKING_SUMMARY,
       page: () => BookingSummary(),
-      preventDuplicates: true,
-      fullscreenDialog: true,
-      transition: Transition.rightToLeftWithFade,
-    ),
+    ).custom(),
     GetPage(
       name: Routes.PATIENT_LIST,
       page: () => PatientListPage(),
-      preventDuplicates: true,
-      fullscreenDialog: true,
-      transition: Transition.rightToLeftWithFade,
-    ),
+    ).custom(),
     GetPage(
       name: Routes.PATIENT_PROFILE_DETAIL,
       page: () => PatientProfileDetailPage(),
-      preventDuplicates: true,
-      fullscreenDialog: true,
-      transition: Transition.rightToLeftWithFade,
-    ),
+    ).custom(),
     GetPage(
       name: Routes.CHAT,
       page: () => ChatPage(),
-      preventDuplicates: true,
-      fullscreenDialog: true,
-      transition: Transition.rightToLeftWithFade,
-    ),
+    ).custom(),
     GetPage(
       name: Routes.MEETING_DETAIL,
       page: () => MeetingDetailPage(),
-      preventDuplicates: true,
-      fullscreenDialog: true,
-      transition: Transition.rightToLeftWithFade,
-    ),
+    ).custom(),
     GetPage(
       name: Routes.CHANNEL,
       page: () => const ChannelPage(),
-      preventDuplicates: true,
-      fullscreenDialog: true,
-      transition: Transition.rightToLeftWithFade,
-    ),
+    ).custom(),
     GetPage(
       name: Routes.HEALTH_RECORDS,
       page: () => const HealthRecordPage(),
-      preventDuplicates: true,
-      fullscreenDialog: true,
-      transition: Transition.rightToLeftWithFade,
-    ),
+    ).custom(),
     GetPage(
       name: Routes.EDIT_HEALTH_RECORD,
       page: () => AddHealthRecordPage(),
+    ).custom(),
+  ];
+}
+
+extension GetPageExt on GetPage {
+  GetPage custom() {
+    return GetPage(
+      name: name,
+      page: page,
       preventDuplicates: true,
       fullscreenDialog: true,
       transition: Transition.rightToLeftWithFade,
-    ),
-  ];
+    );
+  }
 }

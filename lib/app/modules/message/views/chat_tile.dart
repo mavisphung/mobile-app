@@ -76,13 +76,16 @@ class ChatTile extends StatelessWidget {
                           ),
                           Row(
                             children: [
-                              Text(
-                                chatPeer.lastMessage,
-                                overflow: TextOverflow.ellipsis,
-                                style: _textStyle,
+                              Expanded(
+                                child: Text(
+                                  chatPeer.lastMessage,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: _textStyle,
+                                ),
                               ),
                               Text(
-                                ' - ${DateFormat('dd MMM kk:mm').format(DateTime.fromMillisecondsSinceEpoch(int.parse(chatPeer.lastTimeStamp)))}',
+                                DateFormat('dd MMM kk:mm')
+                                    .format(DateTime.fromMillisecondsSinceEpoch(int.parse(chatPeer.lastTimeStamp))),
                                 style: TextStyle(
                                   color: Colors.blueGrey[300],
                                   fontSize: 12,

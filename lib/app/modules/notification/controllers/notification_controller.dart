@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:hi_doctor_v2/app/common/util/extensions.dart';
+
 import 'package:hi_doctor_v2/app/common/util/status.dart';
 import 'package:hi_doctor_v2/app/data/api_response.dart';
 import 'package:hi_doctor_v2/app/data/response_model.dart';

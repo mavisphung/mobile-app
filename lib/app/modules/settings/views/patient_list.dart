@@ -3,7 +3,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import 'package:hi_doctor_v2/app/common/constants.dart';
-import 'package:hi_doctor_v2/app/common/util/status.dart';
 import 'package:hi_doctor_v2/app/modules/settings/controllers/patient_profile_controller.dart';
 import 'package:hi_doctor_v2/app/modules/settings/widgets/patient_item.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/my_appbar.dart';
