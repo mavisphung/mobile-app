@@ -2,7 +2,7 @@
 class Pathology {
   final int? id;
   final String? code;
-  final String name;
+  final String? name;
 
   Pathology(
     this.id,

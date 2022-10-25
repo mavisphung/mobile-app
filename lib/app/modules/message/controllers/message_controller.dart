@@ -3,40 +3,32 @@ import 'package:get/get.dart';
 
 import 'package:hi_doctor_v2/app/common/constants.dart';
 import 'package:hi_doctor_v2/app/common/storage/box.dart';
+import 'package:hi_doctor_v2/app/modules/message/models/chat_message.dart';
 
 class MessageController extends GetxController {
   final FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
-  final _userInfo = Box.userInfo;
 
-  int get userId => _userInfo!.id!;
+  int get userId => Box.userInfo!.id!;
 
-  MessageController();
-
-  Future<void> insertDataFirestore(String collectionPath, String docPath, Map<String, dynamic> dataNeedUpdate) {
-    return _firebaseFirestore.collection(collectionPath).doc(docPath).set(dataNeedUpdate);
+  Future<void> setDataFirestore(String collectionPath, String docPath, Map<String, dynamic> dataNeedInsert) {
+    return _firebaseFirestore.collection(collectionPath).doc(docPath).set(dataNeedInsert);
   }
 
-  Future<void> updateDataFirestore(String collectionPath, String docPath, Map<String, dynamic> dataNeedUpdate) {
-    DocumentReference documentReference = _firebaseFirestore.collection(collectionPath).doc(docPath);
+  // Future<void> updateDataFirestore(String collectionPath, String docPath, Map<String, dynamic> dataNeedUpdate) {
+  //   DocumentReference documentReference = _firebaseFirestore.collection(collectionPath).doc(docPath);
 
-    return _firebaseFirestore.runTransaction((transaction) async {
-      transaction.update(
-        documentReference,
-        dataNeedUpdate,
-      );
-    });
-  }
-
-  Future<bool> hasGroupChatDocument(String groupChatId) async {
-    final snapshot = await _firebaseFirestore.collection(Constants.pathMessageCollection).doc(groupChatId).get();
-    if (snapshot.data() == null) return false;
-    return true;
-  }
+  //   return _firebaseFirestore.runTransaction((transaction) async {
+  //     transaction.update(
+  //       documentReference,
+  //       dataNeedUpdate,
+  //     );
+  //   });
+  // }
 
   Stream<QuerySnapshot> getAllGroupChatStream(int limit) {
     return _firebaseFirestore
         .collection(Constants.pathMessageCollection)
-        .where(Constants.patientId, isEqualTo: userId)
+        .where(Constants.supervisorId, isEqualTo: userId)
         .limit(limit)
         .snapshots();
   }
@@ -46,37 +38,28 @@ class MessageController extends GetxController {
         .collection(Constants.pathMessageCollection)
         .doc(groupChatId)
         .collection(groupChatId)
-        .orderBy(Constants.timestamp, descending: true)
+        .orderBy(Constants.createdAt, descending: true)
         .limit(limit)
         .snapshots();
   }
 
-  Future<void> sendMessage(String content, int type, String groupChatId, int currentUserId, int peerId) {
-    DocumentReference documentReference = _firebaseFirestore
-        .collection(Constants.pathMessageCollection)
-        .doc(groupChatId)
-        .collection(groupChatId)
-        .doc(DateTime.now().millisecondsSinceEpoch.toString());
+  Future<void> sendMessage(String content, int type, String groupChatId, int supervisorId, int peerId) {
+    DocumentReference documentReference =
+        _firebaseFirestore.collection(Constants.pathMessageCollection).doc(groupChatId).collection(groupChatId).doc();
+    // .doc(DateTime.now().millisecondsSinceEpoch.toString());
 
-    // ChatMessage chatMessage = ChatMessage(
-    //   idFrom: currentUserId,
-    //   idTo: peerId,
-    //   timestamp: DateTime.now().millisecondsSinceEpoch.toString(),
-    //   content: content,
-    //   type: type,
-    // );
+    ChatMessage chatMessage = ChatMessage(
+      senderId: supervisorId,
+      receiverId: peerId,
+      content: content,
+      createdAt: Timestamp.now().millisecondsSinceEpoch,
+      type: type,
+    );
 
     return _firebaseFirestore.runTransaction((transaction) async {
       transaction.set(
         documentReference,
-        // chatMessage.toJson(),
-        {
-          Constants.idFrom: currentUserId,
-          Constants.idTo: peerId,
-          Constants.timestamp: DateTime.now().millisecondsSinceEpoch.toString(),
-          Constants.content: content,
-          Constants.type: type,
-        },
+        chatMessage.toJson(),
       );
     });
   }

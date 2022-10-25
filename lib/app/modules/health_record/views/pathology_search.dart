@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'package:hi_doctor_v2/app/common/util/transformation.dart';
 import 'package:hi_doctor_v2/app/models/pathology.dart';
 
@@ -39,8 +40,8 @@ class PathologySearchDelegate extends SearchDelegate {
       itemBuilder: (ctx, index) {
         var result = matchQuery[index];
         return ListTile(
+          onTap: () => close(context, result),
           title: Text(result),
-          subtitle: const Text('this is fun'),
         );
       },
       itemCount: matchQuery.length,

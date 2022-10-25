@@ -4,6 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:hi_doctor_v2/app/common/util/transformation.dart';
 import 'package:hi_doctor_v2/app/common/util/utils.dart';
+import 'package:hi_doctor_v2/app/modules/widgets/image_container.dart';
 import 'package:hi_doctor_v2/app/routes/app_pages.dart';
 import 'package:intl/intl.dart';
 
@@ -92,17 +93,10 @@ class BookingSummary extends StatelessWidget {
             CustomContainer(
               child: Row(
                 children: [
-                  Container(
+                  ImageContainer(
                     width: _imageSize,
                     height: _imageSize,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.rectangle,
-                      borderRadius: BorderRadius.circular(Constants.borderRadius.sp),
-                      image: DecorationImage(
-                        image: NetworkImage(doctor.avatar ?? Constants.defaultAvatar),
-                        fit: BoxFit.cover,
-                      ),
-                    ),
+                    imgUrl: doctor.avatar,
                   ),
                   SizedBox(
                     width: 10.sp,
@@ -153,17 +147,11 @@ class BookingSummary extends StatelessWidget {
             CustomContainer(
               child: Row(
                 children: [
-                  Container(
+                  ImageContainer(
                     width: _imageSize,
                     height: _imageSize,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.rectangle,
-                      borderRadius: BorderRadius.circular(15.sp),
-                      image: DecorationImage(
-                        image: NetworkImage(patient.avatar ?? Constants.defaultAvatar),
-                        fit: BoxFit.cover,
-                      ),
-                    ),
+                    imgUrl: patient.avatar,
+                    borderRadius: Constants.textFieldRadius.sp,
                   ),
                   SizedBox(
                     width: 10.sp,

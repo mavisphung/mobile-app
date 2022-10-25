@@ -20,7 +20,7 @@ import 'package:hi_doctor_v2/app/modules/meeting/channel.dart';
 import 'package:hi_doctor_v2/app/modules/meeting/meeting_detail.dart';
 import 'package:hi_doctor_v2/app/modules/message/chat_page.dart';
 import 'package:hi_doctor_v2/app/modules/notification/notification_page.dart';
-import 'package:hi_doctor_v2/app/modules/search/views/search_page.dart';
+import 'package:hi_doctor_v2/app/modules/search/views/search_result_page.dart';
 import 'package:hi_doctor_v2/app/modules/settings/views/patient_list.dart';
 import 'package:hi_doctor_v2/app/modules/settings/views/patient_profile_detail.dart';
 import 'package:hi_doctor_v2/app/modules/settings/views/user_profile_detail.dart';
@@ -61,8 +61,8 @@ abstract class AppPages {
       page: () => const AppoinmentPage(),
     ).custom(),
     GetPage(
-      name: Routes.SEARCH,
-      page: () => const SearchPage(),
+      name: Routes.SEARCH_RESULT,
+      page: () => const SearchResultPage(),
     ).custom(),
     GetPage(
       name: Routes.USER_PROFILE_DETAIL,
@@ -110,7 +110,7 @@ abstract class AppPages {
     ).custom(),
     GetPage(
       name: Routes.HEALTH_RECORDS,
-      page: () => const HealthRecordPage(),
+      page: () => HealthRecordPage(),
     ).custom(),
     GetPage(
       name: Routes.EDIT_HEALTH_RECORD,

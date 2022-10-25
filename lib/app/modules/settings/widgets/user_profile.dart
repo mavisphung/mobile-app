@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
-import 'package:hi_doctor_v2/app/common/constants.dart';
 import 'package:hi_doctor_v2/app/common/util/transformation.dart';
 import 'package:hi_doctor_v2/app/models/user_info.dart';
 import 'package:hi_doctor_v2/app/modules/settings/controllers/settings_controller.dart';
+import 'package:hi_doctor_v2/app/modules/widgets/image_container.dart';
 
 class UserProfile extends StatelessWidget {
   final SettingsController _settingsController = Get.find<SettingsController>();
@@ -17,17 +17,12 @@ class UserProfile extends StatelessWidget {
     return Row(
       children: [
         ObxValue<Rx<UserInfo2>>(
-          (data) => Container(
-            width: 50.sp,
-            height: 50.sp,
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              image: DecorationImage(
-                image: NetworkImage(data.value.avatar ?? Constants.defaultAvatar),
-                fit: BoxFit.cover,
-              ),
-            ),
-          ),
+          (data) => ImageContainer(
+            width: 50,
+            height: 50,
+            imgUrl: data.value.avatar,
+            borderRadius: 15,
+          ).circle(),
           _settingsController.userInfo,
         ),
         SizedBox(

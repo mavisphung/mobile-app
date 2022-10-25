@@ -8,6 +8,7 @@ import 'package:hi_doctor_v2/app/common/util/transformation.dart';
 import 'package:hi_doctor_v2/app/common/values/strings.dart';
 import 'package:hi_doctor_v2/app/models/doctor.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/custom_inkwell.dart';
+import 'package:hi_doctor_v2/app/modules/widgets/image_container.dart';
 import 'package:hi_doctor_v2/app/routes/app_pages.dart';
 
 class DoctorItem extends StatelessWidget {
@@ -47,7 +48,6 @@ class DoctorItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return CustomInkWell(
       width: 330.sp,
-      borderRadius: 20.sp,
       onTap: () {
         'Call api get doctor with id ${doctor.id}'.debugLog('Doctor instance');
         Get.toNamed(Routes.DOCTOR_DETAIL, arguments: doctor.id);
@@ -55,17 +55,11 @@ class DoctorItem extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
-            width: 100.sp,
-            height: 100.sp,
-            decoration: BoxDecoration(
-              color: Colors.amber,
-              borderRadius: BorderRadius.circular(17.sp),
-              image: DecorationImage(
-                image: NetworkImage(doctor.avatar!),
-                fit: BoxFit.cover,
-              ),
-            ),
+          ImageContainer(
+            width: 100,
+            height: 100,
+            imgUrl: doctor.avatar,
+            borderRadius: 17,
           ),
           Expanded(
             child: Padding(

@@ -12,10 +12,8 @@ import 'package:hi_doctor_v2/app/modules/message/views/chat_bubble.dart';
 import 'package:hi_doctor_v2/app/modules/message/views/chat_input.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/my_appbar.dart';
 
-class TypeMessage {
-  static const text = 0;
-  static const image = 1;
-}
+// ignore: constant_identifier_names
+enum TypeMessage { TEXT, IMAGE, FILE, VIDEO }
 
 class ChatPageArguments {
   final int peerId;
@@ -40,19 +38,21 @@ class ChatPage extends StatefulWidget {
 
 class ChatPageState extends State<ChatPage> {
   late final MessageController _cMessage;
+  late final int _userId;
+  late final int _peerId;
 
   List<QueryDocumentSnapshot> listMessage = [];
   int _limit = 20;
   final int _limitIncrement = 20;
-  late String groupChatId;
+  late final String _groupChatId;
 
-  final inputController = TextEditingController();
-  final listScrollController = ScrollController();
+  final _inputController = TextEditingController();
+  final _listScrollController = ScrollController();
 
   _scrollListener() {
-    if (!listScrollController.hasClients) return;
-    if (listScrollController.offset >= listScrollController.position.maxScrollExtent &&
-        !listScrollController.position.outOfRange &&
+    if (!_listScrollController.hasClients) return;
+    if (_listScrollController.offset >= _listScrollController.position.maxScrollExtent &&
+        !_listScrollController.position.outOfRange &&
         _limit <= listMessage.length) {
       setState(() {
         _limit += _limitIncrement;
@@ -60,79 +60,50 @@ class ChatPageState extends State<ChatPage> {
     }
   }
 
-  void _readLocal() async {
-    await _cMessage.updateDataFirestore(
-      Constants.pathMessageCollection,
-      groupChatId,
-      {
-        Constants.isChatting: false,
-      },
-    );
-  }
-
   @override
   void initState() {
     super.initState();
     _cMessage = Get.put(MessageController());
-    groupChatId = '${_cMessage.userId}-${widget.arguments.peerId}';
+    _userId = _cMessage.userId;
+    _peerId = widget.arguments.peerId;
+    _groupChatId = '$_userId-$_peerId';
 
-    listScrollController.addListener(_scrollListener);
-    // _readLocal();
+    _listScrollController.addListener(_scrollListener);
   }
 
   @override
   void dispose() {
     Utils.unfocus();
-    inputController.dispose();
+    _inputController.dispose();
     super.dispose();
   }
 
-  void onMessageSend(String content, int type) async {
-    int peerId = widget.arguments.peerId;
-    groupChatId = '${_cMessage.userId}-$peerId';
-    if (content.trim().isNotEmpty) {
-      inputController.clear();
-      await _cMessage.sendMessage(content, type, groupChatId, _cMessage.userId, widget.arguments.peerId);
-      await _cMessage.updateDataFirestore(
-        Constants.pathMessageCollection,
-        groupChatId,
-        {
-          Constants.isChatting: true,
-        },
-      );
-      await _cMessage.updateDataFirestore(
-        Constants.pathMessageCollection,
-        groupChatId,
-        {
-          Constants.patientId: _cMessage.userId,
-        },
-      );
-      await _cMessage.updateDataFirestore(
-        Constants.pathMessageCollection,
-        groupChatId,
-        {
-          Constants.lastMessage: content,
-        },
-      );
-      await _cMessage.updateDataFirestore(
-        Constants.pathMessageCollection,
-        groupChatId,
-        {
-          Constants.lastTimeStamp: DateTime.now().millisecondsSinceEpoch.toString(),
-        },
-      );
-      if (listScrollController.hasClients) {
-        listScrollController.animateTo(0, duration: const Duration(milliseconds: 300), curve: Curves.easeOut);
-      }
-    } else {
-      print('CHAT PAGE ERR: Nothing to send');
+  void _onMessageSend(int type) async {
+    final content = _inputController.text.trim();
+    if (content.isEmpty) return;
+    _inputController.clear();
+    await _cMessage.sendMessage(content, type, _groupChatId, _userId, _peerId);
+
+    await _cMessage.setDataFirestore(
+      Constants.pathMessageCollection,
+      _groupChatId,
+      {
+        Constants.supervisorId: _userId,
+        Constants.doctorId: _peerId,
+        Constants.lastMessage: content,
+        Constants.lastTimeStamp: DateTime.now().millisecondsSinceEpoch.toString(),
+      },
+    );
+
+    if (_listScrollController.hasClients) {
+      _listScrollController.animateTo(0, duration: const Duration(milliseconds: 300), curve: Curves.easeOut);
     }
   }
 
   Widget buildListMessage() {
-    return Flexible(
+    return Expanded(
       child: StreamBuilder<QuerySnapshot>(
-        stream: _cMessage.getChatStream(groupChatId, _limit),
+        stream: _cMessage.getChatStream(_groupChatId, _limit),
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (snapshot.hasData) {
             listMessage = snapshot.data!.docs;
@@ -141,14 +112,14 @@ class ChatPageState extends State<ChatPage> {
                 reverse: true,
                 padding: EdgeInsets.all(10.sp),
                 itemBuilder: (context, index) => ChatBubble(
-                  userId: _cMessage.userId,
+                  userId: _userId,
                   document: snapshot.data?.docs[index],
                   index: index,
                   listMessage: listMessage,
                   peerAvatar: widget.arguments.peerAvatar,
                 ),
                 itemCount: snapshot.data?.docs.length,
-                controller: listScrollController,
+                controller: _listScrollController,
               );
             } else {
               return const Center(child: Text("No message here yet..."));
@@ -175,7 +146,7 @@ class ChatPageState extends State<ChatPage> {
       body: Column(
         children: <Widget>[
           buildListMessage(),
-          ChatInput(inputController: inputController, onMessageSend: onMessageSend),
+          ChatInput(inputController: _inputController, onMessageSend: _onMessageSend),
         ],
       ),
     );

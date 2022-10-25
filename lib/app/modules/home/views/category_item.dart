@@ -24,7 +24,7 @@ class CategoryItem extends StatelessWidget {
           children: [
             SvgPicture.asset(
               image,
-              color: AppColors.primary,
+              // color: AppColors.primary,
               fit: BoxFit.cover,
               width: 33.0,
               height: 33.0,

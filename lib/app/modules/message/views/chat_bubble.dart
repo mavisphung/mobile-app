@@ -2,10 +2,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hi_doctor_v2/app/common/constants.dart';
-import 'package:hi_doctor_v2/app/common/values/colors.dart';
 
 import 'package:hi_doctor_v2/app/modules/message/chat_page.dart';
 import 'package:hi_doctor_v2/app/modules/message/models/chat_message.dart';
+import 'package:hi_doctor_v2/app/modules/widgets/image_container.dart';
 import 'package:intl/intl.dart';
 
 class ChatBubble extends StatelessWidget {
@@ -24,16 +24,19 @@ class ChatBubble extends StatelessWidget {
     required this.peerAvatar,
   });
 
-  String getDate(String timestamp) {
-    final date = DateTime.fromMillisecondsSinceEpoch(int.parse(timestamp));
+  String getDate(int timestamp) {
+    final date = DateTime.fromMillisecondsSinceEpoch(timestamp);
     final now = DateTime.now();
     if (date.year == now.year && date.month == now.month && date.day == now.day) {
       return DateFormat('kk:mm').format(date);
     }
-    return DateFormat('dd MMM kk:mm').format(date);
+    if (date.year == now.year) {
+      return DateFormat('dd MMM').format(date);
+    }
+    return DateFormat('dd MMM yyyy').format(date);
   }
 
-  Widget getDateWidget(EdgeInsets padding, String timestamp) {
+  Widget getDateWidget(EdgeInsets padding, int timestamp) {
     return Padding(
       padding: padding,
       child: Text(
@@ -44,7 +47,7 @@ class ChatBubble extends StatelessWidget {
   }
 
   bool isLastMessageLeft(int index) {
-    if ((index > 0 && listMessage[index - 1].get(Constants.idFrom) == userId) || index == 0) {
+    if ((index > 0 && listMessage[index - 1].get(Constants.senderId) == userId) || index == 0) {
       return true;
     } else {
       return false;
@@ -52,7 +55,7 @@ class ChatBubble extends StatelessWidget {
   }
 
   bool isLastMessageRight(int index) {
-    if ((index > 0 && listMessage[index - 1].get(Constants.idFrom) != userId) || index == 0) {
+    if ((index > 0 && listMessage[index - 1].get(Constants.senderId) != userId) || index == 0) {
       return true;
     } else {
       return false;
@@ -63,7 +66,7 @@ class ChatBubble extends StatelessWidget {
   Widget build(BuildContext context) {
     if (document != null) {
       ChatMessage messageChat = ChatMessage.fromDocument(document!);
-      if (messageChat.idFrom == userId) {
+      if (messageChat.senderId == userId) {
         // Right (my message)
         return Padding(
           padding: EdgeInsets.only(bottom: 10.sp),
@@ -73,7 +76,7 @@ class ChatBubble extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: <Widget>[
-                  messageChat.type == TypeMessage.text
+                  messageChat.type == TypeMessage.TEXT.index
                       ? Container(
                           constraints: BoxConstraints(
                             maxWidth: 250.sp,
@@ -95,7 +98,7 @@ class ChatBubble extends StatelessWidget {
               if (isLastMessageRight(index))
                 getDateWidget(
                   EdgeInsets.only(right: 10.sp, top: 5.sp, bottom: 5.sp),
-                  messageChat.timestamp,
+                  messageChat.createdAt,
                 ),
             ],
           ),
@@ -110,20 +113,13 @@ class ChatBubble extends StatelessWidget {
               Row(
                 children: <Widget>[
                   isLastMessageLeft(index)
-                      ? Container(
-                          width: 35.sp,
-                          height: 35.sp,
-                          decoration: BoxDecoration(
-                            color: AppColors.grey300,
-                            shape: BoxShape.circle,
-                            image: DecorationImage(
-                              image: NetworkImage(peerAvatar),
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                        )
+                      ? ImageContainer(
+                          width: 35,
+                          height: 35,
+                          imgUrl: peerAvatar,
+                        ).circle()
                       : SizedBox(width: 35.sp),
-                  messageChat.type == TypeMessage.text
+                  messageChat.type == TypeMessage.TEXT.index
                       ? Container(
                           constraints: BoxConstraints(
                             maxWidth: 230.sp,
@@ -146,7 +142,7 @@ class ChatBubble extends StatelessWidget {
               isLastMessageLeft(index)
                   ? getDateWidget(
                       EdgeInsets.only(left: 50.sp, top: 5.sp, bottom: 5.sp),
-                      messageChat.timestamp,
+                      messageChat.createdAt,
                     )
                   : const SizedBox.shrink()
             ],

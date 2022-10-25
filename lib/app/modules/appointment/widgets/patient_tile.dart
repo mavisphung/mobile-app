@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:hi_doctor_v2/app/common/util/transformation.dart';
 
+import 'package:hi_doctor_v2/app/common/util/transformation.dart';
 import 'package:hi_doctor_v2/app/models/patient.dart';
+import 'package:hi_doctor_v2/app/modules/widgets/image_container.dart';
 
 class PatientTile extends StatelessWidget {
   final Patient patient;
@@ -14,17 +14,11 @@ class PatientTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      trailing: Container(
-        width: 50.sp,
-        height: 50.sp,
-        decoration: BoxDecoration(
-          shape: BoxShape.circle,
-          image: DecorationImage(
-            image: NetworkImage(patient.avatar!),
-            fit: BoxFit.cover,
-          ),
-        ),
-      ),
+      trailing: ImageContainer(
+        width: 50,
+        height: 50,
+        imgUrl: patient.avatar,
+      ).circle(),
       title: Text(Tx.getFullName(patient.lastName, patient.firstName)),
       subtitle: Text('${patient.gender}'),
     );

@@ -13,6 +13,6 @@ class AppColors {
   static Color get blueHighlight => const Color(0xFFEEF4FF);
   static Color get whiteHighlight => Colors.grey[100] ?? const Color(0xFFF5F5F5);
   static Color get bottomSheet => const Color(0xFFD9E5FF);
-  static Color get background => Colors.grey[100] ?? const Color(0xFFF5F5F5);
+  static Color get background => Colors.grey.shade50;
   static Color get grey300 => Colors.grey.shade300;
 }

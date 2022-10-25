@@ -20,14 +20,13 @@ abstract class Constants {
 
   // firebase constants
   static const pathMessageCollection = 'messages';
-  static const patientId = 'patientId';
+  static const supervisorId = 'supervisorId';
   static const doctorId = 'doctorId';
   static const lastMessage = 'lastMessage';
   static const lastTimeStamp = 'lastTimeStamp';
-  static const isChatting = 'isChatting';
-  static const idFrom = 'idFrom';
-  static const idTo = 'idTo';
-  static const timestamp = 'timestamp';
+  static const senderId = 'senderId';
+  static const receiverId = 'receiverId';
   static const content = 'content';
+  static const createdAt = 'createdAt';
   static const type = 'type';
 }

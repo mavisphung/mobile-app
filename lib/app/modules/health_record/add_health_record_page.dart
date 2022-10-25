@@ -1,23 +1,22 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-
 import 'package:hi_doctor_v2/app/common/constants.dart';
-import 'package:hi_doctor_v2/app/common/util/transformation.dart';
+
 import 'package:hi_doctor_v2/app/common/values/colors.dart';
-import 'package:hi_doctor_v2/app/modules/health_record/controllers/health_record_controller.dart';
-import 'package:hi_doctor_v2/app/modules/health_record/views/pathology_search.dart';
+import 'package:hi_doctor_v2/app/modules/health_record/controllers/edit_health_record_controller.dart';
+import 'package:hi_doctor_v2/app/modules/health_record/views/pathology_view.dart';
+import 'package:hi_doctor_v2/app/modules/health_record/widgets/pathology_textfield.dart';
 import 'package:hi_doctor_v2/app/modules/health_record/views/record_view.dart';
-import 'package:hi_doctor_v2/app/modules/health_record/views/record_dropdown.dart';
+import 'package:hi_doctor_v2/app/modules/health_record/widgets/record_dropdown.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/base_page.dart';
-import 'package:hi_doctor_v2/app/modules/widgets/custom_icon_button.dart';
+import 'package:hi_doctor_v2/app/modules/widgets/custom_text_btn.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/custom_textfield_widget.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/my_appbar.dart';
 
 class AddHealthRecordPage extends StatelessWidget {
-  final _cHealthRecord = Get.put(HealthRecordController());
+  final _cEditHealthRecord = Get.put(EditHealthRecordController());
   final _formKey = GlobalKey<FormState>();
 
   AddHealthRecordPage({super.key});
@@ -67,30 +66,22 @@ class AddHealthRecordPage extends StatelessWidget {
     );
   }
 
-  void _addPathologyItem(String value) {
-    if (value.trim().isEmpty) {
-      _cHealthRecord.pathologyNameStatus.value = PathologyNameStatus.EMPTY;
-      return;
-    }
-    _cHealthRecord.addPathology();
-  }
-
   @override
   Widget build(BuildContext context) {
     return BasePage(
+      paddingTop: 20.sp,
       backgroundColor: Colors.white,
       appBar: MyAppBar(
         title: 'Thêm hồ sơ sức khỏe',
         actions: [
           Padding(
-            padding: EdgeInsets.only(right: 5.sp),
-            child: CustomIconButton(
-              onPressed: () {},
-              icon: Icon(
-                PhosphorIcons.folder_notch_plus_light,
-                color: AppColors.secondary,
-                size: 24.sp,
-              ),
+            padding: EdgeInsets.only(
+              top: 16.sp,
+              right: 14.sp,
+            ),
+            child: CustomTextButton(
+              btnText: 'Add',
+              action: () => _cEditHealthRecord.saveHealthRecord(),
             ),
           ),
         ],
@@ -102,39 +93,16 @@ class AddHealthRecordPage extends StatelessWidget {
           children: [
             CustomTextFieldWidget(
               labelText: 'Tên hồ sơ',
-              focusNode: _cHealthRecord.nameFocusNode,
-              controller: _cHealthRecord.nameController,
+              focusNode: _cEditHealthRecord.nameFocusNode,
+              controller: _cEditHealthRecord.nameController,
             ),
             Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Expanded(
-                  child: ObxValue<Rx<PathologyNameStatus>>(
-                    (data) => CustomTextFieldWidget(
-                      labelText: 'Bệnh lý',
-                      hintText: 'Tap to find pathology',
-                      validator: null,
-                      focusNode: _cHealthRecord.pathologyFocusNode,
-                      controller: _cHealthRecord.pathologyController,
-                      textInputAction: TextInputAction.done,
-                      onFieldSubmitted: (value) => _addPathologyItem(value ?? ''),
-                      errorText: data.value == PathologyNameStatus.INVALID
-                          ? 'Invalid pathology'
-                          : (data.value == PathologyNameStatus.EMPTY ? 'Please input pathology' : null),
-                      onTap: () async {
-                        _cHealthRecord.pathologyController.text = await showSearch(
-                          context: context,
-                          delegate: PathologySearchDelegate(),
-                        );
-                      },
-                    ),
-                    _cHealthRecord.pathologyNameStatus,
-                  ),
-                ),
+                PathologyTextField(),
                 _box10,
                 _getAddBtn(
-                  margin: EdgeInsets.only(top: 2.sp),
-                  onPressed: () => _addPathologyItem(_cHealthRecord.pathologyController.text),
+                  margin: EdgeInsets.only(bottom: 2.sp),
+                  onPressed: _cEditHealthRecord.addPathology,
                 ),
               ],
             ),
@@ -145,7 +113,7 @@ class AddHealthRecordPage extends StatelessWidget {
                 _box10,
                 _getAddBtn(
                   margin: EdgeInsets.only(bottom: 2.sp),
-                  onPressed: _cHealthRecord.addTicket,
+                  onPressed: _cEditHealthRecord.addTicket,
                 ),
               ],
             ),
@@ -153,55 +121,7 @@ class AddHealthRecordPage extends StatelessWidget {
             ImagePreviewGrid(),
             _hBox20,
             _getTitle('Bệnh lý đã thêm'),
-            ObxValue<RxInt>(
-              (data) {
-                if (data.value == 0) {
-                  return const Text('Bạn chưa thêm phiếu sức khỏe nào');
-                }
-                return Container(
-                  height: 150.sp,
-                  padding: EdgeInsets.symmetric(horizontal: 14.sp),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(Constants.textFieldRadius.sp),
-                    border: Border.all(
-                      width: 0.2.sp,
-                      color: Colors.blueGrey.shade200,
-                    ),
-                  ),
-                  child: ListView.builder(
-                    physics: const ScrollPhysics(),
-                    itemCount: data.value,
-                    itemBuilder: (_, index) {
-                      var e = _cHealthRecord.getPathologys[index];
-                      return Padding(
-                        padding: EdgeInsets.symmetric(vertical: 8.sp),
-                        child: Row(
-                          children: [
-                            CustomIconButton(
-                              size: 28.sp,
-                              color: AppColors.grey300.withOpacity(0.7),
-                              onPressed: () {},
-                              icon: Icon(
-                                CupertinoIcons.xmark,
-                                size: 12.8.sp,
-                                color: Colors.black87,
-                              ),
-                            ),
-                            SizedBox(width: 10.sp),
-                            Flexible(
-                              child: Text(
-                                Tx.getPathologyString(e.code, e.name),
-                              ),
-                            ),
-                          ],
-                        ),
-                      );
-                    },
-                  ),
-                );
-              },
-              _cHealthRecord.pathologiesLength,
-            ),
+            PathologyView(),
             _hBox20,
             _getTitle('Các phiếu đã thêm'),
             RecordsView(),

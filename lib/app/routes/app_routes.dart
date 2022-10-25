@@ -10,7 +10,7 @@ abstract class Routes {
   static const MESSAGE = '/message';
   static const HISTORY = '/history';
   static const USER_PROFILE_DETAIL = '/userProfileDetail';
-  static const SEARCH = '/search';
+  static const SEARCH_RESULT = '/searchResult';
   static const DOCTOR_DETAIL = '/doctorDetail';
   static const BOOKING = '/booking';
   static const BOOKING_PACKAGE = '/bookingPackage';

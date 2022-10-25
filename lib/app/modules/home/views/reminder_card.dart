@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hi_doctor_v2/app/common/constants.dart';
 
 import 'package:hi_doctor_v2/app/common/values/colors.dart';
+import 'package:hi_doctor_v2/app/modules/widgets/image_container.dart';
 
 class ReminderCard extends StatelessWidget {
   const ReminderCard({super.key});
@@ -23,16 +24,11 @@ class ReminderCard extends StatelessWidget {
         title: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Container(
-              width: 50.sp,
-              height: 50.sp,
-              decoration: const BoxDecoration(
-                shape: BoxShape.circle,
-                image: DecorationImage(
-                  image: NetworkImage('https://cuu-be.s3.amazonaws.com/cuu-be/2022/6/28/O2VWFV.png'),
-                ),
-              ),
-            ),
+            const ImageContainer(
+              width: 50,
+              height: 50,
+              imgUrl: null,
+            ).circle(),
             SizedBox(width: 10.sp),
             Expanded(
               child: Column(

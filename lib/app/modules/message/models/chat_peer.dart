@@ -16,15 +16,15 @@ class ChatPeer {
   });
 
   factory ChatPeer.fromDocument(DocumentSnapshot doc) {
-    int doctorId = 0;
-    String lastMessage = '';
-    String lastTimeStamp = '';
+    late int doctorId;
+    late String lastMessage;
+    late String lastTimeStamp;
     try {
       doctorId = doc.get(Constants.doctorId);
       lastMessage = doc.get(Constants.lastMessage);
       lastTimeStamp = doc.get(Constants.lastTimeStamp);
     } catch (e) {
-      'CANNOT GET FIELD'.debugLog('FIREBASE');
+      'CANNOT GET GROUP CHAT INFO'.debugLog('FIREBASE');
     }
     return ChatPeer(
       doctorId: doctorId,

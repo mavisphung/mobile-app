@@ -10,7 +10,6 @@ import 'package:hi_doctor_v2/app/common/values/strings.dart';
 import 'package:hi_doctor_v2/app/models/appointment.dart';
 import 'package:hi_doctor_v2/app/modules/appointment/widgets/appointment_tile_button.dart';
 import 'package:hi_doctor_v2/app/modules/message/chat_page.dart';
-import 'package:hi_doctor_v2/app/modules/message/controllers/message_controller.dart';
 import 'package:hi_doctor_v2/app/routes/app_pages.dart';
 
 final Map<AppointmentStatus, Color> statusColors = {
@@ -145,28 +144,14 @@ class AppointmentTile extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     GestureDetector(
-                      onTap: () async {
-                        final _cMessage = MessageController();
-                        final groupChatId = '${_cMessage.userId}-${data.doctor!['id']}';
-                        final hasGroupChatDoc = await _cMessage.hasGroupChatDocument(groupChatId);
-                        if (!hasGroupChatDoc) {
-                          _cMessage.insertDataFirestore(
-                            Constants.pathMessageCollection,
-                            groupChatId,
-                            {
-                              Constants.doctorId: data.doctor!['id'],
-                            },
-                          );
-                        }
-                        Get.toNamed(
-                          Routes.CHAT,
-                          arguments: ChatPageArguments(
-                            peerId: data.doctor!['id'],
-                            peerName: fullName,
-                            peerAvatar: data.doctor!['avatar'],
-                          ),
-                        );
-                      },
+                      onTap: () => Get.toNamed(
+                        Routes.CHAT,
+                        arguments: ChatPageArguments(
+                          peerId: data.doctor!['id'],
+                          peerName: fullName,
+                          peerAvatar: data.doctor!['avatar'],
+                        ),
+                      ),
                       child: Container(
                         padding: EdgeInsets.all(9.sp),
                         alignment: Alignment.center,
@@ -250,6 +235,7 @@ class HistoryAppointmentTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final fullName = '${data.doctor!["firstName"]} ${data.doctor!["lastName"]}';
     return Container(
       height: 180.sp,
       margin: EdgeInsets.symmetric(vertical: 10.sp),
@@ -331,6 +317,39 @@ class HistoryAppointmentTile extends StatelessWidget {
                     buildDay(data.bookedAt!),
                   ],
                 ),
+              ),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  GestureDetector(
+                    onTap: () => Get.toNamed(
+                      Routes.CHAT,
+                      arguments: ChatPageArguments(
+                        peerId: data.doctor!['id'],
+                        peerName: fullName,
+                        peerAvatar: data.doctor!['avatar'],
+                      ),
+                    ),
+                    child: Container(
+                      padding: EdgeInsets.all(9.sp),
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                        color: Colors.grey[100]?.withOpacity(0.7),
+                        borderRadius: BorderRadius.circular(20.sp),
+                      ),
+                      child: data.type.toString().enumType == AppointmentType.online
+                          ? Icon(
+                              PhosphorIcons.phone,
+                              color: AppColors.primary,
+                            )
+                          : Icon(
+                              PhosphorIcons.messenger_logo,
+                              color: AppColors.primary,
+                            ),
+                    ),
+                  ),
+                ],
               ),
             ],
           ),

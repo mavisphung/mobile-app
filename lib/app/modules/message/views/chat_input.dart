@@ -8,7 +8,7 @@ import 'package:hi_doctor_v2/app/modules/message/chat_page.dart';
 
 class ChatInput extends StatelessWidget {
   final TextEditingController inputController;
-  final Function(String, int) onMessageSend;
+  final void Function(int) onMessageSend;
 
   const ChatInput({
     super.key,
@@ -46,7 +46,7 @@ class ChatInput extends StatelessWidget {
           // Edit text
           Flexible(
             child: TextField(
-              onSubmitted: (value) => onMessageSend(inputController.text, TypeMessage.text),
+              onSubmitted: (value) => onMessageSend(TypeMessage.TEXT.index),
               style: const TextStyle(color: Colors.black, fontSize: 15),
               controller: inputController,
               decoration: InputDecoration.collapsed(
@@ -62,7 +62,7 @@ class ChatInput extends StatelessWidget {
               margin: const EdgeInsets.symmetric(horizontal: 8),
               child: IconButton(
                 icon: const Icon(PhosphorIcons.paper_plane_right_fill),
-                onPressed: () => onMessageSend(inputController.text, TypeMessage.text),
+                onPressed: () => onMessageSend(TypeMessage.TEXT.index),
                 color: AppColors.secondary,
               ),
             ),

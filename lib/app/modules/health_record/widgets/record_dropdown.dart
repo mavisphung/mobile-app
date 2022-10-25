@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 
 import 'package:hi_doctor_v2/app/common/constants.dart';
 import 'package:hi_doctor_v2/app/common/values/colors.dart';
-import 'package:hi_doctor_v2/app/modules/health_record/controllers/health_record_controller.dart';
+import 'package:hi_doctor_v2/app/modules/health_record/controllers/edit_health_record_controller.dart';
 
 List<Map<String, dynamic>> recordTypes = [
   {
@@ -42,7 +42,7 @@ List<Map<String, dynamic>> recordTypes = [
 ];
 
 class RecordDropDown extends StatelessWidget {
-  final _cHealthRecord = Get.find<HealthRecordController>();
+  final _cEditHealthRecord = Get.find<EditHealthRecordController>();
   RecordDropDown({super.key});
 
   @override
@@ -92,7 +92,7 @@ class RecordDropDown extends StatelessWidget {
               iconEnabledColor: Colors.blueGrey,
               icon: const Icon(Icons.arrow_drop_down_rounded),
             ),
-            _cHealthRecord.recordId,
+            _cEditHealthRecord.recordId,
           ),
         ),
       ],

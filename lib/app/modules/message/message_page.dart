@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:hi_doctor_v2/app/common/values/strings.dart';
 import 'package:hi_doctor_v2/app/modules/message/controllers/message_controller.dart';
 import 'package:hi_doctor_v2/app/modules/message/views/chat_tile.dart';
+import 'package:hi_doctor_v2/app/modules/message/views/message_skeleton.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/my_appbar.dart';
 
 class MessagePage extends StatelessWidget {
@@ -37,14 +38,8 @@ class MessagePage extends StatelessWidget {
                       child: Text("No users"),
                     );
                   }
-                } else {
-                  return const Center(
-                    child: CircularProgressIndicator(
-                      color: Colors.blueGrey,
-                      strokeWidth: 10.0,
-                    ),
-                  );
                 }
+                return const SizedBox.shrink();
               },
             ),
           ),

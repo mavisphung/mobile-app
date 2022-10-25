@@ -10,36 +10,45 @@ import 'package:hi_doctor_v2/app/common/constants.dart';
 import 'package:hi_doctor_v2/app/common/util/utils.dart';
 import 'package:hi_doctor_v2/app/common/values/colors.dart';
 import 'package:hi_doctor_v2/app/common/values/strings.dart';
-import 'package:hi_doctor_v2/app/modules/health_record/controllers/health_record_controller.dart';
-import 'package:hi_doctor_v2/app/modules/health_record/views/record_item.dart';
+import 'package:hi_doctor_v2/app/modules/health_record/controllers/edit_health_record_controller.dart';
+import 'package:hi_doctor_v2/app/modules/health_record/widgets/record_item.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/custom_icon_button.dart';
 
 class RecordsView extends StatelessWidget {
-  final _cHealthRecord = Get.find<HealthRecordController>();
+  final _cEditHealthRecord = Get.find<EditHealthRecordController>();
 
   RecordsView({super.key});
 
   @override
   Widget build(BuildContext context) {
     return ObxValue<RxInt>(
-      (data) => ListView.separated(
-        shrinkWrap: true,
-        physics: const NeverScrollableScrollPhysics(),
-        itemBuilder: (_, index) {
-          return RecordItem(r: _cHealthRecord.getRecords[index]);
-        },
-        itemCount: data.value,
-        separatorBuilder: (_, __) => SizedBox(
-          height: 5.sp,
-        ),
-      ),
-      _cHealthRecord.recordsLength,
+      (data) {
+        if (data.value == 0) {
+          return const Align(
+            heightFactor: 3,
+            alignment: Alignment.center,
+            child: Text('Bạn chưa thêm phiếu sức khỏe nào'),
+          );
+        }
+        return ListView.separated(
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
+          itemBuilder: (_, index) {
+            return RecordItem(recordIndex: index);
+          },
+          itemCount: data.value,
+          separatorBuilder: (_, __) => SizedBox(
+            height: 5.sp,
+          ),
+        );
+      },
+      _cEditHealthRecord.recordsLength,
     );
   }
 }
 
 class ImagePreviewGrid extends StatelessWidget {
-  final _cHealthRecord = Get.find<HealthRecordController>();
+  final _cEditHealthRecord = Get.find<EditHealthRecordController>();
 
   ImagePreviewGrid({Key? key}) : super(key: key);
 
@@ -73,7 +82,7 @@ class ImagePreviewGrid extends StatelessWidget {
                     confirmText: Strings.camera.tr,
                   );
                   if (isFromCamera != null) {
-                    _cHealthRecord.addImage(isFromCamera);
+                    _cEditHealthRecord.addImage(isFromCamera);
                   }
                 },
                 child: Container(
@@ -105,7 +114,7 @@ class ImagePreviewGrid extends StatelessWidget {
                 ),
               );
             }
-            String e = _cHealthRecord.getImgs[index - 1];
+            String e = _cEditHealthRecord.getImgs[index - 1];
             return Stack(
               fit: StackFit.expand,
               children: [
@@ -125,7 +134,7 @@ class ImagePreviewGrid extends StatelessWidget {
                   child: CustomIconButton(
                     size: 28.sp,
                     color: AppColors.grey300.withOpacity(0.7),
-                    onPressed: () => _cHealthRecord.removeImage(index - 1),
+                    onPressed: () => _cEditHealthRecord.removeImage(index - 1),
                     icon: Icon(
                       CupertinoIcons.xmark,
                       size: 12.8.sp,
@@ -137,7 +146,7 @@ class ImagePreviewGrid extends StatelessWidget {
             );
           },
         ),
-        _cHealthRecord.imgsLength,
+        _cEditHealthRecord.imgsLength,
       ),
     );
   }
