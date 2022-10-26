@@ -113,11 +113,7 @@ class HomePage extends StatelessWidget {
                           scrollDirection: Axis.horizontal,
                           physics: const BouncingScrollPhysics(),
                           itemBuilder: (_, index) {
-                            var temp = _homeController.specialistList[index];
-                            return CategoryItem(
-                              label: temp.name!,
-                              image: 'assets/icons/skeleton.svg',
-                            );
+                            return CategoryItem(spec: _homeController.specialistList[index]);
                           },
                           separatorBuilder: (_, __) => SizedBox(
                             width: 3.sp,
