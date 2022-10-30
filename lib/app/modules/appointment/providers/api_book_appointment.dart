@@ -22,6 +22,13 @@ class ApiBookAppointmentImpl extends GetConnect {
     );
   }
 
+  Future<Response> getSuggestHours(int doctorId) {
+    return get(
+      '/api/suggest/doctor/$doctorId/',
+      headers: _headers,
+    );
+  }
+
   Future<Response> postAppointment(ReqAppointmentModel reqModel) {
     reqModel.toString().debugLog('Req Appointment Body');
     return post(

@@ -74,9 +74,6 @@ class IncomingController extends GetxController {
     scrollController.addListener(
       () async {
         if (scrollController.position.maxScrollExtent == scrollController.offset) {
-          //the bottom of the scrollbar is reached
-          //adding more widgets
-          // 'Reach the bottom'.debugLog('ScrollController');
           loadMore();
           loadingStatus.value.toString().debugLog('loading status');
           getUserIncomingAppointments(page: currentPage.value);

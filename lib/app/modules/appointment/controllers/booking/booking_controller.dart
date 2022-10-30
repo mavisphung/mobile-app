@@ -83,6 +83,17 @@ class BookingController extends GetxController {
     rxPatient.value = value;
   }
 
+  Future<bool?> getSuggestHours(int doctorId) async {
+    final response = await _apiBookAppointment.getSuggestHours(doctorId).futureValue();
+    if (response != null && response.isSuccess == true && response.statusCode == Constants.successGetStatusCode) {
+      final data = response.data;
+      if (data is Map) {
+        return false;
+      }
+    }
+    return null;
+  }
+
   Future<List<PackageItem>?> getPackages(int doctorId) async {
     final result = await _apiBookAppointment.getDoctorPackage(doctorId);
     final Map<String, dynamic> response = ApiResponse.getResponse(result);

@@ -3,14 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
-import 'package:hi_doctor_v2/app/common/constants.dart';
 import 'package:hi_doctor_v2/app/common/util/transformation.dart';
 import 'package:hi_doctor_v2/app/common/values/colors.dart';
 import 'package:hi_doctor_v2/app/modules/health_record/controllers/edit_health_record_controller.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/custom_icon_button.dart';
+import 'package:hi_doctor_v2/app/routes/app_pages.dart';
 
 class PathologyView extends StatelessWidget {
-  final _cEditHealthRecord = Get.find<EditHealthRecordController>();
+  final _cEditOtherHealthRecord = Get.find<EditOtherHealthRecordController>(tag: 'MAIN');
 
   PathologyView({super.key});
 
@@ -25,49 +25,62 @@ class PathologyView extends StatelessWidget {
             child: Text('Bạn chưa thêm bệnh lý nào'),
           );
         }
-        return Container(
-          height: 150.sp,
-          padding: EdgeInsets.symmetric(horizontal: 14.sp),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(Constants.textFieldRadius.sp),
-            border: Border.all(
-              width: 0.2.sp,
-              color: Colors.blueGrey.shade200,
-            ),
-          ),
-          child: ListView.builder(
-            physics: const BouncingScrollPhysics(),
-            itemCount: data.value,
-            itemBuilder: (_, index) {
-              var e = _cEditHealthRecord.getPathologys[index];
-              return Padding(
-                padding: EdgeInsets.symmetric(vertical: 8.sp),
-                child: Row(
-                  children: [
-                    CustomIconButton(
-                      size: 28.sp,
-                      color: AppColors.grey300.withOpacity(0.7),
-                      onPressed: () => _cEditHealthRecord.removePathology(index),
-                      icon: Icon(
-                        CupertinoIcons.xmark,
-                        size: 12.8.sp,
-                        color: Colors.black87,
+        return ListView.separated(
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
+          itemBuilder: (_, index) {
+            var e = _cEditOtherHealthRecord.getPathologies[index];
+            return Container(
+              padding: EdgeInsets.all(15.sp),
+              decoration: BoxDecoration(
+                color: Colors.grey.shade200,
+                borderRadius: BorderRadius.circular(15.sp),
+              ),
+              child: Column(
+                children: [
+                  Row(
+                    children: [
+                      CustomIconButton(
+                        size: 28.sp,
+                        color: Colors.redAccent.withOpacity(0.8),
+                        onPressed: () => _cEditOtherHealthRecord.removePathology(index),
+                        icon: Icon(
+                          CupertinoIcons.xmark,
+                          size: 12.8.sp,
+                          color: Colors.white,
+                        ),
                       ),
-                    ),
-                    SizedBox(width: 10.sp),
-                    Flexible(
-                      child: Text(
-                        Tx.getPathologyString(e.code, e.name),
+                      SizedBox(width: 10.sp),
+                      Expanded(
+                        child: Text(
+                          Tx.getPathologyString(e.code, e.diseaseName),
+                        ),
                       ),
-                    ),
-                  ],
-                ),
-              );
-            },
+                      SizedBox(width: 10.sp),
+                      CustomIconButton(
+                        size: 28.sp,
+                        color: AppColors.grey300.withOpacity(0.7),
+                        onPressed: () =>
+                            Get.toNamed(Routes.EDIT_PATHOLOGY_RECORD, arguments: e, parameters: {'tag': 'Save'}),
+                        icon: Icon(
+                          Icons.edit,
+                          size: 14.sp,
+                          color: Colors.black87,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            );
+          },
+          itemCount: data.value,
+          separatorBuilder: (_, __) => SizedBox(
+            height: 5.sp,
           ),
         );
       },
-      _cEditHealthRecord.pathologiesLength,
+      _cEditOtherHealthRecord.pathologiesLength,
     );
   }
 }

@@ -13,6 +13,7 @@ import 'package:hi_doctor_v2/app/modules/auth/register_page.dart';
 import 'package:hi_doctor_v2/app/modules/auth/splash_page.dart';
 import 'package:hi_doctor_v2/app/modules/bottom_navbar/nav_bar.dart';
 import 'package:hi_doctor_v2/app/modules/health_record/add_health_record_page.dart';
+import 'package:hi_doctor_v2/app/modules/health_record/edit_pathology_record_page.dart';
 import 'package:hi_doctor_v2/app/modules/health_record/health_record_page.dart';
 import 'package:hi_doctor_v2/app/modules/home/home_page.dart';
 import 'package:hi_doctor_v2/app/modules/home/views/doctor_detail_page.dart';
@@ -110,11 +111,15 @@ abstract class AppPages {
     ).custom(),
     GetPage(
       name: Routes.HEALTH_RECORDS,
-      page: () => HealthRecordPage(),
+      page: () => OtherHealthRecordPage(),
     ).custom(),
     GetPage(
       name: Routes.EDIT_HEALTH_RECORD,
-      page: () => AddHealthRecordPage(),
+      page: () => AddOtherHealthRecordPage(),
+    ).custom(),
+    GetPage(
+      name: Routes.EDIT_PATHOLOGY_RECORD,
+      page: () => EditPathologyRecordPage(),
     ).custom(),
   ];
 }

@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:hi_doctor_v2/app/common/constants.dart';
 
 import 'package:hi_doctor_v2/app/common/values/colors.dart';
 import 'package:hi_doctor_v2/app/modules/health_record/controllers/edit_health_record_controller.dart';
@@ -15,11 +14,11 @@ import 'package:hi_doctor_v2/app/modules/widgets/custom_text_btn.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/custom_textfield_widget.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/my_appbar.dart';
 
-class AddHealthRecordPage extends StatelessWidget {
-  final _cEditHealthRecord = Get.put(EditHealthRecordController());
+class AddOtherHealthRecordPage extends StatelessWidget {
+  final _cEditOtherHealthRecord = Get.put(EditOtherHealthRecordController(), tag: 'MAIN');
   final _formKey = GlobalKey<FormState>();
 
-  AddHealthRecordPage({super.key});
+  AddOtherHealthRecordPage({super.key});
 
   final _box10 = SizedBox(width: 10.sp, height: 10.sp);
 
@@ -81,7 +80,7 @@ class AddHealthRecordPage extends StatelessWidget {
             ),
             child: CustomTextButton(
               btnText: 'Add',
-              action: () => _cEditHealthRecord.saveHealthRecord(),
+              action: () => _cEditOtherHealthRecord.saveOtherHealthRecord(),
             ),
           ),
         ],
@@ -93,17 +92,12 @@ class AddHealthRecordPage extends StatelessWidget {
           children: [
             CustomTextFieldWidget(
               labelText: 'Tên hồ sơ',
-              focusNode: _cEditHealthRecord.nameFocusNode,
-              controller: _cEditHealthRecord.nameController,
+              focusNode: _cEditOtherHealthRecord.nameFocusNode,
+              controller: _cEditOtherHealthRecord.nameController,
             ),
             Row(
-              children: [
+              children: const [
                 PathologyTextField(),
-                _box10,
-                _getAddBtn(
-                  margin: EdgeInsets.only(bottom: 2.sp),
-                  onPressed: _cEditHealthRecord.addPathology,
-                ),
               ],
             ),
             Row(
@@ -113,7 +107,7 @@ class AddHealthRecordPage extends StatelessWidget {
                 _box10,
                 _getAddBtn(
                   margin: EdgeInsets.only(bottom: 2.sp),
-                  onPressed: _cEditHealthRecord.addTicket,
+                  onPressed: _cEditOtherHealthRecord.addTicket,
                 ),
               ],
             ),

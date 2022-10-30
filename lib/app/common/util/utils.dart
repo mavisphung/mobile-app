@@ -181,7 +181,8 @@ abstract class Utils {
               InkWell(
                 onTap: () => Navigator.pop(ctx, true),
                 customBorder: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.only(bottomLeft: Radius.circular(12.sp)),
+                  borderRadius:
+                      BorderRadius.only(bottomLeft: Radius.circular(12.sp), bottomRight: Radius.circular(12.sp)),
                 ),
                 child: Padding(
                   padding: EdgeInsets.symmetric(vertical: Constants.padding.sp),

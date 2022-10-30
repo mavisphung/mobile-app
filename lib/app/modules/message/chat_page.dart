@@ -10,6 +10,7 @@ import 'package:hi_doctor_v2/app/common/values/colors.dart';
 import 'package:hi_doctor_v2/app/modules/message/controllers/message_controller.dart';
 import 'package:hi_doctor_v2/app/modules/message/views/chat_bubble.dart';
 import 'package:hi_doctor_v2/app/modules/message/views/chat_input.dart';
+import 'package:hi_doctor_v2/app/modules/widgets/loading_widget.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/my_appbar.dart';
 
 // ignore: constant_identifier_names
@@ -125,12 +126,7 @@ class ChatPageState extends State<ChatPage> {
               return const Center(child: Text("No message here yet..."));
             }
           } else {
-            return Center(
-              child: SpinKitChasingDots(
-                size: 30.sp,
-                color: AppColors.primary.withOpacity(0.3),
-              ),
-            );
+            return const LoadingWidget();
           }
         },
       ),

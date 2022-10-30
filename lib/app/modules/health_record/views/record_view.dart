@@ -5,8 +5,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:hi_doctor_v2/app/common/constants.dart';
 
+import 'package:hi_doctor_v2/app/common/constants.dart';
 import 'package:hi_doctor_v2/app/common/util/utils.dart';
 import 'package:hi_doctor_v2/app/common/values/colors.dart';
 import 'package:hi_doctor_v2/app/common/values/strings.dart';
@@ -14,10 +14,14 @@ import 'package:hi_doctor_v2/app/modules/health_record/controllers/edit_health_r
 import 'package:hi_doctor_v2/app/modules/health_record/widgets/record_item.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/custom_icon_button.dart';
 
+// ignore: must_be_immutable
 class RecordsView extends StatelessWidget {
-  final _cEditHealthRecord = Get.find<EditHealthRecordController>();
+  final String? tag;
+  late EditOtherHealthRecordController _cEditOtherHealthRecord;
 
-  RecordsView({super.key});
+  RecordsView({Key? key, this.tag}) : super(key: key) {
+    _cEditOtherHealthRecord = Get.find<EditOtherHealthRecordController>(tag: tag ?? 'MAIN');
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +38,7 @@ class RecordsView extends StatelessWidget {
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
           itemBuilder: (_, index) {
-            return RecordItem(recordIndex: index);
+            return RecordItem(recordIndex: index, tag: tag);
           },
           itemCount: data.value,
           separatorBuilder: (_, __) => SizedBox(
@@ -42,15 +46,19 @@ class RecordsView extends StatelessWidget {
           ),
         );
       },
-      _cEditHealthRecord.recordsLength,
+      _cEditOtherHealthRecord.recordsLength,
     );
   }
 }
 
+// ignore: must_be_immutable
 class ImagePreviewGrid extends StatelessWidget {
-  final _cEditHealthRecord = Get.find<EditHealthRecordController>();
+  final String? tag;
+  late EditOtherHealthRecordController _cEditOtherHealthRecord;
 
-  ImagePreviewGrid({Key? key}) : super(key: key);
+  ImagePreviewGrid({Key? key, this.tag}) : super(key: key) {
+    _cEditOtherHealthRecord = Get.find<EditOtherHealthRecordController>(tag: tag ?? 'MAIN');
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -82,7 +90,7 @@ class ImagePreviewGrid extends StatelessWidget {
                     confirmText: Strings.camera.tr,
                   );
                   if (isFromCamera != null) {
-                    _cEditHealthRecord.addImage(isFromCamera);
+                    _cEditOtherHealthRecord.addImage(isFromCamera);
                   }
                 },
                 child: Container(
@@ -114,7 +122,7 @@ class ImagePreviewGrid extends StatelessWidget {
                 ),
               );
             }
-            String e = _cEditHealthRecord.getImgs[index - 1];
+            String e = _cEditOtherHealthRecord.getImgs[index - 1];
             return Stack(
               fit: StackFit.expand,
               children: [
@@ -134,7 +142,7 @@ class ImagePreviewGrid extends StatelessWidget {
                   child: CustomIconButton(
                     size: 28.sp,
                     color: AppColors.grey300.withOpacity(0.7),
-                    onPressed: () => _cEditHealthRecord.removeImage(index - 1),
+                    onPressed: () => _cEditOtherHealthRecord.removeImage(index - 1),
                     icon: Icon(
                       CupertinoIcons.xmark,
                       size: 12.8.sp,
@@ -146,7 +154,7 @@ class ImagePreviewGrid extends StatelessWidget {
             );
           },
         ),
-        _cEditHealthRecord.imgsLength,
+        _cEditOtherHealthRecord.imgsLength,
       ),
     );
   }

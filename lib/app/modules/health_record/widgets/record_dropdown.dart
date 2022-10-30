@@ -42,8 +42,12 @@ List<Map<String, dynamic>> recordTypes = [
 ];
 
 class RecordDropDown extends StatelessWidget {
-  final _cEditHealthRecord = Get.find<EditHealthRecordController>();
-  RecordDropDown({super.key});
+  final String? tag;
+  late final EditOtherHealthRecordController _cEditOtherHealthRecord;
+
+  RecordDropDown({Key? key, this.tag}) : super(key: key) {
+    _cEditOtherHealthRecord = Get.find<EditOtherHealthRecordController>(tag: tag ?? 'MAIN');
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -92,7 +96,7 @@ class RecordDropDown extends StatelessWidget {
               iconEnabledColor: Colors.blueGrey,
               icon: const Icon(Icons.arrow_drop_down_rounded),
             ),
-            _cEditHealthRecord.recordId,
+            _cEditOtherHealthRecord.recordId,
           ),
         ),
       ],

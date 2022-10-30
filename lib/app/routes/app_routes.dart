@@ -23,5 +23,6 @@ abstract class Routes {
   static const MEETING_DETAIL = '/meetingDetail';
   static const NOTIFICATION_PAGE = '/notification';
   static const HEALTH_RECORDS = '/healthRecords';
-  static const EDIT_HEALTH_RECORD = '/editHealthRecord';
+  static const EDIT_HEALTH_RECORD = '/editOtherHealthRecord';
+  static const EDIT_PATHOLOGY_RECORD = '/editPathologyRecord';
 }

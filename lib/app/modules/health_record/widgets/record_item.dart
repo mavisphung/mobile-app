@@ -5,15 +5,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:hi_doctor_v2/app/common/values/colors.dart';
+import 'package:hi_doctor_v2/app/models/record.dart';
 
 import 'package:hi_doctor_v2/app/modules/health_record/controllers/edit_health_record_controller.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/custom_icon_button.dart';
 
 class RecordItem extends StatefulWidget {
+  final String? tag;
   final int recordIndex;
 
   const RecordItem({
     super.key,
+    this.tag,
     required this.recordIndex,
   });
 
@@ -22,12 +25,18 @@ class RecordItem extends StatefulWidget {
 }
 
 class _RecordItemState extends State<RecordItem> {
-  final _cEditHealthRecord = Get.find<EditHealthRecordController>();
+  late final EditOtherHealthRecordController _cEditOtherHealthRecord;
   bool _isExpanded = false;
 
   @override
+  void initState() {
+    _cEditOtherHealthRecord = Get.find<EditOtherHealthRecordController>(tag: widget.tag ?? 'MAIN');
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final record = _cEditHealthRecord.getRecords[widget.recordIndex];
+    final record = _cEditOtherHealthRecord.getRecords[widget.recordIndex];
     return Container(
       padding: EdgeInsets.all(15.sp),
       decoration: BoxDecoration(
@@ -41,7 +50,7 @@ class _RecordItemState extends State<RecordItem> {
               CustomIconButton(
                 size: 28.sp,
                 color: Colors.redAccent.withOpacity(0.8),
-                onPressed: () => _cEditHealthRecord.removeRecord(widget.recordIndex, record.type!),
+                onPressed: () => _cEditOtherHealthRecord.removeRecord(widget.recordIndex, record.type!),
                 icon: Icon(
                   CupertinoIcons.xmark,
                   size: 12.8.sp,
@@ -69,7 +78,7 @@ class _RecordItemState extends State<RecordItem> {
               ),
             ],
           ),
-          if (record.tickets != null && _isExpanded) RecordGrid(recordIndex: widget.recordIndex),
+          if (record.tickets != null && _isExpanded) RecordGrid(record: record, tag: widget.tag),
         ],
       ),
     );
@@ -77,11 +86,13 @@ class _RecordItemState extends State<RecordItem> {
 }
 
 class RecordGrid extends StatefulWidget {
-  final int recordIndex;
+  final String? tag;
+  final Record record;
 
   const RecordGrid({
     Key? key,
-    required this.recordIndex,
+    this.tag,
+    required this.record,
   }) : super(key: key);
 
   @override
@@ -90,7 +101,13 @@ class RecordGrid extends StatefulWidget {
 
 class _RecordGridState extends State<RecordGrid> {
   late RxInt _recordsLength;
-  final _cEditHealthRecord = Get.find<EditHealthRecordController>();
+  late final EditOtherHealthRecordController _cEditOtherHealthRecord;
+
+  @override
+  void initState() {
+    _cEditOtherHealthRecord = Get.find<EditOtherHealthRecordController>(tag: widget.tag ?? 'MAIN');
+    super.initState();
+  }
 
   @override
   void dispose() {
@@ -100,7 +117,7 @@ class _RecordGridState extends State<RecordGrid> {
 
   @override
   Widget build(BuildContext context) {
-    final records = _cEditHealthRecord.getTicketsWithRecordId(widget.recordIndex);
+    final records = widget.record.tickets;
     if (records == null) return const SizedBox.shrink();
     _recordsLength = records.length.obs;
     return Padding(
@@ -138,7 +155,7 @@ class _RecordGridState extends State<RecordGrid> {
                       size: 28.sp,
                       color: AppColors.grey300.withOpacity(0.7),
                       onPressed: () => setState(() {
-                        _cEditHealthRecord.removeTicket(widget.recordIndex, index);
+                        _cEditOtherHealthRecord.removeTicket(widget.record.id!, index);
                       }),
                       icon: Icon(
                         CupertinoIcons.xmark,

@@ -5,6 +5,7 @@ import 'package:hi_doctor_v2/app/common/storage/storage.dart';
 import 'package:hi_doctor_v2/app/modules/auth/controllers/login_controller.dart';
 import 'package:hi_doctor_v2/app/modules/auth/login_page.dart';
 import 'package:hi_doctor_v2/app/modules/bottom_navbar/nav_bar.dart';
+import 'package:hi_doctor_v2/app/modules/widgets/loading_widget.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/no_internet_widget.dart';
 
 class SplashPage extends StatefulWidget {
@@ -45,7 +46,7 @@ class _SplashPageState extends State<SplashPage> {
                 return LoginPage();
               }
             } else {
-              return const Center(child: Text('Loading..'));
+              return const LoadingWidget();
             }
           },
         ),

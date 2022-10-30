@@ -1,31 +1,34 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
-import 'package:hi_doctor_v2/app/common/storage/box.dart';
-import 'package:hi_doctor_v2/app/common/storage/storage.dart';
-import 'package:hi_doctor_v2/app/common/util/transformation.dart';
 import 'package:hi_doctor_v2/app/common/util/utils.dart';
-import 'package:hi_doctor_v2/app/models/health_record.dart';
+import 'package:hi_doctor_v2/app/models/other_health_record.dart';
 import 'package:hi_doctor_v2/app/models/pathology.dart';
 import 'package:hi_doctor_v2/app/models/record.dart';
 import 'package:image_picker/image_picker.dart';
 
-class EditHealthRecordController extends GetxController {
+class EditOtherHealthRecordController extends GetxController {
   final _pathologies = <Pathology>[];
-  List<Pathology> get getPathologys => _pathologies;
+  List<Pathology> get getPathologies => _pathologies;
   final _records = <Record>[];
-  List<Record> get getRecords => _records;
+  List<Record> get getRecords {
+    if (pathologyObj.value != null) {
+      return pathologyObj.value!.records;
+    }
+    return _records;
+  }
+
   final _imgs = <String>[];
   List<String> get getImgs => _imgs;
 
   final pathologiesLength = 0.obs;
-  final recordsLength = 0.obs;
+  final RxInt recordsLength = 0.obs;
   final imgsLength = 0.obs;
   final recordId = 0.obs;
 
   final nameController = TextEditingController();
   final nameFocusNode = FocusNode();
-  final pathologyText = 'Tap to find pathology'.obs;
+  Rxn<Pathology> pathologyObj = Rxn(null);
 
   Future<String?> _getImage(bool isFromCamera) async {
     final picker = ImagePicker();
@@ -52,14 +55,6 @@ class EditHealthRecordController extends GetxController {
     // return null;
   }
 
-  List<String>? getTicketsWithRecordId(int recordId) {
-    final item = _records.firstWhereOrNull((e) => e.id == recordId);
-    if (item != null) {
-      return item.tickets;
-    }
-    return null;
-  }
-
   void addImage(bool isFromCamera) async {
     final url = await _getImage(isFromCamera);
     if (url != null) {
@@ -73,19 +68,29 @@ class EditHealthRecordController extends GetxController {
     --imgsLength.value;
   }
 
-  void addPathology() {
-    final p = pathologyText.value;
-    if (p == 'Tap to find pathology') return;
-    final codeName = Tx.getPathologyCodeName(p);
-    final pathology = Pathology(0, codeName[0], codeName[1]);
-    _pathologies.add(pathology);
+  void addPathology(Pathology p) {
+    _pathologies.add(p);
     ++pathologiesLength.value;
-    pathologyText.value = 'Tap to find pathology';
+    Get.back();
+    for (var p in _pathologies) {
+      print('\n========================');
+      print(p.toString());
+    }
   }
 
-  void removePathology(int index) {
-    _pathologies.removeAt(index);
-    --pathologiesLength.value;
+  void savePathology(Pathology p) {
+    Get.back();
+  }
+
+  void removePathology(int index) async {
+    final confirm = await Utils.showConfirmDialog(
+      'Bệnh lý và những phiếu sức khỏe liên quan đến bệnh lý sẽ bị xóa. Bạn có chắc muốn xóa?',
+      title: 'Xóa bệnh lý',
+    );
+    if (confirm ?? false) {
+      _pathologies.removeAt(index);
+      --pathologiesLength.value;
+    }
   }
 
   void _clearImgs() {
@@ -95,53 +100,25 @@ class EditHealthRecordController extends GetxController {
 
   void addTicket() {
     final imgs = _imgs.toList();
-    final rId = recordId.value;
-    final existedRecordIndex = _records.indexWhere((e) => e.id == rId);
+    List<Record> records = getRecords;
+    final existedRecordIndex = records.indexWhere((e) => e.id == recordId.value);
 
     if (existedRecordIndex == -1) {
-      final String typeName;
-      switch (rId) {
-        case 0:
-          typeName = 'Phiếu điện tim';
-          break;
-        case 1:
-          typeName = 'Phiếu siêu âm';
-          break;
-        case 2:
-          typeName = 'Phiếu chụp X-quang';
-          break;
-        case 3:
-          typeName = 'Phiếu ra viện';
-          break;
-        case 4:
-          typeName = 'Phiếu xét nghiệm huyết học';
-          break;
-        case 5:
-          typeName = 'Đơn thuốc';
-          break;
-        case 6:
-          typeName = 'Sinh hiệu';
-          break;
-        case 7:
-          typeName = 'Khác';
-          break;
-        default:
-          typeName = 'Khác';
-          break;
-      }
+      final String? typeName = recordType[recordId.value];
       final record = Record(recordId.value, typeName, imgs);
-      _records.add(record);
+      records.add(record);
       ++recordsLength.value;
     } else {
-      var tmp = _records[existedRecordIndex].tickets?.toList();
+      var tmp = records[existedRecordIndex].tickets?.toList();
       tmp?.addAll(imgs);
-      if (tmp != null) _records[existedRecordIndex].setTickets(tmp);
+      if (tmp != null) records[existedRecordIndex].setTickets(tmp);
     }
     _clearImgs();
   }
 
   void removeTicket(int recordIndex, int index) {
-    final record = _records.elementAt(recordIndex);
+    List<Record> records = getRecords;
+    final record = records.elementAt(recordIndex);
     var tmp = record.tickets?.toList();
     if (tmp != null) {
       tmp.removeAt(index);
@@ -155,13 +132,18 @@ class EditHealthRecordController extends GetxController {
       title: 'Xóa $recordName',
     );
     if (confirm ?? false) {
-      _records.removeAt(index);
+      List<Record> records = getRecords;
+      records.removeAt(index);
       --recordsLength.value;
     }
   }
 
-  void saveHealthRecord() async {
-    final healtRecord = HealthRecord(
+  void saveOtherHealthRecord() async {
+    if (nameController.text.isEmpty && (_pathologies.isEmpty || _records.isEmpty)) {
+      Utils.showAlertDialog('Bạn cần đặt tên hồ sơ và thêm ít nhất một bệnh lý hoặc phiếu sức khỏe.');
+      return;
+    }
+    final healtRecord = OtherHealthRecord(
       null,
       nameController.text.trim(),
       DateTime.now(),
@@ -169,10 +151,6 @@ class EditHealthRecordController extends GetxController {
       _records.toList(),
     );
 
-    // var myOtherRecords = Box.otherRecords?.toList() ?? <HealthRecord>[];
-    var myOtherRecords = <HealthRecord>[];
-    // myOtherRecords.add(healtRecord);
-    await Storage.saveValue(CacheKey.RECORDS.name, healtRecord);
     Get.back();
   }
 
@@ -184,7 +162,7 @@ class EditHealthRecordController extends GetxController {
     recordId.close();
     nameController.dispose();
     nameFocusNode.dispose();
-    pathologyText.close();
+    pathologyObj.close();
     super.dispose();
   }
 }
