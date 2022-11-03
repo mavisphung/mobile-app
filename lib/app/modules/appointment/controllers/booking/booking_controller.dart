@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 
 import 'package:hi_doctor_v2/app/common/constants.dart';
 import 'package:hi_doctor_v2/app/common/util/extensions.dart';
+import 'package:hi_doctor_v2/app/common/util/utils.dart';
 import 'package:hi_doctor_v2/app/data/api_response.dart';
 import 'package:hi_doctor_v2/app/data/response_model.dart';
 import 'package:hi_doctor_v2/app/models/doctor.dart';
@@ -11,6 +12,7 @@ import 'package:hi_doctor_v2/app/modules/appointment/providers/api_book_appointm
 import 'package:hi_doctor_v2/app/modules/appointment/providers/req_appointment_model.dart';
 import 'package:hi_doctor_v2/app/modules/appointment/views/booking/booking_package_page.dart';
 import 'package:hi_doctor_v2/app/modules/appointment/widgets/service_item.dart';
+import 'package:intl/intl.dart';
 
 class BookingController extends GetxController {
   // select booking date time
@@ -79,16 +81,21 @@ class BookingController extends GetxController {
 
   final rxPatient = Patient().obs;
   Patient get patient => rxPatient.value;
-  void setPatient(value) {
+  void setPatient(Patient value) {
     rxPatient.value = value;
   }
 
-  Future<bool?> getSuggestHours(int doctorId) async {
-    final response = await _apiBookAppointment.getSuggestHours(doctorId).futureValue();
+  Future<List<Map<String, dynamic>>?> getSuggestHours() async {
+    final response = await _apiBookAppointment
+        .getSuggestHours(_doctor.id!, DateFormat('yyyy-MM-dd').format(selectedDate))
+        .futureValue();
     if (response != null && response.isSuccess == true && response.statusCode == Constants.successGetStatusCode) {
       final data = response.data;
+      print(response.data.toString());
       if (data is Map) {
-        return false;
+        if (data.isEmpty) return List.empty();
+      } else if (data is List<Map<String, dynamic>>) {
+        return data;
       }
     }
     return null;

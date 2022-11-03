@@ -2,10 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import 'package:hi_doctor_v2/app/models/other_health_record.dart';
+import 'package:hi_doctor_v2/app/models/patient.dart';
+import 'package:hi_doctor_v2/app/modules/health_record/providers/api_health_record.dart';
 import 'package:hi_doctor_v2/app/modules/health_record/views/other_tab.dart';
 
 class HealthRecordController extends GetxController with GetSingleTickerProviderStateMixin {
-  late TabController cTab;
+  late final ApiHealthRecord _apiHealthRecord;
+  late final TabController cTab;
   late final ScrollController allScroll;
   late final ScrollController systemScroll;
   late final ScrollController otherScroll;
@@ -18,17 +21,25 @@ class HealthRecordController extends GetxController with GetSingleTickerProvider
   List<OtherHealthRecord> get getOtherList => _otherList.toList();
   final otherListLength = 0.obs;
 
+  final patient = Patient().obs;
+
   Future<bool> getOtherHealthRecords({int page = 1, int limit = 10}) async {
-    await Future.delayed(const Duration(seconds: 1));
+    await Future.delayed(const Duration(seconds: 3));
     _otherList = hrList.toList();
     otherListLength.value = _otherList.length;
     print('VALUE: ${otherListLength.value}');
     return true;
   }
 
+  Future<bool> createHealthRecord(OtherHealthRecord hr) async {
+    await _apiHealthRecord.postHealthRecord(hr);
+    return false;
+  }
+
   @override
   void onInit() {
     super.onInit();
+    _apiHealthRecord = Get.put(ApiHealthRecord());
     cTab = TabController(vsync: this, length: 3);
 
     allScroll = ScrollController();
@@ -65,6 +76,7 @@ class HealthRecordController extends GetxController with GetSingleTickerProvider
     allScroll.dispose();
     systemScroll.dispose();
     otherScroll.dispose();
+    patient.close();
     super.dispose();
   }
 }

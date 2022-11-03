@@ -12,6 +12,7 @@ import 'package:hi_doctor_v2/app/modules/settings/widgets/setting_item.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/base_page.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/custom_container.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/my_appbar.dart';
+import 'package:hi_doctor_v2/app/modules/widgets/patient_tile.dart';
 import 'package:hi_doctor_v2/app/routes/app_pages.dart';
 
 enum SettingOption { myaccount, logout }
@@ -91,7 +92,10 @@ class SettingsPage extends StatelessWidget {
                   label: 'Y lệnh',
                 ),
                 GestureDetector(
-                  onTap: () => Get.toNamed(Routes.HEALTH_RECORDS),
+                  onTap: () {
+                    final patientOption = PatientOption();
+                    patientOption.openPatientOptions(context, (p) => Get.toNamed(Routes.HEALTH_RECORDS, arguments: p));
+                  },
                   child: const SettingItem2(
                     assetName: 'assets/icons/health_record1.svg',
                     label: 'Hồ sơ sức khỏe',

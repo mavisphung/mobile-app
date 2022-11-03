@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 import 'package:hi_doctor_v2/app/common/constants.dart';
 
 import 'package:hi_doctor_v2/app/common/storage/box.dart';
+import 'package:hi_doctor_v2/app/models/other_health_record.dart';
 
 class ApiHealthRecord extends GetConnect {
   final headers = Box.headers;
@@ -22,6 +23,24 @@ class ApiHealthRecord extends GetConnect {
         'limit': limit.toString(),
         'keyword': keyword,
       },
+    );
+  }
+
+  Future<Response> postHealthRecord(OtherHealthRecord hr) {
+    return post(
+      '/user/health-records/',
+      {
+        "patient": 7,
+        "detail": {
+          "asd": 15,
+          "asdasd": {"asdasd": "Asdfsf", "fsdfs": 999},
+          "array": [
+            {"asdas": 3},
+            {"pop": "popoe"}
+          ]
+        }
+      },
+      headers: headers,
     );
   }
 }

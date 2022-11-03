@@ -262,7 +262,9 @@ abstract class Utils {
 
   static String formatDateApi(DateTime date) => DateFormat('yyyy-MM-dd').format(date);
 
-  static String formatTime(DateTime date) => DateFormat('HH:mm').format(date);
+  static String formatTime(DateTime date) => DateFormat.jm().format(date);
+
+  static String formatHHmmTime(DateTime date) => DateFormat('HH:mm').format(date);
 
   static DateTime? parseStrToDateTime(String str) {
     try {

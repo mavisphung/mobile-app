@@ -7,7 +7,7 @@ import 'package:hi_doctor_v2/app/common/values/colors.dart';
 import 'package:hi_doctor_v2/app/common/values/strings.dart';
 import 'package:hi_doctor_v2/app/models/patient.dart';
 import 'package:hi_doctor_v2/app/modules/appointment/controllers/booking/booking_controller.dart';
-import 'package:hi_doctor_v2/app/modules/appointment/widgets/patient_tile.dart';
+import 'package:hi_doctor_v2/app/modules/widgets/patient_tile.dart';
 import 'package:hi_doctor_v2/app/modules/settings/controllers/patient_profile_controller.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/base_page.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/custom_bottom_sheet.dart';
@@ -51,12 +51,9 @@ class BookingPatientDetailPage extends StatelessWidget {
                   style: Theme.of(ctx).textTheme.headline6,
                 ),
                 ..._cPatientProfile.patientList
-                    .map((e) => GestureDetector(
-                          onTap: () {
-                            _cBooking.setPatient(e);
-                            Get.back();
-                          },
-                          child: PatientTile(patient: e),
+                    .map((e) => PatientTile(
+                          patient: e,
+                          onTap: _cBooking.setPatient,
                         ))
                     .toList()
               ],

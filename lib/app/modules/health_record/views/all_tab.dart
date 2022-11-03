@@ -22,23 +22,26 @@ class _AllTabState extends State<AllTab> with AutomaticKeepAliveClientMixin {
       children: [
         const InfoContainer(
             info: 'Danh sách bao gồm tất cả các hồ sơ sức khỏe từ hệ thống và hồ sơ mà bạn đã thêm trước đó.'),
-        FutureBuilder(
-          future: _cOtherHealthRecord.getOtherHealthRecords(),
-          builder: (_, AsyncSnapshot<bool> snapshot) {
-            if (snapshot.hasData && snapshot.data == true) {
-              return ListView.builder(
-                shrinkWrap: true,
-                controller: _cOtherHealthRecord.allScroll,
-                physics: const BouncingScrollPhysics(),
-                itemBuilder: (_, index) {
-                  // return SystemHealthRecordItem(hr: _cOtherHealthRecord.getOtherList[index]);
-                  return const SizedBox.shrink();
-                },
-                itemCount: _cOtherHealthRecord.getOtherList.length,
-              );
-            }
-            return const HealthRecordsSkeleton();
-          },
+        Expanded(
+          child: FutureBuilder(
+            // future: _cOtherHealthRecord.getOtherHealthRecords(),
+            future: Future.value(false),
+            builder: (_, AsyncSnapshot<bool> snapshot) {
+              if (snapshot.hasData && snapshot.data == true) {
+                return ListView.builder(
+                  shrinkWrap: true,
+                  controller: _cOtherHealthRecord.allScroll,
+                  physics: const BouncingScrollPhysics(),
+                  itemBuilder: (_, index) {
+                    // return SystemHealthRecordItem(hr: _cOtherHealthRecord.getOtherList[index]);
+                    return const SizedBox.shrink();
+                  },
+                  itemCount: _cOtherHealthRecord.getOtherList.length,
+                );
+              }
+              return const HealthRecordsSkeleton();
+            },
+          ),
         ),
       ],
     );

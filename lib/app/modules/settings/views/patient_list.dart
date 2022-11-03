@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import 'package:hi_doctor_v2/app/common/constants.dart';
+import 'package:hi_doctor_v2/app/common/values/colors.dart';
 import 'package:hi_doctor_v2/app/modules/settings/controllers/patient_profile_controller.dart';
 import 'package:hi_doctor_v2/app/modules/settings/widgets/patient_item.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/my_appbar.dart';
@@ -29,9 +30,9 @@ class PatientListPage extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Icon(
+                    Icon(
                       Icons.add,
-                      color: Colors.blue,
+                      color: AppColors.primary,
                     ),
                     SizedBox(
                       width: 7.sp,
@@ -39,7 +40,7 @@ class PatientListPage extends StatelessWidget {
                     Text(
                       'Thêm hồ sơ',
                       style: TextStyle(
-                        color: Colors.blue,
+                        color: AppColors.primary,
                         fontSize: 14.sp,
                         fontWeight: FontWeight.w500,
                       ),

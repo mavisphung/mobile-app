@@ -10,7 +10,7 @@ class HealthRecordsSkeleton extends StatelessWidget {
       itemCount: 5,
       itemBuilder: (_, __) {
         return Container(
-          margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+          margin: const EdgeInsets.symmetric(vertical: 10),
           padding: const EdgeInsets.all(15),
           decoration: BoxDecoration(
             color: Colors.grey.shade200,

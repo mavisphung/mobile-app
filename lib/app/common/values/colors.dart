@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class AppColors {
   // static Color get primary => const Color(0xFF0857DE);
   // static Color get primary => const Color(0xFF4482ED);
-  static Color get primary => Colors.blue;
+  static Color get primary => Colors.green;
   static Color get secondary => Colors.orangeAccent;
   static Color get shadow => Colors.blue.withOpacity(0.08);
   static Color get hightLight => const Color(0xCAFFFFFF);

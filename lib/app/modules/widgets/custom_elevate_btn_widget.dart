@@ -36,7 +36,7 @@ class CustomElevatedButtonWidget extends StatelessWidget {
               blurRadius: 7,
             ),
             BoxShadow(
-              color: Colors.indigoAccent.withOpacity(0.5),
+              color: AppColors.primary.withOpacity(0.5),
               spreadRadius: 0.4,
               blurRadius: 7,
             ),

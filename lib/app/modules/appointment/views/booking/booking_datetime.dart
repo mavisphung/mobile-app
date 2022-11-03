@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:hi_doctor_v2/app/modules/appointment/controllers/booking/slots_creator.dart';
+import 'package:hi_doctor_v2/app/modules/appointment/widgets/slots_skeleton.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 import 'package:hi_doctor_v2/app/common/util/extensions.dart';
@@ -26,6 +27,8 @@ class BookingDateTimePage extends StatelessWidget {
   final _doctor = Get.arguments as Doctor;
 
   final _now = DateTime.now();
+
+  final _dayOfWeek = ['Thứ hai', 'Thứ ba', 'Thứ tư', 'Thứ năm', 'Thứ sáu', 'Thứ bảy', 'CN'];
 
   @override
   Widget build(BuildContext context) {
@@ -75,7 +78,7 @@ class BookingDateTimePage extends StatelessWidget {
               builder: (c) {
                 return TableCalendar(
                   shouldFillViewport: true,
-                  daysOfWeekHeight: 25.sp,
+                  daysOfWeekHeight: 35.sp,
                   calendarStyle: CalendarStyle(
                     todayDecoration: BoxDecoration(
                       shape: BoxShape.circle,
@@ -97,16 +100,22 @@ class BookingDateTimePage extends StatelessWidget {
                   },
                   onDaySelected: (selectedDay, focusedDay) {
                     if (!isSameDay(c.selectedDate, selectedDay)) {
-                      c.setSelectedDate(selectedDay);
+                      // c.setSelectedDate(selectedDay);
                       c.setFocusedDate(focusedDay);
-                      'Selected day $selectedDay | Focused day $focusedDay'.debugLog('Selected day');
+                      c.rxSelectedDate.value = selectedDay;
+                      'Selected day ${c.selectedDate} | Focused day ${c.focusedDate}'.debugLog('Selected day');
                       c.update();
                     }
                   },
                   calendarBuilders: CalendarBuilders(
+                    headerTitleBuilder: (context, day) => Text('${day.month} ${day.year}'),
+                    dowBuilder: (context, day) {
+                      return Padding(
+                        padding: EdgeInsets.only(left: 8.sp),
+                        child: Text(_dayOfWeek[day.weekday - 1]),
+                      );
+                    },
                     selectedBuilder: (_, DateTime day, DateTime otherDay) {
-                      // day.toString().debugLog('day');
-                      // otherDay.toString().debugLog('otherDay');
                       return Container(
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
@@ -133,38 +142,46 @@ class BookingDateTimePage extends StatelessWidget {
             paddingLeft: 8.sp,
           ),
           ObxValue<Rx<DateTime>>((data) {
-            final slots = slotsCreator.getAvailableSlot(data.value.getWeekday());
-            if (slots != null) {
-              return GridView.builder(
-                padding: EdgeInsets.only(bottom: 5.sp),
-                physics: const NeverScrollableScrollPhysics(),
-                shrinkWrap: true,
-                itemCount: slots.length,
-                gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-                  crossAxisSpacing: 10.sp,
-                  mainAxisSpacing: 20.sp,
-                  maxCrossAxisExtent: 80.sp,
-                  mainAxisExtent: 50.sp,
-                ),
-                itemBuilder: (_, int index) {
-                  WorkingHour e = slots[index];
-                  return GestureDetector(
-                    onTap: () {
-                      _cBooking.setSelectedTimeId(e.id!);
-                      _cBooking.setSelectedTime(e.value!);
+            return FutureBuilder(
+              future: slotsCreator.getAvailableSlot(data.value.getWeekday()),
+              builder: (_, AsyncSnapshot<List<WorkingHour>?> snapshot) {
+                if (snapshot.hasData && snapshot.data!.isNotEmpty) {
+                  final slots = snapshot.data!;
+                  return GridView.builder(
+                    padding: EdgeInsets.only(bottom: 5.sp),
+                    physics: const NeverScrollableScrollPhysics(),
+                    shrinkWrap: true,
+                    itemCount: slots.length,
+                    gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+                      crossAxisSpacing: 10.sp,
+                      mainAxisSpacing: 20.sp,
+                      maxCrossAxisExtent: 80.sp,
+                      mainAxisExtent: 50.sp,
+                    ),
+                    itemBuilder: (_, int index) {
+                      WorkingHour e = slots[index];
+                      return GestureDetector(
+                        onTap: () {
+                          _cBooking.setSelectedTimeId(e.id!);
+                          print('E.VALUE: ${e.value}');
+                          _cBooking.setSelectedTime(e.value!);
+                        },
+                        child: ObxValue<RxInt>(
+                            (data) => HourItem(
+                                  text: e.title!,
+                                  id: e.id!,
+                                  isSelected: data.value == e.id ? true : false,
+                                ),
+                            _cBooking.rxSelectedTimeId),
+                      );
                     },
-                    child: ObxValue<RxInt>(
-                        (data) => HourItem(
-                              text: e.title!,
-                              id: e.id!,
-                              isSelected: data.value == e.id ? true : false,
-                            ),
-                        _cBooking.rxSelectedTimeId),
                   );
-                },
-              );
-            }
-            return Text('No slot on week day ${data.value.weekday}');
+                } else if (snapshot.hasData && snapshot.data!.isEmpty) {
+                  return Text('No slot on week day ${data.value.weekday}');
+                }
+                return const SlotsSkeleton();
+              },
+            );
           }, _cBooking.rxSelectedDate),
           SizedBox(height: 90.sp),
         ],

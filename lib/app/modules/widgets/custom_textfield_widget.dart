@@ -116,7 +116,7 @@ class CustomTextFieldWidget extends StatelessWidget {
                                   text: labelText,
                                   style: DefaultTextStyle.of(context).style.copyWith(
                                         fontSize: 16.5.sp,
-                                        color: _hasFocus.value ? Colors.blue : Colors.grey[600],
+                                        color: _hasFocus.value ? AppColors.primary : Colors.grey[600],
                                       ),
                                   children: [
                                     TextSpan(

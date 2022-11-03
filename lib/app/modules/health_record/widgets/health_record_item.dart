@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 
 import 'package:hi_doctor_v2/app/common/util/utils.dart';
 import 'package:hi_doctor_v2/app/models/other_health_record.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/custom_inkwell.dart';
+import 'package:hi_doctor_v2/app/routes/app_pages.dart';
 
 class OtherHealthRecordItem extends StatelessWidget {
   final OtherHealthRecord hr;
@@ -47,7 +49,13 @@ class OtherHealthRecordItem extends StatelessWidget {
       padding: EdgeInsets.symmetric(vertical: 5.sp),
       child: CustomInkWell(
         onTap: () {
-          Utils.showAlertDialog('Hey');
+          Get.toNamed(
+            Routes.EDIT_HEALTH_RECORD,
+            arguments: hr,
+            parameters: {
+              'tag': 'EDIT',
+            },
+          );
         },
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,

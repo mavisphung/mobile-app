@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import 'package:hi_doctor_v2/app/common/values/colors.dart';
+import 'package:hi_doctor_v2/app/models/other_health_record.dart';
 import 'package:hi_doctor_v2/app/modules/health_record/controllers/edit_health_record_controller.dart';
 import 'package:hi_doctor_v2/app/modules/health_record/views/pathology_view.dart';
 import 'package:hi_doctor_v2/app/modules/health_record/widgets/pathology_textfield.dart';
@@ -14,9 +15,11 @@ import 'package:hi_doctor_v2/app/modules/widgets/custom_text_btn.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/custom_textfield_widget.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/my_appbar.dart';
 
+// ignore: must_be_immutable
 class AddOtherHealthRecordPage extends StatelessWidget {
   final _cEditOtherHealthRecord = Get.put(EditOtherHealthRecordController(), tag: 'MAIN');
-  final _formKey = GlobalKey<FormState>();
+  late String _funcLabel;
+  late Function _func;
 
   AddOtherHealthRecordPage({super.key});
 
@@ -65,8 +68,22 @@ class AddOtherHealthRecordPage extends StatelessWidget {
     );
   }
 
+  void init() {
+    final hr = Get.arguments as OtherHealthRecord?;
+    final parameters = Get.parameters;
+    final tag = parameters['tag'];
+    _funcLabel = 'Add';
+    _func = _cEditOtherHealthRecord.saveOtherHealthRecord;
+    if (tag != null && tag == 'EDIT' && hr != null) {
+      _funcLabel = 'Save';
+      _func = _cEditOtherHealthRecord.saveOtherHealthRecord;
+      _cEditOtherHealthRecord.initValue(hr);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    init();
     return BasePage(
       paddingTop: 20.sp,
       backgroundColor: Colors.white,
@@ -79,48 +96,47 @@ class AddOtherHealthRecordPage extends StatelessWidget {
               right: 14.sp,
             ),
             child: CustomTextButton(
-              btnText: 'Add',
-              action: () => _cEditOtherHealthRecord.saveOtherHealthRecord(),
+              btnText: _funcLabel,
+              action: () async {
+                await _func();
+              },
             ),
           ),
         ],
       ),
-      body: Form(
-        key: _formKey,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            CustomTextFieldWidget(
-              labelText: 'Tên hồ sơ',
-              focusNode: _cEditOtherHealthRecord.nameFocusNode,
-              controller: _cEditOtherHealthRecord.nameController,
-            ),
-            Row(
-              children: const [
-                PathologyTextField(),
-              ],
-            ),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                Expanded(child: RecordDropDown()),
-                _box10,
-                _getAddBtn(
-                  margin: EdgeInsets.only(bottom: 2.sp),
-                  onPressed: _cEditOtherHealthRecord.addTicket,
-                ),
-              ],
-            ),
-            _box10,
-            ImagePreviewGrid(),
-            _hBox20,
-            _getTitle('Bệnh lý đã thêm'),
-            PathologyView(),
-            _hBox20,
-            _getTitle('Các phiếu đã thêm'),
-            RecordsView(),
-          ],
-        ),
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          CustomTextFieldWidget(
+            labelText: 'Tên hồ sơ',
+            focusNode: _cEditOtherHealthRecord.nameFocusNode,
+            controller: _cEditOtherHealthRecord.nameController,
+          ),
+          Row(
+            children: const [
+              PathologyTextField(),
+            ],
+          ),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              Expanded(child: RecordDropDown()),
+              _box10,
+              _getAddBtn(
+                margin: EdgeInsets.only(bottom: 2.sp),
+                onPressed: _cEditOtherHealthRecord.addTicket,
+              ),
+            ],
+          ),
+          _box10,
+          ImagePreviewGrid(),
+          _hBox20,
+          _getTitle('Bệnh lý đã thêm'),
+          PathologyView(),
+          _hBox20,
+          _getTitle('Các phiếu đã thêm'),
+          RecordsView(),
+        ],
       ),
     );
   }

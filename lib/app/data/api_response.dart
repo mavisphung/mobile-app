@@ -30,7 +30,7 @@ abstract class ApiResponse {
           return response.body;
         }
       } else {
-        // print('NOT OK: ${response.body}');
+        print('NOT OK: ${response.body}');
         if (res['success'] == false && res['status'] == 400) {
           return response.body;
         } else if (status.isServerError) {

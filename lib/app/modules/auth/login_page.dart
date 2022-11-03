@@ -150,7 +150,7 @@ class LoginPage extends StatelessWidget {
                       },
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(top: 20.0, bottom: 45.0),
+                      padding: EdgeInsets.only(top: 15.sp, bottom: 45.sp),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [

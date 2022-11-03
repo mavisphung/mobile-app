@@ -8,10 +8,11 @@ import 'package:hi_doctor_v2/app/models/record.dart';
 import 'package:image_picker/image_picker.dart';
 
 class EditOtherHealthRecordController extends GetxController {
-  final _pathologies = <Pathology>[];
-  List<Pathology> get getPathologies => _pathologies;
-  final _records = <Record>[];
-  List<Record> get getRecords {
+  var _pathologies = List.empty();
+  List<dynamic> get getPathologies => _pathologies;
+
+  var _records = List.empty();
+  List<dynamic> get getRecords {
     if (pathologyObj.value != null) {
       return pathologyObj.value!.records;
     }
@@ -100,7 +101,7 @@ class EditOtherHealthRecordController extends GetxController {
 
   void addTicket() {
     final imgs = _imgs.toList();
-    List<Record> records = getRecords;
+    final records = getRecords;
     final existedRecordIndex = records.indexWhere((e) => e.id == recordId.value);
 
     if (existedRecordIndex == -1) {
@@ -117,7 +118,7 @@ class EditOtherHealthRecordController extends GetxController {
   }
 
   void removeTicket(int recordIndex, int index) {
-    List<Record> records = getRecords;
+    final records = getRecords;
     final record = records.elementAt(recordIndex);
     var tmp = record.tickets?.toList();
     if (tmp != null) {
@@ -132,7 +133,7 @@ class EditOtherHealthRecordController extends GetxController {
       title: 'Xóa $recordName',
     );
     if (confirm ?? false) {
-      List<Record> records = getRecords;
+      final records = getRecords;
       records.removeAt(index);
       --recordsLength.value;
     }
@@ -152,6 +153,13 @@ class EditOtherHealthRecordController extends GetxController {
     );
 
     Get.back();
+  }
+
+  void initValue(OtherHealthRecord hr) {
+    _pathologies = hr.pathologies ?? List.empty();
+    pathologiesLength.value = _pathologies.length;
+    _records = hr.otherTickets ?? List.empty();
+    recordsLength.value = _records.length;
   }
 
   @override

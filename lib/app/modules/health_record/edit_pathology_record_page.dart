@@ -2,8 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:hi_doctor_v2/app/common/constants.dart';
-import 'package:hi_doctor_v2/app/common/util/transformation.dart';
 
 import 'package:hi_doctor_v2/app/common/values/colors.dart';
 import 'package:hi_doctor_v2/app/models/pathology.dart';
@@ -114,7 +112,6 @@ class EditPathologyRecordPage extends StatelessWidget {
         children: [
           _getTitle('Thông tin bệnh lý'),
           Container(
-            // width: double.infinity,
             padding: EdgeInsets.symmetric(
               vertical: 20.sp,
               horizontal: 18.sp,

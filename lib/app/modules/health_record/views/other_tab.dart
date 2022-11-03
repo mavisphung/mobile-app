@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:hi_doctor_v2/app/common/values/colors.dart';
 
 import 'package:hi_doctor_v2/app/models/other_health_record.dart';
 import 'package:hi_doctor_v2/app/models/pathology.dart';
@@ -8,6 +10,7 @@ import 'package:hi_doctor_v2/app/modules/health_record/controllers/health_record
 import 'package:hi_doctor_v2/app/modules/health_record/widgets/health_record_item.dart';
 import 'package:hi_doctor_v2/app/modules/health_record/widgets/health_records_skeleton.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/info_container.dart';
+import 'package:hi_doctor_v2/app/routes/app_pages.dart';
 import 'package:intl/intl.dart';
 
 class OtherTab extends StatefulWidget {
@@ -26,22 +29,55 @@ class _OtherTabState extends State<OtherTab> with AutomaticKeepAliveClientMixin 
     return Column(
       children: [
         const InfoContainer(info: 'Danh sách bao gồm tất cả các hồ sơ mà bạn đã thêm trước đó.'),
-        FutureBuilder(
-          future: _cOtherHealthRecord.getOtherHealthRecords(),
-          builder: (_, AsyncSnapshot<bool> snapshot) {
-            if (snapshot.hasData && snapshot.data == true) {
-              return ListView.builder(
-                shrinkWrap: true,
-                controller: _cOtherHealthRecord.otherScroll,
-                physics: const BouncingScrollPhysics(),
-                itemBuilder: (_, index) {
-                  return OtherHealthRecordItem(hr: _cOtherHealthRecord.getOtherList[index]);
-                },
-                itemCount: _cOtherHealthRecord.getOtherList.length,
-              );
-            }
-            return const HealthRecordsSkeleton();
-          },
+        GestureDetector(
+          onTap: () => Get.toNamed(
+            Routes.EDIT_HEALTH_RECORD,
+            parameters: {
+              'tag': 'ADD',
+            },
+          ),
+          child: Padding(
+            padding: EdgeInsets.symmetric(vertical: 8.sp),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(
+                  Icons.add,
+                  color: AppColors.primary,
+                ),
+                SizedBox(
+                  width: 7.sp,
+                ),
+                Text(
+                  'Thêm hồ sơ ngoài hệ thống',
+                  style: TextStyle(
+                    color: AppColors.primary,
+                    fontSize: 14.sp,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+        Expanded(
+          child: FutureBuilder(
+            future: _cOtherHealthRecord.getOtherHealthRecords(),
+            builder: (_, AsyncSnapshot<bool> snapshot) {
+              if (snapshot.hasData && snapshot.data == true) {
+                return ListView.builder(
+                  shrinkWrap: true,
+                  controller: _cOtherHealthRecord.otherScroll,
+                  physics: const BouncingScrollPhysics(),
+                  itemBuilder: (_, index) {
+                    return OtherHealthRecordItem(hr: _cOtherHealthRecord.getOtherList[index]);
+                  },
+                  itemCount: _cOtherHealthRecord.getOtherList.length,
+                );
+              }
+              return const HealthRecordsSkeleton();
+            },
+          ),
         ),
       ],
     );
