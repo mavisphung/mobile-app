@@ -73,10 +73,10 @@ class AddOtherHealthRecordPage extends StatelessWidget {
     final parameters = Get.parameters;
     final tag = parameters['tag'];
     _funcLabel = 'Add';
-    _func = _cEditOtherHealthRecord.saveOtherHealthRecord;
+    _func = _cEditOtherHealthRecord.addOtherHealthRecord;
     if (tag != null && tag == 'EDIT' && hr != null) {
       _funcLabel = 'Save';
-      _func = _cEditOtherHealthRecord.saveOtherHealthRecord;
+      _func = _cEditOtherHealthRecord.addOtherHealthRecord;
       _cEditOtherHealthRecord.initValue(hr);
     }
   }

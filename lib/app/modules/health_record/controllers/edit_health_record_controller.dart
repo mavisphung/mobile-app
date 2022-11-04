@@ -1,17 +1,23 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:hi_doctor_v2/app/common/util/extensions.dart';
+import 'package:hi_doctor_v2/app/modules/health_record/controllers/health_record_controller.dart';
+import 'package:image_picker/image_picker.dart';
 
 import 'package:hi_doctor_v2/app/common/util/utils.dart';
 import 'package:hi_doctor_v2/app/models/other_health_record.dart';
 import 'package:hi_doctor_v2/app/models/pathology.dart';
 import 'package:hi_doctor_v2/app/models/record.dart';
-import 'package:image_picker/image_picker.dart';
+import 'package:hi_doctor_v2/app/modules/health_record/providers/api_health_record.dart';
 
 class EditOtherHealthRecordController extends GetxController {
-  var _pathologies = List.empty();
+  late ApiHealthRecord _apiHealthRecord;
+  late HealthRecordController _cHealthRecord;
+
+  var _pathologies = List.empty(growable: true);
   List<dynamic> get getPathologies => _pathologies;
 
-  var _records = List.empty();
+  var _records = List.empty(growable: true);
   List<dynamic> get getRecords {
     if (pathologyObj.value != null) {
       return pathologyObj.value!.records;
@@ -139,12 +145,12 @@ class EditOtherHealthRecordController extends GetxController {
     }
   }
 
-  void saveOtherHealthRecord() async {
+  void addOtherHealthRecord() async {
     if (nameController.text.isEmpty && (_pathologies.isEmpty || _records.isEmpty)) {
       Utils.showAlertDialog('Bạn cần đặt tên hồ sơ và thêm ít nhất một bệnh lý hoặc phiếu sức khỏe.');
       return;
     }
-    final healtRecord = OtherHealthRecord(
+    final hr = OtherHealthRecord(
       null,
       nameController.text.trim(),
       DateTime.now(),
@@ -152,14 +158,27 @@ class EditOtherHealthRecordController extends GetxController {
       _records.toList(),
     );
 
+    final patientId = _cHealthRecord.patient.value.id;
+    if (patientId != null) {
+      final response = await _apiHealthRecord.postHealthRecord(patientId, hr).futureValue();
+      print('ADD RESP: ${response.toString()}');
+    }
+
     Get.back();
   }
 
   void initValue(OtherHealthRecord hr) {
-    _pathologies = hr.pathologies ?? List.empty();
+    _pathologies = hr.pathologies ?? List.empty(growable: true);
     pathologiesLength.value = _pathologies.length;
-    _records = hr.otherTickets ?? List.empty();
+    _records = hr.otherTickets ?? List.empty(growable: true);
     recordsLength.value = _records.length;
+  }
+
+  @override
+  void onInit() {
+    _apiHealthRecord = Get.put(ApiHealthRecord());
+    _cHealthRecord = Get.find<HealthRecordController>();
+    super.onInit();
   }
 
   @override

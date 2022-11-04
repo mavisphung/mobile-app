@@ -23,7 +23,6 @@ class OtherHealthRecord {
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
-      'id': id,
       'name': name,
       'createDate': createDate?.millisecondsSinceEpoch,
       'pathologies': pathologies,
@@ -40,8 +39,6 @@ class OtherHealthRecord {
       map['otherTickets'] != null ? List<dynamic>.from((map['otherTickets'] as List<dynamic>)) : null,
     );
   }
-
-  String toJson() => json.encode(toMap());
 
   factory OtherHealthRecord.fromJson(String source) =>
       OtherHealthRecord.fromMap(json.decode(source) as Map<String, dynamic>);

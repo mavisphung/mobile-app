@@ -3,11 +3,9 @@ import 'package:get/get.dart';
 
 import 'package:hi_doctor_v2/app/models/other_health_record.dart';
 import 'package:hi_doctor_v2/app/models/patient.dart';
-import 'package:hi_doctor_v2/app/modules/health_record/providers/api_health_record.dart';
 import 'package:hi_doctor_v2/app/modules/health_record/views/other_tab.dart';
 
 class HealthRecordController extends GetxController with GetSingleTickerProviderStateMixin {
-  late final ApiHealthRecord _apiHealthRecord;
   late final TabController cTab;
   late final ScrollController allScroll;
   late final ScrollController systemScroll;
@@ -31,15 +29,9 @@ class HealthRecordController extends GetxController with GetSingleTickerProvider
     return true;
   }
 
-  Future<bool> createHealthRecord(OtherHealthRecord hr) async {
-    await _apiHealthRecord.postHealthRecord(hr);
-    return false;
-  }
-
   @override
   void onInit() {
     super.onInit();
-    _apiHealthRecord = Get.put(ApiHealthRecord());
     cTab = TabController(vsync: this, length: 3);
 
     allScroll = ScrollController();

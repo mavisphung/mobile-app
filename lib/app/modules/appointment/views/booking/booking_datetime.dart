@@ -28,7 +28,21 @@ class BookingDateTimePage extends StatelessWidget {
 
   final _now = DateTime.now();
 
-  final _dayOfWeek = ['Thứ hai', 'Thứ ba', 'Thứ tư', 'Thứ năm', 'Thứ sáu', 'Thứ bảy', 'CN'];
+  final _dayOfWeek = ['Thứ hai', 'Thứ ba', 'Thứ tư', 'Thứ năm', 'Thứ sáu', 'Thứ bảy', 'Chủ nhật'];
+  final _month = [
+    'Tháng một',
+    'Tháng hai',
+    'Tháng ba',
+    'Tháng tư',
+    'Tháng năm',
+    'Tháng sáu',
+    'Tháng bảy',
+    'Tháng tám',
+    'Tháng chín',
+    'Tháng mười',
+    'Tháng mười một',
+    'Tháng mười hai'
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -78,7 +92,7 @@ class BookingDateTimePage extends StatelessWidget {
               builder: (c) {
                 return TableCalendar(
                   shouldFillViewport: true,
-                  daysOfWeekHeight: 35.sp,
+                  daysOfWeekHeight: 40.sp,
                   calendarStyle: CalendarStyle(
                     todayDecoration: BoxDecoration(
                       shape: BoxShape.circle,
@@ -100,19 +114,29 @@ class BookingDateTimePage extends StatelessWidget {
                   },
                   onDaySelected: (selectedDay, focusedDay) {
                     if (!isSameDay(c.selectedDate, selectedDay)) {
-                      // c.setSelectedDate(selectedDay);
+                      c.setSelectedDate(selectedDay);
                       c.setFocusedDate(focusedDay);
-                      c.rxSelectedDate.value = selectedDay;
                       'Selected day ${c.selectedDate} | Focused day ${c.focusedDate}'.debugLog('Selected day');
                       c.update();
                     }
                   },
                   calendarBuilders: CalendarBuilders(
-                    headerTitleBuilder: (context, day) => Text('${day.month} ${day.year}'),
+                    headerTitleBuilder: (context, day) {
+                      return Text(
+                        '${_month[day.month - 1]} ${day.year}',
+                        style: TextStyle(
+                          fontSize: 15.sp,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      );
+                    },
                     dowBuilder: (context, day) {
                       return Padding(
-                        padding: EdgeInsets.only(left: 8.sp),
-                        child: Text(_dayOfWeek[day.weekday - 1]),
+                        padding: EdgeInsets.symmetric(horizontal: 2.sp),
+                        child: Text(
+                          _dayOfWeek[day.weekday - 1],
+                          textAlign: TextAlign.center,
+                        ),
                       );
                     },
                     selectedBuilder: (_, DateTime day, DateTime otherDay) {

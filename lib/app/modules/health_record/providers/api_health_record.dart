@@ -26,19 +26,12 @@ class ApiHealthRecord extends GetConnect {
     );
   }
 
-  Future<Response> postHealthRecord(OtherHealthRecord hr) {
+  Future<Response> postHealthRecord(int patientId, OtherHealthRecord hr) {
     return post(
       '/user/health-records/',
       {
-        "patient": 7,
-        "detail": {
-          "asd": 15,
-          "asdasd": {"asdasd": "Asdfsf", "fsdfs": 999},
-          "array": [
-            {"asdas": 3},
-            {"pop": "popoe"}
-          ]
-        }
+        "patient": patientId,
+        "detail": hr.toMap(),
       },
       headers: headers,
     );
