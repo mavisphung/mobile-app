@@ -18,22 +18,19 @@ class HourItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      alignment: Alignment.center,
       padding: EdgeInsets.symmetric(
         vertical: 5.sp,
         horizontal: 16.sp,
       ),
       decoration: BoxDecoration(
-        // border: Border.all(
-        //   color: AppColors.primary,
-        //   width: 2.5.sp,
-        // ),
         borderRadius: BorderRadius.circular(10.sp),
         color: isSelected ? AppColors.primary : Colors.white,
         boxShadow: [
           BoxShadow(
             color: Colors.black.withOpacity(0.12),
             offset: const Offset(0, 2),
-            blurRadius: 4.sp,
+            blurRadius: 2.sp,
           ),
         ],
       ),

@@ -4,7 +4,6 @@ import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
-import 'package:hi_doctor_v2/app/common/constants.dart';
 import 'package:hi_doctor_v2/app/common/util/extensions.dart';
 import 'package:hi_doctor_v2/app/common/util/transformation.dart';
 import 'package:hi_doctor_v2/app/common/values/colors.dart';
@@ -14,6 +13,7 @@ import 'package:hi_doctor_v2/app/modules/home/widgets/doctor_tile.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/base_page.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/custom_bottom_sheet.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/custom_container.dart';
+import 'package:hi_doctor_v2/app/modules/widgets/image_container.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/my_appbar.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/custom_title_section.dart';
 import 'package:hi_doctor_v2/app/routes/app_pages.dart';
@@ -66,16 +66,10 @@ class DoctorDetailPage extends StatelessWidget {
                     borderRadius: 8.sp,
                     child: Row(
                       children: [
-                        Container(
-                          width: 120.sp,
-                          height: 120.sp,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.rectangle,
-                            borderRadius: BorderRadius.circular(Constants.borderRadius.sp),
-                            image: const DecorationImage(
-                              image: NetworkImage(Constants.defaultAvatar),
-                            ),
-                          ),
+                        ImageContainer(
+                          width: 120,
+                          height: 120,
+                          imgUrl: _cDoctor.doctor.avatar,
                         ),
                         Expanded(
                           child: Container(
@@ -260,18 +254,12 @@ class DoctorDetailPage extends StatelessWidget {
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.start,
                                     children: [
-                                      Container(
-                                        margin: EdgeInsets.only(right: 20.sp),
-                                        width: 53.sp,
-                                        height: 53.sp,
-                                        decoration: BoxDecoration(
-                                          shape: BoxShape.circle,
-                                          image: DecorationImage(
-                                            fit: BoxFit.cover,
-                                            image: NetworkImage(_cDoctor.doctor.avatar!),
-                                          ),
-                                        ),
-                                      ),
+                                      ImageContainer(
+                                        width: 53,
+                                        height: 53,
+                                        imgUrl: _cDoctor.doctor.avatar,
+                                      ).circle(),
+                                      SizedBox(width: 20.sp),
                                       Text(
                                         'Bệnh nhân ${index + 1}',
                                         style: TextStyle(

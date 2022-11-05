@@ -61,7 +61,7 @@ class GenderDropdown extends StatelessWidget {
                       onChanged: (value) {
                         data.value = value ?? 'OTHER';
                       },
-                      iconSize: 35.sp,
+                      iconSize: 29.sp,
                       icon: const Icon(Icons.arrow_drop_down_rounded),
                     ),
                 rxGender),

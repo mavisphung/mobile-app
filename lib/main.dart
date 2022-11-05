@@ -34,7 +34,7 @@ class MyApp extends StatelessWidget {
   TextTheme? getTextTheme(bool isEnglish) {
     return isEnglish
         ? null
-        : ThemeData.light().textTheme.copyWith(
+        : ThemeData.light().textTheme.apply(bodyColor: Colors.black87).copyWith(
               titleMedium: const TextStyle(
                 fontWeight: FontWeight.w500,
               ),

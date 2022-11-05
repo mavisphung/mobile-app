@@ -27,7 +27,7 @@ class BasePage extends StatelessWidget {
       physics: const BouncingScrollPhysics(),
       child: Padding(
         padding: EdgeInsets.only(
-          top: paddingTop ?? 40.sp,
+          top: paddingTop ?? 0,
           bottom: paddingBottom ?? (bottomSheet == null ? 30.sp : 100.sp),
           left: paddingLeft ?? Constants.padding.sp,
           right: paddingRight ?? Constants.padding.sp,

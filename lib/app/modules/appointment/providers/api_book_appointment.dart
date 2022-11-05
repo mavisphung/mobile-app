@@ -10,14 +10,25 @@ class ApiBookAppointmentImpl extends GetConnect {
 
   @override
   void onInit() {
-    super.onInit();
     httpClient.baseUrl = Constants.baseUrl;
     httpClient.timeout = Constants.timeout;
+
+    super.onInit();
   }
 
   Future<Response> getDoctorPackage(int doctorId) {
     return get(
       '/doctor/$doctorId/packages/',
+      headers: _headers,
+    );
+  }
+
+  Future<Response> getSuggestHours(int doctorId, String selectedDate) {
+    return get(
+      '/api/suggest/doctor/$doctorId/',
+      query: {
+        'date': selectedDate,
+      },
       headers: _headers,
     );
   }

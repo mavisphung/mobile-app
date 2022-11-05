@@ -39,7 +39,7 @@ abstract class Utils {
       builder: (ctx) {
         return Dialog(
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12.sp),
+            borderRadius: BorderRadius.circular(17.sp),
           ),
           child: Column(
             mainAxisSize: MainAxisSize.min,
@@ -72,7 +72,7 @@ abstract class Utils {
               Divider(
                 height: 0,
                 color: AppColors.greyDivider,
-                thickness: 0.8.sp,
+                thickness: 0.2.sp,
               ),
               IntrinsicHeight(
                 child: Row(
@@ -91,7 +91,7 @@ abstract class Utils {
                               cancelText ?? Strings.cancel.tr,
                               style: const TextStyle(
                                 fontWeight: FontWeight.w500,
-                                color: Colors.blue,
+                                color: Colors.lightBlueAccent,
                               ),
                             ),
                           ),
@@ -101,7 +101,7 @@ abstract class Utils {
                     VerticalDivider(
                       width: 0,
                       color: AppColors.greyDivider,
-                      thickness: 0.8.sp,
+                      thickness: 0.2.sp,
                     ),
                     Expanded(
                       child: InkWell(
@@ -116,7 +116,7 @@ abstract class Utils {
                               confirmText ?? Strings.confirm.tr,
                               style: const TextStyle(
                                 fontWeight: FontWeight.w500,
-                                color: Colors.blue,
+                                color: Colors.lightBlueAccent,
                               ),
                             ),
                           ),
@@ -181,7 +181,8 @@ abstract class Utils {
               InkWell(
                 onTap: () => Navigator.pop(ctx, true),
                 customBorder: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.only(bottomLeft: Radius.circular(12.sp)),
+                  borderRadius:
+                      BorderRadius.only(bottomLeft: Radius.circular(12.sp), bottomRight: Radius.circular(12.sp)),
                 ),
                 child: Padding(
                   padding: EdgeInsets.symmetric(vertical: Constants.padding.sp),
@@ -261,7 +262,9 @@ abstract class Utils {
 
   static String formatDateApi(DateTime date) => DateFormat('yyyy-MM-dd').format(date);
 
-  static String formatTime(DateTime date) => DateFormat('HH:mm').format(date);
+  static String formatTime(DateTime date) => DateFormat.jm().format(date);
+
+  static String formatHHmmTime(DateTime date) => DateFormat('HH:mm').format(date);
 
   static DateTime? parseStrToDateTime(String str) {
     try {

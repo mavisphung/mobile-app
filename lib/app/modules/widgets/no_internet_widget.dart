@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class NoInternetWidget extends StatelessWidget {
@@ -9,11 +10,22 @@ class NoInternetWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
-          SvgPicture.asset('assets/icons/no_internet.svg'),
-          const Text('A network error occurs, please tap the button to reload'),
-          OutlinedButton(onPressed: refresh, child: const Text('Try again')),
+          SvgPicture.asset(
+            'assets/icons/no_internet.svg',
+            width: 100.sp,
+            height: 100.sp,
+          ),
+          const SizedBox(height: 30),
+          const Text(
+            'A network error occurs.\nPlease tap the button to reload',
+            textAlign: TextAlign.center,
+            style: TextStyle(color: Colors.black54),
+          ),
+          const SizedBox(height: 5),
+          OutlinedButton(onPressed: refresh, child: const Text('Refresh')),
         ],
       ),
     );

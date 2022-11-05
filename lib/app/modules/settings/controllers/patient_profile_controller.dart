@@ -102,7 +102,7 @@ class PatientProfileController extends GetxController {
               gender: e['gender'],
               avatar: e['avatar'],
               supervisorId: e['supervisor_id'],
-              oldHealthRecords: e['old_health_records'],
+              oldOtherHealthRecords: e['old_health_records'],
             ),
           )
           .toList();

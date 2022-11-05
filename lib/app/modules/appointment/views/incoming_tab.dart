@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
-import '../../../models/appointment.dart';
-import '../controllers/incoming_controller.dart';
-import '../widgets/appointment_tile.dart';
+import 'package:hi_doctor_v2/app/models/appointment.dart';
+import 'package:hi_doctor_v2/app/modules/appointment/controllers/incoming_controller.dart';
+import 'package:hi_doctor_v2/app/modules/appointment/widgets/appointment_tile.dart';
 
 class IncomingTab extends StatefulWidget {
   IncomingTab({

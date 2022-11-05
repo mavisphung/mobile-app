@@ -5,7 +5,7 @@ import 'package:hi_doctor_v2/app/common/constants.dart';
 import 'package:hi_doctor_v2/app/common/values/colors.dart';
 
 class CustomInkWell extends StatelessWidget {
-  final VoidCallback onTap;
+  final VoidCallback? onTap;
   final double? width;
   final double? height;
   final double? verticalPadding;
@@ -15,7 +15,7 @@ class CustomInkWell extends StatelessWidget {
 
   const CustomInkWell({
     super.key,
-    required this.onTap,
+    this.onTap,
     this.width,
     this.height,
     this.verticalPadding,

@@ -1,77 +1,74 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:hi_doctor_v2/app/common/util/transformation.dart';
 
-import 'package:hi_doctor_v2/app/models/pathological.dart';
-import 'package:image_picker/image_picker.dart';
+import 'package:hi_doctor_v2/app/models/other_health_record.dart';
+import 'package:hi_doctor_v2/app/models/patient.dart';
+import 'package:hi_doctor_v2/app/modules/health_record/views/other_tab.dart';
 
-class HealthRecordController extends GetxController {
-  final _pathologicals = <Pathological>[];
-  List<Pathological> get getPathologicals => _pathologicals;
-  var pathologicalsLength = 0.obs;
+class HealthRecordController extends GetxController with GetSingleTickerProviderStateMixin {
+  late final TabController cTab;
+  late final ScrollController allScroll;
+  late final ScrollController systemScroll;
+  late final ScrollController otherScroll;
 
-  final nameController = TextEditingController();
-  final pathologicalController = TextEditingController();
-  final nameFocusNode = FocusNode();
-  final pathologicalFocusNode = FocusNode();
+  List<OtherHealthRecord> _allList = <OtherHealthRecord>[];
+  List<OtherHealthRecord> get getAllList => _allList.toList();
+  List<OtherHealthRecord> _systemList = <OtherHealthRecord>[];
+  List<OtherHealthRecord> get getSystemList => _systemList.toList();
+  List<OtherHealthRecord> _otherList = <OtherHealthRecord>[];
+  List<OtherHealthRecord> get getOtherList => _otherList.toList();
+  final otherListLength = 0.obs;
 
-  final _recordImgs = <String>[];
-  List<String> get getRecordImgs => _recordImgs;
-  var recordImgsLength = 0.obs;
+  final patient = Patient().obs;
 
-  Future<String?> _getImage(bool isFromCamera) async {
-    final picker = ImagePicker();
-    XFile? file = isFromCamera
-        ? await picker.pickImage(source: ImageSource.camera)
-        : await picker.pickImage(source: ImageSource.gallery);
-    if (file == null) {
-      return null;
-    }
-    return file.path;
-    // List<XFile> files = <XFile>[];
-    // files.add(file);
-    // var response = await _provider.postPresignedUrls(files);
-    // if (response.isOk) {
-    //   ResponseModel1 resModel = ResponseModel1.fromJson(response.body);
-    //   String fileExt = file.name.split('.')[1];
-    //   String fullUrl = resModel.data['urls'][0];
-    //   String url = fullUrl.split('?')[0];
-
-    //   await Utils.upload(fullUrl, File(file.path), fileExt);
-    //   print('URL: $url');
-    //   return url;
-    // }
-    // return null;
+  Future<bool> getOtherHealthRecords({int page = 1, int limit = 10}) async {
+    await Future.delayed(const Duration(seconds: 3));
+    _otherList = hrList.toList();
+    otherListLength.value = _otherList.length;
+    print('VALUE: ${otherListLength.value}');
+    return true;
   }
 
-  void addRecordImage(bool isFromCamera) async {
-    // final settingsController = Get.put(SettingsController());
-    final url = await _getImage(isFromCamera);
-    if (url != null) {
-      _recordImgs.add(url);
-      // recordImgsLength.value = _recordImgs.length;
-      recordImgsLength.value = ++recordImgsLength.value;
-    }
-  }
+  @override
+  void onInit() {
+    super.onInit();
+    cTab = TabController(vsync: this, length: 3);
 
-  void savePathological() {
-    final codeName = Tx.getPathologicalCodeName(pathologicalController.text.trim());
-    final pathological = Pathological(0, codeName[0], codeName[1], _recordImgs);
-    // final pathological = Pathological(0, 'why', 'humm', _recordImgs);
-    _pathologicals.add(pathological);
-    ++pathologicalsLength.value;
+    allScroll = ScrollController();
+    systemScroll = ScrollController();
+    otherScroll = ScrollController();
+    allScroll.addListener(
+      () async {
+        if (allScroll.position.maxScrollExtent == allScroll.offset) {
+          // await getOtherHealthRecords();
+        }
+      },
+    );
+    systemScroll.addListener(
+      () async {
+        if (systemScroll.position.maxScrollExtent == systemScroll.offset) {
+          // await getOtherHealthRecords();
+        }
+      },
+    );
+    otherScroll.addListener(
+      () async {
+        if (otherScroll.position.maxScrollExtent == otherScroll.offset) {
+          await getOtherHealthRecords();
+        }
+      },
+    );
+    getOtherHealthRecords();
   }
-
-  void saveHealthRecord() {}
 
   @override
   void dispose() {
-    pathologicalsLength.close();
-    nameController.dispose();
-    pathologicalController.dispose();
-    nameFocusNode.dispose();
-    pathologicalFocusNode.dispose();
-    recordImgsLength.close();
+    cTab.dispose();
+    otherListLength.close();
+    allScroll.dispose();
+    systemScroll.dispose();
+    otherScroll.dispose();
+    patient.close();
     super.dispose();
   }
 }

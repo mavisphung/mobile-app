@@ -10,11 +10,11 @@ class Tx {
     return '$lastName $firstName';
   }
 
-  static String getPathologicalString(String? code, String? name) {
+  static String getPathologyString(String? code, String? name) {
     return '$code - $name';
   }
 
-  static List<String> getPathologicalCodeName(String codeName) {
+  static List<String> getPathologyCodeName(String codeName) {
     return codeName.split(' - ');
   }
 }

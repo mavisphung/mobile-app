@@ -1,5 +1,4 @@
 // ignore_for_file: constant_identifier_names
-
 part of './app_pages.dart';
 
 abstract class Routes {
@@ -11,7 +10,7 @@ abstract class Routes {
   static const MESSAGE = '/message';
   static const HISTORY = '/history';
   static const USER_PROFILE_DETAIL = '/userProfileDetail';
-  static const SEARCH = '/search';
+  static const SEARCH_RESULT = '/searchResult';
   static const DOCTOR_DETAIL = '/doctorDetail';
   static const BOOKING = '/booking';
   static const BOOKING_PACKAGE = '/bookingPackage';
@@ -24,5 +23,6 @@ abstract class Routes {
   static const MEETING_DETAIL = '/meetingDetail';
   static const NOTIFICATION_PAGE = '/notification';
   static const HEALTH_RECORDS = '/healthRecords';
-  static const EDIT_HEALTH_RECORD = '/editHealthRecord';
+  static const EDIT_HEALTH_RECORD = '/editOtherHealthRecord';
+  static const EDIT_PATHOLOGY_RECORD = '/editPathologyRecord';
 }

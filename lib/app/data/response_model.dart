@@ -5,7 +5,7 @@ class ResponseModel1 {
   final bool isSuccess;
   final int statusCode;
   final String message;
-  Map<String, dynamic> data;
+  final dynamic data;
 
   ResponseModel1({
     required this.isSuccess,
@@ -19,7 +19,7 @@ class ResponseModel1 {
       isSuccess: map['success'] as bool,
       statusCode: map['status'] as int,
       message: map['message'] as String,
-      data: Map<String, dynamic>.from((map['data'] as Map<String, dynamic>)),
+      data: map['data'] as dynamic,
     );
   }
 

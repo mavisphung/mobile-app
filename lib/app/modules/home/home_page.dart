@@ -9,12 +9,15 @@ import 'package:hi_doctor_v2/app/common/values/strings.dart';
 import 'package:hi_doctor_v2/app/modules/home/controllers/home_controller.dart';
 import 'package:hi_doctor_v2/app/modules/home/views/category_item.dart';
 import 'package:hi_doctor_v2/app/modules/home/views/doctor_item.dart';
+import 'package:hi_doctor_v2/app/modules/home/views/doctor_item_skeleton.dart';
 import 'package:hi_doctor_v2/app/modules/home/views/reminder_card.dart';
+import 'package:hi_doctor_v2/app/modules/search/search_delegate.dart';
 import 'package:hi_doctor_v2/app/modules/settings/controllers/settings_controller.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/base_page.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/custom_container.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/custom_icon_button.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/custom_title_section.dart';
+import 'package:hi_doctor_v2/app/modules/widgets/image_container.dart';
 
 class HomePage extends StatelessWidget {
   HomePage({Key? key}) : super(key: key);
@@ -36,18 +39,12 @@ class HomePage extends StatelessWidget {
         children: [
           Row(
             children: [
-              Container(
-                width: 37.sp,
-                height: 37.sp,
-                margin: EdgeInsets.only(right: 10.sp),
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  image: DecorationImage(
-                    image: NetworkImage(userInfo.avatar ?? Constants.defaultAvatar),
-                    fit: BoxFit.cover,
-                  ),
-                ),
-              ),
+              ImageContainer(
+                width: 45,
+                height: 45,
+                imgUrl: userInfo.avatar,
+              ).circle(),
+              SizedBox(width: 10.sp),
               Expanded(
                 child: Material(
                   borderRadius: BorderRadius.circular(Constants.textFieldRadius.sp),
@@ -55,12 +52,12 @@ class HomePage extends StatelessWidget {
                     borderRadius: BorderRadius.circular(Constants.textFieldRadius.sp),
                     onTap: () => showSearch(
                       context: context,
-                      delegate: CustomSearcDelegate(),
+                      delegate: CustomSearchDelegate(),
                     ),
                     child: Ink(
                       padding: EdgeInsets.symmetric(vertical: 12.sp, horizontal: 12.sp),
                       decoration: BoxDecoration(
-                        color: Colors.grey[200],
+                        color: const Color(0xFFEBEBEB),
                         borderRadius: BorderRadius.circular(Constants.textFieldRadius.sp),
                       ),
                       child: Row(
@@ -79,14 +76,11 @@ class HomePage extends StatelessWidget {
                   ),
                 ),
               ),
-              SizedBox(
-                width: 45.sp,
-                child: CustomIconButton(
-                  onPressed: () {},
-                  icon: Icon(
-                    CupertinoIcons.bell_fill,
-                    color: AppColors.primary,
-                  ),
+              CustomIconButton(
+                onPressed: () {},
+                icon: Icon(
+                  CupertinoIcons.bell_fill,
+                  color: AppColors.primary,
                 ),
               ),
             ],
@@ -119,11 +113,7 @@ class HomePage extends StatelessWidget {
                           scrollDirection: Axis.horizontal,
                           physics: const BouncingScrollPhysics(),
                           itemBuilder: (_, index) {
-                            var temp = _homeController.specialistList[index];
-                            return CategoryItem(
-                              label: temp.name!,
-                              image: 'assets/icons/specs/cardio2.svg',
-                            );
+                            return CategoryItem(spec: _homeController.specialistList[index]);
                           },
                           separatorBuilder: (_, __) => SizedBox(
                             width: 3.sp,
@@ -135,59 +125,53 @@ class HomePage extends StatelessWidget {
               ),
               _spacing,
               const CustomTitleSection(title: 'Bác sĩ gần khu vực'),
-              Obx(
-                () => SizedBox(
-                  height: 135.sp,
-                  width: double.infinity,
-                  child: _homeController.nearestList.isNotEmpty
-                      ? ListView.separated(
-                          scrollDirection: Axis.horizontal,
-                          itemCount: _homeController.nearestList.length,
-                          itemBuilder: (_, index) {
-                            var realDoctor = _homeController.nearestList[index];
-                            return DoctorItem(
-                              doctor: realDoctor,
-                            );
-                          },
-                          separatorBuilder: (_, __) => SizedBox(
-                            width: 10.sp,
-                          ),
-                        )
-                      : const Center(child: CircularProgressIndicator()),
+              SizedBox(
+                height: 135.sp,
+                child: FutureBuilder(
+                  future: _homeController.getNearestDoctorsApi(),
+                  builder: (_, AsyncSnapshot<bool> snapshot) {
+                    if (snapshot.hasData && snapshot.data == true) {
+                      return ListView.separated(
+                        scrollDirection: Axis.horizontal,
+                        itemCount: _homeController.nearestList.length,
+                        itemBuilder: (_, index) {
+                          var realDoctor = _homeController.nearestList[index];
+                          return DoctorItem(
+                            doctor: realDoctor,
+                          );
+                        },
+                        separatorBuilder: (_, __) => SizedBox(width: 10.sp),
+                      );
+                    }
+                    return const DoctorItemSkeleton();
+                  },
                 ),
               ),
               _spacing,
               CustomTitleSection(title: Strings.latestSearchDoctor.tr),
-              FutureBuilder(
-                future: _homeController.getDoctors(),
-                builder: (_, AsyncSnapshot snapshot) {
-                  if (snapshot.hasData) {
-                    return GetBuilder(
-                      init: _homeController,
-                      builder: (_) {
-                        return SizedBox(
-                          height: 125.sp,
-                          child: ListView.separated(
-                            scrollDirection: Axis.horizontal,
-                            itemCount: _homeController.doctorList.length,
-                            itemBuilder: (_, index) {
-                              var realDoctor = _homeController.doctorList[index];
-                              // realDoctor.toJson().debugLog('Doctor');
-                              // 'Build again $index'.debugLog('DoctorList');
-                              return DoctorItem(
-                                doctor: realDoctor,
-                              );
-                            },
-                            separatorBuilder: (_, __) => SizedBox(
-                              width: 10.sp,
-                            ),
-                          ),
-                        );
-                      },
-                    );
-                  }
-                  return const CircularProgressIndicator();
-                },
+              SizedBox(
+                height: 125.sp,
+                child: FutureBuilder(
+                  future: _homeController.getDoctorList(),
+                  builder: (_, AsyncSnapshot<bool> snapshot) {
+                    if (snapshot.hasData && snapshot.data == true) {
+                      return ListView.separated(
+                        scrollDirection: Axis.horizontal,
+                        itemCount: _homeController.doctorList.length,
+                        itemBuilder: (_, index) {
+                          var realDoctor = _homeController.doctorList[index];
+                          return DoctorItem(
+                            doctor: realDoctor,
+                          );
+                        },
+                        separatorBuilder: (_, __) => SizedBox(
+                          width: 10.sp,
+                        ),
+                      );
+                    }
+                    return const DoctorItemSkeleton();
+                  },
+                ),
               ),
               SizedBox(
                 height: 50.sp,
@@ -196,79 +180,6 @@ class HomePage extends StatelessWidget {
           ),
         ],
       ),
-    );
-  }
-}
-
-class CustomSearcDelegate extends SearchDelegate {
-  List<String> searchTearms = [
-    'Apple',
-    'Banana',
-    'Pear',
-    'Watermelons',
-    'Oranges',
-    'Blueberries',
-    'Strawberries',
-    'Rasberries',
-  ];
-  @override
-  List<Widget>? buildActions(BuildContext context) {
-    return [
-      IconButton(
-        onPressed: () {
-          query = '';
-        },
-        icon: const Icon(Icons.clear),
-      ),
-    ];
-  }
-
-  @override
-  Widget? buildLeading(BuildContext context) {
-    return IconButton(
-      onPressed: () {
-        close(context, null);
-      },
-      icon: const Icon(Icons.arrow_back),
-    );
-  }
-
-  @override
-  Widget buildResults(BuildContext context) {
-    List<String> matchQuery = [];
-    for (var fruit in searchTearms) {
-      if (fruit.toLowerCase().contains(query.toLowerCase())) {
-        matchQuery.add(fruit);
-      }
-    }
-    return ListView.builder(
-      itemBuilder: (ctx, index) {
-        var result = matchQuery[index];
-        return ListTile(
-          title: Text(result),
-          subtitle: const Text('this is fun'),
-        );
-      },
-      itemCount: matchQuery.length,
-    );
-  }
-
-  @override
-  Widget buildSuggestions(BuildContext context) {
-    List<String> matchQuery = [];
-    for (var fruit in searchTearms) {
-      if (fruit.toLowerCase().contains(query.toLowerCase())) {
-        matchQuery.add(fruit);
-      }
-    }
-    return ListView.builder(
-      itemBuilder: (ctx, index) {
-        var result = matchQuery[index];
-        return ListTile(
-          title: Text(result),
-        );
-      },
-      itemCount: matchQuery.length,
     );
   }
 }

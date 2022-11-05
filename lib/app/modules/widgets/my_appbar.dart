@@ -1,9 +1,10 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import 'package:hi_doctor_v2/app/common/values/strings.dart';
-import 'package:hi_doctor_v2/app/modules/widgets/icon_text_btn.dart';
+import 'package:hi_doctor_v2/app/modules/widgets/custom_icon_text_btn.dart';
 
 class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
@@ -37,7 +38,10 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
               padding: EdgeInsets.only(
                 left: 8.sp,
               ),
-              child: IconTextButton(btnText: Strings.back.tr),
+              child: CustomIconTextButton(
+                btnText: Strings.back.tr,
+                iconData: CupertinoIcons.left_chevron,
+              ),
             )
           : null,
     );

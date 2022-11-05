@@ -1,30 +1,6 @@
 import 'package:flutter/material.dart';
 
-class SearchPage extends StatelessWidget {
-  const SearchPage({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Search Test'),
-        actions: [
-          IconButton(
-            onPressed: () {
-              showSearch(
-                context: context,
-                delegate: CustomSearcDelegate(),
-              );
-            },
-            icon: const Icon(Icons.search),
-          )
-        ],
-      ),
-    );
-  }
-}
-
-class CustomSearcDelegate extends SearchDelegate {
+class CustomSearchDelegate extends SearchDelegate {
   List<String> searchTearms = [
     'Apple',
     'Banana',

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svgjs="http://svgjs.com/svgjs" version="1.1" width="512" height="512" x="0" y="0" viewBox="0 0 512 512" style="enable-background:new 0 0 512 512" xml:space="preserve" class="">
+  <g>
+    <linearGradient id="New_Gradient_Swatch_copy_12" gradientUnits="userSpaceOnUse" x1="240" x2="240" y2="464">
+      <stop stop-opacity="1" stop-color="#e0e5f0" offset="0"/>
+      <stop stop-opacity="1" stop-color="#fbfcff" offset="0.117"/>
+      <stop stop-opacity="1" stop-color="#f0f5ff" offset="0.325"/>
+      <stop stop-opacity="1" stop-color="#dee9ff" offset="0.579"/>
+      <stop stop-opacity="1" stop-color="#e1ebff" offset="1"/>
+    </linearGradient>
+    <linearGradient id="New_Gradient_Swatch_copy" gradientUnits="userSpaceOnUse" x1="228" x2="228" y1="512" y2="176">
+      <stop offset="0" stop-color="#93d8a5"/>
+      <stop offset=".603" stop-color="#83cdac"/>
+      <stop offset="1" stop-color="#76c4b2"/>
+    </linearGradient>
+    <g id="_19_Healthy_Guidance" data-name="19 Healthy Guidance">
+      <g id="Flat">
+        <path d="m400 455.993v-231.993h88a24 24 0 0 1 24 24v208c0 31.168-24.725 56.47-56 55.993a56 56 0 0 1 -56-56z" fill="#76c4b2" data-original="#76c4b2"/>
+        <path d="m456 464h-40v-464h40a24.028 24.028 0 0 1 24 24v416a24.028 24.028 0 0 1 -24 24z" fill="#c1d5fb" data-original="#c1d5fb" class=""/>
+        <path d="m424 464h-392v-440a24.028 24.028 0 0 1 24-24h368a24.028 24.028 0 0 1 24 24v416a24.028 24.028 0 0 1 -24 24z" fill="url(#New_Gradient_Swatch_copy_12)" data-original="url(#New_Gradient_Swatch_copy_12)"/>
+        <g fill="#c1d5fb">
+          <path d="m80 48h320v64h-320z" fill="#c1d5fb" data-original="#c1d5fb" class=""/>
+          <path d="m80 128h320v16h-320z" fill="#c1d5fb" data-original="#c1d5fb" class=""/>
+          <path d="m160 160h240v16h-240z" fill="#c1d5fb" data-original="#c1d5fb" class=""/>
+          <path d="m400 208h-15v-16h15zm-31 0h-16v-16h16zm-32 0h-16v-16h16zm-32 0h-145v-16h145z" fill="#c1d5fb" data-original="#c1d5fb" class=""/>
+        </g>
+        <path d="m456 512h-400a56 56 0 0 1 -56-56v-280h72a56.089 56.089 0 0 1 55.43 48h264.57a24.006 24.006 0 0 1 24 24v208c0 22.06 17.94 56 40 56z" fill="url(#New_Gradient_Swatch_copy)" data-original="url(#New_Gradient_Swatch_copy)"/>
+        <path d="m416 293.2v22.62l-142.23 142.24-11.32-11.32z" fill="#93d8a5" data-original="#93d8a5" class=""/>
+        <path d="m416 338.45v45.26l-108.29 108.29-22.63-22.63z" fill="#93d8a5" data-original="#93d8a5" class=""/>
+        <path d="m256 464h-96v-48h-48v-96h48v-48h96v48h48v96h-48z" fill="#ffffff" data-original="#ffffff" class=""/>
+      </g>
+    </g>
+  </g>
+</svg>

@@ -12,7 +12,7 @@ class Patient {
   final String? gender;
   final String? avatar;
   final int? supervisorId;
-  final dynamic oldHealthRecords;
+  final dynamic oldOtherHealthRecords;
 
   Patient({
     this.id,
@@ -23,7 +23,7 @@ class Patient {
     this.gender,
     this.avatar,
     this.supervisorId,
-    this.oldHealthRecords,
+    this.oldOtherHealthRecords,
   });
 
   Patient copyWith({
@@ -35,7 +35,7 @@ class Patient {
     String? gender,
     String? avatar,
     int? supervisorId,
-    dynamic oldHealthRecords,
+    dynamic oldOtherHealthRecords,
   }) {
     return Patient(
       id: id ?? this.id,
@@ -46,7 +46,7 @@ class Patient {
       gender: gender ?? this.gender,
       avatar: avatar ?? this.avatar,
       supervisorId: supervisorId ?? this.supervisorId,
-      oldHealthRecords: oldHealthRecords ?? this.oldHealthRecords,
+      oldOtherHealthRecords: oldOtherHealthRecords ?? this.oldOtherHealthRecords,
     );
   }
 
@@ -71,7 +71,7 @@ class Patient {
       gender: map['gender'],
       avatar: map['avatar'] ?? Constants.defaultAvatar,
       supervisorId: map['supervisor_id'],
-      oldHealthRecords: map['old_health_records'],
+      oldOtherHealthRecords: map['old_health_records'],
     );
   }
 
@@ -81,6 +81,6 @@ class Patient {
 
   @override
   String toString() {
-    return 'Patient(id: $id, firstName: $firstName, lastName: $lastName, dob: $dob, address: $address, gender: $gender, avatar: $avatar, supervisorId: $supervisorId, oldHealthRecords: $oldHealthRecords)';
+    return 'Patient(id: $id, firstName: $firstName, lastName: $lastName, dob: $dob, address: $address, gender: $gender, avatar: $avatar, supervisorId: $supervisorId, oldOtherHealthRecords: $oldOtherHealthRecords)';
   }
 }

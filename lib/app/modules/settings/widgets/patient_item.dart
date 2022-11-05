@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
-import 'package:hi_doctor_v2/app/common/constants.dart';
 import 'package:hi_doctor_v2/app/common/util/transformation.dart';
 import 'package:hi_doctor_v2/app/common/values/strings.dart';
 import 'package:hi_doctor_v2/app/models/patient.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/custom_container.dart';
+import 'package:hi_doctor_v2/app/modules/widgets/image_container.dart';
 import 'package:hi_doctor_v2/app/routes/app_pages.dart';
 
 class PatientItem extends StatelessWidget {
@@ -51,17 +51,11 @@ class PatientItem extends StatelessWidget {
       child: CustomContainer(
         child: Row(
           children: [
-            Container(
+            ImageContainer(
               width: imageSize,
               height: imageSize,
-              decoration: BoxDecoration(
-                shape: BoxShape.rectangle,
-                borderRadius: BorderRadius.circular(15.sp),
-                image: DecorationImage(
-                  image: NetworkImage(patient.avatar ?? Constants.defaultAvatar),
-                  fit: BoxFit.cover,
-                ),
-              ),
+              imgUrl: patient.avatar,
+              borderRadius: 15,
             ),
             SizedBox(
               width: 15.sp,

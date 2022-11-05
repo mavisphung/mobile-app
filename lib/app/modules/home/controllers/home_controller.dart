@@ -25,27 +25,28 @@ class HomeController extends GetxController {
     getNearestDoctorsApi(address: userInfo?.address);
   }
 
-  void getNearestDoctorsApi(
-      {String? address = '218 Hồng Bàng, Phường 15, Quận 5, Thành phố Hồ Chí Minh, Việt Nam',
-      int page = 1,
-      int limit = 10}) async {
+  Future<bool> getNearestDoctorsApi({
+    String? address = '218 Hồng Bàng, Phường 15, Quận 5, Thành phố Hồ Chí Minh, Việt Nam',
+    int page = 1,
+    int limit = 10,
+  }) async {
     'Fetching nearest doctors'.debugLog('HomeController');
     final result = await apiHome.getNearestDoctors(page: page, limit: limit);
     final Map<String, dynamic> response = ApiResponse.getResponse(result);
     final model = ResponseModel2.fromMap(response);
     final data = model.data as List<dynamic>;
     nearestList.value += data.map((e) => Doctor.fromMap(e)).toList();
-    update();
+    return true;
   }
 
-  void getDoctorList({int page = 1, int limit = 10}) async {
+  Future<bool> getDoctorList({int page = 1, int limit = 10}) async {
     'Initializing data'.debugLog('HomeController');
     final result = await apiHome.getDoctorList(page: page, limit: limit);
     final Map<String, dynamic> response = ApiResponse.getResponse(result);
     final model = ResponseModel2.fromMap(response);
     final data = model.data as List<dynamic>;
     doctorList.value += data.map((e) => Doctor.fromMap(e)).toList();
-    update();
+    return true;
   }
 
   void getSpecialistsApi({int page = 1, int limit = 10}) async {
@@ -60,10 +61,6 @@ class HomeController extends GetxController {
         )
         .toList();
     update();
-  }
-
-  Future<RxList<Doctor>> getDoctors() async {
-    return doctorList;
   }
 
   Future<RxList<Specialist>> getSpecialists() async {

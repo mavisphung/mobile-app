@@ -4,11 +4,12 @@ import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
+import 'package:hi_doctor_v2/app/common/constants.dart';
 import 'package:hi_doctor_v2/app/common/util/validators.dart';
 import 'package:hi_doctor_v2/app/common/values/colors.dart';
 
 class CustomTextFieldWidget extends StatelessWidget {
-  final String? labelText, hintText, initialValue;
+  final String? labelText, hintText, errorText, initialValue;
   final FocusNode focusNode;
   final TextEditingController controller;
   final Widget? prefixIcon, suffixIcon;
@@ -19,7 +20,7 @@ class CustomTextFieldWidget extends StatelessWidget {
   final int? maxLength, maxLines;
   final FormFieldValidator<String?>? validator;
   final void Function(String?)? onChanged, onSaved, onFieldSubmitted;
-  final VoidCallback? onTap;
+  final VoidCallback? onTap, onClear;
   final TextStyle? textStyle;
   final TextAlign textAlign;
   final InputDecoration? inputDecoration;
@@ -30,6 +31,7 @@ class CustomTextFieldWidget extends StatelessWidget {
     Key? key,
     this.labelText,
     this.hintText,
+    this.errorText,
     this.initialValue,
     required this.focusNode,
     required this.controller,
@@ -49,6 +51,7 @@ class CustomTextFieldWidget extends StatelessWidget {
     this.onChanged,
     this.onSaved,
     this.onTap,
+    this.onClear,
     this.onFieldSubmitted,
     this.textStyle,
     this.textAlign = TextAlign.start,
@@ -70,11 +73,12 @@ class CustomTextFieldWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 100.sp,
+      height: 92.sp,
       child: ObxValue<RxBool>(
           (isObscure) => TextFormField(
                 readOnly: readOnly,
                 enabled: enabled,
+                initialValue: initialValue,
                 obscureText: isObscure.value && hasObscureIcon,
                 enableSuggestions: !hasObscureIcon,
                 autocorrect: !hasObscureIcon,
@@ -101,6 +105,9 @@ class CustomTextFieldWidget extends StatelessWidget {
                     : null,
                 decoration: inputDecoration ??
                     InputDecoration(
+                      isDense: isDense,
+                      hintText: hintText,
+                      errorText: errorText,
                       label: withAsterisk
                           ? Padding(
                               padding: EdgeInsets.only(bottom: 22.sp),
@@ -109,7 +116,7 @@ class CustomTextFieldWidget extends StatelessWidget {
                                   text: labelText,
                                   style: DefaultTextStyle.of(context).style.copyWith(
                                         fontSize: 16.5.sp,
-                                        color: _hasFocus.value ? Colors.blue : Colors.grey[600],
+                                        color: _hasFocus.value ? AppColors.primary : Colors.grey[600],
                                       ),
                                   children: [
                                     TextSpan(
@@ -121,8 +128,6 @@ class CustomTextFieldWidget extends StatelessWidget {
                               ),
                             )
                           : Text(labelText ?? ''),
-                      hintText: hintText,
-                      isDense: isDense,
                       prefixIcon: prefixIcon,
                       suffixIcon: suffixIcon ??
                           (hasClearIcon
@@ -130,7 +135,10 @@ class CustomTextFieldWidget extends StatelessWidget {
                                   (data) => Visibility(
                                         visible: data.value,
                                         child: IconButton(
-                                          onPressed: () => controller.clear(),
+                                          onPressed: () {
+                                            controller.clear();
+                                            onClear?.call();
+                                          },
                                           icon: const Icon(CupertinoIcons.xmark_circle),
                                         ).noSplash(),
                                       ),
@@ -147,10 +155,10 @@ class CustomTextFieldWidget extends StatelessWidget {
                       floatingLabelBehavior: FloatingLabelBehavior.always,
                       enabledBorder: OutlineInputBorder(
                         borderSide: BorderSide.none,
-                        borderRadius: BorderRadius.circular(15.0),
+                        borderRadius: BorderRadius.circular(Constants.textFieldRadius.sp),
                       ),
                       border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(15.0),
+                        borderRadius: BorderRadius.circular(Constants.textFieldRadius.sp),
                       ),
                       filled: true,
                       fillColor: _hasFocus.value ? AppColors.blueHighlight : AppColors.whiteHighlight,

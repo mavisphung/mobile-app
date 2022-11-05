@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:hi_doctor_v2/app/common/values/colors.dart';
+
+import 'package:hi_doctor_v2/app/models/specialist.dart';
 
 class CategoryItem extends StatelessWidget {
-  final String label;
-  final String image;
+  final Specialist spec;
 
   const CategoryItem({
     Key? key,
-    required this.label,
-    required this.image,
+    required this.spec,
   }) : super(key: key);
 
   @override
@@ -23,18 +22,17 @@ class CategoryItem extends StatelessWidget {
         child: Column(
           children: [
             SvgPicture.asset(
-              image,
-              color: AppColors.primary,
+              _getIconOfSpec(spec.id!),
               fit: BoxFit.cover,
-              width: 33.0,
-              height: 33.0,
+              width: 33.sp,
+              height: 33.sp,
             ),
             SizedBox(
               height: 4.sp,
             ),
             Expanded(
               child: Text(
-                label,
+                '${spec.name}',
                 style: TextStyle(fontSize: 11.6.sp),
                 overflow: TextOverflow.ellipsis,
               ),
@@ -44,31 +42,29 @@ class CategoryItem extends StatelessWidget {
       ),
     );
   }
-}
 
-List<CategoryItem> categoriesList = [
-  const CategoryItem(
-    label: 'Cardiology',
-    image: 'assets/icons/specs/cardio2.svg',
-  ),
-  const CategoryItem(
-    label: 'Pediatrics',
-    image: 'assets/icons/specs/baby2.svg',
-  ),
-  const CategoryItem(
-    label: 'Dentistry',
-    image: 'assets/icons/specs/dental2.svg',
-  ),
-  const CategoryItem(
-    label: 'Pulmonology',
-    image: 'assets/icons/specs/lung2.svg',
-  ),
-  // const CategoryItem(
-  //   label: 'Physical therapy',
-  //   image: 'assets/icons/specs/physical.svg',
-  // ),
-  const CategoryItem(
-    label: 'More',
-    image: 'assets/icons/specs/more2.svg',
-  ),
-];
+  String _getIconOfSpec(int specId) {
+    switch (specId) {
+      case 1:
+        return 'assets/icons/specs/skin.svg';
+      case 2:
+        return 'assets/icons/specs/skeleton.svg';
+      case 3:
+        return 'assets/icons/specs/earnose.svg';
+      case 4:
+        return 'assets/icons/specs/baby.svg';
+      case 5:
+        return 'assets/icons/specs/psychology.svg';
+      case 6:
+        return 'assets/icons/specs/cardiology.svg';
+      case 7:
+        return 'assets/icons/specs/general.svg';
+      case 8:
+        return 'assets/icons/specs/traditional_medicine.svg';
+      case 9:
+        return 'assets/icons/specs/eye.svg';
+      default:
+        return '';
+    }
+  }
+}

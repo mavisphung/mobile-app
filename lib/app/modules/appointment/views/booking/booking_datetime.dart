@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:hi_doctor_v2/app/modules/appointment/controllers/booking/slots_creator.dart';
+import 'package:hi_doctor_v2/app/modules/appointment/widgets/slots_skeleton.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 import 'package:hi_doctor_v2/app/common/util/extensions.dart';
@@ -21,75 +23,31 @@ import 'package:hi_doctor_v2/app/routes/app_pages.dart';
 class BookingDateTimePage extends StatelessWidget {
   BookingDateTimePage({Key? key}) : super(key: key);
 
-  DateTime currentDate = DateTime.now();
-
   final _cBooking = Get.put(BookingController());
-  final doctor = Get.arguments as Doctor;
+  final _doctor = Get.arguments as Doctor;
 
-  Map<String, dynamic>? _getShift(int weekday) {
-    for (var shift in doctor.shifts!) {
-      Map<String, dynamic> temp = shift as Map<String, dynamic>;
-      if (shift['weekday'] == weekday) {
-        return temp;
-      }
-    }
-    return null;
-  }
+  final _now = DateTime.now();
 
-  List<WorkingHour>? getAvailableSlot(int weekDay) {
-    _cBooking.setDoctor(doctor);
-    final listShift = doctor.shifts;
-    if (listShift == null || listShift.isEmpty) {
-      return null;
-    }
-    final shift = _getShift(weekDay);
-
-    if (shift == null) return null;
-
-    final isActive = shift['isActive'] as bool;
-    if (isActive) {
-      // print(shift['startTime']);
-      final dateStr = '${currentDate.year}-${currentDate.month}-${currentDate.day}';
-      final start = shift['startTime'] as String;
-      final end = shift['endTime'] as String;
-      final startTime = Utils.parseStrToDateTime('$dateStr ${start.replaceRange(5, null, "")}');
-      // print('start: $startTime');
-      final endTime = Utils.parseStrToDateTime('$dateStr ${end.replaceRange(5, null, "")}');
-      // print('end: $endTime');
-      if (startTime != null && endTime != null) {
-        List<WorkingHour> slots = [];
-        DateTime endSlot;
-        int id = 1;
-        endSlot = startTime;
-        String label;
-        do {
-          label = 'AM';
-          final midTime = DateTime(currentDate.year, currentDate.month, currentDate.day, 12);
-          if (endTime.isAfter(midTime)) {
-            label = 'PM';
-          }
-          slots.add(WorkingHour(
-            id: id++,
-            title: '${Utils.formatTime(endSlot)} $label',
-            value: '${Utils.formatTime(endSlot)}:00',
-          ));
-          endSlot = DateTime(
-            currentDate.year,
-            currentDate.month,
-            currentDate.day,
-            endSlot.hour,
-            endSlot.minute,
-          ).add(const Duration(minutes: 30));
-          // print('endSlot: $endSlot');
-        } while (endSlot.isBefore(endTime) || endSlot.compareTo(endTime) == 0);
-
-        return slots;
-      }
-    }
-  }
+  final _dayOfWeek = ['Thứ hai', 'Thứ ba', 'Thứ tư', 'Thứ năm', 'Thứ sáu', 'Thứ bảy', 'Chủ nhật'];
+  final _month = [
+    'Tháng một',
+    'Tháng hai',
+    'Tháng ba',
+    'Tháng tư',
+    'Tháng năm',
+    'Tháng sáu',
+    'Tháng bảy',
+    'Tháng tám',
+    'Tháng chín',
+    'Tháng mười',
+    'Tháng mười một',
+    'Tháng mười hai'
+  ];
 
   @override
   Widget build(BuildContext context) {
+    _cBooking.setDoctor(_doctor);
+    final slotsCreator = SlotsCreator(_doctor);
     return BasePage(
       appBar: const MyAppBar(
         title: 'Book an appointment',
@@ -134,7 +92,7 @@ class BookingDateTimePage extends StatelessWidget {
               builder: (c) {
                 return TableCalendar(
                   shouldFillViewport: true,
-                  daysOfWeekHeight: 25.sp,
+                  daysOfWeekHeight: 40.sp,
                   calendarStyle: CalendarStyle(
                     todayDecoration: BoxDecoration(
                       shape: BoxShape.circle,
@@ -148,8 +106,8 @@ class BookingDateTimePage extends StatelessWidget {
                   availableCalendarFormats: const {
                     CalendarFormat.month: 'Month',
                   },
-                  firstDay: DateTime.utc(currentDate.year, currentDate.month, currentDate.day),
-                  lastDay: DateTime.utc(currentDate.year, currentDate.month + 1, currentDate.day),
+                  firstDay: DateTime.utc(_now.year, _now.month, _now.day),
+                  lastDay: DateTime.utc(_now.year, _now.month + 1, _now.day),
                   focusedDay: c.focusedDate,
                   selectedDayPredicate: (day) {
                     return isSameDay(c.selectedDate, day);
@@ -158,14 +116,30 @@ class BookingDateTimePage extends StatelessWidget {
                     if (!isSameDay(c.selectedDate, selectedDay)) {
                       c.setSelectedDate(selectedDay);
                       c.setFocusedDate(focusedDay);
-                      'Selected day $selectedDay | Focused day $focusedDay'.debugLog('Selected day');
+                      'Selected day ${c.selectedDate} | Focused day ${c.focusedDate}'.debugLog('Selected day');
                       c.update();
                     }
                   },
                   calendarBuilders: CalendarBuilders(
+                    headerTitleBuilder: (context, day) {
+                      return Text(
+                        '${_month[day.month - 1]} ${day.year}',
+                        style: TextStyle(
+                          fontSize: 15.sp,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      );
+                    },
+                    dowBuilder: (context, day) {
+                      return Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 2.sp),
+                        child: Text(
+                          _dayOfWeek[day.weekday - 1],
+                          textAlign: TextAlign.center,
+                        ),
+                      );
+                    },
                     selectedBuilder: (_, DateTime day, DateTime otherDay) {
-                      // day.toString().debugLog('day');
-                      // otherDay.toString().debugLog('otherDay');
                       return Container(
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
@@ -192,38 +166,46 @@ class BookingDateTimePage extends StatelessWidget {
             paddingLeft: 8.sp,
           ),
           ObxValue<Rx<DateTime>>((data) {
-            final slots = getAvailableSlot(data.value.getWeekday());
-            if (slots != null) {
-              return GridView.builder(
-                padding: EdgeInsets.only(bottom: 5.sp),
-                physics: const NeverScrollableScrollPhysics(),
-                shrinkWrap: true,
-                itemCount: slots.length,
-                gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-                  crossAxisSpacing: 10.sp,
-                  mainAxisSpacing: 20.sp,
-                  maxCrossAxisExtent: 80.sp,
-                  mainAxisExtent: 50.sp,
-                ),
-                itemBuilder: (_, int index) {
-                  WorkingHour e = slots[index];
-                  return GestureDetector(
-                    onTap: () {
-                      _cBooking.setSelectedTimeId(e.id!);
-                      _cBooking.setSelectedTime(e.value!);
+            return FutureBuilder(
+              future: slotsCreator.getAvailableSlot(data.value.getWeekday()),
+              builder: (_, AsyncSnapshot<List<WorkingHour>?> snapshot) {
+                if (snapshot.hasData && snapshot.data!.isNotEmpty) {
+                  final slots = snapshot.data!;
+                  return GridView.builder(
+                    padding: EdgeInsets.only(bottom: 5.sp),
+                    physics: const NeverScrollableScrollPhysics(),
+                    shrinkWrap: true,
+                    itemCount: slots.length,
+                    gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+                      crossAxisSpacing: 10.sp,
+                      mainAxisSpacing: 20.sp,
+                      maxCrossAxisExtent: 80.sp,
+                      mainAxisExtent: 50.sp,
+                    ),
+                    itemBuilder: (_, int index) {
+                      WorkingHour e = slots[index];
+                      return GestureDetector(
+                        onTap: () {
+                          _cBooking.setSelectedTimeId(e.id!);
+                          print('E.VALUE: ${e.value}');
+                          _cBooking.setSelectedTime(e.value!);
+                        },
+                        child: ObxValue<RxInt>(
+                            (data) => HourItem(
+                                  text: e.title!,
+                                  id: e.id!,
+                                  isSelected: data.value == e.id ? true : false,
+                                ),
+                            _cBooking.rxSelectedTimeId),
+                      );
                     },
-                    child: ObxValue<RxInt>(
-                        (data) => HourItem(
-                              text: e.title!,
-                              id: e.id!,
-                              isSelected: data.value == e.id ? true : false,
-                            ),
-                        _cBooking.rxSelectedTimeId),
                   );
-                },
-              );
-            }
-            return Text('No slot on week day ${data.value.weekday}');
+                } else if (snapshot.hasData && snapshot.data!.isEmpty) {
+                  return Text('No slot on week day ${data.value.weekday}');
+                }
+                return const SlotsSkeleton();
+              },
+            );
           }, _cBooking.rxSelectedDate),
           SizedBox(height: 90.sp),
         ],

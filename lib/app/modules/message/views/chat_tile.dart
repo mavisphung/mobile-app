@@ -3,14 +3,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:hi_doctor_v2/app/common/constants.dart';
 
 import 'package:hi_doctor_v2/app/common/util/transformation.dart';
 import 'package:hi_doctor_v2/app/common/values/strings.dart';
 import 'package:hi_doctor_v2/app/modules/home/controllers/doctor_controller.dart';
 import 'package:hi_doctor_v2/app/modules/message/chat_page.dart';
 import 'package:hi_doctor_v2/app/modules/message/models/chat_peer.dart';
+import 'package:hi_doctor_v2/app/modules/widgets/image_container.dart';
 import 'package:hi_doctor_v2/app/routes/app_pages.dart';
 import 'package:intl/intl.dart';
+import 'package:skeletons/skeletons.dart';
 
 class ChatTile extends StatelessWidget {
   final DocumentSnapshot document;
@@ -48,17 +51,11 @@ class ChatTile extends StatelessWidget {
                 ),
                 child: Row(
                   children: [
-                    Container(
-                      width: 55.sp,
-                      height: 55.sp,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: Colors.grey[100],
-                        image: DecorationImage(
-                          image: NetworkImage(_cDoctor.doctor.avatar!),
-                        ),
-                      ),
-                    ),
+                    ImageContainer(
+                      width: 55,
+                      height: 55,
+                      imgUrl: _cDoctor.doctor.avatar,
+                    ).circle(),
                     SizedBox(width: 10.sp),
                     Expanded(
                       child: Column(
@@ -76,13 +73,16 @@ class ChatTile extends StatelessWidget {
                           ),
                           Row(
                             children: [
-                              Text(
-                                chatPeer.lastMessage,
-                                overflow: TextOverflow.ellipsis,
-                                style: _textStyle,
+                              Expanded(
+                                child: Text(
+                                  chatPeer.lastMessage,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: _textStyle,
+                                ),
                               ),
                               Text(
-                                ' - ${DateFormat('dd MMM kk:mm').format(DateTime.fromMillisecondsSinceEpoch(int.parse(chatPeer.lastTimeStamp)))}',
+                                DateFormat('dd MMM kk:mm')
+                                    .format(DateTime.fromMillisecondsSinceEpoch(int.parse(chatPeer.lastTimeStamp))),
                                 style: TextStyle(
                                   color: Colors.blueGrey[300],
                                   fontSize: 12,
@@ -104,8 +104,18 @@ class ChatTile extends StatelessWidget {
             );
           }
         }
-        return const Center(
-          child: Text('Loading'),
+        return SkeletonListTile(
+          leadingStyle: const SkeletonAvatarStyle(
+            width: 55,
+            height: 55,
+            shape: BoxShape.circle,
+          ),
+          hasSubtitle: true,
+          titleStyle: SkeletonLineStyle(width: 150.sp),
+          padding: EdgeInsets.symmetric(
+            horizontal: Constants.padding.sp,
+            vertical: 8.sp,
+          ),
         );
       },
     );

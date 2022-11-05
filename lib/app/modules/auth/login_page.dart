@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
 import 'package:hi_doctor_v2/app/common/util/status.dart';
@@ -10,6 +9,7 @@ import 'package:hi_doctor_v2/app/common/util/validators.dart';
 import 'package:hi_doctor_v2/app/common/values/colors.dart';
 import 'package:hi_doctor_v2/app/common/values/strings.dart';
 import 'package:hi_doctor_v2/app/modules/auth/controllers/login_controller.dart';
+import 'package:hi_doctor_v2/app/modules/auth/views/gglogin_button.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/custom_elevate_btn_widget.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/custom_textfield_widget.dart';
 import 'package:hi_doctor_v2/app/routes/app_pages.dart';
@@ -89,7 +89,7 @@ class LoginPage extends StatelessWidget {
                       ),
                     ),
                     Container(
-                      padding: const EdgeInsets.only(bottom: 15.0),
+                      padding: EdgeInsets.only(bottom: 20.sp),
                       alignment: Alignment.centerRight,
                       child: GestureDetector(
                         onTap: () {
@@ -121,7 +121,7 @@ class LoginPage extends StatelessWidget {
                       children: [
                         Expanded(
                           child: Divider(
-                            color: AppColors.greyDivider,
+                            color: AppColors.grey300,
                             height: 2,
                             indent: 10,
                             endIndent: 10,
@@ -131,12 +131,12 @@ class LoginPage extends StatelessWidget {
                           'or',
                           style: TextStyle(
                             fontSize: 12.sp,
-                            color: Colors.grey[600],
+                            color: AppColors.grey600,
                           ),
                         ),
                         Expanded(
                           child: Divider(
-                            color: AppColors.greyDivider,
+                            color: AppColors.grey300,
                             height: 2,
                             indent: 10,
                             endIndent: 10,
@@ -144,41 +144,13 @@ class LoginPage extends StatelessWidget {
                         ),
                       ],
                     ),
-                    Container(
-                      width: double.infinity,
-                      margin: const EdgeInsets.only(
-                        top: 20.0,
-                        bottom: 5.0,
-                      ),
-                      child: ElevatedButton.icon(
-                        icon: SvgPicture.asset(
-                          'assets/icons/gg.svg',
-                          fit: BoxFit.cover,
-                          width: 23.0,
-                          height: 23.0,
-                        ),
-                        label: Text(
-                          Strings.signInGg.tr,
-                          style: const TextStyle(
-                            color: Colors.black,
-                          ),
-                        ),
-                        style: ButtonStyle(
-                          backgroundColor: MaterialStateProperty.all(Colors.white),
-                          padding: MaterialStateProperty.all<EdgeInsets>(const EdgeInsets.symmetric(vertical: 10.0)),
-                          shape: MaterialStateProperty.all(
-                            RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(15.0),
-                            ),
-                          ),
-                        ),
-                        onPressed: () {
-                          if (_c.loginStatus.value != Status.loading) {}
-                        },
-                      ),
+                    GgLoginButton(
+                      onPressed: () {
+                        if (_c.loginStatus.value != Status.loading) {}
+                      },
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(top: 20.0, bottom: 45.0),
+                      padding: EdgeInsets.only(top: 15.sp, bottom: 45.sp),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
