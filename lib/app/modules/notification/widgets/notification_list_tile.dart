@@ -61,7 +61,6 @@ class NotificationListTile extends StatelessWidget {
       onTap: () {
         'Pressed list tile'.debugLog('NotificationPage');
       },
-      trailing: Icon(Icons.more_vert),
     );
   }
 }
