@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
-import 'package:hi_doctor_v2/app/common/constants.dart';
 
+import 'package:hi_doctor_v2/app/common/constants.dart';
 import 'package:hi_doctor_v2/app/common/storage/box.dart';
 import 'package:hi_doctor_v2/app/models/other_health_record.dart';
 

@@ -1,7 +1,10 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:hi_doctor_v2/app/common/util/dialogs.dart';
 
 import 'package:hi_doctor_v2/app/common/values/colors.dart';
 import 'package:hi_doctor_v2/app/models/other_health_record.dart';
@@ -15,11 +18,11 @@ import 'package:hi_doctor_v2/app/modules/widgets/custom_text_btn.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/custom_textfield_widget.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/my_appbar.dart';
 
-// ignore: must_be_immutable
 class AddOtherHealthRecordPage extends StatelessWidget {
-  final _cEditOtherHealthRecord = Get.put(EditOtherHealthRecordController(), tag: 'MAIN');
+  late final EditOtherHealthRecordController _cEditOtherHealthRecord =
+      Get.put(EditOtherHealthRecordController(), tag: 'MAIN');
   late String _funcLabel;
-  late Function _func;
+  late VoidCallback _func;
 
   AddOtherHealthRecordPage({super.key});
 
@@ -68,22 +71,35 @@ class AddOtherHealthRecordPage extends StatelessWidget {
     );
   }
 
-  void init() {
+  void init(BuildContext ctx) {
     final hr = Get.arguments as OtherHealthRecord?;
     final parameters = Get.parameters;
     final tag = parameters['tag'];
+
     _funcLabel = 'Add';
-    _func = _cEditOtherHealthRecord.addOtherHealthRecord;
+    _func = () async {
+      final isSuccess = await _cEditOtherHealthRecord.addOtherHealthRecord();
+      if (isSuccess != null) {
+        Dialogs.statusDialog(
+          ctx: ctx,
+          isSuccess: isSuccess,
+          successMsg: 'Thêm hồ sơ ngoài hệ thống thành công.',
+          failMsg: 'Xảy ra lỗi khi thêm hồ sơ ngoài hệ thống',
+          successAction: () => Get.back(),
+        );
+      }
+    };
+
     if (tag != null && tag == 'EDIT' && hr != null) {
-      _funcLabel = 'Save';
-      _func = _cEditOtherHealthRecord.addOtherHealthRecord;
-      _cEditOtherHealthRecord.initValue(hr);
+      _funcLabel = 'Update';
+      _func = () => _cEditOtherHealthRecord.updateOtherHealthRecord();
+      _cEditOtherHealthRecord.healthRecord = hr;
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    init();
+    init(context);
     return BasePage(
       paddingTop: 20.sp,
       backgroundColor: Colors.white,
@@ -97,9 +113,7 @@ class AddOtherHealthRecordPage extends StatelessWidget {
             ),
             child: CustomTextButton(
               btnText: _funcLabel,
-              action: () async {
-                await _func();
-              },
+              action: _func,
             ),
           ),
         ],

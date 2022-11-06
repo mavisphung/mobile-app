@@ -104,7 +104,7 @@ class OtherHealthRecordItem extends StatelessWidget {
                 ),
               ),
             ),
-            ...hr.pathologies!.map((e) => _getPathologyRow(e.code!, e.diseaseName)).toList(),
+            ...hr.pathologies!.map((e) => _getPathologyRow(e.code!, e.diseaseName!)).toList(),
           ],
         ),
       ),

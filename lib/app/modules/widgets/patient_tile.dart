@@ -30,7 +30,7 @@ class PatientOption {
                   Padding(
                     padding: const EdgeInsets.only(bottom: 18.0),
                     child: Text(
-                      'Choose a patient',
+                      'Chọn bệnh nhân',
                       style: TextStyle(
                         fontSize: 17.sp,
                         fontWeight: FontWeight.w500,

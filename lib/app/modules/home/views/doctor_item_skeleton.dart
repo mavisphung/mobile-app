@@ -41,3 +41,27 @@ class DoctorItemSkeleton extends StatelessWidget {
     );
   }
 }
+
+class SpecialistSkeleton extends StatelessWidget {
+  const SpecialistSkeleton({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView.separated(
+      scrollDirection: Axis.horizontal,
+      itemCount: 5,
+      itemBuilder: (_, index) {
+        return SkeletonAvatar(
+          style: SkeletonAvatarStyle(
+            width: 80.sp,
+            height: 50.sp,
+            borderRadius: BorderRadius.circular(15.sp),
+          ),
+        );
+      },
+      separatorBuilder: (_, __) => SizedBox(
+        width: 10.sp,
+      ),
+    );
+  }
+}

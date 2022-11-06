@@ -10,11 +10,13 @@ class CustomElevatedButtonWidget extends StatelessWidget {
   final String textChild;
   final Status? status;
   final VoidCallback onPressed;
+  final bool hasShadow;
   const CustomElevatedButtonWidget({
     Key? key,
     required this.textChild,
     required this.onPressed,
     this.status = Status.init,
+    this.hasShadow = true,
   }) : super(key: key);
 
   @override
@@ -29,18 +31,20 @@ class CustomElevatedButtonWidget extends StatelessWidget {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(16.sp),
           color: AppColors.primary,
-          boxShadow: [
-            BoxShadow(
-              color: Colors.white.withOpacity(0.5),
-              spreadRadius: 0.4,
-              blurRadius: 7,
-            ),
-            BoxShadow(
-              color: AppColors.primary.withOpacity(0.5),
-              spreadRadius: 0.4,
-              blurRadius: 7,
-            ),
-          ],
+          boxShadow: hasShadow
+              ? [
+                  BoxShadow(
+                    color: Colors.white.withOpacity(0.5),
+                    spreadRadius: 0.4,
+                    blurRadius: 7,
+                  ),
+                  BoxShadow(
+                    color: AppColors.primary.withOpacity(0.5),
+                    spreadRadius: 0.4,
+                    blurRadius: 7,
+                  ),
+                ]
+              : null,
         ),
         child: status == Status.loading
             ? SpinKitThreeBounce(

@@ -6,6 +6,8 @@ import 'package:get/get.dart';
 import 'package:hi_doctor_v2/app/common/constants.dart';
 import 'package:hi_doctor_v2/app/common/values/colors.dart';
 import 'package:hi_doctor_v2/app/common/values/strings.dart';
+import 'package:hi_doctor_v2/app/models/doctor.dart';
+import 'package:hi_doctor_v2/app/models/specialist.dart';
 import 'package:hi_doctor_v2/app/modules/home/controllers/home_controller.dart';
 import 'package:hi_doctor_v2/app/modules/home/views/category_item.dart';
 import 'package:hi_doctor_v2/app/modules/home/views/doctor_item.dart';
@@ -105,72 +107,71 @@ class HomePage extends StatelessWidget {
               const ReminderCard(),
               _spacing,
               CustomTitleSection(title: Strings.category.tr),
-              Obx(
-                () => CustomContainer(
+              ObxValue<RxList<Specialist>>(
+                (data) => CustomContainer(
                   height: 80.sp,
-                  child: _homeController.specialistList.isNotEmpty
+                  child: data.isNotEmpty
                       ? ListView.separated(
                           scrollDirection: Axis.horizontal,
                           physics: const BouncingScrollPhysics(),
                           itemBuilder: (_, index) {
-                            return CategoryItem(spec: _homeController.specialistList[index]);
+                            return CategoryItem(spec: data[index]);
                           },
                           separatorBuilder: (_, __) => SizedBox(
                             width: 3.sp,
                           ),
-                          itemCount: _homeController.specialistList.length,
+                          itemCount: data.length,
                         )
-                      : const Center(child: CircularProgressIndicator()),
+                      : const SpecialistSkeleton(),
                 ),
+                _homeController.specialistList,
               ),
               _spacing,
               const CustomTitleSection(title: 'Bác sĩ gần khu vực'),
               SizedBox(
                 height: 135.sp,
-                child: FutureBuilder(
-                  future: _homeController.getNearestDoctorsApi(),
-                  builder: (_, AsyncSnapshot<bool> snapshot) {
-                    if (snapshot.hasData && snapshot.data == true) {
-                      return ListView.separated(
-                        scrollDirection: Axis.horizontal,
-                        itemCount: _homeController.nearestList.length,
-                        itemBuilder: (_, index) {
-                          var realDoctor = _homeController.nearestList[index];
-                          return DoctorItem(
-                            doctor: realDoctor,
-                          );
-                        },
-                        separatorBuilder: (_, __) => SizedBox(width: 10.sp),
-                      );
-                    }
-                    return const DoctorItemSkeleton();
+                child: ObxValue<RxList<Doctor>>(
+                  (data) {
+                    return data.isNotEmpty
+                        ? ListView.separated(
+                            scrollDirection: Axis.horizontal,
+                            itemCount: data.length,
+                            itemBuilder: (_, index) {
+                              var realDoctor = data[index];
+                              return DoctorItem(
+                                doctor: realDoctor,
+                              );
+                            },
+                            separatorBuilder: (_, __) => SizedBox(width: 10.sp),
+                          )
+                        : const DoctorItemSkeleton();
                   },
+                  _homeController.nearestList,
                 ),
               ),
               _spacing,
               CustomTitleSection(title: Strings.latestSearchDoctor.tr),
               SizedBox(
                 height: 125.sp,
-                child: FutureBuilder(
-                  future: _homeController.getDoctorList(),
-                  builder: (_, AsyncSnapshot<bool> snapshot) {
-                    if (snapshot.hasData && snapshot.data == true) {
-                      return ListView.separated(
-                        scrollDirection: Axis.horizontal,
-                        itemCount: _homeController.doctorList.length,
-                        itemBuilder: (_, index) {
-                          var realDoctor = _homeController.doctorList[index];
-                          return DoctorItem(
-                            doctor: realDoctor,
-                          );
-                        },
-                        separatorBuilder: (_, __) => SizedBox(
-                          width: 10.sp,
-                        ),
-                      );
-                    }
-                    return const DoctorItemSkeleton();
+                child: ObxValue<RxList<Doctor>>(
+                  (data) {
+                    return data.isNotEmpty
+                        ? ListView.separated(
+                            scrollDirection: Axis.horizontal,
+                            itemCount: data.length,
+                            itemBuilder: (_, index) {
+                              var realDoctor = data[index];
+                              return DoctorItem(
+                                doctor: realDoctor,
+                              );
+                            },
+                            separatorBuilder: (_, __) => SizedBox(
+                              width: 10.sp,
+                            ),
+                          )
+                        : const DoctorItemSkeleton();
                   },
+                  _homeController.doctorList,
                 ),
               ),
               SizedBox(

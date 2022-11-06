@@ -32,6 +32,18 @@ class BookingSummary extends StatelessWidget {
     height: 15.sp,
   );
 
+  Widget _getLabel(String text) {
+    return Padding(
+      padding: EdgeInsets.only(top: 15.sp, bottom: 8.sp),
+      child: Text(
+        text,
+        style: TextStyle(
+          fontSize: 14.sp,
+        ),
+      ),
+    );
+  }
+
   Widget _getSubText(String text) {
     return Text(
       text,
@@ -89,7 +101,7 @@ class BookingSummary extends StatelessWidget {
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(Strings.doctorInfo.tr),
+            _getLabel(Strings.doctorInfo.tr),
             CustomContainer(
               child: Row(
                 children: [
@@ -143,7 +155,7 @@ class BookingSummary extends StatelessWidget {
               ),
             ),
             _spacing,
-            Text(Strings.patientInfo.tr),
+            _getLabel(Strings.patientInfo.tr),
             CustomContainer(
               child: Row(
                 children: [
@@ -196,7 +208,7 @@ class BookingSummary extends StatelessWidget {
               ),
             ),
             _spacing,
-            Text(Strings.appointmentDetail.tr),
+            _getLabel(Strings.appointmentDetail.tr),
             CustomContainer(
               child: Column(
                 children: [
@@ -237,14 +249,14 @@ class BookingSummary extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       _getSubText(Strings.price.tr),
-                      Text('${servicePackage.price}'),
+                      Text('${servicePackage.price} Vnđ'),
                     ],
                   ),
                 ],
               ),
             ),
             _spacing,
-            const Text('Payment'),
+            _getLabel('Ví của bạn'),
             CustomContainer(
               child: Row(
                 children: [
@@ -257,13 +269,13 @@ class BookingSummary extends StatelessWidget {
                   SizedBox(
                     width: 15.sp,
                   ),
-                  Expanded(
-                    child: Text(getFormatedPhone()),
+                  const Expanded(
+                    child: Text('1.200.000 đ'),
                   ),
-                  TextButton(
-                    onPressed: () {},
-                    child: Text(Strings.change.tr),
-                  ),
+                  // TextButton(
+                  //   onPressed: () {},
+                  //   child: Text(Strings.change.tr),
+                  // ),
                 ],
               ),
             ),
