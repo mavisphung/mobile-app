@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 
+import 'package:hi_doctor_v2/app/common/util/status.dart';
 import 'package:hi_doctor_v2/app/data/api_custom.dart';
 import 'package:hi_doctor_v2/app/data/response_model.dart';
 import 'package:hi_doctor_v2/app/routes/app_pages.dart';
@@ -51,6 +52,20 @@ class EditOtherHealthRecordController extends GetxController {
 
   final nameController = TextEditingController();
   final nameFocusNode = FocusNode();
+
+  final status = Status.init.obs;
+
+  void setStatusLoading() {
+    status.value = Status.loading;
+  }
+
+  void setStatusSuccess() {
+    status.value = Status.success;
+  }
+
+  void setStatusFail() {
+    status.value = Status.fail;
+  }
 
   Future<XFile?> _getImage(bool isFromCamera) async {
     final picker = ImagePicker();
@@ -146,6 +161,7 @@ class EditOtherHealthRecordController extends GetxController {
       Utils.showAlertDialog('Bạn cần đặt tên hồ sơ và thêm ít nhất một bệnh lý hoặc phiếu sức khỏe.');
       return null;
     }
+    setStatusLoading();
     await _assignUrls();
     final hr = OtherHealthRecord(
       null,
@@ -160,8 +176,10 @@ class EditOtherHealthRecordController extends GetxController {
       final response = await _apiHealthRecord.postHealthRecord(patientId, hr).futureValue();
       print('ADD RESP: ${response.toString()}');
       if (response != null && response.isSuccess) {
+        setStatusSuccess();
         return true;
       } else if (response != null && !response.isSuccess) {
+        setStatusFail();
         return false;
       }
     }
@@ -235,6 +253,7 @@ class EditOtherHealthRecordController extends GetxController {
     recordId.close();
     nameController.dispose();
     nameFocusNode.dispose();
+    status.close();
     super.dispose();
   }
 }

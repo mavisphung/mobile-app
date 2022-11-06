@@ -33,8 +33,8 @@ class CustomInkWell extends StatelessWidget {
         width: width,
         height: height,
         padding: EdgeInsets.symmetric(
-          vertical: verticalPadding ?? Constants.padding.sp,
-          horizontal: horizontalPadding ?? Constants.padding.sp,
+          vertical: verticalPadding?.sp ?? Constants.padding.sp,
+          horizontal: horizontalPadding?.sp ?? Constants.padding.sp,
         ),
         decoration: BoxDecoration(
           color: Colors.white,

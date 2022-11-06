@@ -4,8 +4,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:hi_doctor_v2/app/common/util/dialogs.dart';
 
+import 'package:hi_doctor_v2/app/common/util/dialogs.dart';
+import 'package:hi_doctor_v2/app/common/util/status.dart';
 import 'package:hi_doctor_v2/app/common/values/colors.dart';
 import 'package:hi_doctor_v2/app/models/other_health_record.dart';
 import 'package:hi_doctor_v2/app/modules/health_record/controllers/edit_health_record_controller.dart';
@@ -76,7 +77,7 @@ class AddOtherHealthRecordPage extends StatelessWidget {
     final parameters = Get.parameters;
     final tag = parameters['tag'];
 
-    _funcLabel = 'Add';
+    _funcLabel = 'Thêm';
     _func = () async {
       final isSuccess = await _cEditOtherHealthRecord.addOtherHealthRecord();
       if (isSuccess != null) {
@@ -91,7 +92,7 @@ class AddOtherHealthRecordPage extends StatelessWidget {
     };
 
     if (tag != null && tag == 'EDIT' && hr != null) {
-      _funcLabel = 'Update';
+      _funcLabel = 'Cập nhật';
       _func = () => _cEditOtherHealthRecord.updateOtherHealthRecord();
       _cEditOtherHealthRecord.healthRecord = hr;
     }
@@ -105,15 +106,22 @@ class AddOtherHealthRecordPage extends StatelessWidget {
       backgroundColor: Colors.white,
       appBar: MyAppBar(
         title: 'Thêm hồ sơ sức khỏe',
+        rxStatus: _cEditOtherHealthRecord.status,
         actions: [
           Padding(
             padding: EdgeInsets.only(
-              top: 16.sp,
+              top: 10.sp,
               right: 14.sp,
             ),
-            child: CustomTextButton(
-              btnText: _funcLabel,
-              action: _func,
+            child: ObxValue<Rx<Status>>(
+              (data) {
+                return CustomTextButton(
+                  btnText: _funcLabel,
+                  action: _func,
+                  status: data.value,
+                );
+              },
+              _cEditOtherHealthRecord.status,
             ),
           ),
         ],

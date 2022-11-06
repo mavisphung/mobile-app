@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:hi_doctor_v2/app/common/util/status.dart';
 
 import 'package:hi_doctor_v2/app/common/values/colors.dart';
 
@@ -8,12 +9,14 @@ class CustomIconTextButton extends StatelessWidget {
   final IconData iconData;
   final String btnText;
   final VoidCallback? action;
+  final Status? status;
 
   const CustomIconTextButton({
     Key? key,
     required this.iconData,
     required this.btnText,
     this.action,
+    this.status = Status.init,
   }) : super(key: key);
 
   @override
@@ -23,7 +26,9 @@ class CustomIconTextButton extends StatelessWidget {
         onVerticalDragUpdate: (_) => Future.delayed(const Duration(milliseconds: 100), () => data.value = false),
         onTap: () {
           Future.delayed(const Duration(milliseconds: 100), () => data.value = false);
-          action != null ? action!.call() : Get.back();
+          if (status != Status.loading) {
+            action != null ? action!.call() : Get.back();
+          }
         },
         onTapDown: ((_) => data.value = true),
         child: Row(

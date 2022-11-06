@@ -31,7 +31,6 @@ class MeetingDetailPage extends StatelessWidget {
     return BasePage(
       appBar: const MyAppBar(
         title: 'Appointment Detail',
-        hasBackBtn: false,
       ),
       body: FutureBuilder<bool>(
         future: _cMeeting.getAppointmentDetail(_doctorId),
