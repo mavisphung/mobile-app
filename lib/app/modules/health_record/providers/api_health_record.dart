@@ -5,7 +5,7 @@ import 'package:hi_doctor_v2/app/common/storage/box.dart';
 import 'package:hi_doctor_v2/app/models/other_health_record.dart';
 
 class ApiHealthRecord extends GetConnect {
-  final headers = Box.headers;
+  final headers = Box.getAuthorization();
 
   @override
   void onInit() {

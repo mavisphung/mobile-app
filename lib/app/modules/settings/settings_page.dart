@@ -6,7 +6,7 @@ import 'package:get/get.dart';
 import 'package:hi_doctor_v2/app/common/util/utils.dart';
 import 'package:hi_doctor_v2/app/common/values/colors.dart';
 import 'package:hi_doctor_v2/app/common/values/strings.dart';
-import 'package:hi_doctor_v2/app/data/custom_controller.dart';
+import 'package:hi_doctor_v2/app/modules/settings/controllers/settings_controller.dart';
 import 'package:hi_doctor_v2/app/modules/settings/widgets/user_profile.dart';
 import 'package:hi_doctor_v2/app/modules/settings/widgets/setting_item.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/base_page.dart';
@@ -19,7 +19,7 @@ enum SettingOption { myaccount, logout }
 
 // ignore: must_be_immutable
 class SettingsPage extends StatelessWidget {
-  final _cCustom = Get.find<CustomController>();
+  final _cSettings = Get.find<SettingsController>();
 
   SettingsPage({Key? key}) : super(key: key);
 
@@ -32,7 +32,7 @@ class SettingsPage extends StatelessWidget {
       confirmText: Strings.yes.tr,
     );
     if (confirmLogout ?? false) {
-      _cCustom.logOut();
+      _cSettings.logOut();
     }
   }
 
@@ -154,52 +154,6 @@ class SettingsPage extends StatelessWidget {
                   function: () => Get.toNamed(Routes.PATIENT_LIST),
                 ),
               ],
-            ),
-          ),
-          getLabel('Ngôn ngữ'),
-          getSettingItem1(
-            child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 10.sp),
-              child: Row(
-                children: [
-                  getIcon(PhosphorIcons.translate_thin),
-                  SizedBox(
-                    width: 14.sp,
-                  ),
-                  Expanded(
-                    child: Text(
-                      Strings.language.tr,
-                      style: TextStyle(
-                        fontSize: 14.sp,
-                      ),
-                    ),
-                  ),
-                  ObxValue<RxBool>(
-                      (data) => ToggleButtons(
-                            onPressed: (int index) {
-                              if (index == 0) {
-                                _cCustom.changeLanguage(false);
-                                return;
-                              }
-                              _cCustom.changeLanguage(true);
-                            },
-                            borderRadius: const BorderRadius.all(Radius.circular(8)),
-                            selectedBorderColor: Colors.white,
-                            borderColor: const Color(0xFFE7E5E5),
-                            selectedColor: Colors.grey[800],
-                            fillColor: const Color(0xFFE7E5E5),
-                            color: Colors.grey[800],
-                            borderWidth: 1.2.sp,
-                            constraints: BoxConstraints(
-                              minHeight: 30.sp,
-                              minWidth: 40.sp,
-                            ),
-                            isSelected: [data.isTrue, data.isFalse],
-                            children: [Text(Strings.vi), Text(Strings.en)],
-                          ),
-                      _cCustom.isEnglish),
-                ],
-              ),
             ),
           ),
           getLabel('Trợ giúp & hỗ trợ'),

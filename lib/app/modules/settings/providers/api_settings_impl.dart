@@ -7,7 +7,7 @@ import 'package:hi_doctor_v2/app/models/user_info.dart';
 import 'package:hi_doctor_v2/app/modules/settings/providers/api_settings.dart';
 
 class ApiSettingsImpl extends GetConnect with ApiSettings {
-  final headers = Box.headers;
+  final headers = Box.getAuthorization();
 
   @override
   void onInit() {

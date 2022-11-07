@@ -13,7 +13,6 @@ class UserProfile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    _settingsController.getUserInfo();
     return Row(
       children: [
         ObxValue<Rx<UserInfo2>>(
