@@ -67,7 +67,7 @@ class HomePage extends StatelessWidget {
                         children: const [
                           Expanded(
                             child: Text(
-                              'Search doctor or health issue',
+                              'Tìm bác sĩ hoặc bệnh lý',
                               overflow: TextOverflow.ellipsis,
                             ),
                           ),
@@ -98,7 +98,7 @@ class HomePage extends StatelessWidget {
                   InkWell(
                     onTap: () {},
                     child: const Text(
-                      'See all',
+                      'Xem tất cả',
                       style: TextStyle(fontWeight: FontWeight.bold),
                     ),
                   ),

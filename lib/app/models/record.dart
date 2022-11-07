@@ -28,7 +28,7 @@ class Record {
     return Record(
       map['id'] != null ? map['id'] as int : null,
       map['type'] != null ? map['type'] as String : null,
-      map['tickets'] != null ? List<String>.from((map['tickets'] as List<String>)) : null,
+      map['tickets'] != null ? List.from((map['tickets'] as List)) : null,
       null,
     );
   }

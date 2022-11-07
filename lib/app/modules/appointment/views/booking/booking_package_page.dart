@@ -11,8 +11,6 @@ import 'package:hi_doctor_v2/app/modules/widgets/my_appbar.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/custom_title_section.dart';
 import 'package:hi_doctor_v2/app/routes/app_pages.dart';
 
-enum PackageType { online, offline }
-
 // ignore: must_be_immutable
 class BookingPackagePage extends StatelessWidget {
   BookingPackagePage({Key? key}) : super(key: key);
@@ -26,46 +24,16 @@ class BookingPackagePage extends StatelessWidget {
     return null;
   }
 
-  Widget buildPackageType(String typeName, PackageType type) {
-    String name = typeName;
-    PackageType value = type;
-    return Row(
-      children: [
-        Text(
-          name,
-          style: TextStyle(
-            color: Colors.green[400],
-            fontSize: 18.sp,
-            fontWeight: FontWeight.w500,
-          ),
-        ),
-        ObxValue<Rx<PackageType>>(
-          (data) => Radio<PackageType>(
-            onChanged: (PackageType? value) {
-              value != null ? _cBooking.setServiceType(value) : null;
-            },
-            value: value,
-            groupValue: data.value,
-          ),
-          _cBooking.rxServiceType,
-        )
-      ],
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const MyAppBar(title: 'Select Package'),
+      appBar: const MyAppBar(title: 'Gói dịch vụ'),
       body: BasePage(
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(height: 20.sp),
-            buildPackageType(Strings.online.tr, PackageType.online),
-            buildPackageType(Strings.offline.tr, PackageType.offline),
-            SizedBox(height: 20.sp),
-            const CustomTitleSection(title: 'Select package'),
+            const CustomTitleSection(title: 'Chọn gói dịch vụ'),
             FutureBuilder(
                 future: getService(),
                 builder: (_, AsyncSnapshot<List<PackageItem>?> snapshot) {

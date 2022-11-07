@@ -44,18 +44,6 @@ class BookingController extends GetxController {
     rxFocusedDate.value = value;
   }
 
-  // select service package
-  final Rx<PackageType> rxServiceType = PackageType.online.obs;
-
-  String get serviceType {
-    if (rxServiceType.value.index == 0) return 'ONLINE';
-    return 'OFFLINE';
-  }
-
-  void setServiceType(PackageType serviceType) {
-    rxServiceType.value = serviceType;
-  }
-
   final RxInt rxServiceId = 0.obs;
 
   int get serviceId => rxServiceId.value;
@@ -121,21 +109,18 @@ class BookingController extends GetxController {
     return packageList;
   }
 
-  Future<Map<String, dynamic>> createAppointment(ReqAppointmentModel reqModel) async {
+  Future<bool?> createAppointment(ReqAppointmentModel reqModel) async {
     'Creating appointment'.debugLog('BookingController');
     final response = await _apiBookAppointment.postAppointment(reqModel).futureValue();
     response.toString().debugLog('BookingController.response');
-    Map<String, dynamic> result = {};
     if (response != null) {
       if (response.isSuccess == true && response.statusCode == 201) {
-        result['status'] = 200;
-        result['message'] = 'APPOINTMENT_CREATED_SUCCEEDED';
+        return true;
       } else if (response.message == 'APPOINTMENT_DUPLICATED') {
-        result['status'] = 400;
-        result['message'] = response.message;
+        return false;
       }
     }
-    return result;
+    return null;
   }
 
   @override
@@ -146,7 +131,6 @@ class BookingController extends GetxController {
     rxSelectedTimeId.close();
 
     // select service package
-    rxServiceType.close();
     rxServiceId.close();
 
     // patient detail

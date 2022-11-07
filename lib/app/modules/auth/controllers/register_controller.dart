@@ -54,6 +54,7 @@ class RegisterController extends GetxController {
 
     if (response != null && response.isSuccess == true && response.statusCode == Constants.successPostStatusCode) {
       nextStatus.value = Status.success;
+      print('REGISTER DATA: ${response.data}');
       return true;
     }
     nextStatus.value = Status.fail;

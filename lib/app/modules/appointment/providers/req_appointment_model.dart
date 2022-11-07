@@ -6,7 +6,6 @@ class ReqAppointmentModel {
   final int patient;
   final int package;
   final String bookedAt;
-  final String type;
   final String diseaseDescription;
 
   ReqAppointmentModel(
@@ -14,7 +13,6 @@ class ReqAppointmentModel {
     this.patient,
     this.package,
     this.bookedAt,
-    this.type,
     this.diseaseDescription,
   );
 
@@ -24,7 +22,6 @@ class ReqAppointmentModel {
       'patient': patient,
       'package': package,
       'bookedAt': bookedAt,
-      'type': type,
       'diseaseDescription': diseaseDescription,
     };
   }
@@ -33,6 +30,6 @@ class ReqAppointmentModel {
 
   @override
   String toString() {
-    return 'ReqAppointmentModel(doctor: $doctor, patient: $patient, package: $package, bookedAt: $bookedAt, type: $type, diseaseDescription: $diseaseDescription)';
+    return 'ReqAppointmentModel(doctor: $doctor, patient: $patient, package: $package, bookedAt: $bookedAt, diseaseDescription: $diseaseDescription)';
   }
 }

@@ -119,23 +119,32 @@ class ChatBubble extends StatelessWidget {
                           imgUrl: peerAvatar,
                         ).circle()
                       : SizedBox(width: 35.sp),
-                  messageChat.type == TypeMessage.TEXT.index
-                      ? Container(
-                          constraints: BoxConstraints(
-                            maxWidth: 230.sp,
-                          ),
-                          padding: EdgeInsets.symmetric(vertical: 10.sp, horizontal: 15.sp),
-                          decoration: BoxDecoration(
-                            color: Colors.blueGrey.shade50,
-                            borderRadius: BorderRadius.circular(8.sp),
-                          ),
-                          margin: EdgeInsets.only(left: 10.sp),
-                          child: Text(
-                            messageChat.content,
-                            style: const TextStyle(color: Colors.black),
-                          ),
-                        )
-                      : const SizedBox.shrink(),
+                  if (messageChat.type == TypeMessage.TEXT.index)
+                    Container(
+                      constraints: BoxConstraints(
+                        maxWidth: 230.sp,
+                      ),
+                      padding: EdgeInsets.symmetric(vertical: 10.sp, horizontal: 15.sp),
+                      decoration: BoxDecoration(
+                        color: Colors.blueGrey.shade50,
+                        borderRadius: BorderRadius.circular(8.sp),
+                      ),
+                      margin: EdgeInsets.only(left: 10.sp),
+                      child: Text(
+                        messageChat.content,
+                        style: const TextStyle(color: Colors.black),
+                      ),
+                    ),
+                  if (messageChat.type == TypeMessage.IMAGE.index)
+                    Padding(
+                      padding: EdgeInsets.symmetric(vertical: 10.sp, horizontal: 15.sp),
+                      child: ImageContainer(
+                        width: 100.sp,
+                        height: 150.sp,
+                        imgUrl: messageChat.content,
+                        borderRadius: 5,
+                      ),
+                    ),
                 ],
               ),
               // Time

@@ -217,7 +217,7 @@ abstract class Utils {
     closeSnackbar();
 
     Get.snackbar(
-      title ?? 'Notification',
+      title ?? 'Thông báo',
       message,
     );
   }
