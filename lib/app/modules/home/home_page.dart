@@ -136,25 +136,6 @@ class HomePage extends StatelessWidget {
               const CustomTitleSection(title: 'Bác sĩ gần khu vực'),
               SizedBox(
                 height: 135.sp,
-<<<<<<< HEAD
-                child: FutureBuilder(
-                  future: _isNearestLoaded,
-                  builder: (_, AsyncSnapshot<bool> snapshot) {
-                    if (snapshot.hasData && snapshot.data == true) {
-                      return ListView.separated(
-                        scrollDirection: Axis.horizontal,
-                        itemCount: _homeController.nearestList.length,
-                        itemBuilder: (_, index) {
-                          var realDoctor = _homeController.nearestList[index];
-                          return DoctorItem(
-                            doctor: realDoctor,
-                          );
-                        },
-                        separatorBuilder: (_, __) => SizedBox(width: 10.sp),
-                      );
-                    }
-                    return const DoctorItemSkeleton();
-=======
                 child: ObxValue<RxList<Doctor>>(
                   (data) {
                     return data.isNotEmpty
@@ -170,7 +151,6 @@ class HomePage extends StatelessWidget {
                             separatorBuilder: (_, __) => SizedBox(width: 10.sp),
                           )
                         : const DoctorItemSkeleton();
->>>>>>> origin/dev2
                   },
                   _homeController.nearestList,
                 ),
