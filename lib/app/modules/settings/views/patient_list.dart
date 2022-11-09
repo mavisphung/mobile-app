@@ -1,12 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
 import 'package:hi_doctor_v2/app/common/constants.dart';
 import 'package:hi_doctor_v2/app/common/values/colors.dart';
+import 'package:hi_doctor_v2/app/common/values/strings.dart';
+import 'package:hi_doctor_v2/app/models/patient.dart';
 import 'package:hi_doctor_v2/app/modules/settings/controllers/patient_profile_controller.dart';
 import 'package:hi_doctor_v2/app/modules/settings/widgets/patient_item.dart';
+import 'package:hi_doctor_v2/app/modules/widgets/loading_widget.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/my_appbar.dart';
+import 'package:hi_doctor_v2/app/modules/widgets/response_status_widget.dart';
 import 'package:hi_doctor_v2/app/routes/app_pages.dart';
 
 class PatientListPage extends StatelessWidget {
@@ -52,47 +57,33 @@ class PatientListPage extends StatelessWidget {
             Expanded(
               child: Padding(
                 padding: EdgeInsets.symmetric(vertical: 15.sp),
-                // child: FutureBuilder(
-                //   future: _c.getPatientList(),
-                //   builder: (context, AsyncSnapshot snapshot) {
-                //     if (snapshot.hasData) {
-                //       if (snapshot.data == true) {
-                //         return ListView.separated(
-                //           physics: const BouncingScrollPhysics(),
-                //           itemCount: _c.patientList.length,
-                //           itemBuilder: (_, index) {
-                //             var patient = _c.patientList[index];
-                //             return PatientItem(
-                //               patient: patient,
-                //             );
-                //           },
-                //           separatorBuilder: (_, __) => SizedBox(height: 20.sp),
-                //         );
-                //       } else {
-                //         return const Center(
-                //           child: Text('No patient yet'),
-                //         );
-                //       }
-                //     }
-                //     return const Center(child: CircularProgressIndicator());
-                //   },
-                // ),
-                child: GetBuilder(
-                  init: _c,
-                  builder: (PatientProfileController controller) {
-                    if (controller.patientList.isNotEmpty) {
-                      return ListView.builder(
-                        physics: const BouncingScrollPhysics(),
-                        itemCount: controller.patientList.length,
-                        itemBuilder: (_, index) {
-                          var patient = controller.patientList[index];
-                          return PatientItem(
-                            patient: patient,
-                          );
-                        },
-                      );
+                child: FutureBuilder(
+                  future: _c.getPatientList(),
+                  builder: (_, AsyncSnapshot<bool?> snapshot) {
+                    if (snapshot.hasData && snapshot.data == true) {
+                      if (_c.patientList.isNotEmpty) {
+                        return ObxValue<RxList<Patient>>(
+                          (data) => ListView.builder(
+                            physics: const BouncingScrollPhysics(),
+                            itemCount: data.length,
+                            itemBuilder: (_, index) {
+                              var patient = data[index];
+                              return PatientItem(
+                                patient: patient,
+                              );
+                            },
+                          ),
+                          _c.patientList,
+                        );
+                      } else {
+                        return NoDataWidget(message: Strings.noDataPatient);
+                      }
+                    } else if (snapshot.hasData && snapshot.data == false) {
+                      return const SystemErrorWidget();
+                    } else if (snapshot.connectionState == ConnectionState.none) {
+                      return const NoInternetWidget2();
                     }
-                    return const Center(child: CircularProgressIndicator());
+                    return const LoadingWidget();
                   },
                 ),
               ),

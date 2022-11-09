@@ -40,7 +40,7 @@ class BookingDateTimePage extends StatelessWidget {
             Utils.showAlertDialog('Please choose your booking time');
             return;
           }
-          Get.toNamed(Routes.BOOKING_PACKAGE, preventDuplicates: true);
+          Get.toNamed(Routes.BOOKING_PACKAGE);
         },
       ),
       body: Column(

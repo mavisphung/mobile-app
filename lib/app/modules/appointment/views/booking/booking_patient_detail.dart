@@ -131,42 +131,46 @@ class BookingPatientDetailPage extends StatelessWidget {
                               if (snapshot.hasData) {
                                 if (snapshot.data == true) {
                                   _cBooking.setPatient(_cPatientProfile.patientList[0]);
-                                  return ObxValue<Rx<Patient>>(
-                                      (data) => Column(
+                                  return ObxValue<Rxn<Patient>>(
+                                    (data) {
+                                      final patient = data.value!;
+                                      return Column(
+                                        children: [
+                                          Row(
+                                            crossAxisAlignment: CrossAxisAlignment.start,
                                             children: [
-                                              Row(
-                                                crossAxisAlignment: CrossAxisAlignment.start,
-                                                children: [
-                                                  _getTitle(Strings.fullName),
-                                                  Flexible(
-                                                    child: Text(
-                                                      Tx.getFullName(data.value.lastName, data.value.firstName),
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                              Row(
-                                                children: [
-                                                  _getTitle(Strings.gender),
-                                                  Text('${data.value.gender}'),
-                                                ],
-                                              ),
-                                              Row(
-                                                children: [
-                                                  _getTitle(Strings.dob),
-                                                  Text('${data.value.dob}'),
-                                                ],
-                                              ),
-                                              Row(
-                                                crossAxisAlignment: CrossAxisAlignment.start,
-                                                children: [
-                                                  _getTitle(Strings.address),
-                                                  Flexible(child: Text('${data.value.address}')),
-                                                ],
+                                              _getTitle(Strings.fullName),
+                                              Flexible(
+                                                child: Text(
+                                                  Tx.getFullName(patient.lastName, patient.firstName),
+                                                ),
                                               ),
                                             ],
                                           ),
-                                      _cBooking.rxPatient);
+                                          Row(
+                                            children: [
+                                              _getTitle(Strings.gender),
+                                              Text('${patient.gender}'),
+                                            ],
+                                          ),
+                                          Row(
+                                            children: [
+                                              _getTitle(Strings.dob),
+                                              Text('${patient.dob}'),
+                                            ],
+                                          ),
+                                          Row(
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            children: [
+                                              _getTitle(Strings.address),
+                                              Flexible(child: Text('${patient.address}')),
+                                            ],
+                                          ),
+                                        ],
+                                      );
+                                    },
+                                    _cBooking.rxPatient,
+                                  );
                                 }
                               }
                               return const Center(child: CircularProgressIndicator());
@@ -221,9 +225,9 @@ class BookingPatientDetailPage extends StatelessWidget {
         buttonText: Strings.kContinue,
         onPressed: () {
           _formKey.currentState?.save();
-          if (_formKey.currentState?.validate() ?? false) {
-            Get.toNamed(Routes.BOOKING_SUMMARY);
-          }
+          final isValidated = _formKey.currentState?.validate() ?? false;
+          if (!isValidated || _cBooking.patient == null) return;
+          Get.toNamed(Routes.BOOKING_SUMMARY);
         },
       ),
     );

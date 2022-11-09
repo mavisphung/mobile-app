@@ -81,8 +81,7 @@ class PatientProfileController extends GetxController {
     update();
   }
 
-  Future<bool> getPatientList({int page = 1, int limit = 10}) async {
-    'Get patient list invoked'.debugLog('PatientProfileController');
+  Future<bool?> getPatientList({int page = 1, int limit = 10}) async {
     setStatusLoading();
     final response = await _provider.getPatientList(page: page, limit: limit);
 
@@ -90,26 +89,31 @@ class PatientProfileController extends GetxController {
     ResponseModel2 model = ResponseModel2.fromMap(result);
     List<dynamic> data = model.data;
 
-    if (data.isNotEmpty) {
-      patientList.value = data
-          .map<Patient>(
-            (e) => Patient(
-              id: e['id'],
-              firstName: e['firstName'],
-              lastName: e['lastName'],
-              dob: e['dob'],
-              address: e['address'],
-              gender: e['gender'],
-              avatar: e['avatar'],
-              supervisorId: e['supervisor_id'],
-              oldOtherHealthRecords: e['old_health_records'],
-            ),
-          )
-          .toList();
+    if (model.success == true) {
+      if (data.isNotEmpty) {
+        patientList.value = data
+            .map<Patient>(
+              (e) => Patient(
+                id: e['id'],
+                firstName: e['firstName'],
+                lastName: e['lastName'],
+                dob: e['dob'],
+                address: e['address'],
+                gender: e['gender'],
+                avatar: e['avatar'],
+                supervisorId: e['supervisor_id'],
+                oldOtherHealthRecords: e['old_health_records'],
+              ),
+            )
+            .toList();
+      }
       setStatusSuccess();
       return true;
+    } else if (model.success == false) {
+      setStatusFail();
+      return false;
     }
-    return false;
+    return null;
   }
 
   Future<bool> getPatientWithId(int id) async {

@@ -73,7 +73,7 @@ class BookingSummary extends StatelessWidget {
   void createAppointment(BuildContext ctx) async {
     final reqModel = ReqAppointmentModel(
       _cBooking.doctor.id!,
-      _cBooking.patient.id!,
+      _cBooking.patient!.id!,
       _cBooking.serviceId,
       "${DateFormat('yyyy-MM-dd').format(_cBooking.selectedDate)} ${_cBooking.selectedTime}",
       _cBooking.problemController.text.trim(),
@@ -93,7 +93,7 @@ class BookingSummary extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final patient = _cBooking.patient;
+    final patient = _cBooking.patient!;
     final doctor = _cBooking.doctor;
     final servicePackage = _cBooking.packageList!.firstWhere((e) => e.id == _cBooking.serviceId);
     return BasePage(
@@ -118,7 +118,7 @@ class BookingSummary extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          '${Strings.dr} ${Tx.getFullName(doctor.lastName, doctor.firstName)}',
+                          '${Strings.doctor} ${Tx.getFullName(doctor.lastName, doctor.firstName)}',
                           style: const TextStyle(
                             fontWeight: FontWeight.w500,
                           ),

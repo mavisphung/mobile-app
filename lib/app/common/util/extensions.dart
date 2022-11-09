@@ -42,7 +42,7 @@ extension FutureExt<T> on Future<Response<T>> {
           Utils.showAlertDialog(errorMessage);
         } else if (e.type == ErrorType.unauthorized) {
           if (e.message == 'AUTHENTICATION_FAILED') {
-            Utils.showTopSnackbar(Strings.loginFailedMsg, title: Strings.authentication);
+            Utils.showTopSnackbar(Strings.loginFailedMsg, title: Strings.verification);
             return null;
           }
           Storage.clearStorage();

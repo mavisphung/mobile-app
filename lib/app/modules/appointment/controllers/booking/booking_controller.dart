@@ -51,7 +51,7 @@ class BookingController extends GetxController {
     rxServiceId.value = serviceId;
   }
 
-  late List<PackageItem>? packageList;
+  List<PackageItem>? packageList;
 
   // patient detail
   final problemController = TextEditingController();
@@ -65,8 +65,8 @@ class BookingController extends GetxController {
     _doctor = value;
   }
 
-  final rxPatient = Patient().obs;
-  Patient get patient => rxPatient.value;
+  final rxPatient = Rxn<Patient>();
+  Patient? get patient => rxPatient.value;
   void setPatient(Patient value) {
     rxPatient.value = value;
   }
@@ -87,12 +87,13 @@ class BookingController extends GetxController {
     return null;
   }
 
-  Future<List<PackageItem>?> getPackages(int doctorId) async {
-    final result = await _apiBookAppointment.getDoctorPackage(doctorId);
+  Future<bool?> getPackages(int doctorId) async {
+    final result = await _apiBookAppointment.getDoctorPackage(6);
     final Map<String, dynamic> response = ApiResponse.getResponse(result);
     final ResponseModel2 model = ResponseModel2.fromMap(response);
     if (model.success == true && model.status == Constants.successGetStatusCode) {
-      final data = model.data as List<dynamic>;
+      final data = model.data as List<dynamic>?;
+      if (data == null || data.isEmpty) return true;
       packageList = data
           .map((e) => PackageItem(
                 id: e['id'],
@@ -102,10 +103,12 @@ class BookingController extends GetxController {
               ))
           .toList();
       setServiceId(data[0]['id']);
-    } else {
+      return true;
+    } else if (model.success == false) {
       packageList = null;
+      return false;
     }
-    return packageList;
+    return null;
   }
 
   Future<bool?> createAppointment(ReqAppointmentModel reqModel) async {

@@ -8,9 +8,12 @@ class LoadingWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: SpinKitChasingDots(
-        size: 35,
-        color: AppColors.primary.withOpacity(0.5),
+      child: SizedBox(
+        height: 100,
+        child: SpinKitChasingDots(
+          size: 45,
+          color: AppColors.primary.withOpacity(0.5),
+        ),
       ),
     );
   }
