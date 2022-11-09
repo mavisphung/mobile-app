@@ -43,7 +43,7 @@ class _ChannelPageState extends State<ChannelPage> {
     _cMeeting = Get.find<MeetingController>();
 
     final args = Get.arguments as Map<String, String>;
-    _channelName = args['channel']!;
+    _channelName = args['channelId']!;
     _tempToken = args['token']!;
     print('CHANNEL ID : $_channelName, token: $_tempToken');
 
@@ -118,6 +118,7 @@ class _ChannelPageState extends State<ChannelPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.black,
       appBar: MyAppBar(
         title: 'Video call',
         actions: [
@@ -127,12 +128,11 @@ class _ChannelPageState extends State<ChannelPage> {
             },
             shape: const CircleBorder(),
             elevation: 2.0,
-            fillColor: Colors.white,
             padding: const EdgeInsets.all(12.0),
             child: const Icon(
               PhosphorIcons.camera_rotate_fill,
               color: Colors.white,
-              size: 20.0,
+              size: 24,
             ),
           ),
         ],
@@ -162,7 +162,7 @@ class _ChannelPageState extends State<ChannelPage> {
               ),
             ),
           ),
-          _panel(),
+          // _panel(),
           _toolbar(),
         ],
       ),

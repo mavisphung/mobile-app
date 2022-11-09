@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
-import 'package:hi_doctor_v2/app/common/constants.dart';
 
+import 'package:hi_doctor_v2/app/common/constants.dart';
 import 'package:hi_doctor_v2/app/common/storage/box.dart';
 import 'package:hi_doctor_v2/app/models/other_health_record.dart';
 
@@ -12,6 +12,17 @@ class ApiHealthRecord extends GetConnect {
     httpClient.baseUrl = Constants.baseUrl;
     httpClient.timeout = Constants.timeout;
     super.onInit();
+  }
+
+  Future<Response> getHealthRecords({int page = 1, int limit = 10}) {
+    return get(
+      '/user/health-records/',
+      headers: headers,
+      query: {
+        'page': page.toString(),
+        'limit': limit.toString(),
+      },
+    );
   }
 
   Future<Response> getPathologySearch(String keyword, {int page = 1, int limit = 10}) {

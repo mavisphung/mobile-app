@@ -123,10 +123,10 @@ class Doctor {
       ratingPoints: map['ratingPoints'] != null ? map['ratingPoints'] as double : null,
       ratingTurns: map['ratingTurns'] != null ? map['ratingTurns'] as int : null,
       address: map['address'] != null ? map['address'] as String : null,
-      shifts: map['shifts'] != null ? List<dynamic>.from((map['shifts'] as List<dynamic>)) : null,
-      specialists: map['specialists'] != null ? List<dynamic>.from((map['specialists'] as List<dynamic>)) : null,
-      distance: map['distance'] != null ? Map<String, dynamic>.from((map['distance'] as Map<String, dynamic>)) : null,
-      duration: map['duration'] != null ? Map<String, dynamic>.from((map['duration'] as Map<String, dynamic>)) : null,
+      shifts: map['shifts'] != null ? List<dynamic>.from(map['shifts'] as List<dynamic>) : null,
+      specialists: map['specialists'] != null ? List<dynamic>.from(map['specialists'] as List<dynamic>) : null,
+      distance: map['distance'] != null ? Map<String, dynamic>.from(map['distance'] as Map<String, dynamic>) : null,
+      duration: map['duration'] != null ? Map<String, dynamic>.from(map['duration'] as Map<String, dynamic>) : null,
     );
   }
 

@@ -4,12 +4,12 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
 import 'package:hi_doctor_v2/app/common/util/utils.dart';
-import 'package:hi_doctor_v2/app/models/other_health_record.dart';
+import 'package:hi_doctor_v2/app/modules/health_record/models/hr_res_model.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/custom_inkwell.dart';
 import 'package:hi_doctor_v2/app/routes/app_pages.dart';
 
 class OtherHealthRecordItem extends StatelessWidget {
-  final OtherHealthRecord hr;
+  final HrResModel hr;
 
   const OtherHealthRecordItem({
     super.key,
@@ -32,10 +32,12 @@ class OtherHealthRecordItem extends StatelessWidget {
               ),
             ),
           ),
-          Text(
-            name,
-            style: TextStyle(
-              fontSize: 14.sp,
+          Flexible(
+            child: Text(
+              name,
+              style: TextStyle(
+                fontSize: 14.sp,
+              ),
             ),
           ),
         ],
@@ -48,6 +50,7 @@ class OtherHealthRecordItem extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 5.sp),
       child: CustomInkWell(
+        verticalPadding: 20,
         onTap: () {
           Get.toNamed(
             Routes.EDIT_HEALTH_RECORD,
@@ -72,7 +75,7 @@ class OtherHealthRecordItem extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Hồ sơ ${hr.name}',
+                      'Hồ sơ ${hr.detail?['name']}',
                       style: TextStyle(
                         fontSize: 15.sp,
                         fontWeight: FontWeight.w500,
@@ -80,7 +83,7 @@ class OtherHealthRecordItem extends StatelessWidget {
                     ),
                     SizedBox(height: 2.sp),
                     Text(
-                      'Tạo ngày ${Utils.formatDate(hr.createDate!)}',
+                      'Tạo ngày ${Utils.formatDateTime(DateTime.fromMillisecondsSinceEpoch(hr.detail?['createDate']))}',
                       style: TextStyle(
                         color: Colors.black54,
                         fontSize: 10.5.sp,
@@ -104,7 +107,7 @@ class OtherHealthRecordItem extends StatelessWidget {
                 ),
               ),
             ),
-            ...hr.pathologies!.map((e) => _getPathologyRow(e.code!, e.diseaseName)).toList(),
+            ...hr.detail?['pathologies']?.map((e) => _getPathologyRow('${e['code']}', '${e['diseaseName']}')).toList(),
           ],
         ),
       ),

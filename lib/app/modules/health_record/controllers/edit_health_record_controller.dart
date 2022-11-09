@@ -1,9 +1,15 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
-import 'package:hi_doctor_v2/app/common/util/extensions.dart';
-import 'package:hi_doctor_v2/app/modules/health_record/controllers/health_record_controller.dart';
 import 'package:image_picker/image_picker.dart';
 
+import 'package:hi_doctor_v2/app/common/util/status.dart';
+import 'package:hi_doctor_v2/app/data/api_custom.dart';
+import 'package:hi_doctor_v2/app/data/response_model.dart';
+import 'package:hi_doctor_v2/app/routes/app_pages.dart';
+import 'package:hi_doctor_v2/app/common/util/extensions.dart';
+import 'package:hi_doctor_v2/app/modules/health_record/controllers/health_record_controller.dart';
 import 'package:hi_doctor_v2/app/common/util/utils.dart';
 import 'package:hi_doctor_v2/app/models/other_health_record.dart';
 import 'package:hi_doctor_v2/app/models/pathology.dart';
@@ -11,33 +17,57 @@ import 'package:hi_doctor_v2/app/models/record.dart';
 import 'package:hi_doctor_v2/app/modules/health_record/providers/api_health_record.dart';
 
 class EditOtherHealthRecordController extends GetxController {
-  late ApiHealthRecord _apiHealthRecord;
-  late HealthRecordController _cHealthRecord;
+  late final ApiCustom _apiCustom;
+  late final ApiHealthRecord _apiHealthRecord;
+  late final HealthRecordController _cHealthRecord;
 
-  var _pathologies = List.empty(growable: true);
-  List<dynamic> get getPathologies => _pathologies;
+  OtherHealthRecord? _hr;
+  Pathology? _p;
 
-  var _records = List.empty(growable: true);
-  List<dynamic> get getRecords {
-    if (pathologyObj.value != null) {
-      return pathologyObj.value!.records;
+  set healthRecord(OtherHealthRecord value) => _hr = value;
+  set pathology(Pathology value) => _p = value;
+
+  final RxList<Pathology> _pathologies = RxList<Pathology>();
+  final RxList<Record> _records = RxList<Record>();
+
+  RxList<Pathology> get rxPathologies {
+    if (_hr?.pathologies != null) {
+      _pathologies.value = _hr!.pathologies!;
+    }
+    return _pathologies;
+  }
+
+  RxList<Record> get rxRecords {
+    if (_hr?.otherTickets != null) {
+      _records.value = _hr!.otherTickets!;
+    } else if (_p?.records != null) {
+      _records.value = _p!.records!;
     }
     return _records;
   }
 
-  final _imgs = <String>[];
-  List<String> get getImgs => _imgs;
+  final imgs = RxList<XFile>();
 
-  final pathologiesLength = 0.obs;
-  final RxInt recordsLength = 0.obs;
-  final imgsLength = 0.obs;
   final recordId = 0.obs;
 
   final nameController = TextEditingController();
   final nameFocusNode = FocusNode();
-  Rxn<Pathology> pathologyObj = Rxn(null);
 
-  Future<String?> _getImage(bool isFromCamera) async {
+  final status = Status.init.obs;
+
+  void setStatusLoading() {
+    status.value = Status.loading;
+  }
+
+  void setStatusSuccess() {
+    status.value = Status.success;
+  }
+
+  void setStatusFail() {
+    status.value = Status.fail;
+  }
+
+  Future<XFile?> _getImage(bool isFromCamera) async {
     final picker = ImagePicker();
     XFile? file = isFromCamera
         ? await picker.pickImage(source: ImageSource.camera)
@@ -45,48 +75,32 @@ class EditOtherHealthRecordController extends GetxController {
     if (file == null) {
       return null;
     }
-    return file.path;
-    // List<XFile> files = <XFile>[];
-    // files.add(file);
-    // var response = await _provider.postPresignedUrls(files);
-    // if (response.isOk) {
-    //   ResponseModel1 resModel = ResponseModel1.fromJson(response.body);
-    //   String fileExt = file.name.split('.')[1];
-    //   String fullUrl = resModel.data['urls'][0];
-    //   String url = fullUrl.split('?')[0];
-
-    //   await Utils.upload(fullUrl, File(file.path), fileExt);
-    //   print('URL: $url');
-    //   return url;
-    // }
-    // return null;
+    return file;
   }
 
   void addImage(bool isFromCamera) async {
-    final url = await _getImage(isFromCamera);
-    if (url != null) {
-      _imgs.add(url);
-      ++imgsLength.value;
+    final file = await _getImage(isFromCamera);
+    if (file != null) {
+      imgs.add(file);
+      imgs.refresh();
     }
   }
 
   void removeImage(int index) {
-    _imgs.removeAt(index);
-    --imgsLength.value;
+    imgs.removeAt(index);
+    imgs.refresh();
   }
 
   void addPathology(Pathology p) {
-    _pathologies.add(p);
-    ++pathologiesLength.value;
-    Get.back();
-    for (var p in _pathologies) {
-      print('\n========================');
-      print(p.toString());
-    }
+    rxPathologies.add(p);
+    rxPathologies.refresh();
+    Get.until((route) => Get.currentRoute == '${Routes.EDIT_HEALTH_RECORD}?tag=ADD');
   }
 
-  void savePathology(Pathology p) {
-    Get.back();
+  void updatePathology(Pathology p) {
+    final existedItem = rxPathologies.indexWhere((e) => e.id == p.id);
+    rxPathologies.setAll(existedItem, [p]);
+    Get.until((route) => Get.currentRoute == '${Routes.EDIT_HEALTH_RECORD}?tag=ADD');
   }
 
   void removePathology(int index) async {
@@ -95,41 +109,39 @@ class EditOtherHealthRecordController extends GetxController {
       title: 'Xóa bệnh lý',
     );
     if (confirm ?? false) {
-      _pathologies.removeAt(index);
-      --pathologiesLength.value;
+      rxPathologies.removeAt(index);
+      rxPathologies.refresh();
     }
   }
 
   void _clearImgs() {
-    _imgs.clear();
-    imgsLength.value = 0;
+    imgs.clear();
+    imgs.refresh();
   }
 
   void addTicket() {
-    final imgs = _imgs.toList();
-    final records = getRecords;
-    final existedRecordIndex = records.indexWhere((e) => e.id == recordId.value);
+    final existedRecordIndex = rxRecords.indexWhere((e) => e.id == recordId.value);
 
     if (existedRecordIndex == -1) {
       final String? typeName = recordType[recordId.value];
-      final record = Record(recordId.value, typeName, imgs);
-      records.add(record);
-      ++recordsLength.value;
+      final record = Record(recordId.value, typeName, [], imgs.toList());
+      rxRecords.add(record);
+      rxRecords.refresh();
     } else {
-      var tmp = records[existedRecordIndex].tickets?.toList();
-      tmp?.addAll(imgs);
-      if (tmp != null) records[existedRecordIndex].setTickets(tmp);
+      var tmp = rxRecords[existedRecordIndex].xFiles;
+      if (tmp != null) {
+        tmp.addAll(imgs.toList());
+      }
     }
     _clearImgs();
   }
 
   void removeTicket(int recordIndex, int index) {
-    final records = getRecords;
-    final record = records.elementAt(recordIndex);
-    var tmp = record.tickets?.toList();
+    final record = rxRecords.elementAt(recordIndex);
+    var tmp = record.xFiles?.toList();
     if (tmp != null) {
       tmp.removeAt(index);
-      record.setTickets(tmp);
+      record.xFiles = tmp;
     }
   }
 
@@ -139,43 +151,88 @@ class EditOtherHealthRecordController extends GetxController {
       title: 'Xóa $recordName',
     );
     if (confirm ?? false) {
-      final records = getRecords;
-      records.removeAt(index);
-      --recordsLength.value;
+      rxRecords.removeAt(index);
+      rxRecords.refresh();
     }
   }
 
-  void addOtherHealthRecord() async {
-    if (nameController.text.isEmpty && (_pathologies.isEmpty || _records.isEmpty)) {
+  Future<bool?> addOtherHealthRecord() async {
+    if (nameController.text.isEmpty && (rxPathologies.isEmpty || rxRecords.isEmpty)) {
       Utils.showAlertDialog('Bạn cần đặt tên hồ sơ và thêm ít nhất một bệnh lý hoặc phiếu sức khỏe.');
-      return;
+      return null;
     }
+    setStatusLoading();
+    await _assignUrls();
     final hr = OtherHealthRecord(
       null,
       nameController.text.trim(),
       DateTime.now(),
-      _pathologies.toList(),
-      _records.toList(),
+      rxPathologies.toList(),
+      rxRecords.toList(),
     );
 
     final patientId = _cHealthRecord.patient.value.id;
     if (patientId != null) {
       final response = await _apiHealthRecord.postHealthRecord(patientId, hr).futureValue();
       print('ADD RESP: ${response.toString()}');
+      if (response != null && response.isSuccess) {
+        setStatusSuccess();
+        return true;
+      } else if (response != null && !response.isSuccess) {
+        setStatusFail();
+        return false;
+      }
     }
-
-    Get.back();
+    return null;
   }
 
-  void initValue(OtherHealthRecord hr) {
-    _pathologies = hr.pathologies ?? List.empty(growable: true);
-    pathologiesLength.value = _pathologies.length;
-    _records = hr.otherTickets ?? List.empty(growable: true);
-    recordsLength.value = _records.length;
+  Future<List<String>?> _registerImgs(List<XFile> files) async {
+    final urls = <String>[];
+    String fileExt, fullUrl, url;
+    var response = await _apiCustom.postPresignedUrls(files);
+    if (response.isOk) {
+      ResponseModel1 resModel = ResponseModel1.fromJson(response.body);
+      for (int i = 0; i < files.length; ++i) {
+        fileExt = files[i].name.split('.')[1];
+        fullUrl = resModel.data['urls'][i];
+        url = fullUrl.split('?')[0];
+        await Utils.upload(fullUrl, File(files[i].path), fileExt);
+        urls.add(url);
+      }
+      return urls;
+    }
+    return null;
+  }
+
+  Future<void> _assignUrls() async {
+    List<String> urls;
+    for (var p in rxPathologies) {
+      if (p.records != null) {
+        for (var r in p.records!) {
+          final pXFiles = r.xFiles;
+          if (pXFiles != null) {
+            urls = await _registerImgs(pXFiles) ?? [];
+            r.tickets = urls;
+          }
+        }
+      }
+    }
+    for (var r in rxRecords) {
+      final hrXFiles = r.xFiles;
+      if (hrXFiles != null) {
+        urls = await _registerImgs(hrXFiles) ?? [];
+        r.tickets = urls;
+      }
+    }
+  }
+
+  void updateOtherHealthRecord() {
+    Get.back();
   }
 
   @override
   void onInit() {
+    _apiCustom = Get.put(ApiCustom());
     _apiHealthRecord = Get.put(ApiHealthRecord());
     _cHealthRecord = Get.find<HealthRecordController>();
     super.onInit();
@@ -183,13 +240,20 @@ class EditOtherHealthRecordController extends GetxController {
 
   @override
   void dispose() {
-    pathologiesLength.close();
-    recordsLength.close();
-    imgsLength.close();
+    rxPathologies.clear();
+    rxPathologies.close();
+    rxRecords.clear();
+    rxRecords.close();
+    _pathologies.clear();
+    _pathologies.close();
+    _records.clear();
+    _records.close();
+    imgs.clear();
+    imgs.close();
     recordId.close();
     nameController.dispose();
     nameFocusNode.dispose();
-    pathologyObj.close();
+    status.close();
     super.dispose();
   }
 }

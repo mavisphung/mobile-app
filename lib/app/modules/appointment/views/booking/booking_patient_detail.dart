@@ -7,6 +7,7 @@ import 'package:hi_doctor_v2/app/common/values/colors.dart';
 import 'package:hi_doctor_v2/app/common/values/strings.dart';
 import 'package:hi_doctor_v2/app/models/patient.dart';
 import 'package:hi_doctor_v2/app/modules/appointment/controllers/booking/booking_controller.dart';
+import 'package:hi_doctor_v2/app/modules/widgets/loading_widget.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/patient_tile.dart';
 import 'package:hi_doctor_v2/app/modules/settings/controllers/patient_profile_controller.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/base_page.dart';
@@ -41,22 +42,48 @@ class BookingPatientDetailPage extends StatelessWidget {
         builder: (_) {
           return Dialog(
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(12.sp),
+              borderRadius: BorderRadius.circular(17.sp),
             ),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(
-                  'Choose a patient',
-                  style: Theme.of(ctx).textTheme.headline6,
-                ),
-                ..._cPatientProfile.patientList
-                    .map((e) => PatientTile(
-                          patient: e,
-                          onTap: _cBooking.setPatient,
-                        ))
-                    .toList()
-              ],
+            child: Padding(
+              padding: EdgeInsets.symmetric(vertical: 30.sp),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 18.0),
+                    child: Text(
+                      'Chọn bệnh nhân',
+                      style: TextStyle(
+                        fontSize: 17.sp,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ),
+                  ObxValue<RxList<Patient>>(
+                    (data) {
+                      if (data.isNotEmpty) {
+                        return ListView.separated(
+                          shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
+                          itemBuilder: (_, index) {
+                            return PatientTile(
+                              patient: data[index],
+                              onTap: _cBooking.setPatient,
+                            );
+                          },
+                          separatorBuilder: (_, __) => Divider(
+                            color: AppColors.greyDivider,
+                            thickness: 0.3.sp,
+                          ),
+                          itemCount: data.length,
+                        );
+                      }
+                      return const LoadingWidget();
+                    },
+                    _cPatientProfile.patientList,
+                  ),
+                ],
+              ),
             ),
           );
         });

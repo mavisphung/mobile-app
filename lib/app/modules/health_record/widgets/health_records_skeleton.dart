@@ -7,7 +7,7 @@ class HealthRecordsSkeleton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-      itemCount: 5,
+      itemCount: 3,
       itemBuilder: (_, __) {
         return Container(
           margin: const EdgeInsets.symmetric(vertical: 10),

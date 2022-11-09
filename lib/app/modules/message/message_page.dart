@@ -5,7 +5,6 @@ import 'package:get/get.dart';
 import 'package:hi_doctor_v2/app/common/values/strings.dart';
 import 'package:hi_doctor_v2/app/modules/message/controllers/message_controller.dart';
 import 'package:hi_doctor_v2/app/modules/message/views/chat_tile.dart';
-import 'package:hi_doctor_v2/app/modules/message/views/message_skeleton.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/loading_widget.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/my_appbar.dart';
 
@@ -32,7 +31,7 @@ class MessagePage extends StatelessWidget {
                   if (snapshot.data!.docs.isNotEmpty) {
                     return ListView.builder(
                       itemBuilder: (context, index) => ChatTile(document: snapshot.data!.docs[0]),
-                      itemCount: (snapshot.data?.docs.length ?? 0) * 5,
+                      itemCount: snapshot.data?.docs.length,
                     );
                   } else {
                     return const Center(

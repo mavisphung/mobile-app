@@ -35,7 +35,7 @@ class ReminderCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Dr. Nguyen Le Kim Phung kdnf kn kdnf knd kn kn kn kn kn kn km km kn kn kn kn kn nkn kn kn kn kn',
+                    'Dr. Minh Thiên',
                     maxLines: 2,
                     style: TextStyle(
                       fontSize: 14.sp,
@@ -46,9 +46,6 @@ class ReminderCard extends StatelessWidget {
                   ),
                   const Text(
                     'Dental specialist',
-                    style: TextStyle(
-                        // color: Colors.white,
-                        ),
                   ),
                 ],
               ),

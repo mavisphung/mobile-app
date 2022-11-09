@@ -34,9 +34,8 @@ class MeetingController extends GetxController {
       final String? token = response.data['token'];
       if (channelName != null && token != null) {
         return {
-          'channelId': 'aaa',
-          'token':
-              '007eJxTYNgVpMZp6RJ3dcLOsxeuPCn3ae5rLmDseSnvuOLHG/YORgUFBiNjc0sjE5NEA3PLZBNTA0uLJLMUSwMTg6QkY/PERAvTO+VpyTEv0pJDWxoYGRkYGViAOOdbWjITmGQGkyxQdmJiIhODkSUACpcneA==',
+          'channelId': channelName,
+          'token': token,
         };
       }
     }

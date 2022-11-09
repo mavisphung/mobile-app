@@ -17,22 +17,15 @@ import 'package:hi_doctor_v2/app/modules/widgets/my_appbar.dart';
 class EditPathologyRecordPage extends StatelessWidget {
   final _c = Get.put(EditOtherHealthRecordController(), tag: 'SUB');
   final _cEditOtherHealthRecord = Get.find<EditOtherHealthRecordController>(tag: 'MAIN');
-  final _p = Get.arguments as Pathology;
-  late String funcLabel;
-  late void Function(Pathology) func;
+
+  late final Pathology _p;
+  late String _funcLabel;
+  late Function _func;
 
   final _box10 = SizedBox(width: 10.sp, height: 10.sp);
   final _hBox30 = SizedBox(height: 30.sp);
 
-  EditPathologyRecordPage({Key? key}) : super(key: key) {
-    _c.pathologyObj.value = _p;
-    _c.recordsLength.value = _c.pathologyObj.value!.records.length;
-    final parameters = Get.parameters;
-    if (parameters['tag'] != null) {
-      funcLabel = parameters['tag']!;
-    }
-    func = funcLabel == 'Save' ? _cEditOtherHealthRecord.savePathology : _cEditOtherHealthRecord.addPathology;
-  }
+  EditPathologyRecordPage({Key? key}) : super(key: key);
 
   Widget _getLabel(String text) {
     return SizedBox(
@@ -88,8 +81,24 @@ class EditPathologyRecordPage extends StatelessWidget {
     );
   }
 
+  void init() {
+    _p = Get.arguments as Pathology;
+    _c.pathology = _p;
+
+    final parameters = Get.parameters;
+    if (parameters['tag'] != null) {
+      _funcLabel = parameters['tag']!;
+    }
+    _func = () => _cEditOtherHealthRecord.addPathology(_p);
+
+    if (_funcLabel == 'Update') {
+      _func = () => _cEditOtherHealthRecord.updatePathology(_p);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    init();
     return BasePage(
       backgroundColor: Colors.white,
       appBar: MyAppBar(
@@ -101,8 +110,8 @@ class EditPathologyRecordPage extends StatelessWidget {
               right: 14.sp,
             ),
             child: CustomTextButton(
-              btnText: funcLabel,
-              action: () => func(_p),
+              btnText: _funcLabel,
+              action: () => _func.call(),
             ),
           ),
         ],

@@ -36,7 +36,7 @@ class _RecordItemState extends State<RecordItem> {
 
   @override
   Widget build(BuildContext context) {
-    final record = _cEditOtherHealthRecord.getRecords[widget.recordIndex];
+    final record = _cEditOtherHealthRecord.rxRecords[widget.recordIndex];
     return Container(
       padding: EdgeInsets.all(15.sp),
       decoration: BoxDecoration(
@@ -117,7 +117,7 @@ class _RecordGridState extends State<RecordGrid> {
 
   @override
   Widget build(BuildContext context) {
-    final records = widget.record.tickets;
+    final records = widget.record.xFiles;
     if (records == null) return const SizedBox.shrink();
     _recordsLength = records.length.obs;
     return Padding(
@@ -136,7 +136,7 @@ class _RecordGridState extends State<RecordGrid> {
               childAspectRatio: 0.9,
             ),
             itemBuilder: (_, int index) {
-              String e = records[index];
+              String e = records[index].path;
               return Stack(
                 fit: StackFit.expand,
                 children: [
@@ -163,7 +163,7 @@ class _RecordGridState extends State<RecordGrid> {
                         color: Colors.black87,
                       ),
                     ),
-                  )
+                  ),
                 ],
               );
             },

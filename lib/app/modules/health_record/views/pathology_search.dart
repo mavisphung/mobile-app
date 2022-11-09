@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
 import 'package:hi_doctor_v2/app/modules/health_record/controllers/edit_health_record_controller.dart';
@@ -46,7 +47,31 @@ class PathologySearchDelegate extends SearchDelegate {
       builder: (_, AsyncSnapshot<bool?> snapshot) {
         if (!snapshot.hasData) return const SizedBox.shrink();
         if (snapshot.hasData && snapshot.data == false) {
-          return const Text('no result found');
+          return Center(
+            child: Padding(
+              padding: EdgeInsets.only(top: 50.sp),
+              child: Column(
+                children: [
+                  SvgPicture.asset(
+                    'assets/icons/no_search_found.svg',
+                    width: 50.sp,
+                    height: 50.sp,
+                  ),
+                  Padding(
+                    padding: EdgeInsets.symmetric(vertical: 20.sp),
+                    child: Text(
+                      'Không tìm thấy kết quả nào.',
+                      textAlign: TextAlign.justify,
+                      style: TextStyle(
+                        fontSize: 14.sp,
+                        color: Colors.black54,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          );
         }
         if (snapshot.hasData && snapshot.data == true) {
           return ObxValue<RxInt>(
@@ -59,12 +84,13 @@ class PathologySearchDelegate extends SearchDelegate {
                   return ListTile(
                     onTap: () {
                       final existedItem =
-                          _cEditOtherHealthRecord.getPathologies.firstWhereOrNull((e) => e.id == result.id);
+                          _cEditOtherHealthRecord.rxPathologies.firstWhereOrNull((e) => e.id == result.id);
                       if (existedItem == null) {
                         Get.toNamed(Routes.EDIT_PATHOLOGY_RECORD, arguments: result, parameters: {'tag': 'Add'});
                         return;
                       }
-                      Get.toNamed(Routes.EDIT_PATHOLOGY_RECORD, arguments: existedItem, parameters: {'tag': 'Save'});
+                      Get.toNamed(Routes.EDIT_PATHOLOGY_RECORD,
+                          arguments: existedItem.copyWith(), parameters: {'tag': 'Update'});
                     },
                     title: Row(
                       children: [

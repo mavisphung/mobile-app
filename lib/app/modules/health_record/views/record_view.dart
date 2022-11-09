@@ -10,11 +10,12 @@ import 'package:hi_doctor_v2/app/common/constants.dart';
 import 'package:hi_doctor_v2/app/common/util/utils.dart';
 import 'package:hi_doctor_v2/app/common/values/colors.dart';
 import 'package:hi_doctor_v2/app/common/values/strings.dart';
+import 'package:hi_doctor_v2/app/models/record.dart';
 import 'package:hi_doctor_v2/app/modules/health_record/controllers/edit_health_record_controller.dart';
 import 'package:hi_doctor_v2/app/modules/health_record/widgets/record_item.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/custom_icon_button.dart';
+import 'package:image_picker/image_picker.dart';
 
-// ignore: must_be_immutable
 class RecordsView extends StatelessWidget {
   final String? tag;
   late EditOtherHealthRecordController _cEditOtherHealthRecord;
@@ -25,9 +26,9 @@ class RecordsView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ObxValue<RxInt>(
+    return ObxValue<RxList<Record>>(
       (data) {
-        if (data.value == 0) {
+        if (data.isEmpty) {
           return const Align(
             heightFactor: 3,
             alignment: Alignment.center,
@@ -40,18 +41,17 @@ class RecordsView extends StatelessWidget {
           itemBuilder: (_, index) {
             return RecordItem(recordIndex: index, tag: tag);
           },
-          itemCount: data.value,
+          itemCount: data.length,
           separatorBuilder: (_, __) => SizedBox(
             height: 5.sp,
           ),
         );
       },
-      _cEditOtherHealthRecord.recordsLength,
+      _cEditOtherHealthRecord.rxRecords,
     );
   }
 }
 
-// ignore: must_be_immutable
 class ImagePreviewGrid extends StatelessWidget {
   final String? tag;
   late EditOtherHealthRecordController _cEditOtherHealthRecord;
@@ -69,11 +69,11 @@ class ImagePreviewGrid extends StatelessWidget {
         color: Colors.grey[100],
         borderRadius: BorderRadius.circular(Constants.textFieldRadius.sp),
       ),
-      child: ObxValue<RxInt>(
+      child: ObxValue<RxList<XFile>>(
         (data) => GridView.builder(
           physics: const BouncingScrollPhysics(),
           shrinkWrap: true,
-          itemCount: data.value + 1,
+          itemCount: data.length + 1,
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 4,
             crossAxisSpacing: 10.sp,
@@ -122,7 +122,7 @@ class ImagePreviewGrid extends StatelessWidget {
                 ),
               );
             }
-            String e = _cEditOtherHealthRecord.getImgs[index - 1];
+            String e = data[index - 1].path;
             return Stack(
               fit: StackFit.expand,
               children: [
@@ -154,7 +154,7 @@ class ImagePreviewGrid extends StatelessWidget {
             );
           },
         ),
-        _cEditOtherHealthRecord.imgsLength,
+        _cEditOtherHealthRecord.imgs,
       ),
     );
   }
