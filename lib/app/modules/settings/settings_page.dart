@@ -27,9 +27,9 @@ class SettingsPage extends StatelessWidget {
 
   void _logOut() async {
     final confirmLogout = await Utils.showConfirmDialog(
-      Strings.logoutConfirmMsg.tr,
-      cancelText: Strings.no.tr,
-      confirmText: Strings.yes.tr,
+      Strings.logoutConfirmMsg,
+      cancelText: Strings.no,
+      confirmText: Strings.yes,
     );
     if (confirmLogout ?? false) {
       _cSettings.logOut();
@@ -71,7 +71,7 @@ class SettingsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return BasePage(
       appBar: MyAppBar(
-        title: Strings.settings.tr,
+        title: Strings.settings,
         hasBackBtn: false,
       ),
       body: Column(
@@ -122,7 +122,7 @@ class SettingsPage extends StatelessWidget {
               ],
             ),
           ),
-          getLabel(Strings.myAccount.tr),
+          getLabel(Strings.myAccount),
           getSettingItem1(
             child: Column(
               children: [
@@ -150,7 +150,7 @@ class SettingsPage extends StatelessWidget {
                 ),
                 SettingItem1(
                   icon: getIcon(PhosphorIcons.user_list_thin),
-                  title: Strings.patientProfile.tr,
+                  title: Strings.patientProfile,
                   function: () => Get.toNamed(Routes.PATIENT_LIST),
                 ),
               ],
@@ -187,7 +187,7 @@ class SettingsPage extends StatelessWidget {
                 color: AppColors.error,
               ),
               color: Colors.red,
-              title: Strings.logout.tr,
+              title: Strings.logout,
               function: _logOut,
               isNavigator: false,
             ),

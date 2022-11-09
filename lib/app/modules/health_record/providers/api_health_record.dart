@@ -25,7 +25,7 @@ class ApiHealthRecord extends GetConnect {
     );
   }
 
-  Future<Response> getPathologySearch(String keyword, {int page = 1, int limit = 10}) {
+  Future<Response> getPathologySearch(String keyword, {int page = 1, int limit = 50}) {
     return get(
       '/diseases/',
       headers: headers,

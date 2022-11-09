@@ -29,7 +29,7 @@ class Record {
       map['id'] != null ? map['id'] as int : null,
       map['type'] != null ? map['type'] as String : null,
       map['tickets'] != null ? List.from((map['tickets'] as List)) : null,
-      null,
+      <XFile>[],
     );
   }
 

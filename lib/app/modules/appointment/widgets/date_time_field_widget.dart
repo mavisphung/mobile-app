@@ -55,7 +55,7 @@ class MyDateTimeField extends StatelessWidget {
                     width: double.infinity,
                     child: CupertinoButton(
                       child: Text(
-                        Strings.ok.tr,
+                        Strings.ok,
                         style: const TextStyle(
                           color: Colors.blue,
                         ),
@@ -92,7 +92,7 @@ class MyDateTimeField extends StatelessWidget {
                           padding: EdgeInsets.only(bottom: 22.sp),
                           child: RichText(
                             text: TextSpan(
-                              text: Strings.dob.tr,
+                              text: Strings.dob,
                               style: DefaultTextStyle.of(context).style.copyWith(
                                     fontSize: 16.5.sp,
                                     color: Colors.grey[600],
@@ -114,7 +114,9 @@ class MyDateTimeField extends StatelessWidget {
                           right: 18.sp,
                         ),
                         disabledBorder: OutlineInputBorder(
-                          borderSide: data.value ? BorderSide.none : BorderSide(color: Colors.red[700] ?? const Color(0xFFD32F2F)),
+                          borderSide: data.value
+                              ? BorderSide.none
+                              : BorderSide(color: Colors.red[700] ?? const Color(0xFFD32F2F)),
                           borderRadius: BorderRadius.circular(15.sp),
                         ),
                         filled: true,
@@ -126,7 +128,7 @@ class MyDateTimeField extends StatelessWidget {
                       child: Padding(
                         padding: EdgeInsets.only(left: 18.sp, top: 5.sp),
                         child: Text(
-                          warningText ?? Strings.fieldCantBeEmpty.tr,
+                          warningText ?? Strings.fieldCantBeEmpty,
                           style: TextStyle(
                             fontSize: 11.sp,
                             color: Colors.red[700],

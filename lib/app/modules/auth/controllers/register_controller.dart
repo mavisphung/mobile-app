@@ -45,7 +45,7 @@ class RegisterController extends GetxController {
     Utils.unfocus();
     if (!isPolicyAgreed.value) {
       Utils.showAlertDialog(
-        Strings.policyAgreementNeedMsg.tr,
+        Strings.policyAgreementNeedMsg,
       );
       return false;
     }
@@ -67,19 +67,19 @@ class RegisterController extends GetxController {
     final response = await _apiAuth.postActivateAccount(email, code).futureValue();
 
     if (response != null && response.isSuccess && response.statusCode == Constants.successPostStatusCode) {
-      Utils.showTopSnackbar(Strings.registerSuccessMsg.tr, title: Strings.registerSuccess.tr);
+      Utils.showTopSnackbar(Strings.registerSuccessMsg, title: Strings.registerSuccess);
       nextStatus.value = Status.success;
       Get.offAllNamed(Routes.LOGIN);
     } else if (response != null &&
         !response.isSuccess &&
         response.statusCode == 400 &&
         response.message == 'NO_MATCHED_CODE') {
-      Utils.showTopSnackbar(Strings.otpErrorMsg.trParams({'code': otpCode.value}));
+      Utils.showTopSnackbar('Sai mã PIN');
     } else if (response != null &&
         !response.isSuccess &&
         response.statusCode == 400 &&
         response.message == 'VERIFY_CODE_EXPIRED') {
-      Utils.showTopSnackbar(Strings.otpExpiredMsg.tr);
+      Utils.showTopSnackbar(Strings.otpExpiredMsg);
     }
     nextStatus.value = Status.fail;
   }

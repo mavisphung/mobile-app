@@ -5,24 +5,23 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 
 import 'package:hi_doctor_v2/app/common/constants.dart';
 import 'package:hi_doctor_v2/app/common/util/utils.dart';
 import 'package:hi_doctor_v2/app/common/values/colors.dart';
 import 'package:hi_doctor_v2/app/common/values/strings.dart';
 import 'package:hi_doctor_v2/app/models/record.dart';
-import 'package:hi_doctor_v2/app/modules/health_record/controllers/edit_health_record_controller.dart';
 import 'package:hi_doctor_v2/app/modules/health_record/widgets/record_item.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/custom_icon_button.dart';
-import 'package:image_picker/image_picker.dart';
 
 class RecordsView extends StatelessWidget {
-  final String? tag;
-  late EditOtherHealthRecordController _cEditOtherHealthRecord;
+  final RxList<Record> rxRecords;
+  final void Function(int, String) removeRecordFunc;
+  final void Function(int, int) removeTicketFunc;
 
-  RecordsView({Key? key, this.tag}) : super(key: key) {
-    _cEditOtherHealthRecord = Get.find<EditOtherHealthRecordController>(tag: tag ?? 'MAIN');
-  }
+  const RecordsView(
+      {super.key, required this.rxRecords, required this.removeRecordFunc, required this.removeTicketFunc});
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +38,11 @@ class RecordsView extends StatelessWidget {
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
           itemBuilder: (_, index) {
-            return RecordItem(recordIndex: index, tag: tag);
+            return RecordItem(
+              record: data[index],
+              removeRecordFunc: removeRecordFunc,
+              removeTicketFunc: removeTicketFunc,
+            );
           },
           itemCount: data.length,
           separatorBuilder: (_, __) => SizedBox(
@@ -47,18 +50,17 @@ class RecordsView extends StatelessWidget {
           ),
         );
       },
-      _cEditOtherHealthRecord.rxRecords,
+      rxRecords,
     );
   }
 }
 
 class ImagePreviewGrid extends StatelessWidget {
-  final String? tag;
-  late EditOtherHealthRecordController _cEditOtherHealthRecord;
+  final RxList<XFile> imgs;
+  final void Function(bool) addImgFunc;
+  final void Function(int) removeImgFunc;
 
-  ImagePreviewGrid({Key? key, this.tag}) : super(key: key) {
-    _cEditOtherHealthRecord = Get.find<EditOtherHealthRecordController>(tag: tag ?? 'MAIN');
-  }
+  const ImagePreviewGrid({super.key, required this.imgs, required this.addImgFunc, required this.removeImgFunc});
 
   @override
   Widget build(BuildContext context) {
@@ -85,12 +87,12 @@ class ImagePreviewGrid extends StatelessWidget {
               return GestureDetector(
                 onTap: () async {
                   var isFromCamera = await Utils.showConfirmDialog(
-                    Strings.imageSourceMsg.tr,
-                    cancelText: Strings.gallery.tr,
-                    confirmText: Strings.camera.tr,
+                    Strings.imageSourceMsg,
+                    cancelText: Strings.gallery,
+                    confirmText: Strings.camera,
                   );
                   if (isFromCamera != null) {
-                    _cEditOtherHealthRecord.addImage(isFromCamera);
+                    addImgFunc(isFromCamera);
                   }
                 },
                 child: Container(
@@ -142,7 +144,7 @@ class ImagePreviewGrid extends StatelessWidget {
                   child: CustomIconButton(
                     size: 28.sp,
                     color: AppColors.grey300.withOpacity(0.7),
-                    onPressed: () => _cEditOtherHealthRecord.removeImage(index - 1),
+                    onPressed: () => removeImgFunc(index - 1),
                     icon: Icon(
                       CupertinoIcons.xmark,
                       size: 12.8.sp,
@@ -154,7 +156,7 @@ class ImagePreviewGrid extends StatelessWidget {
             );
           },
         ),
-        _cEditOtherHealthRecord.imgs,
+        imgs,
       ),
     );
   }

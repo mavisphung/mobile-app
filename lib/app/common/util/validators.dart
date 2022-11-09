@@ -1,11 +1,9 @@
-import 'package:get/get.dart';
-
-import '../values/strings.dart';
+import 'package:hi_doctor_v2/app/common/values/strings.dart';
 
 abstract class Validators {
   static String? validateEmpty(String? value) {
     if (value == null || value.isEmpty) {
-      return Strings.fieldCantBeEmpty.tr;
+      return Strings.fieldCantBeEmpty;
     }
     return null;
   }
@@ -14,40 +12,40 @@ abstract class Validators {
     const pattern =
         r'^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$';
     if (value == null || value.isEmpty) {
-      return Strings.emailCantBeEmpty.tr;
+      return Strings.emailCantBeEmpty;
     } else if (!RegExp(pattern).hasMatch(value)) {
-      return Strings.enterValidEmail.tr;
+      return Strings.enterValidEmail;
     } else if (isEmailDuplicated) {
-      return Strings.duplicatedEmail.tr;
+      return Strings.duplicatedEmail;
     }
     return null;
   }
 
   static String? validatePassword(String? value) {
     if (value == null || value.isEmpty) {
-      return Strings.passCantBeEmpty.tr;
+      return Strings.passCantBeEmpty;
     } else if (value.length < 6) {
-      return Strings.passLengthtMsg.tr;
+      return Strings.passLengthtMsg;
     }
     return null;
   }
 
   static String? validateConfirmPassword(String? confirmPassword, String? password) {
     if (confirmPassword == null || confirmPassword.isEmpty) {
-      return Strings.confirmPassCantBeEmpty.tr;
+      return Strings.confirmPassCantBeEmpty;
     } else if (confirmPassword.length < 6) {
-      return Strings.confirmPassLengthtMsg.tr;
+      return Strings.confirmPassLengthtMsg;
     } else if (confirmPassword != (password ?? '')) {
-      return Strings.confirmPassNotMatchMsg.tr;
+      return Strings.confirmPassNotMatchMsg;
     }
     return null;
   }
 
   static String? validatePhone(String? value) {
     if (value == null || value.isEmpty) {
-      return Strings.fieldCantBeEmpty.tr;
+      return Strings.fieldCantBeEmpty;
     } else if (value.length != 10) {
-      return Strings.enterValidPhone.tr;
+      return Strings.enterValidPhone;
     }
     return null;
   }

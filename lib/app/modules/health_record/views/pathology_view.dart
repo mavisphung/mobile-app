@@ -11,7 +11,7 @@ import 'package:hi_doctor_v2/app/modules/widgets/custom_icon_button.dart';
 import 'package:hi_doctor_v2/app/routes/app_pages.dart';
 
 class PathologyView extends StatelessWidget {
-  final _cEditOtherHealthRecord = Get.find<EditOtherHealthRecordController>(tag: 'MAIN');
+  final _cEditOtherHealthRecord = Get.find<EditOtherHealthRecordController>();
 
   PathologyView({super.key});
 
@@ -62,7 +62,7 @@ class PathologyView extends StatelessWidget {
                         size: 28.sp,
                         color: AppColors.grey300.withOpacity(0.7),
                         onPressed: () => Get.toNamed(Routes.EDIT_PATHOLOGY_RECORD,
-                            arguments: p.copyWith(), parameters: {'tag': 'Update'}),
+                            arguments: p.copyWith(), parameters: {'tag': 'UPDATE'}),
                         icon: Icon(
                           Icons.edit,
                           size: 14.sp,

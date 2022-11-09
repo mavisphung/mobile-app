@@ -29,7 +29,7 @@ class GenderDropdown extends StatelessWidget {
               bottom: 1.sp,
             ),
             child: Text(
-              Strings.gender.tr,
+              Strings.gender,
               style: DefaultTextStyle.of(context).style.copyWith(
                     fontSize: 11.5.sp,
                     color: Colors.grey[600],
@@ -50,7 +50,7 @@ class GenderDropdown extends StatelessWidget {
                       value: data.value,
                       isExpanded: true,
                       underline: const SizedBox.shrink(),
-                      hint: Text(Strings.gender.tr),
+                      hint: Text(Strings.gender),
                       borderRadius: BorderRadius.circular(10.sp),
                       items: userGender.map((item) {
                         return DropdownMenuItem<String>(

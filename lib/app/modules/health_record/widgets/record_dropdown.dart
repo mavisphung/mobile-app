@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:hi_doctor_v2/app/common/constants.dart';
 import 'package:hi_doctor_v2/app/common/values/colors.dart';
 import 'package:hi_doctor_v2/app/modules/health_record/controllers/edit_health_record_controller.dart';
+import 'package:hi_doctor_v2/app/modules/health_record/controllers/edit_pathology_controller.dart';
 
 List<Map<String, dynamic>> recordTypes = [
   {
@@ -42,15 +43,18 @@ List<Map<String, dynamic>> recordTypes = [
 ];
 
 class RecordDropDown extends StatelessWidget {
-  final String? tag;
-  late final EditOtherHealthRecordController _cEditOtherHealthRecord;
+  final GetxController c;
 
-  RecordDropDown({Key? key, this.tag}) : super(key: key) {
-    _cEditOtherHealthRecord = Get.find<EditOtherHealthRecordController>(tag: tag ?? 'MAIN');
-  }
+  const RecordDropDown({super.key, required this.c});
 
   @override
   Widget build(BuildContext context) {
+    late RxInt recordId;
+    if (c is EditOtherHealthRecordController) {
+      recordId = (c as EditOtherHealthRecordController).recordId;
+    } else if (c is EditPathologyController) {
+      recordId = (c as EditPathologyController).recordId;
+    }
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -96,7 +100,7 @@ class RecordDropDown extends StatelessWidget {
               iconEnabledColor: Colors.blueGrey,
               icon: const Icon(Icons.arrow_drop_down_rounded),
             ),
-            _cEditOtherHealthRecord.recordId,
+            recordId,
           ),
         ),
       ],

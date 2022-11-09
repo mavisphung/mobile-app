@@ -42,11 +42,11 @@ class Step3 extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 10.0),
           child: Text(
-            Strings.enterOtp.tr,
+            Strings.enterOtp,
             style: Theme.of(context).textTheme.headline6,
           ),
         ),
-        Text(Strings.sentOtpMsg.tr),
+        Text(Strings.sentOtpMsg),
         SizedBox(height: 5.sp),
         Text(
           email,
@@ -61,7 +61,7 @@ class Step3 extends StatelessWidget {
               if (value == null || value.isEmpty) {
                 return Strings.fieldCantBeEmpty;
               } else if (value.length < 6) {
-                return Strings.otpLengthMsg.tr;
+                return Strings.otpLengthMsg;
               }
               return null;
             }),
@@ -81,7 +81,7 @@ class Step3 extends StatelessWidget {
           padding: EdgeInsets.only(top: 15.sp),
           child: Row(
             children: [
-              Text(Strings.notReceiveOtpMsg.tr),
+              Text(Strings.notReceiveOtpMsg),
               InkWell(
                 onTap: () async {
                   await _c.resendOtp(email);
@@ -89,7 +89,7 @@ class Step3 extends StatelessWidget {
                 child: Padding(
                   padding: const EdgeInsets.all(5.0),
                   child: Text(
-                    Strings.resend.tr,
+                    Strings.resend,
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       color: Theme.of(context).primaryColor,

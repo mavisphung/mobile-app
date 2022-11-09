@@ -21,7 +21,7 @@ abstract class Utils {
     DateTime now = DateTime.now();
     if (currentBackPressTime == null || now.difference(currentBackPressTime!) > const Duration(milliseconds: 500)) {
       currentBackPressTime = now;
-      Utils.showBottomSnackbar(Strings.exitAppAlert.tr);
+      Utils.showBottomSnackbar(Strings.exitAppAlert);
       return Future.value(false);
     }
     return Future.value(true);
@@ -52,7 +52,7 @@ abstract class Utils {
                   right: 30.sp,
                 ),
                 child: Text(
-                  title ?? Strings.confirm.tr,
+                  title ?? Strings.confirm,
                   style: TextStyle(
                     fontSize: 15.sp,
                     fontWeight: FontWeight.w500,
@@ -88,7 +88,7 @@ abstract class Utils {
                           padding: EdgeInsets.symmetric(vertical: Constants.padding.sp),
                           child: Center(
                             child: Text(
-                              cancelText ?? Strings.cancel.tr,
+                              cancelText ?? Strings.cancel,
                               style: const TextStyle(
                                 fontWeight: FontWeight.w500,
                                 color: Colors.lightBlueAccent,
@@ -113,7 +113,7 @@ abstract class Utils {
                           padding: EdgeInsets.symmetric(vertical: Constants.padding.sp),
                           child: Center(
                             child: Text(
-                              confirmText ?? Strings.confirm.tr,
+                              confirmText ?? Strings.confirm,
                               style: const TextStyle(
                                 fontWeight: FontWeight.w500,
                                 color: Colors.lightBlueAccent,
@@ -156,7 +156,7 @@ abstract class Utils {
                   right: 30.sp,
                 ),
                 child: Text(
-                  title ?? Strings.alert.tr,
+                  title ?? Strings.alert,
                   style: TextStyle(
                     fontSize: 15.sp,
                     fontWeight: FontWeight.w500,
@@ -188,7 +188,7 @@ abstract class Utils {
                   padding: EdgeInsets.symmetric(vertical: Constants.padding.sp),
                   child: Center(
                     child: Text(
-                      Strings.ok.tr,
+                      Strings.ok,
                       style: const TextStyle(
                         fontWeight: FontWeight.w500,
                         color: Colors.blue,

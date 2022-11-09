@@ -94,7 +94,7 @@ class HomePage extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  CustomTitleSection(title: Strings.upcomingAppointment.tr),
+                  CustomTitleSection(title: Strings.upcomingAppointment),
                   InkWell(
                     onTap: () {},
                     child: const Text(
@@ -106,7 +106,7 @@ class HomePage extends StatelessWidget {
               ),
               const ReminderCard(),
               _spacing,
-              CustomTitleSection(title: Strings.category.tr),
+              CustomTitleSection(title: Strings.category),
               ObxValue<RxList<Specialist>>(
                 (data) => CustomContainer(
                   height: 80.sp,
@@ -150,7 +150,7 @@ class HomePage extends StatelessWidget {
                 ),
               ),
               _spacing,
-              CustomTitleSection(title: Strings.latestSearchDoctor.tr),
+              CustomTitleSection(title: Strings.latestSearchDoctor),
               SizedBox(
                 height: 125.sp,
                 child: ObxValue<RxList<Doctor>>(

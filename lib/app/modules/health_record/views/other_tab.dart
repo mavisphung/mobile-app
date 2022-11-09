@@ -27,12 +27,7 @@ class _OtherTabState extends State<OtherTab> with AutomaticKeepAliveClientMixin 
       children: [
         const InfoContainer(info: 'Danh sách bao gồm tất cả các hồ sơ mà bạn đã thêm trước đó.'),
         GestureDetector(
-          onTap: () => Get.toNamed(
-            Routes.EDIT_HEALTH_RECORD,
-            parameters: {
-              'tag': 'ADD',
-            },
-          ),
+          onTap: () => Get.toNamed(Routes.EDIT_HEALTH_RECORD),
           child: Padding(
             padding: EdgeInsets.symmetric(vertical: 8.sp),
             child: Row(

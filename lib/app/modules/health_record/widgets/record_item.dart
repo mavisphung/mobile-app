@@ -4,20 +4,22 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+
 import 'package:hi_doctor_v2/app/common/values/colors.dart';
 import 'package:hi_doctor_v2/app/models/record.dart';
-
-import 'package:hi_doctor_v2/app/modules/health_record/controllers/edit_health_record_controller.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/custom_icon_button.dart';
+import 'package:image_picker/image_picker.dart';
 
 class RecordItem extends StatefulWidget {
-  final String? tag;
-  final int recordIndex;
+  final Record record;
+  final void Function(int, String) removeRecordFunc;
+  final void Function(int, int) removeTicketFunc;
 
   const RecordItem({
     super.key,
-    this.tag,
-    required this.recordIndex,
+    required this.record,
+    required this.removeRecordFunc,
+    required this.removeTicketFunc,
   });
 
   @override
@@ -25,18 +27,10 @@ class RecordItem extends StatefulWidget {
 }
 
 class _RecordItemState extends State<RecordItem> {
-  late final EditOtherHealthRecordController _cEditOtherHealthRecord;
   bool _isExpanded = false;
 
   @override
-  void initState() {
-    _cEditOtherHealthRecord = Get.find<EditOtherHealthRecordController>(tag: widget.tag ?? 'MAIN');
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
-    final record = _cEditOtherHealthRecord.rxRecords[widget.recordIndex];
     return Container(
       padding: EdgeInsets.all(15.sp),
       decoration: BoxDecoration(
@@ -50,7 +44,7 @@ class _RecordItemState extends State<RecordItem> {
               CustomIconButton(
                 size: 28.sp,
                 color: Colors.redAccent.withOpacity(0.8),
-                onPressed: () => _cEditOtherHealthRecord.removeRecord(widget.recordIndex, record.type!),
+                onPressed: () => widget.removeRecordFunc(widget.record.id!, widget.record.type!),
                 icon: Icon(
                   CupertinoIcons.xmark,
                   size: 12.8.sp,
@@ -60,7 +54,7 @@ class _RecordItemState extends State<RecordItem> {
               SizedBox(width: 10.sp),
               Expanded(
                 child: Text(
-                  '${record.type}',
+                  '${widget.record.type}',
                 ),
               ),
               SizedBox(width: 10.sp),
@@ -78,7 +72,11 @@ class _RecordItemState extends State<RecordItem> {
               ),
             ],
           ),
-          if (record.tickets != null && _isExpanded) RecordGrid(record: record, tag: widget.tag),
+          if (widget.record.xFiles != null && _isExpanded)
+            RecordGrid(
+              record: widget.record,
+              removeTicketFunc: widget.removeTicketFunc,
+            ),
         ],
       ),
     );
@@ -86,13 +84,13 @@ class _RecordItemState extends State<RecordItem> {
 }
 
 class RecordGrid extends StatefulWidget {
-  final String? tag;
   final Record record;
+  final void Function(int, int) removeTicketFunc;
 
   const RecordGrid({
     Key? key,
-    this.tag,
     required this.record,
+    required this.removeTicketFunc,
   }) : super(key: key);
 
   @override
@@ -100,26 +98,27 @@ class RecordGrid extends StatefulWidget {
 }
 
 class _RecordGridState extends State<RecordGrid> {
-  late RxInt _recordsLength;
-  late final EditOtherHealthRecordController _cEditOtherHealthRecord;
-
-  @override
-  void initState() {
-    _cEditOtherHealthRecord = Get.find<EditOtherHealthRecordController>(tag: widget.tag ?? 'MAIN');
-    super.initState();
-  }
+  final RxInt _xFilesLength = 0.obs;
 
   @override
   void dispose() {
-    _recordsLength.close();
+    _xFilesLength.close();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    final records = widget.record.xFiles;
-    if (records == null) return const SizedBox.shrink();
-    _recordsLength = records.length.obs;
+    final xFiles = widget.record.xFiles;
+    final tickets = widget.record.tickets;
+
+    if (xFiles == null || tickets == null) return const SizedBox.shrink();
+
+    final list = [];
+    list.addAll(tickets);
+    list.addAll(xFiles);
+
+    _xFilesLength.value = list.length;
+
     return Padding(
       padding: EdgeInsets.only(top: 10.sp),
       child: SizedBox(
@@ -133,30 +132,45 @@ class _RecordGridState extends State<RecordGrid> {
               crossAxisCount: 4,
               crossAxisSpacing: 10.sp,
               mainAxisSpacing: 20.sp,
-              childAspectRatio: 0.9,
+              childAspectRatio: 0.8,
             ),
             itemBuilder: (_, int index) {
-              String e = records[index].path;
+              final e = list[index];
               return Stack(
                 fit: StackFit.expand,
                 children: [
-                  Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(5.sp),
-                      image: DecorationImage(
-                        image: FileImage(File(e)),
-                        fit: BoxFit.cover,
+                  if (e is XFile)
+                    Container(
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(5.sp),
+                        image: DecorationImage(
+                          image: FileImage(File(e.path)),
+                          fit: BoxFit.cover,
+                        ),
                       ),
                     ),
-                  ),
+                  if (e is String)
+                    Container(
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(5.sp),
+                        image: DecorationImage(
+                          image: NetworkImage(e),
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                    ),
                   Align(
                     alignment: Alignment.topRight,
                     child: CustomIconButton(
                       size: 28.sp,
                       color: AppColors.grey300.withOpacity(0.7),
-                      onPressed: () => setState(() {
-                        _cEditOtherHealthRecord.removeTicket(widget.record.id!, index);
-                      }),
+                      onPressed: () {
+                        widget.removeTicketFunc(widget.record.id!, index);
+                        list.removeAt(index);
+                        data.value = list.length;
+                      },
                       icon: Icon(
                         CupertinoIcons.xmark,
                         size: 12.8.sp,
@@ -168,7 +182,7 @@ class _RecordGridState extends State<RecordGrid> {
               );
             },
           ),
-          _recordsLength,
+          _xFilesLength,
         ),
       ),
     );

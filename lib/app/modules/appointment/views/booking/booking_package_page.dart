@@ -53,7 +53,7 @@ class BookingPackagePage extends StatelessWidget {
         ),
       ),
       bottomSheet: CustomBottomSheet(
-        buttonText: Strings.kContinue.tr,
+        buttonText: Strings.kContinue,
         onPressed: () => Get.toNamed(Routes.BOOKING_PATIENT_DETAIL),
       ),
     );

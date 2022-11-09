@@ -14,7 +14,7 @@ abstract class ApiResponse {
     if (status.connectionError) {
       throw ApiError(
         type: ErrorType.noConnection,
-        error: Strings.noConMsg.tr,
+        error: Strings.noConMsg,
       );
     }
 
@@ -39,7 +39,7 @@ abstract class ApiResponse {
         } else if (status.code == HttpStatus.requestTimeout) {
           throw ApiError(
             type: ErrorType.connectTimeout,
-            error: Strings.conTimeOutMsg.tr,
+            error: Strings.conTimeOutMsg,
           );
         } else if (response.unauthorized) {
           if (res['message'] == 'AUTHENTICATION_FAILED') {
@@ -50,24 +50,24 @@ abstract class ApiResponse {
           }
           throw ApiError(
             type: ErrorType.unauthorized,
-            error: Strings.unauthorizedErrMsg.tr,
+            error: Strings.unauthorizedErrMsg,
           );
         } else {
           throw ApiError(
             type: ErrorType.failedResponse,
-            error: Strings.systemErrMsg.tr,
+            error: Strings.systemErrMsg,
           );
         }
       }
     } on FormatException {
       throw ApiError(
         type: ErrorType.unknownError,
-        error: Strings.formatErrMsg.tr,
+        error: Strings.formatErrMsg,
       );
     } on TimeoutException {
       throw ApiError(
         type: ErrorType.connectTimeout,
-        error: Strings.conTimeOutMsg.tr,
+        error: Strings.conTimeOutMsg,
       );
     }
     return null;

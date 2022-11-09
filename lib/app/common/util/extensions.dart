@@ -20,7 +20,7 @@ extension FutureExt<T> on Future<Response<T>> {
       onTimeout: () {
         throw ApiError(
           type: ErrorType.connectTimeout,
-          error: Strings.conTimeOutMsg.tr,
+          error: Strings.conTimeOutMsg,
         );
       },
     ).then((value) {
@@ -42,7 +42,7 @@ extension FutureExt<T> on Future<Response<T>> {
           Utils.showAlertDialog(errorMessage);
         } else if (e.type == ErrorType.unauthorized) {
           if (e.message == 'AUTHENTICATION_FAILED') {
-            Utils.showTopSnackbar(Strings.loginFailedMsg.tr, title: Strings.authentication.tr);
+            Utils.showTopSnackbar(Strings.loginFailedMsg, title: Strings.authentication);
             return null;
           }
           Storage.clearStorage();

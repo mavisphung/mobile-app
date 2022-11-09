@@ -54,7 +54,7 @@ class GgLoginButton extends StatelessWidget {
                   ),
                   SizedBox(width: 10.sp),
                   Text(
-                    Strings.signInGg.tr,
+                    Strings.signInGg,
                     style: TextStyle(
                       fontSize: 12.5.sp,
                       color: Colors.black87,

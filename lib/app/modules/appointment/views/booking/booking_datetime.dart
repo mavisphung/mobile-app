@@ -34,7 +34,7 @@ class BookingDateTimePage extends StatelessWidget {
         title: 'Book an appointment',
       ),
       bottomSheet: CustomBottomSheet(
-        buttonText: Strings.kContinue.tr,
+        buttonText: Strings.kContinue,
         onPressed: () {
           if (_cBooking.selectedTime.isEmpty) {
             Utils.showAlertDialog('Please choose your booking time');

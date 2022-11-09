@@ -9,7 +9,6 @@ import 'package:hi_doctor_v2/app/models/doctor.dart';
 import 'package:hi_doctor_v2/app/models/patient.dart';
 import 'package:hi_doctor_v2/app/modules/appointment/providers/api_book_appointment.dart';
 import 'package:hi_doctor_v2/app/modules/appointment/providers/req_appointment_model.dart';
-import 'package:hi_doctor_v2/app/modules/appointment/views/booking/booking_package_page.dart';
 import 'package:hi_doctor_v2/app/modules/appointment/widgets/service_item.dart';
 import 'package:intl/intl.dart';
 

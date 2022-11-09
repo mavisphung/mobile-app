@@ -34,7 +34,7 @@ class ApiError implements Exception {
     this.error,
   });
 
-  String get message => (error?.toString() ?? Strings.unknownErrMsg.tr);
+  String get message => (error?.toString() ?? Strings.unknownErrMsg);
 
   @override
   String toString() {

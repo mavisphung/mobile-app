@@ -21,7 +21,7 @@ class SearchPathologyController extends GetxController {
     _totalItems = 0;
   }
 
-  Future<bool?> searchPathology(String keyword, {int page = 1, int limit = 20}) async {
+  Future<bool?> searchPathology(String keyword, {int page = 1, int limit = 50}) async {
     if (keyword.isEmpty) return null;
     _keyword = keyword;
 

@@ -6,16 +6,10 @@ import 'package:hi_doctor_v2/app/models/user_info.dart';
 import 'package:hi_doctor_v2/app/routes/app_pages.dart';
 
 class SettingsController extends GetxController {
-  late final Rx<UserInfo2> userInfo;
+  final Rx<UserInfo2> userInfo = Box.getCacheUser().obs;
 
   void logOut() async {
     await Storage.clearStorage();
     Get.offAllNamed(Routes.LOGIN);
-  }
-
-  @override
-  void onInit() {
-    super.onInit();
-    userInfo.value = Box.getCacheUser();
   }
 }

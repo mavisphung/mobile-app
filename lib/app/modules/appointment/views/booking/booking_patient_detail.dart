@@ -110,8 +110,8 @@ class BookingPatientDetailPage extends StatelessWidget {
                       children: [
                         // ------------- Choose patient section -------------
                         CustomTitleSection(
-                          title: Strings.patientInfo.tr,
-                          suffixText: Strings.change.tr,
+                          title: Strings.patientInfo,
+                          suffixText: Strings.change,
                           suffixAction: () => openPatientOptions(context),
                         ),
                         Container(
@@ -137,7 +137,7 @@ class BookingPatientDetailPage extends StatelessWidget {
                                               Row(
                                                 crossAxisAlignment: CrossAxisAlignment.start,
                                                 children: [
-                                                  _getTitle(Strings.fullName.tr),
+                                                  _getTitle(Strings.fullName),
                                                   Flexible(
                                                     child: Text(
                                                       Tx.getFullName(data.value.lastName, data.value.firstName),
@@ -147,20 +147,20 @@ class BookingPatientDetailPage extends StatelessWidget {
                                               ),
                                               Row(
                                                 children: [
-                                                  _getTitle(Strings.gender.tr),
+                                                  _getTitle(Strings.gender),
                                                   Text('${data.value.gender}'),
                                                 ],
                                               ),
                                               Row(
                                                 children: [
-                                                  _getTitle(Strings.dob.tr),
+                                                  _getTitle(Strings.dob),
                                                   Text('${data.value.dob}'),
                                                 ],
                                               ),
                                               Row(
                                                 crossAxisAlignment: CrossAxisAlignment.start,
                                                 children: [
-                                                  _getTitle(Strings.address.tr),
+                                                  _getTitle(Strings.address),
                                                   Flexible(child: Text('${data.value.address}')),
                                                 ],
                                               ),
@@ -179,21 +179,21 @@ class BookingPatientDetailPage extends StatelessWidget {
                         SizedBox(
                           height: 16.sp,
                         ),
-                        CustomTitleSection(title: Strings.healthIssue.tr),
+                        CustomTitleSection(title: Strings.healthIssue),
                         TextFormField(
                           validator: (String? value) {
                             if (value == null || value.isEmpty) {
-                              return Strings.fieldCantBeEmpty.tr;
+                              return Strings.fieldCantBeEmpty;
                             }
                             if (value.length >= 1000) {
-                              return Strings.problemLengthMsg.tr;
+                              return Strings.problemLengthMsg;
                             }
                             return null;
                           },
                           focusNode: FocusNode(),
                           controller: _cBooking.problemController,
                           decoration: InputDecoration(
-                            hintText: Strings.problemMsg.tr,
+                            hintText: Strings.problemMsg,
                             contentPadding: EdgeInsets.only(top: 16.sp, bottom: 16.sp, left: 18.sp, right: -18.sp),
                             enabledBorder: OutlineInputBorder(
                               borderSide: BorderSide.none,
@@ -218,7 +218,7 @@ class BookingPatientDetailPage extends StatelessWidget {
         ),
       ),
       bottomSheet: CustomBottomSheet(
-        buttonText: Strings.kContinue.tr,
+        buttonText: Strings.kContinue,
         onPressed: () {
           _formKey.currentState?.save();
           if (_formKey.currentState?.validate() ?? false) {

@@ -49,7 +49,7 @@ class LoginPage extends StatelessWidget {
                         bottom: 40.0,
                       ),
                       child: Text(
-                        Strings.login.tr,
+                        Strings.login,
                         textAlign: TextAlign.center,
                         style: const TextStyle(
                           fontSize: 24,
@@ -67,7 +67,7 @@ class LoginPage extends StatelessWidget {
                             focusNode: _c.emailFocusNode,
                             controller: _c.emailController,
                             onFieldSubmitted: (_) => FocusScope.of(context).requestFocus(_c.passwordFocusNode),
-                            hintText: Strings.email.tr,
+                            hintText: Strings.email,
                             prefixIcon: const Icon(
                               CupertinoIcons.mail_solid,
                             ),
@@ -82,7 +82,7 @@ class LoginPage extends StatelessWidget {
                             focusNode: _c.passwordFocusNode,
                             controller: _c.passwordController,
                             onFieldSubmitted: (_) => _submitLogin(),
-                            hintText: Strings.pasword.tr,
+                            hintText: Strings.pasword,
                             prefixIcon: const Icon(CupertinoIcons.lock_fill),
                           ),
                         ],
@@ -96,7 +96,7 @@ class LoginPage extends StatelessWidget {
                           if (_c.loginStatus.value != Status.loading) {}
                         },
                         child: Text(
-                          Strings.forgotPassword.tr,
+                          Strings.forgotPassword,
                           style: TextStyle(
                             color: AppColors.primary,
                           ),
@@ -110,7 +110,7 @@ class LoginPage extends StatelessWidget {
                       ),
                       child: ObxValue<Rx<Status>>(
                           (data) => CustomElevatedButtonWidget(
-                                textChild: Strings.login.tr,
+                                textChild: Strings.login,
                                 status: data.value,
                                 onPressed: _submitLogin,
                               ),
@@ -154,7 +154,7 @@ class LoginPage extends StatelessWidget {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text(Strings.notAccountYet.tr),
+                          Text(Strings.notAccountYet),
                           SizedBox(width: 5.sp),
                           GestureDetector(
                             onTap: () {
@@ -163,7 +163,7 @@ class LoginPage extends StatelessWidget {
                               }
                             },
                             child: Text(
-                              Strings.signUp.tr,
+                              Strings.signUp,
                               textAlign: TextAlign.right,
                               style: TextStyle(
                                 color: AppColors.primary,

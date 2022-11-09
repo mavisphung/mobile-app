@@ -10,7 +10,7 @@ import 'package:hi_doctor_v2/app/routes/app_pages.dart';
 
 class PathologySearchDelegate extends SearchDelegate {
   final _cSearchPathology = Get.put(SearchPathologyController());
-  final _cEditOtherHealthRecord = Get.find<EditOtherHealthRecordController>(tag: 'MAIN');
+  final _cEditOtherHealthRecord = Get.find<EditOtherHealthRecordController>();
 
   @override
   List<Widget>? buildActions(BuildContext context) {
@@ -86,11 +86,11 @@ class PathologySearchDelegate extends SearchDelegate {
                       final existedItem =
                           _cEditOtherHealthRecord.rxPathologies.firstWhereOrNull((e) => e.id == result.id);
                       if (existedItem == null) {
-                        Get.toNamed(Routes.EDIT_PATHOLOGY_RECORD, arguments: result, parameters: {'tag': 'Add'});
+                        Get.toNamed(Routes.EDIT_PATHOLOGY_RECORD, arguments: result, parameters: {'tag': 'CREATE'});
                         return;
                       }
                       Get.toNamed(Routes.EDIT_PATHOLOGY_RECORD,
-                          arguments: existedItem.copyWith(), parameters: {'tag': 'Update'});
+                          arguments: existedItem.copyWith(), parameters: {'tag': 'UPDATE'});
                     },
                     title: Row(
                       children: [

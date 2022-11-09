@@ -137,7 +137,7 @@ class UserProfileController extends GetxController {
 
       setStatusSuccess();
       Get.back();
-      Utils.showTopSnackbar(Strings.updateProfileMsg.tr);
+      Utils.showTopSnackbar(Strings.updateProfileMsg);
     } else {
       Get.snackbar('Error ${response.statusCode}', 'Error while updating profile', backgroundColor: Colors.red);
       setStatusFail();

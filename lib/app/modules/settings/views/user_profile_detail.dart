@@ -81,7 +81,7 @@ class UserProfileDetailPage extends StatelessWidget {
                                 focusNode: _c.firstNameFocusNode,
                                 controller: _c.firstName,
                                 onFieldSubmitted: (_) => FocusScope.of(context).requestFocus(_c.lastNameFocusNode),
-                                labelText: Strings.firstName.tr,
+                                labelText: Strings.firstName,
                               ),
                             ),
                             const SizedBox(
@@ -93,7 +93,7 @@ class UserProfileDetailPage extends StatelessWidget {
                                 focusNode: _c.lastNameFocusNode,
                                 controller: _c.lastName,
                                 onFieldSubmitted: (_) => FocusScope.of(context).requestFocus(_c.addressFocusNode),
-                                labelText: Strings.lastName.tr,
+                                labelText: Strings.lastName,
                               ),
                             ),
                           ],
@@ -103,14 +103,14 @@ class UserProfileDetailPage extends StatelessWidget {
                           focusNode: _c.addressFocusNode,
                           controller: _c.address,
                           onFieldSubmitted: (_) => FocusScope.of(context).requestFocus(_c.phoneNumberFocusNode),
-                          labelText: Strings.address.tr,
+                          labelText: Strings.address,
                         ),
                         CustomTextFieldWidget(
                           validator: Validators.validatePhone,
                           focusNode: _c.phoneNumberFocusNode,
                           controller: _c.phoneNumber,
                           onFieldSubmitted: (_) => Utils.unfocus(),
-                          labelText: Strings.phoneNumber.tr,
+                          labelText: Strings.phoneNumber,
                           keyboardType: TextInputType.number,
                           maxLength: 10,
                         ),
@@ -127,7 +127,7 @@ class UserProfileDetailPage extends StatelessWidget {
                     width: 1.sw,
                     child: ObxValue<Rx<Status>>(
                         (data) => CustomElevatedButtonWidget(
-                              textChild: Strings.saveProfile.tr,
+                              textChild: Strings.saveProfile,
                               status: data.value,
                               onPressed: () {
                                 _formKey.currentState?.save();
