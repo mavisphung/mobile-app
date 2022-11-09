@@ -43,11 +43,8 @@ class _ChannelPageState extends State<ChannelPage> {
     _cMeeting = Get.find<MeetingController>();
 
     final args = Get.arguments as Map<String, String>;
-    // _channelName = args['channelId']!;
-    // _tempToken = args['token']!;
-    _channelName = 'z';
-    _tempToken =
-        '007eJxTYFiZl73wRRsTY3H18l19b5pNb0xySu3K6+d9dWrprsB9F1IVGAxTk1LMDM0MDCzNzU2MTNKSEs3Mkg2NjFJMk42MTM3NFDXckhdUuifzFmqyMjEwgiGIz8hQxcDAygACAOiaHyQ=';
+    _channelName = args['channel']!;
+    _tempToken = args['token']!;
     print('CHANNEL ID : $_channelName, token: $_tempToken');
 
     _infoStr = _cMeeting.infoStr;
@@ -59,7 +56,7 @@ class _ChannelPageState extends State<ChannelPage> {
 
   void setupVideoSDKEngine() async {
     _engine = createAgoraRtcEngine();
-    await _engine.initialize(const RtcEngineContext(appId: Constants.appId));
+    await _engine.initialize(const RtcEngineContext(appId: Constants.agoraAppId));
 
     _engine.registerEventHandler(
       RtcEngineEventHandler(
@@ -104,9 +101,10 @@ class _ChannelPageState extends State<ChannelPage> {
       token: _tempToken,
       channelId: _channelName,
       uid: 0,
-      options: const ChannelMediaOptions(
+      options: ChannelMediaOptions(
         clientRoleType: ClientRoleType.clientRoleBroadcaster,
         channelProfile: ChannelProfileType.channelProfileCommunication,
+        token: _tempToken,
       ),
     );
   }
