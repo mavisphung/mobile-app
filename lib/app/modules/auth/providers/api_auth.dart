@@ -3,8 +3,8 @@ import 'package:hi_doctor_v2/app/modules/auth/providers/req_auth_model.dart';
 
 abstract class ApiAuth {
   Future<Response> postLogin(String email, String password);
+  Future<Response> postGoogleLogin(String accessToken);
   Future<Response> getLoginWithToken(String accessToken);
-  Future<Response> getLoginWithGoogleToken(String accessToken);
   Future<Response> postCheckEmailExisted(String email);
   Future<Response> postRegister(RequestRegisterModel reqBody);
   Future<Response> postActivateAccount(String email, String code);

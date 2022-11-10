@@ -31,25 +31,6 @@ class LoginPage extends StatelessWidget {
     _c.login(_c.emailController.text, _c.passwordController.text);
   }
 
-  Future _signInGoogle() async {
-    try {
-      GoogleSignInAccount? user = await GoogleSignInApi.login();
-      if (user == null) {
-        Utils.showAlertDialog('Xảy ra lỗi khi đăng nhập bằng Gmail', title: 'Cảnh báo');
-        return;
-      }
-      user.email.toString().debugLog('Google account');
-      GoogleSignInAuthentication key = await user.authentication;
-      // user.toString().debugLog('signInGoogle');
-
-      key.accessToken.toString().debugLog('AccessToken');
-      key.idToken.toString().debugLog('IdToken');
-      await GoogleSignInApi.disconnect();
-    } catch (e) {
-      e.toString().debugLog('Error when invoking signInGoogle');
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -169,7 +150,7 @@ class LoginPage extends StatelessWidget {
                     GgLoginButton(
                       onPressed: () async {
                         if (_c.loginStatus.value != Status.loading) {
-                          _signInGoogle();
+                          _c.signInGoogle();
                         }
                       },
                     ),

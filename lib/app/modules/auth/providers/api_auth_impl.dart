@@ -79,7 +79,7 @@ class ApiAuthImpl extends GetConnect with ApiAuth {
   }
 
   @override
-  Future<Response> getLoginWithGoogleToken(String accessToken) {
+  Future<Response> postGoogleLogin(String accessToken) {
     return post(
       '/social-login/',
       json.encode({
