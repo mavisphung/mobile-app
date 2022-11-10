@@ -75,6 +75,33 @@ class LoginController extends GetxController {
     return null;
   }
 
+  Future<bool?> loginWithGoogleToken() async {
+    final accessToken = Storage.getValue<String>(CacheKey.TOKEN.name);
+    if (accessToken == null) return false;
+
+    final response = await _apiAuth.getLoginWithGoogleToken(accessToken).futureValue();
+
+    if (response != null) {
+      if (response.isSuccess == true && response.statusCode == Constants.successGetStatusCode) {
+        final userInfo = UserInfo2(
+          id: response.data['id'],
+          email: response.data['email'],
+          firstName: response.data['firstName'],
+          lastName: response.data['lastName'],
+          address: response.data['address'],
+          phoneNumber: response.data['phoneNumber'],
+          gender: response.data['gender'],
+          avatar: response.data['avatar'],
+        );
+        await Storage.saveValue(CacheKey.USER_INFO.name, userInfo);
+        return true;
+      } else {
+        return false;
+      }
+    }
+    return null;
+  }
+
   @override
   void dispose() {
     emailFocusNode.dispose();

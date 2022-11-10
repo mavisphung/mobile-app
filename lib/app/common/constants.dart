@@ -31,3 +31,8 @@ abstract class Constants {
   static const createdAt = 'createdAt';
   static const type = 'type';
 }
+
+abstract class SocialPlatform {
+  static const String google = 'GOOGLE';
+  static const String facebook = 'FACEBOOK';
+}
