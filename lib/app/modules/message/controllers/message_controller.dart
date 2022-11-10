@@ -8,22 +8,11 @@ import 'package:hi_doctor_v2/app/modules/message/models/chat_message.dart';
 class MessageController extends GetxController {
   final FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
 
-  int get userId => Box.userInfo!.id!;
+  int get userId => Box.getCacheUser().id!;
 
   Future<void> setDataFirestore(String collectionPath, String docPath, Map<String, dynamic> dataNeedInsert) {
     return _firebaseFirestore.collection(collectionPath).doc(docPath).set(dataNeedInsert);
   }
-
-  // Future<void> updateDataFirestore(String collectionPath, String docPath, Map<String, dynamic> dataNeedUpdate) {
-  //   DocumentReference documentReference = _firebaseFirestore.collection(collectionPath).doc(docPath);
-
-  //   return _firebaseFirestore.runTransaction((transaction) async {
-  //     transaction.update(
-  //       documentReference,
-  //       dataNeedUpdate,
-  //     );
-  //   });
-  // }
 
   Stream<QuerySnapshot> getAllGroupChatStream(int limit) {
     return _firebaseFirestore
@@ -46,7 +35,6 @@ class MessageController extends GetxController {
   Future<void> sendMessage(String content, int type, String groupChatId, int supervisorId, int peerId) {
     DocumentReference documentReference =
         _firebaseFirestore.collection(Constants.pathMessageCollection).doc(groupChatId).collection(groupChatId).doc();
-    // .doc(DateTime.now().millisecondsSinceEpoch.toString());
 
     ChatMessage chatMessage = ChatMessage(
       senderId: supervisorId,

@@ -49,7 +49,7 @@ class Step1 extends StatelessWidget {
             focusNode: emailFocusNode,
             controller: emailController,
             onFieldSubmitted: (_) => FocusScope.of(context).requestFocus(passwordFocusNode),
-            labelText: Strings.email.tr,
+            labelText: Strings.email,
           ),
           CustomTextFieldWidget(
             hasObscureIcon: true,
@@ -58,7 +58,7 @@ class Step1 extends StatelessWidget {
             focusNode: passwordFocusNode,
             controller: passwordController,
             onFieldSubmitted: (_) => FocusScope.of(context).requestFocus(confirmFocusNode),
-            labelText: Strings.pasword.tr,
+            labelText: Strings.pasword,
           ),
           CustomTextFieldWidget(
             // withAsterisk: false,
@@ -69,7 +69,7 @@ class Step1 extends StatelessWidget {
             focusNode: confirmFocusNode,
             controller: confirmController,
             onFieldSubmitted: (_) => action(),
-            labelText: Strings.confirmPasword.tr,
+            labelText: Strings.confirmPasword,
           ),
         ],
       ),

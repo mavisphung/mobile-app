@@ -30,7 +30,7 @@ class PatientProfileDetailPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return BasePage(
       backgroundColor: Colors.white,
-      appBar: MyAppBar(title: _patientId == null ? 'New patient profile' : Strings.patientProfileDetail.tr),
+      appBar: MyAppBar(title: _patientId == null ? 'New patient profile' : Strings.patientProfileDetail),
       body: FutureBuilder<bool>(
         future: _patientId == null ? _c.emptyField() : _c.getPatientWithId(_patientId!),
         builder: (ctx, snapshot) {
@@ -77,7 +77,7 @@ class PatientProfileDetailPage extends StatelessWidget {
                             focusNode: _c.firstNameFocusNode,
                             controller: _c.firstName,
                             onFieldSubmitted: (_) => FocusScope.of(context).requestFocus(_c.lastNameFocusNode),
-                            labelText: Strings.firstName.tr,
+                            labelText: Strings.firstName,
                           ),
                         ),
                         const SizedBox(
@@ -89,7 +89,7 @@ class PatientProfileDetailPage extends StatelessWidget {
                             focusNode: _c.lastNameFocusNode,
                             controller: _c.lastName,
                             onFieldSubmitted: (_) => FocusScope.of(context).requestFocus(_c.addressFocusNode),
-                            labelText: Strings.lastName.tr,
+                            labelText: Strings.lastName,
                           ),
                         ),
                       ],
@@ -99,7 +99,7 @@ class PatientProfileDetailPage extends StatelessWidget {
                       focusNode: _c.addressFocusNode,
                       controller: _c.address,
                       onFieldSubmitted: (_) => Utils.unfocus(),
-                      labelText: Strings.address.tr,
+                      labelText: Strings.address,
                     ),
                     MyDateTimeField(
                       dob: _c.dob,
@@ -114,7 +114,7 @@ class PatientProfileDetailPage extends StatelessWidget {
                 width: 1.sw,
                 child: ObxValue<Rx<Status>>(
                     (data) => CustomElevatedButtonWidget(
-                          textChild: _patientId == null ? 'Add patient profile' : Strings.saveProfile.tr,
+                          textChild: _patientId == null ? 'Add patient profile' : Strings.saveProfile,
                           status: data.value,
                           onPressed: () {
                             _formKey.currentState?.save();

@@ -44,7 +44,7 @@ class Pathology {
                 (x) => Record.fromMap(x as Map<String, dynamic>),
               ),
             )
-          : List.empty(growable: true),
+          : <Record>[],
     );
   }
 
@@ -75,78 +75,3 @@ class Pathology {
     );
   }
 }
-
-List<Pathology> pathologys = [
-  Pathology(
-    0,
-    'M54.0',
-    'M540',
-    'GN: Bệnh cột sống',
-    'DN: Bệnh cột sống',
-    <Record>[],
-  ),
-  Pathology(
-    1,
-    'L08',
-    'L08',
-    'Nhiễm trùng da và mô dưới da',
-    'Nhiễm trùng da và mô dưới da',
-    <Record>[],
-  ),
-  Pathology(
-    2,
-    'I89',
-    'I89',
-    'Bệnh tĩnh mạch, mạch bạch huyết và hạch bạch huyết không phân loại nơi khác',
-    'Bệnh tĩnh mạch, mạch bạch huyết và hạch bạch huyết không phân loại nơi khác',
-    <Record>[],
-  ),
-  Pathology(
-    3,
-    'I02',
-    'I02',
-    'Thấp khớp cấp',
-    'Thấp khớp cấp',
-    <Record>[],
-  ),
-  Pathology(
-    4,
-    'I15',
-    'I15',
-    'Bệnh lý tăng huyết áp',
-    'Bệnh lý tăng huyết áp',
-    <Record>[],
-  ),
-  Pathology(
-    5,
-    'D59',
-    'D59',
-    'Thiếu máu tan máu',
-    'Thiếu máu tan máu',
-    <Record>[],
-  ),
-  Pathology(
-    6,
-    'L30',
-    'L30',
-    'Viêm da và chàm',
-    'Viêm da và chàm',
-    <Record>[],
-  ),
-  Pathology(
-    7,
-    'M79',
-    'M79',
-    'Các bệnh lý mô mềm',
-    'Các bệnh lý mô mềm',
-    <Record>[],
-  ),
-  Pathology(
-    8,
-    'M25',
-    'M25',
-    'Bệnh khớp',
-    'Bệnh khớp',
-    <Record>[],
-  ),
-];

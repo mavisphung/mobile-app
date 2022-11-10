@@ -5,7 +5,7 @@ import 'package:hi_doctor_v2/app/common/storage/box.dart';
 import 'package:hi_doctor_v2/app/models/other_health_record.dart';
 
 class ApiHealthRecord extends GetConnect {
-  final headers = Box.headers;
+  final headers = Box.getAuthorization();
 
   @override
   void onInit() {
@@ -25,7 +25,7 @@ class ApiHealthRecord extends GetConnect {
     );
   }
 
-  Future<Response> getPathologySearch(String keyword, {int page = 1, int limit = 10}) {
+  Future<Response> getPathologySearch(String keyword, {int page = 1, int limit = 50}) {
     return get(
       '/diseases/',
       headers: headers,

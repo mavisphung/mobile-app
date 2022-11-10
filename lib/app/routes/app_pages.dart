@@ -1,6 +1,5 @@
 // ignore_for_file: constant_identifier_names
 
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import 'package:hi_doctor_v2/app/modules/appointment/appointment_page.dart';
@@ -13,7 +12,7 @@ import 'package:hi_doctor_v2/app/modules/auth/login_page.dart';
 import 'package:hi_doctor_v2/app/modules/auth/register_page.dart';
 import 'package:hi_doctor_v2/app/modules/auth/splash_page.dart';
 import 'package:hi_doctor_v2/app/modules/bottom_navbar/nav_bar.dart';
-import 'package:hi_doctor_v2/app/modules/health_record/add_health_record_page.dart';
+import 'package:hi_doctor_v2/app/modules/health_record/edit_health_record_page.dart';
 import 'package:hi_doctor_v2/app/modules/health_record/edit_pathology_record_page.dart';
 import 'package:hi_doctor_v2/app/modules/health_record/health_record_page.dart';
 import 'package:hi_doctor_v2/app/modules/home/home_page.dart';
@@ -116,7 +115,7 @@ abstract class AppPages {
     ).custom(),
     GetPage(
       name: Routes.EDIT_HEALTH_RECORD,
-      page: () => AddOtherHealthRecordPage(),
+      page: () => EditOtherHealthRecordPage(),
     ).custom(),
     GetPage(
       name: Routes.EDIT_PATHOLOGY_RECORD,

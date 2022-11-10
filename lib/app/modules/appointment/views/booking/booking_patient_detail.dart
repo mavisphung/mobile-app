@@ -110,8 +110,8 @@ class BookingPatientDetailPage extends StatelessWidget {
                       children: [
                         // ------------- Choose patient section -------------
                         CustomTitleSection(
-                          title: Strings.patientInfo.tr,
-                          suffixText: Strings.change.tr,
+                          title: Strings.patientInfo,
+                          suffixText: Strings.change,
                           suffixAction: () => openPatientOptions(context),
                         ),
                         Container(
@@ -131,42 +131,46 @@ class BookingPatientDetailPage extends StatelessWidget {
                               if (snapshot.hasData) {
                                 if (snapshot.data == true) {
                                   _cBooking.setPatient(_cPatientProfile.patientList[0]);
-                                  return ObxValue<Rx<Patient>>(
-                                      (data) => Column(
+                                  return ObxValue<Rxn<Patient>>(
+                                    (data) {
+                                      final patient = data.value!;
+                                      return Column(
+                                        children: [
+                                          Row(
+                                            crossAxisAlignment: CrossAxisAlignment.start,
                                             children: [
-                                              Row(
-                                                crossAxisAlignment: CrossAxisAlignment.start,
-                                                children: [
-                                                  _getTitle(Strings.fullName.tr),
-                                                  Flexible(
-                                                    child: Text(
-                                                      Tx.getFullName(data.value.lastName, data.value.firstName),
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                              Row(
-                                                children: [
-                                                  _getTitle(Strings.gender.tr),
-                                                  Text('${data.value.gender}'),
-                                                ],
-                                              ),
-                                              Row(
-                                                children: [
-                                                  _getTitle(Strings.dob.tr),
-                                                  Text('${data.value.dob}'),
-                                                ],
-                                              ),
-                                              Row(
-                                                crossAxisAlignment: CrossAxisAlignment.start,
-                                                children: [
-                                                  _getTitle(Strings.address.tr),
-                                                  Flexible(child: Text('${data.value.address}')),
-                                                ],
+                                              _getTitle(Strings.fullName),
+                                              Flexible(
+                                                child: Text(
+                                                  Tx.getFullName(patient.lastName, patient.firstName),
+                                                ),
                                               ),
                                             ],
                                           ),
-                                      _cBooking.rxPatient);
+                                          Row(
+                                            children: [
+                                              _getTitle(Strings.gender),
+                                              Text('${patient.gender}'),
+                                            ],
+                                          ),
+                                          Row(
+                                            children: [
+                                              _getTitle(Strings.dob),
+                                              Text('${patient.dob}'),
+                                            ],
+                                          ),
+                                          Row(
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            children: [
+                                              _getTitle(Strings.address),
+                                              Flexible(child: Text('${patient.address}')),
+                                            ],
+                                          ),
+                                        ],
+                                      );
+                                    },
+                                    _cBooking.rxPatient,
+                                  );
                                 }
                               }
                               return const Center(child: CircularProgressIndicator());
@@ -179,21 +183,21 @@ class BookingPatientDetailPage extends StatelessWidget {
                         SizedBox(
                           height: 16.sp,
                         ),
-                        CustomTitleSection(title: Strings.healthIssue.tr),
+                        CustomTitleSection(title: Strings.healthIssue),
                         TextFormField(
                           validator: (String? value) {
                             if (value == null || value.isEmpty) {
-                              return Strings.fieldCantBeEmpty.tr;
+                              return Strings.fieldCantBeEmpty;
                             }
                             if (value.length >= 1000) {
-                              return Strings.problemLengthMsg.tr;
+                              return Strings.problemLengthMsg;
                             }
                             return null;
                           },
                           focusNode: FocusNode(),
                           controller: _cBooking.problemController,
                           decoration: InputDecoration(
-                            hintText: Strings.problemMsg.tr,
+                            hintText: Strings.problemMsg,
                             contentPadding: EdgeInsets.only(top: 16.sp, bottom: 16.sp, left: 18.sp, right: -18.sp),
                             enabledBorder: OutlineInputBorder(
                               borderSide: BorderSide.none,
@@ -218,12 +222,12 @@ class BookingPatientDetailPage extends StatelessWidget {
         ),
       ),
       bottomSheet: CustomBottomSheet(
-        buttonText: Strings.kContinue.tr,
+        buttonText: Strings.kContinue,
         onPressed: () {
           _formKey.currentState?.save();
-          if (_formKey.currentState?.validate() ?? false) {
-            Get.toNamed(Routes.BOOKING_SUMMARY);
-          }
+          final isValidated = _formKey.currentState?.validate() ?? false;
+          if (!isValidated || _cBooking.patient == null) return;
+          Get.toNamed(Routes.BOOKING_SUMMARY);
         },
       ),
     );

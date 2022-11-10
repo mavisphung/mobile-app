@@ -14,7 +14,7 @@ class HomeController extends GetxController {
   RxList<Doctor> nearestList = <Doctor>[].obs;
   late final ApiHomeImpl apiHome;
 
-  UserInfo2? userInfo = Box.userInfo;
+  UserInfo2 userInfo = Box.getCacheUser();
 
   @override
   void onInit() {
@@ -22,7 +22,7 @@ class HomeController extends GetxController {
     apiHome = Get.put(ApiHomeImpl());
     getDoctorList();
     getSpecialistsApi();
-    getNearestDoctorsApi(address: userInfo?.address);
+    getNearestDoctorsApi(address: userInfo.address);
   }
 
   Future<bool> getNearestDoctorsApi({

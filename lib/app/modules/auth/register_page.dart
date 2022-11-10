@@ -169,7 +169,7 @@ class _RegisterPageState extends State<RegisterPage> {
     return BasePage(
       backgroundColor: Colors.white,
       appBar: MyAppBar(
-        title: Strings.registration.tr,
+        title: Strings.registration,
         hasBackBtn: true,
       ),
       paddingTop: 29.sp,
@@ -198,7 +198,7 @@ class _RegisterPageState extends State<RegisterPage> {
             ),
             ObxValue<Rx<Status>>(
                 (data) => CustomElevatedButtonWidget(
-                      textChild: _currentStep == 2 ? Strings.verify.tr : Strings.kContinue.tr,
+                      textChild: _currentStep == 2 ? Strings.verify : Strings.kContinue,
                       status: data.value,
                       onPressed: _continue,
                     ),

@@ -125,18 +125,19 @@ class UserProfileController extends GetxController {
     if (response.isOk) {
       _profile = info;
 
-      final oldData = Box.userInfo;
+      final oldData = Box.getCacheUser();
       final userInfo = info.copyWith(
-        id: oldData?.id,
-        email: oldData?.email,
+        id: oldData.id,
+        email: oldData.email,
       );
 
       await Storage.saveValue(CacheKey.USER_INFO.name, userInfo);
       final cSettings = Get.find<SettingsController>();
       cSettings.userInfo.value = userInfo;
+
       setStatusSuccess();
       Get.back();
-      Utils.showTopSnackbar(Strings.updateProfileMsg.tr, title: 'Notice');
+      Utils.showTopSnackbar(Strings.updateProfileMsg);
     } else {
       Get.snackbar('Error ${response.statusCode}', 'Error while updating profile', backgroundColor: Colors.red);
       setStatusFail();

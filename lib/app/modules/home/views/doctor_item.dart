@@ -71,7 +71,7 @@ class DoctorItem extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    '${Strings.doctor.tr} ${Tx.getFullName(doctor.lastName, doctor.firstName)}',
+                    '${Strings.doctor} ${Tx.getFullName(doctor.lastName, doctor.firstName)}',
                     maxLines: 1,
                     style: TextStyle(
                       fontSize: 14.sp,

@@ -9,7 +9,6 @@ import 'package:hi_doctor_v2/app/models/doctor.dart';
 import 'package:hi_doctor_v2/app/models/patient.dart';
 import 'package:hi_doctor_v2/app/modules/appointment/providers/api_book_appointment.dart';
 import 'package:hi_doctor_v2/app/modules/appointment/providers/req_appointment_model.dart';
-import 'package:hi_doctor_v2/app/modules/appointment/views/booking/booking_package_page.dart';
 import 'package:hi_doctor_v2/app/modules/appointment/widgets/service_item.dart';
 import 'package:intl/intl.dart';
 
@@ -44,18 +43,6 @@ class BookingController extends GetxController {
     rxFocusedDate.value = value;
   }
 
-  // select service package
-  final Rx<PackageType> rxServiceType = PackageType.online.obs;
-
-  String get serviceType {
-    if (rxServiceType.value.index == 0) return 'ONLINE';
-    return 'OFFLINE';
-  }
-
-  void setServiceType(PackageType serviceType) {
-    rxServiceType.value = serviceType;
-  }
-
   final RxInt rxServiceId = 0.obs;
 
   int get serviceId => rxServiceId.value;
@@ -64,7 +51,7 @@ class BookingController extends GetxController {
     rxServiceId.value = serviceId;
   }
 
-  late List<PackageItem>? packageList;
+  List<PackageItem>? packageList;
 
   // patient detail
   final problemController = TextEditingController();
@@ -78,8 +65,8 @@ class BookingController extends GetxController {
     _doctor = value;
   }
 
-  final rxPatient = Patient().obs;
-  Patient get patient => rxPatient.value;
+  final rxPatient = Rxn<Patient>();
+  Patient? get patient => rxPatient.value;
   void setPatient(Patient value) {
     rxPatient.value = value;
   }
@@ -100,12 +87,13 @@ class BookingController extends GetxController {
     return null;
   }
 
-  Future<List<PackageItem>?> getPackages(int doctorId) async {
-    final result = await _apiBookAppointment.getDoctorPackage(doctorId);
+  Future<bool?> getPackages(int doctorId) async {
+    final result = await _apiBookAppointment.getDoctorPackage(6);
     final Map<String, dynamic> response = ApiResponse.getResponse(result);
     final ResponseModel2 model = ResponseModel2.fromMap(response);
     if (model.success == true && model.status == Constants.successGetStatusCode) {
-      final data = model.data as List<dynamic>;
+      final data = model.data as List<dynamic>?;
+      if (data == null || data.isEmpty) return true;
       packageList = data
           .map((e) => PackageItem(
                 id: e['id'],
@@ -115,27 +103,26 @@ class BookingController extends GetxController {
               ))
           .toList();
       setServiceId(data[0]['id']);
-    } else {
+      return true;
+    } else if (model.success == false) {
       packageList = null;
+      return false;
     }
-    return packageList;
+    return null;
   }
 
-  Future<Map<String, dynamic>> createAppointment(ReqAppointmentModel reqModel) async {
+  Future<bool?> createAppointment(ReqAppointmentModel reqModel) async {
     'Creating appointment'.debugLog('BookingController');
     final response = await _apiBookAppointment.postAppointment(reqModel).futureValue();
     response.toString().debugLog('BookingController.response');
-    Map<String, dynamic> result = {};
     if (response != null) {
       if (response.isSuccess == true && response.statusCode == 201) {
-        result['status'] = 200;
-        result['message'] = 'APPOINTMENT_CREATED_SUCCEEDED';
+        return true;
       } else if (response.message == 'APPOINTMENT_DUPLICATED') {
-        result['status'] = 400;
-        result['message'] = response.message;
+        return false;
       }
     }
-    return result;
+    return null;
   }
 
   @override
@@ -146,7 +133,6 @@ class BookingController extends GetxController {
     rxSelectedTimeId.close();
 
     // select service package
-    rxServiceType.close();
     rxServiceId.close();
 
     // patient detail

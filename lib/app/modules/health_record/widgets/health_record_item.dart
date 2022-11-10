@@ -7,6 +7,7 @@ import 'package:hi_doctor_v2/app/common/util/utils.dart';
 import 'package:hi_doctor_v2/app/modules/health_record/models/hr_res_model.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/custom_inkwell.dart';
 import 'package:hi_doctor_v2/app/routes/app_pages.dart';
+import 'package:intl/intl.dart';
 
 class OtherHealthRecordItem extends StatelessWidget {
   final HrResModel hr;
@@ -18,8 +19,9 @@ class OtherHealthRecordItem extends StatelessWidget {
 
   Widget _getPathologyRow(String code, String name) {
     return Padding(
-      padding: EdgeInsets.symmetric(vertical: 1.2.sp),
+      padding: EdgeInsets.symmetric(vertical: 5.sp),
       child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SizedBox(
             width: 50.sp,
@@ -35,6 +37,7 @@ class OtherHealthRecordItem extends StatelessWidget {
           Flexible(
             child: Text(
               name,
+              overflow: TextOverflow.ellipsis,
               style: TextStyle(
                 fontSize: 14.sp,
               ),
@@ -47,18 +50,14 @@ class OtherHealthRecordItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final list = hr.detail?['pathologies'] as List?;
+    if (list == null) return const SizedBox.shrink();
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 5.sp),
       child: CustomInkWell(
         verticalPadding: 20,
         onTap: () {
-          Get.toNamed(
-            Routes.EDIT_HEALTH_RECORD,
-            arguments: hr,
-            parameters: {
-              'tag': 'EDIT',
-            },
-          );
+          Get.toNamed(Routes.EDIT_HEALTH_RECORD, arguments: hr);
         },
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -83,7 +82,7 @@ class OtherHealthRecordItem extends StatelessWidget {
                     ),
                     SizedBox(height: 2.sp),
                     Text(
-                      'Tạo ngày ${Utils.formatDateTime(DateTime.fromMillisecondsSinceEpoch(hr.detail?['createDate']))}',
+                      'Tạo lúc ${Utils.formatDateTime(DateTime.tryParse(hr.record?['createdAt'])!)}',
                       style: TextStyle(
                         color: Colors.black54,
                         fontSize: 10.5.sp,
@@ -96,7 +95,7 @@ class OtherHealthRecordItem extends StatelessWidget {
             Padding(
               padding: EdgeInsets.only(
                 top: 10.sp,
-                bottom: 3.sp,
+                bottom: 5.sp,
               ),
               child: Text(
                 'Bệnh lý có trong hồ sơ:',
@@ -107,7 +106,19 @@ class OtherHealthRecordItem extends StatelessWidget {
                 ),
               ),
             ),
-            ...hr.detail?['pathologies']?.map((e) => _getPathologyRow('${e['code']}', '${e['diseaseName']}')).toList(),
+            SizedBox(
+              height: 80.sp,
+              child: ListView.builder(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                itemBuilder: (_, index) {
+                  if (index >= list.length) return const SizedBox.shrink();
+                  final e = list[index];
+                  return _getPathologyRow('${e['code']}', '${e['diseaseName']}');
+                },
+                itemCount: 3,
+              ),
+            ),
           ],
         ),
       ),

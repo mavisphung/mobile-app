@@ -17,9 +17,9 @@ class ImagePickerWidget extends StatelessWidget {
     return GestureDetector(
       onTap: () async {
         var isFromCamera = await Utils.showConfirmDialog(
-          Strings.imageSourceMsg.tr,
-          cancelText: Strings.gallery.tr,
-          confirmText: Strings.camera.tr,
+          Strings.imageSourceMsg,
+          cancelText: Strings.gallery,
+          confirmText: Strings.camera,
         );
         if (isFromCamera != null) {
           getImageFucntion(isFromCamera);

@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 
 import 'package:hi_doctor_v2/app/common/values/colors.dart';
 import 'package:hi_doctor_v2/app/models/pathology.dart';
-import 'package:hi_doctor_v2/app/modules/health_record/controllers/edit_health_record_controller.dart';
+import 'package:hi_doctor_v2/app/modules/health_record/controllers/edit_pathology_controller.dart';
 import 'package:hi_doctor_v2/app/modules/health_record/views/record_view.dart';
 import 'package:hi_doctor_v2/app/modules/health_record/widgets/record_dropdown.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/base_page.dart';
@@ -15,17 +15,18 @@ import 'package:hi_doctor_v2/app/modules/widgets/my_appbar.dart';
 
 // ignore: must_be_immutable
 class EditPathologyRecordPage extends StatelessWidget {
-  final _c = Get.put(EditOtherHealthRecordController(), tag: 'SUB');
-  final _cEditOtherHealthRecord = Get.find<EditOtherHealthRecordController>(tag: 'MAIN');
+  final _cEditPathology = Get.put(EditPathologyController());
 
-  late final Pathology _p;
-  late String _funcLabel;
-  late Function _func;
+  final _p = Get.arguments as Pathology;
 
   final _box10 = SizedBox(width: 10.sp, height: 10.sp);
   final _hBox30 = SizedBox(height: 30.sp);
 
-  EditPathologyRecordPage({Key? key}) : super(key: key);
+  EditPathologyRecordPage({super.key});
+
+  late String _title;
+  late String _funcLabel;
+  late VoidCallback _func;
 
   Widget _getLabel(String text) {
     return SizedBox(
@@ -82,17 +83,18 @@ class EditPathologyRecordPage extends StatelessWidget {
   }
 
   void init() {
-    _p = Get.arguments as Pathology;
-    _c.pathology = _p;
-
     final parameters = Get.parameters;
-    if (parameters['tag'] != null) {
-      _funcLabel = parameters['tag']!;
-    }
-    _func = () => _cEditOtherHealthRecord.addPathology(_p);
-
-    if (_funcLabel == 'Update') {
-      _func = () => _cEditOtherHealthRecord.updatePathology(_p);
+    final tag = parameters['tag'];
+    if (tag != null) {
+      if (tag == 'UPDATE') {
+        _title = 'Cập nhật về bệnh lý';
+        _funcLabel = 'Cập nhật';
+        _func = _cEditPathology.updatePathology;
+      } else {
+        _title = 'Thêm bệnh lý';
+        _funcLabel = 'Thêm';
+        _func = _cEditPathology.addPathology;
+      }
     }
   }
 
@@ -102,16 +104,16 @@ class EditPathologyRecordPage extends StatelessWidget {
     return BasePage(
       backgroundColor: Colors.white,
       appBar: MyAppBar(
-        title: 'Thêm bệnh lý',
+        title: _title,
         actions: [
           Padding(
             padding: EdgeInsets.only(
-              top: 16.sp,
+              top: 10.sp,
               right: 14.sp,
             ),
             child: CustomTextButton(
               btnText: _funcLabel,
-              action: () => _func.call(),
+              action: _func,
             ),
           ),
         ],
@@ -172,19 +174,35 @@ class EditPathologyRecordPage extends StatelessWidget {
           Row(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
-              Expanded(child: RecordDropDown(tag: 'SUB')),
+              Expanded(child: RecordDropDown(c: _cEditPathology)),
               _box10,
               _getAddBtn(
                 margin: EdgeInsets.only(bottom: 2.sp),
-                onPressed: _c.addTicket,
+                onPressed: _cEditPathology.addTicket,
               ),
             ],
           ),
           _box10,
-          ImagePreviewGrid(tag: 'SUB'),
+          ImagePreviewGrid(
+            imgs: _cEditPathology.imgs,
+            addImgFunc: _cEditPathology.addImage,
+            removeImgFunc: _cEditPathology.removeImage,
+          ),
           _hBox30,
           _getTitle('Các phiếu sức khỏe liên quan đến bệnh lý'),
-          RecordsView(tag: 'SUB'),
+          FutureBuilder(
+            future: _cEditPathology.initialize(_p),
+            builder: (_, AsyncSnapshot<bool> snapshot) {
+              if (snapshot.hasData && snapshot.data == true) {
+                return RecordsView(
+                  rxRecords: _cEditPathology.rxRecords,
+                  removeRecordFunc: _cEditPathology.removeRecord,
+                  removeTicketFunc: _cEditPathology.removeTicket,
+                );
+              }
+              return const SizedBox.shrink();
+            },
+          ),
         ],
       ),
     );

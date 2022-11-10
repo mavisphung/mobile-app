@@ -1,22 +1,15 @@
 import 'package:get/get.dart';
 
 import 'package:hi_doctor_v2/app/common/storage/box.dart';
+import 'package:hi_doctor_v2/app/common/storage/storage.dart';
 import 'package:hi_doctor_v2/app/models/user_info.dart';
+import 'package:hi_doctor_v2/app/routes/app_pages.dart';
 
 class SettingsController extends GetxController {
-  final userInfo = UserInfo2().obs;
+  final Rx<UserInfo2> userInfo = Box.getCacheUser().obs;
 
-  void getUserInfo() {
-    final data = Box.userInfo;
-    userInfo.value = UserInfo2(
-      id: data?.id,
-      email: data?.email,
-      firstName: data?.firstName,
-      lastName: data?.lastName,
-      address: data?.address,
-      gender: data?.gender,
-      phoneNumber: data?.phoneNumber,
-      avatar: data?.avatar,
-    );
+  void logOut() async {
+    await Storage.clearStorage();
+    Get.offAllNamed(Routes.LOGIN);
   }
 }

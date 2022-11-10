@@ -44,7 +44,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
                       left: 8.sp,
                     ),
                     child: CustomIconTextButton(
-                      btnText: Strings.back.tr,
+                      btnText: Strings.back,
                       iconData: CupertinoIcons.left_chevron,
                       status: data.value,
                     ),
@@ -56,7 +56,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
                     left: 8.sp,
                   ),
                   child: CustomIconTextButton(
-                    btnText: Strings.back.tr,
+                    btnText: Strings.back,
                     iconData: CupertinoIcons.left_chevron,
                   ),
                 ))

@@ -6,7 +6,7 @@ import 'package:hi_doctor_v2/app/common/util/extensions.dart';
 import 'package:hi_doctor_v2/app/modules/appointment/providers/req_appointment_model.dart';
 
 class ApiBookAppointmentImpl extends GetConnect {
-  final _headers = Box.headers;
+  final _headers = Box.getAuthorization();
 
   @override
   void onInit() {

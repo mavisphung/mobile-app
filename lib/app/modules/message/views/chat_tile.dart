@@ -33,8 +33,7 @@ class ChatTile extends StatelessWidget {
       builder: (_, snapshot) {
         if (snapshot.hasData) {
           if (snapshot.data == true) {
-            final fullName =
-                '${Strings.doctor.tr} ${Tx.getFullName(_cDoctor.doctor.lastName, _cDoctor.doctor.firstName)}';
+            final fullName = '${Strings.doctor} ${Tx.getFullName(_cDoctor.doctor.lastName, _cDoctor.doctor.firstName)}';
             return InkWell(
               onTap: () => Get.toNamed(
                 Routes.CHAT,
@@ -62,7 +61,7 @@ class ChatTile extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            '${Strings.doctor.tr} $fullName',
+                            '${Strings.doctor} $fullName',
                             overflow: TextOverflow.ellipsis,
                             style: TextStyle(
                               fontSize: 15.sp,

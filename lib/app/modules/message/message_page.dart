@@ -18,7 +18,7 @@ class MessagePage extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: MyAppBar(
-        title: Strings.message.tr,
+        title: Strings.message,
         hasBackBtn: false,
       ),
       body: Column(

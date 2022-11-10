@@ -87,7 +87,7 @@ class AppointmentTile extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        '${Strings.doctor.tr} $fullName',
+                        '${Strings.doctor} $fullName',
                         overflow: TextOverflow.ellipsis,
                         softWrap: false,
                         style: TextStyle(

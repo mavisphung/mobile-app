@@ -6,7 +6,7 @@ import 'package:hi_doctor_v2/app/modules/auth/controllers/login_controller.dart'
 import 'package:hi_doctor_v2/app/modules/auth/login_page.dart';
 import 'package:hi_doctor_v2/app/modules/bottom_navbar/nav_bar.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/loading_widget.dart';
-import 'package:hi_doctor_v2/app/modules/widgets/no_internet_widget.dart';
+import 'package:hi_doctor_v2/app/modules/widgets/response_status_widget.dart';
 
 class SplashPage extends StatefulWidget {
   const SplashPage({Key? key}) : super(key: key);

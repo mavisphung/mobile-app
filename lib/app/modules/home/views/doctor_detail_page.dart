@@ -78,7 +78,7 @@ class DoctorDetailPage extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.stretch,
                               children: [
                                 Text(
-                                  '${Strings.doctor.tr} ${Tx.getFullName(_cDoctor.doctor.lastName, _cDoctor.doctor.firstName)}',
+                                  '${Strings.doctor} ${Tx.getFullName(_cDoctor.doctor.lastName, _cDoctor.doctor.firstName)}',
                                   style: TextStyle(
                                     fontSize: 17.sp,
                                     fontWeight: FontWeight.w500,
@@ -175,7 +175,7 @@ class DoctorDetailPage extends StatelessWidget {
                               height: 1.25.sp, // Line height
                             ),
                             text:
-                                '${Strings.doctor.tr} ${Tx.getFullName(_cDoctor.doctor.lastName, _cDoctor.doctor.firstName)} là một trong những bác sĩ '
+                                '${Strings.doctor} ${Tx.getFullName(_cDoctor.doctor.lastName, _cDoctor.doctor.firstName)} là một trong những bác sĩ '
                                 'giỏi nhất trong khoa tổng hợp của bệnh viện Hùng Vương, TP. HCM. '
                                 'Đã từng đạt nhiều mạng người trên tay từ thời gian thực tập. '
                                 'Tôi đã hành nghề này được hơn 10 năm...',

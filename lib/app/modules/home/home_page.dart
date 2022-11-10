@@ -73,7 +73,7 @@ class HomePage extends StatelessWidget {
                         children: const [
                           Expanded(
                             child: Text(
-                              'Search doctor or health issue',
+                              'Tìm bác sĩ hoặc bệnh lý',
                               overflow: TextOverflow.ellipsis,
                             ),
                           ),
@@ -100,11 +100,11 @@ class HomePage extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  CustomTitleSection(title: Strings.upcomingAppointment.tr),
+                  CustomTitleSection(title: Strings.upcomingAppointment),
                   InkWell(
                     onTap: () {},
                     child: const Text(
-                      'See all',
+                      'Xem tất cả',
                       style: TextStyle(fontWeight: FontWeight.bold),
                     ),
                   ),
@@ -112,7 +112,7 @@ class HomePage extends StatelessWidget {
               ),
               const ReminderCard(),
               _spacing,
-              CustomTitleSection(title: Strings.category.tr),
+              CustomTitleSection(title: Strings.category),
               ObxValue<RxList<Specialist>>(
                 (data) => CustomContainer(
                   height: 80.sp,
@@ -156,7 +156,7 @@ class HomePage extends StatelessWidget {
                 ),
               ),
               _spacing,
-              CustomTitleSection(title: Strings.latestSearchDoctor.tr),
+              CustomTitleSection(title: Strings.latestSearchDoctor),
               SizedBox(
                 height: 125.sp,
                 child: ObxValue<RxList<Doctor>>(

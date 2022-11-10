@@ -58,7 +58,7 @@ class Step2 extends StatelessWidget {
                       focusNode: firstNameFocusNode,
                       controller: firstNameController,
                       onFieldSubmitted: (_) => FocusScope.of(context).requestFocus(lastNameFocusNode),
-                      labelText: Strings.firstName.tr,
+                      labelText: Strings.firstName,
                     ),
                   ),
                   const SizedBox(
@@ -70,7 +70,7 @@ class Step2 extends StatelessWidget {
                       focusNode: lastNameFocusNode,
                       controller: lastNameController,
                       onFieldSubmitted: (_) => FocusScope.of(context).requestFocus(addressFocusNode),
-                      labelText: Strings.lastName.tr,
+                      labelText: Strings.lastName,
                     ),
                   ),
                 ],
@@ -80,14 +80,14 @@ class Step2 extends StatelessWidget {
                 focusNode: addressFocusNode,
                 controller: addressController,
                 onFieldSubmitted: (_) => FocusScope.of(context).requestFocus(phoneNumberFocusNode),
-                labelText: Strings.address.tr,
+                labelText: Strings.address,
               ),
               CustomTextFieldWidget(
                 validator: Validators.validatePhone,
                 focusNode: phoneNumberFocusNode,
                 controller: phoneNumberController,
                 onFieldSubmitted: (_) => action(),
-                labelText: Strings.phoneNumber.tr,
+                labelText: Strings.phoneNumber,
                 textInputAction: TextInputAction.done,
                 keyboardType: TextInputType.number,
                 maxLength: 10,
@@ -113,7 +113,7 @@ class Step2 extends StatelessWidget {
               child: InkWell(
                 onTap: _toggleIsPolicyAgreed,
                 child: Text(
-                  Strings.policyAgreementMsg.tr,
+                  Strings.policyAgreementMsg,
                 ),
               ),
             )

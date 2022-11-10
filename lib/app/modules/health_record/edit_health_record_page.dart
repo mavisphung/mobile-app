@@ -1,5 +1,3 @@
-// ignore_for_file: use_build_context_synchronously
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -8,8 +6,8 @@ import 'package:get/get.dart';
 import 'package:hi_doctor_v2/app/common/util/dialogs.dart';
 import 'package:hi_doctor_v2/app/common/util/status.dart';
 import 'package:hi_doctor_v2/app/common/values/colors.dart';
-import 'package:hi_doctor_v2/app/models/other_health_record.dart';
 import 'package:hi_doctor_v2/app/modules/health_record/controllers/edit_health_record_controller.dart';
+import 'package:hi_doctor_v2/app/modules/health_record/models/hr_res_model.dart';
 import 'package:hi_doctor_v2/app/modules/health_record/views/pathology_view.dart';
 import 'package:hi_doctor_v2/app/modules/health_record/widgets/pathology_textfield.dart';
 import 'package:hi_doctor_v2/app/modules/health_record/views/record_view.dart';
@@ -19,17 +17,15 @@ import 'package:hi_doctor_v2/app/modules/widgets/custom_text_btn.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/custom_textfield_widget.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/my_appbar.dart';
 
-class AddOtherHealthRecordPage extends StatelessWidget {
-  late final EditOtherHealthRecordController _cEditOtherHealthRecord =
-      Get.put(EditOtherHealthRecordController(), tag: 'MAIN');
-  late String _funcLabel;
-  late VoidCallback _func;
-
-  AddOtherHealthRecordPage({super.key});
+// ignore: must_be_immutable
+class EditOtherHealthRecordPage extends StatelessWidget {
+  final _cEditOtherHealthRecord = Get.put(EditOtherHealthRecordController());
+  final _hr = Get.arguments as HrResModel?;
 
   final _box10 = SizedBox(width: 10.sp, height: 10.sp);
-
   final _hBox20 = SizedBox(height: 20.sp);
+
+  EditOtherHealthRecordPage({super.key});
 
   Widget _getTitle(String title) {
     return Padding(
@@ -72,40 +68,19 @@ class AddOtherHealthRecordPage extends StatelessWidget {
     );
   }
 
-  void init(BuildContext ctx) {
-    final hr = Get.arguments as OtherHealthRecord?;
-    final parameters = Get.parameters;
-    final tag = parameters['tag'];
-
-    _funcLabel = 'Thêm';
-    _func = () async {
-      final isSuccess = await _cEditOtherHealthRecord.addOtherHealthRecord();
-      if (isSuccess != null) {
-        Dialogs.statusDialog(
-          ctx: ctx,
-          isSuccess: isSuccess,
-          successMsg: 'Thêm hồ sơ ngoài hệ thống thành công.',
-          failMsg: 'Xảy ra lỗi khi thêm hồ sơ ngoài hệ thống',
-          successAction: () => Get.back(),
-        );
-      }
-    };
-
-    if (tag != null && tag == 'EDIT' && hr != null) {
-      _funcLabel = 'Cập nhật';
-      _func = () => _cEditOtherHealthRecord.updateOtherHealthRecord();
-      _cEditOtherHealthRecord.healthRecord = hr;
-    }
+  Future<bool?> _addEditHr() async {
+    return _hr == null
+        ? await _cEditOtherHealthRecord.addOtherHealthRecord()
+        : await _cEditOtherHealthRecord.updateOtherHealthRecord();
   }
 
   @override
   Widget build(BuildContext context) {
-    init(context);
     return BasePage(
       paddingTop: 20.sp,
       backgroundColor: Colors.white,
       appBar: MyAppBar(
-        title: 'Thêm hồ sơ sức khỏe',
+        title: _hr == null ? 'Thêm hồ sơ sức khỏe' : 'Cập nhật hồ sơ sức khỏe',
         rxStatus: _cEditOtherHealthRecord.status,
         actions: [
           Padding(
@@ -116,8 +91,19 @@ class AddOtherHealthRecordPage extends StatelessWidget {
             child: ObxValue<Rx<Status>>(
               (data) {
                 return CustomTextButton(
-                  btnText: _funcLabel,
-                  action: _func,
+                  btnText: _hr == null ? 'Thêm' : 'Cập nhật',
+                  action: () async {
+                    final isSuccess = await _addEditHr();
+                    if (isSuccess != null) {
+                      Dialogs.statusDialog(
+                        ctx: context,
+                        isSuccess: isSuccess,
+                        successMsg: 'Thêm hồ sơ ngoài hệ thống thành công.',
+                        failMsg: 'Xảy ra lỗi khi thêm hồ sơ ngoài hệ thống',
+                        successAction: () => Get.back(),
+                      );
+                    }
+                  },
                   status: data.value,
                 );
               },
@@ -142,7 +128,7 @@ class AddOtherHealthRecordPage extends StatelessWidget {
           Row(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
-              Expanded(child: RecordDropDown()),
+              Expanded(child: RecordDropDown(c: _cEditOtherHealthRecord)),
               _box10,
               _getAddBtn(
                 margin: EdgeInsets.only(bottom: 2.sp),
@@ -151,13 +137,34 @@ class AddOtherHealthRecordPage extends StatelessWidget {
             ],
           ),
           _box10,
-          ImagePreviewGrid(),
+          ImagePreviewGrid(
+            imgs: _cEditOtherHealthRecord.imgs,
+            addImgFunc: _cEditOtherHealthRecord.addImage,
+            removeImgFunc: _cEditOtherHealthRecord.removeImage,
+          ),
           _hBox20,
-          _getTitle('Bệnh lý đã thêm'),
-          PathologyView(),
-          _hBox20,
-          _getTitle('Các phiếu đã thêm'),
-          RecordsView(),
+          FutureBuilder(
+            future: _cEditOtherHealthRecord.initialize(_hr),
+            builder: (_, AsyncSnapshot<bool> snapshot) {
+              if (snapshot.hasData && snapshot.data == true) {
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    _getTitle('Bệnh lý đã thêm'),
+                    PathologyView(),
+                    _hBox20,
+                    _getTitle('Các phiếu đã thêm'),
+                    RecordsView(
+                      rxRecords: _cEditOtherHealthRecord.rxRecords,
+                      removeRecordFunc: _cEditOtherHealthRecord.removeRecord,
+                      removeTicketFunc: _cEditOtherHealthRecord.removeTicket,
+                    ),
+                  ],
+                );
+              }
+              return const SizedBox.shrink();
+            },
+          ),
         ],
       ),
     );

@@ -62,7 +62,7 @@ class Dialogs {
                     ),
                   ),
                   CustomElevatedButtonWidget(
-                    textChild: Strings.ok.tr,
+                    textChild: Strings.ok,
                     onPressed: action,
                     hasShadow: false,
                   ),

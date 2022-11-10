@@ -1,21 +1,19 @@
 import 'dart:convert';
 
-import 'package:get/get.dart';
-
 import 'package:hi_doctor_v2/app/common/values/strings.dart';
 
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 List<Map<String, String>> userGender = [
   {
-    'label': Strings.male.tr,
+    'label': Strings.male,
     'value': 'MALE',
   },
   {
-    'label': Strings.female.tr,
+    'label': Strings.female,
     'value': 'FEMALE',
   },
   {
-    'label': Strings.other.tr,
+    'label': Strings.other,
     'value': 'OTHER',
   },
 ];

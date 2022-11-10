@@ -49,12 +49,3 @@ abstract class Initializer {
     ]);
   }
 }
-
-class InitialBindings extends Bindings {
-  @override
-  void dependencies() {
-    // Get.lazyPut<ApiRetryController>(
-    //   () => ApiRetryController(),
-    // );
-  }
-}

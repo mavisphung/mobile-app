@@ -4,7 +4,7 @@ import 'package:hi_doctor_v2/app/common/constants.dart';
 import 'package:hi_doctor_v2/app/common/storage/box.dart';
 
 class ApiHomeImpl extends GetConnect {
-  final headers = Box.headers;
+  final headers = Box.getAuthorization();
 
   @override
   void onInit() {
