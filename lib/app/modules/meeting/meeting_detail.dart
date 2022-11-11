@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:permission_handler/permission_handler.dart';
+import 'package:hi_doctor_v2/app/modules/widgets/content_container.dart';
+import 'package:hi_doctor_v2/app/modules/widgets/custom/doctor_card.dart';
+import 'package:hi_doctor_v2/app/modules/widgets/custom_card.dart';
 
+import 'package:hi_doctor_v2/app/modules/widgets/loading_widget.dart';
+import 'package:hi_doctor_v2/app/modules/widgets/response_status_widget.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:hi_doctor_v2/app/modules/meeting/controllers/meeting_controller.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/base_page.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/custom_bottom_sheet.dart';
@@ -30,40 +35,52 @@ class MeetingDetailPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return BasePage(
       appBar: const MyAppBar(
-        title: 'Appointment Detail',
+        title: 'Chi tiết cuộc hẹn',
       ),
-      body: FutureBuilder<bool>(
+      body: FutureBuilder(
         future: _cMeeting.getAppointmentDetail(_doctorId),
-        builder: (_, snapshot) {
-          if (snapshot.hasData) {
-            if (snapshot.data == true) {
-              final data = _cMeeting.appointment;
-              return Container(
-                margin: const EdgeInsets.only(bottom: 15.0),
-                width: double.infinity,
-                padding: EdgeInsets.symmetric(
-                  vertical: 20.sp,
-                  horizontal: 15.sp,
+        builder: (_, AsyncSnapshot<bool?> snapshot) {
+          if (snapshot.hasData && snapshot.data == true) {
+            final doctor = _cMeeting.appointment.doctor;
+            final patient = _cMeeting.appointment.patient;
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                DoctorCard(
+                  avatar: doctor?['avatar'],
+                  firstName: doctor?['firstName'],
+                  lastName: doctor?['lastName'],
+                  specialist: doctor?['specialist'],
+                  address: doctor?['address'],
                 ),
-                decoration: BoxDecoration(
-                  color: Colors.grey[100],
-                  borderRadius: BorderRadius.circular(15.sp),
+                const ContentTitle1(title: 'Thông tin lịch hẹn'),
+                const ContentContainer(
+                  labelWidth: 70,
+                  content: {
+                    'Ngày': 'lalalala',
+                    'Giờ': '16:00 - 16:30 PM (30 minutes)',
+                  },
                 ),
-                child: Column(
-                  children: [
-                    Text('${data.doctor?['firstName']}'),
-                    Text('${data.doctor?['lastName']}'),
-                    Text('${data.doctor?['age']}'),
-                    Text('${data.doctor?['experienceYears']}'),
-                    Text('${data.doctor?['gender']}'),
-                    Text('${data.doctor?['address']}'),
-                    Text('${data.doctor?['avatar']}'),
-                  ],
+                const ContentTitle1(title: 'Thông tin bệnh nhân'),
+                const ContentContainer(
+                  labelWidth: 70,
+                  content: {
+                    'Ngày': 'lalalala',
+                    'Giờ': '16:00 - 16:30 PM (30 minutes)',
+                  },
                 ),
-              );
-            }
+                const ContentTitle1(title: 'Thông tin gói dịch vụ'),
+                CustomCard(
+                  child: Row(),
+                ),
+              ],
+            );
+          } else if (snapshot.hasData && snapshot.data == false) {
+            return const SystemErrorWidget();
+          } else if (snapshot.connectionState == ConnectionState.none) {
+            return const NoInternetWidget2();
           }
-          return const CircularProgressIndicator();
+          return const LoadingWidget();
         },
       ),
       bottomSheet: CustomBottomSheet(

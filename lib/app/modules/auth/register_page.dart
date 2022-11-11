@@ -197,12 +197,13 @@ class _RegisterPageState extends State<RegisterPage> {
                   _currentStep.obs),
             ),
             ObxValue<Rx<Status>>(
-                (data) => CustomElevatedButtonWidget(
-                      textChild: _currentStep == 2 ? Strings.verify : Strings.kContinue,
-                      status: data.value,
-                      onPressed: _continue,
-                    ),
-                _controller.nextStatus),
+              (data) => CustomElevatedButtonWidget(
+                textChild: _currentStep == 2 ? Strings.verify : Strings.kContinue,
+                status: data.value,
+                onPressed: _continue,
+              ),
+              _controller.nextStatus,
+            ),
           ],
         ),
       ),

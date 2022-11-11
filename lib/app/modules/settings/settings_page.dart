@@ -12,7 +12,7 @@ import 'package:hi_doctor_v2/app/modules/settings/widgets/setting_item.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/base_page.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/custom_container.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/my_appbar.dart';
-import 'package:hi_doctor_v2/app/modules/widgets/patient_tile.dart';
+import 'package:hi_doctor_v2/app/modules/widgets/custom/patient_tile.dart';
 import 'package:hi_doctor_v2/app/routes/app_pages.dart';
 
 enum SettingOption { myaccount, logout }

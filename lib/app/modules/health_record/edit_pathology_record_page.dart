@@ -9,6 +9,7 @@ import 'package:hi_doctor_v2/app/modules/health_record/controllers/edit_patholog
 import 'package:hi_doctor_v2/app/modules/health_record/views/record_view.dart';
 import 'package:hi_doctor_v2/app/modules/health_record/widgets/record_dropdown.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/base_page.dart';
+import 'package:hi_doctor_v2/app/modules/widgets/content_container.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/custom_text_btn.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/info_container.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/my_appbar.dart';
@@ -27,35 +28,6 @@ class EditPathologyRecordPage extends StatelessWidget {
   late String _title;
   late String _funcLabel;
   late VoidCallback _func;
-
-  Widget _getLabel(String text) {
-    return SizedBox(
-      height: 25.sp,
-      width: 100.sp,
-      child: Text(
-        text,
-        style: const TextStyle(
-          fontWeight: FontWeight.w500,
-        ),
-      ),
-    );
-  }
-
-  Widget _getTitle(String title) {
-    return Padding(
-      padding: EdgeInsets.only(
-        left: 18.sp,
-        bottom: 2.sp,
-      ),
-      child: Text(
-        title,
-        style: TextStyle(
-          fontSize: 11.5.sp,
-          color: Colors.grey[600],
-        ),
-      ),
-    );
-  }
 
   Widget _getAddBtn({required EdgeInsets margin, required VoidCallback onPressed}) {
     return Container(
@@ -121,7 +93,11 @@ class EditPathologyRecordPage extends StatelessWidget {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _getTitle('Thông tin bệnh lý'),
+          const ContentTitle1(
+            title: 'Thông tin bệnh lý',
+            leftPadding: 18,
+            bottomPadding: 2,
+          ),
           Container(
             padding: EdgeInsets.symmetric(
               vertical: 20.sp,
@@ -131,39 +107,14 @@ class EditPathologyRecordPage extends StatelessWidget {
               color: Colors.grey[100],
               borderRadius: BorderRadius.circular(15.sp),
             ),
-            child: Column(
-              children: [
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    _getLabel('Mã bệnh'),
-                    Text('${_p.code}'),
-                  ],
-                ),
-                Row(
-                  children: [
-                    _getLabel('Mã bệnh khác'),
-                    Text('${_p.otherCode}'),
-                  ],
-                ),
-                Row(
-                  children: [
-                    _getLabel('Tên chung'),
-                    Flexible(
-                      child: Text('${_p.generalName}'),
-                    ),
-                  ],
-                ),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    _getLabel('Tên bệnh'),
-                    Flexible(
-                      child: Text('${_p.diseaseName}'),
-                    ),
-                  ],
-                ),
-              ],
+            child: ContentContainer(
+              labelWidth: 100,
+              content: {
+                'Mã bệnh': _p.code ?? '',
+                'Mã bệnh khác': _p.otherCode ?? '',
+                'Tên chung': _p.generalName ?? '',
+                'Tên bệnh': _p.diseaseName ?? '',
+              },
             ),
           ),
           _box10,
@@ -189,7 +140,11 @@ class EditPathologyRecordPage extends StatelessWidget {
             removeImgFunc: _cEditPathology.removeImage,
           ),
           _hBox30,
-          _getTitle('Các phiếu sức khỏe liên quan đến bệnh lý'),
+          const ContentTitle1(
+            title: 'Các phiếu sức khỏe liên quan đến bệnh lý',
+            leftPadding: 18,
+            bottomPadding: 2,
+          ),
           FutureBuilder(
             future: _cEditPathology.initialize(_p),
             builder: (_, AsyncSnapshot<bool> snapshot) {

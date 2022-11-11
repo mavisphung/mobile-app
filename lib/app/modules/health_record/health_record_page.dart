@@ -12,7 +12,7 @@ import 'package:hi_doctor_v2/app/modules/health_record/views/system_tab.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/custom_title_section.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/image_container.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/my_appbar.dart';
-import 'package:hi_doctor_v2/app/modules/widgets/patient_tile.dart';
+import 'package:hi_doctor_v2/app/modules/widgets/custom/patient_tile.dart';
 
 class OtherHealthRecordPage extends StatelessWidget {
   final _cHealthRecord = Get.put(HealthRecordController());
