@@ -30,7 +30,7 @@ class HomeController extends GetxController {
     int page = 1,
     int limit = 10,
   }) async {
-    'Fetching nearest doctors'.debugLog('HomeController');
+    'Fetching nearest doctors - Page $page - Limit $limit'.debugLog('HomeController');
     final result = await apiHome.getNearestDoctors(page: page, limit: limit);
     final Map<String, dynamic> response = ApiResponse.getResponse(result);
     final model = ResponseModel2.fromMap(response);
@@ -40,7 +40,7 @@ class HomeController extends GetxController {
   }
 
   Future<bool> getDoctorList({int page = 1, int limit = 10}) async {
-    'Initializing data'.debugLog('HomeController');
+    'Fetching doctors - Page $page - Limit $limit'.debugLog('HomeController');
     final result = await apiHome.getDoctorList(page: page, limit: limit);
     final Map<String, dynamic> response = ApiResponse.getResponse(result);
     final model = ResponseModel2.fromMap(response);

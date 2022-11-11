@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import 'package:hi_doctor_v2/app/common/constants.dart';
+import 'package:hi_doctor_v2/app/common/util/extensions.dart';
 import 'package:hi_doctor_v2/app/common/values/colors.dart';
 import 'package:hi_doctor_v2/app/common/values/strings.dart';
 import 'package:hi_doctor_v2/app/models/doctor.dart';
@@ -22,10 +23,15 @@ import 'package:hi_doctor_v2/app/modules/widgets/custom_title_section.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/image_container.dart';
 
 class HomePage extends StatelessWidget {
-  HomePage({Key? key}) : super(key: key);
+  HomePage({Key? key}) : super(key: key) {
+    _homeController = Get.put(HomeController());
+    _settingsController = Get.put(SettingsController());
+    _isNearestLoaded = _homeController.getNearestDoctorsApi();
+  }
 
-  final HomeController _homeController = Get.put(HomeController());
-  final _settingsController = Get.put(SettingsController());
+  late final HomeController _homeController;
+  late final SettingsController _settingsController;
+  late Future<bool> _isNearestLoaded;
 
   final _spacing = SizedBox(
     height: 18.sp,

@@ -77,4 +77,15 @@ class ApiAuthImpl extends GetConnect with ApiAuth {
       }),
     );
   }
+
+  @override
+  Future<Response> postGoogleLogin(String accessToken) {
+    return post(
+      '/social-login/',
+      json.encode({
+        "platform": SocialPlatform.google,
+        "id": accessToken,
+      }),
+    );
+  }
 }

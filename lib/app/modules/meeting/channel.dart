@@ -56,7 +56,7 @@ class _ChannelPageState extends State<ChannelPage> {
 
   void setupVideoSDKEngine() async {
     _engine = createAgoraRtcEngine();
-    await _engine.initialize(const RtcEngineContext(appId: Constants.appId));
+    await _engine.initialize(const RtcEngineContext(appId: Constants.agoraAppId));
 
     _engine.registerEventHandler(
       RtcEngineEventHandler(
@@ -101,9 +101,10 @@ class _ChannelPageState extends State<ChannelPage> {
       token: _tempToken,
       channelId: _channelName,
       uid: 0,
-      options: const ChannelMediaOptions(
+      options: ChannelMediaOptions(
         clientRoleType: ClientRoleType.clientRoleBroadcaster,
         channelProfile: ChannelProfileType.channelProfileCommunication,
+        token: _tempToken,
       ),
     );
   }

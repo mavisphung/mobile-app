@@ -53,12 +53,14 @@ dependencies:
   table_calendar: ^3.0.6
   shared_preferences: ^2.0.15
   # For firebase
-  firebase_core: ^1.24.0
-  cloud_firestore: ^3.5.0
-  firebase_messaging: ^13.0.1
+  firebase_core: ^2.1.1
+  cloud_firestore: ^4.0.4
+  firebase_messaging: ^14.0.4
   # For video call
   permission_handler: ^10.1.0
   agora_rtc_engine: ^6.0.0
+  google_sign_in: ^5.4.2
+  firebase_auth: ^4.1.1
 
 dev_dependencies:
   flutter_test:

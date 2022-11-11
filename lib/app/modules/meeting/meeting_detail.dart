@@ -25,6 +25,10 @@ class MeetingDetailPage extends StatelessWidget {
     final cameraPermission = await Permission.camera.request();
     if (micPermission.isGranted && cameraPermission.isGranted) {
       final channelEntry = await _cMeeting.getChannelEntry();
+      // var channelEntry = {
+      //   'channel': 'aaa',
+      //   'token': '007eJxTYHjY+ELjp7aPnNU50YPq/GVrM3QEfG7vPHIwaVKVM2tGvqwCg5GxuaWRiUmigbllsompgaVFklmKpYGJQVKSsXliooVp+oS05OcM6cl/Xp9kZGRgZGAB4u986clMYJIZTLJA2YmJiQwMAC5/JMI=',
+      // };
       if (channelEntry != null) {
         Get.toNamed(Routes.CHANNEL, arguments: channelEntry);
       }

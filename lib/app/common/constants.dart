@@ -4,11 +4,12 @@ abstract class Constants {
   static const String baseUrl2 = 'capstone-elb-1141242582.ap-southeast-1.elb.amazonaws.com';
   // static const appId = '2379244a079c45098b6d9040bb37aa85';
   static const appId = '1ebd61600977424fba66c122d5c22576';
+  static const agoraAppId = '2379244a079c45098b6d9040bb37aa85';
   static const timeout = Duration(seconds: 30);
   static const successGetStatusCode = 200;
   static const successPostStatusCode = 201;
   static const userType = 'MEMBER';
-  static const defaultAvatar = 'https://cuu-be.s3.amazonaws.com/cuu-be/2022/10/27/668CGR.png';
+  static const defaultAvatar = 'https://cuu-be.s3.amazonaws.com/cuu-be/2022/10/23/68GE2G.png';
   static const info = 'info';
   static const currentPage = 'currentPage';
   static const nextPage = 'nextPage';
@@ -29,4 +30,9 @@ abstract class Constants {
   static const content = 'content';
   static const createdAt = 'createdAt';
   static const type = 'type';
+}
+
+abstract class SocialPlatform {
+  static const String google = 'GOOGLE';
+  static const String facebook = 'FACEBOOK';
 }

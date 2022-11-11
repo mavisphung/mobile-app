@@ -33,6 +33,7 @@ class MeetingController extends GetxController {
   Future<Map<String, String>?> getChannelEntry() async {
     final response = await _provider.getAgoraChannelToken().futureValue();
     if (response != null && response.isSuccess && response.statusCode == Constants.successGetStatusCode) {
+      response.data.toString().debugLog('MeetingController');
       final String? channelName = response.data['channel'];
       final String? token = response.data['token'];
       if (channelName != null && token != null) {
