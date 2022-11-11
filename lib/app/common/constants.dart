@@ -9,7 +9,7 @@ abstract class Constants {
   static const successGetStatusCode = 200;
   static const successPostStatusCode = 201;
   static const userType = 'MEMBER';
-  static const defaultAvatar = 'https://cuu-be.s3.amazonaws.com/cuu-be/2022/10/23/68GE2G.png';
+  static const defaultAvatar = 'https://cuu-be.s3.amazonaws.com/cuu-be/2022/10/27/668CGR.png';
   static const info = 'info';
   static const currentPage = 'currentPage';
   static const nextPage = 'nextPage';

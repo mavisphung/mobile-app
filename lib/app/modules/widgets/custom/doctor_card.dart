@@ -41,7 +41,7 @@ class DoctorCard extends StatelessWidget {
                   Text(
                     Tx.getDoctorName(lastName, firstName),
                     style: TextStyle(
-                      fontSize: 17.sp,
+                      fontSize: 15.sp,
                       fontWeight: FontWeight.w500,
                     ),
                   ),

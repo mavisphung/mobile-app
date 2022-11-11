@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:hi_doctor_v2/app/common/util/transformation.dart';
+import 'package:hi_doctor_v2/app/common/util/utils.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/content_container.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/custom/doctor_card.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/custom_card.dart';
@@ -58,19 +60,22 @@ class MeetingDetailPage extends StatelessWidget {
                   address: doctor?['address'],
                 ),
                 const ContentTitle1(title: 'Thông tin lịch hẹn'),
-                const ContentContainer(
-                  labelWidth: 70,
+                const ContentRow(
+                  labelWidth: 100,
+                  hozPadding: 5,
                   content: {
                     'Ngày': 'lalalala',
                     'Giờ': '16:00 - 16:30 PM (30 minutes)',
                   },
                 ),
                 const ContentTitle1(title: 'Thông tin bệnh nhân'),
-                const ContentContainer(
-                  labelWidth: 70,
+                ContentRow(
+                  labelWidth: 100,
+                  hozPadding: 5,
                   content: {
-                    'Ngày': 'lalalala',
-                    'Giờ': '16:00 - 16:30 PM (30 minutes)',
+                    'Họ tên': Tx.getFullName(patient?['lastName'], patient?['lastName']),
+                    'Tuổi': Utils.getAge(patient?['dob']),
+                    'Địa chỉ': patient?['address'],
                   },
                 ),
                 const ContentTitle1(title: 'Thông tin gói dịch vụ'),
@@ -84,7 +89,7 @@ class MeetingDetailPage extends StatelessWidget {
           } else if (snapshot.connectionState == ConnectionState.none) {
             return const NoInternetWidget2();
           }
-          return const LoadingWidget();
+          return const LoadingWidget(topPadding: 200);
         },
       ),
       bottomSheet: CustomBottomSheet(

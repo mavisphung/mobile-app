@@ -46,8 +46,60 @@ class ContentContainer extends StatelessWidget {
         horizontal: hozPadding?.sp ?? 18.sp,
       ),
       decoration: BoxDecoration(
-        color: color ?? Colors.grey.shade300,
+        color: color ?? Colors.grey.shade200,
         borderRadius: BorderRadius.circular(Constants.padding.sp),
+      ),
+      child: Column(
+        children: content.entries.map((e) => _getRow(e.key, e.value)).toList(),
+      ),
+    );
+  }
+}
+
+class ContentRow extends StatelessWidget {
+  final Map<String, String> content;
+  final double? verPadding;
+  final double? hozPadding;
+  final double labelWidth;
+
+  const ContentRow({
+    super.key,
+    required this.content,
+    this.verPadding,
+    this.hozPadding,
+    required this.labelWidth,
+  });
+
+  Widget _getRow(String key, String value) {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        SizedBox(
+          height: 25.sp,
+          width: labelWidth.sp,
+          child: Text(
+            key,
+            style: const TextStyle(
+              fontWeight: FontWeight.w300,
+            ),
+          ),
+        ),
+        Text(
+          value,
+          style: const TextStyle(
+            fontWeight: FontWeight.w300,
+          ),
+        ),
+      ],
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.symmetric(
+        vertical: verPadding?.sp ?? 20.sp,
+        horizontal: hozPadding?.sp ?? 18.sp,
       ),
       child: Column(
         children: content.entries.map((e) => _getRow(e.key, e.value)).toList(),
@@ -74,14 +126,15 @@ class ContentTitle1 extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.only(
-        top: topPadding?.sp ?? 0,
-        left: leftPadding?.sp ?? 0,
+        top: topPadding?.sp ?? 20.sp,
+        left: leftPadding?.sp ?? 5.sp,
         bottom: bottomPadding?.sp ?? 0,
       ),
       child: Text(
         title,
         style: TextStyle(
-          fontSize: 14.sp,
+          fontSize: 15.sp,
+          fontWeight: FontWeight.w500,
         ),
       ),
     );

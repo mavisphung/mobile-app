@@ -40,6 +40,7 @@ class UserProfileController extends GetxController {
     phoneNumber.text = profile.phoneNumber ?? '';
     avatar.value = profile.avatar ?? Constants.defaultAvatar;
     dob.text = profile.dob ?? '2000-10-24';
+    gender.value = profile.gender ?? userGender.first['value']!;
   }
 
   Future<bool> getProfile() async {
@@ -58,9 +59,6 @@ class UserProfileController extends GetxController {
           avatar: response.data['avatar'],
           dob: response.data['dob'],
         );
-        // dob.text = response.data['dob'] ?? Utils.formatDate(DateTime.now());
-        // gender.value = response.data['gender'];
-        // avatar.value = response.data['avatar'];
         _setInitialValue();
         return true;
       }

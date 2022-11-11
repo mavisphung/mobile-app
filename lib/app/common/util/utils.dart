@@ -181,7 +181,8 @@ abstract class Utils {
               InkWell(
                 onTap: () => Navigator.pop(ctx, true),
                 customBorder: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.only(bottomLeft: Radius.circular(12.sp), bottomRight: Radius.circular(12.sp)),
+                  borderRadius:
+                      BorderRadius.only(bottomLeft: Radius.circular(12.sp), bottomRight: Radius.circular(12.sp)),
                 ),
                 child: Padding(
                   padding: EdgeInsets.symmetric(vertical: Constants.padding.sp),
@@ -292,5 +293,22 @@ abstract class Utils {
   static String toYmd(String dmy) {
     final dob = dmy.split('-');
     return '${dob[2]}-${dob[1]}-${dob[0]}';
+  }
+
+  static String getAge(String ymd) {
+    try {
+      final dob = DateFormat('yyyy-MM-dd').parse(ymd);
+      final now = DateTime.now();
+
+      if (dob.year == now.year) {
+        return '${now.month - dob.month} tháng';
+      } else if (dob.month < now.month || (dob.month == now.month && dob.day < now.day)) {
+        return '${now.year - dob.year - 1}';
+      } else {
+        return '${now.year - dob.year}';
+      }
+    } catch (e) {
+      return '';
+    }
   }
 }

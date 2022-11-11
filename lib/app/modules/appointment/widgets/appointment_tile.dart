@@ -10,6 +10,7 @@ import 'package:hi_doctor_v2/app/common/values/strings.dart';
 import 'package:hi_doctor_v2/app/models/appointment.dart';
 import 'package:hi_doctor_v2/app/modules/appointment/widgets/appointment_tile_button.dart';
 import 'package:hi_doctor_v2/app/modules/message/chat_page.dart';
+import 'package:hi_doctor_v2/app/modules/widgets/image_container.dart';
 import 'package:hi_doctor_v2/app/routes/app_pages.dart';
 
 final Map<AppointmentStatus, Color> statusColors = {
@@ -70,14 +71,10 @@ class AppointmentTile extends StatelessWidget {
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(Constants.borderRadius.sp),
-                  child: Image.network(
-                    Constants.defaultAvatar,
-                    fit: BoxFit.fill,
-                    width: 83.sp,
-                    height: 83.sp,
-                  ),
+                ImageContainer(
+                  width: 83,
+                  height: 83,
+                  imgUrl: data.doctor?['avatar'],
                 ),
                 SizedBox(
                   width: 12.sp,
@@ -249,14 +246,10 @@ class HistoryAppointmentTile extends StatelessWidget {
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              ClipRRect(
-                borderRadius: BorderRadius.circular(Constants.borderRadius.sp),
-                child: Image.network(
-                  Constants.defaultAvatar,
-                  fit: BoxFit.fill,
-                  width: 83.sp,
-                  height: 83.sp,
-                ),
+              ImageContainer(
+                width: 83,
+                height: 83,
+                imgUrl: data.doctor?['avatar'],
               ),
               SizedBox(
                 width: 12.sp,

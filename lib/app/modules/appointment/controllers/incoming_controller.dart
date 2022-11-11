@@ -41,7 +41,7 @@ class IncomingController extends GetxController {
     ResponseModel2 model = ResponseModel2.fromMap(response);
     var data = model.data as List<dynamic>;
     incomingList.value += data.map((e) {
-      // print(e['bookedAt']);
+      print(data.toString());
       return Appointment(
         beginAt: e['beginAt'],
         id: e['id'],
