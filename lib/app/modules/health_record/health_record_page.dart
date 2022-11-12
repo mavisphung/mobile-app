@@ -9,7 +9,6 @@ import 'package:hi_doctor_v2/app/modules/health_record/controllers/health_record
 import 'package:hi_doctor_v2/app/modules/health_record/views/all_tab.dart';
 import 'package:hi_doctor_v2/app/modules/health_record/views/other_tab.dart';
 import 'package:hi_doctor_v2/app/modules/health_record/views/system_tab.dart';
-import 'package:hi_doctor_v2/app/modules/widgets/custom_title_section.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/image_container.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/my_appbar.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/custom/patient_tile.dart';

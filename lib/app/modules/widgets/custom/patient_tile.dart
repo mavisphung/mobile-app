@@ -64,7 +64,8 @@ class PatientOption {
                       right: Constants.padding.sp,
                     ),
                     child: Text(
-                      'The system will load all health records of selected patient.',
+                      'Hệ thống sẽ tải tất cả hồ sơ sức khỏe của bệnh nhân đã chọn.',
+                      textAlign: TextAlign.justify,
                       style: TextStyle(
                         fontSize: 12.sp,
                         color: Colors.black54,

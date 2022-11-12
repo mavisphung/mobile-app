@@ -23,53 +23,54 @@ class Dialogs {
     }
 
     showDialog(
-        context: ctx,
-        builder: (_) {
-          return Dialog(
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(20.sp),
-            ),
-            child: Padding(
-              padding: EdgeInsets.symmetric(vertical: 30.sp, horizontal: 20.sp),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  // Padding(
-                  //   padding: const EdgeInsets.only(bottom: 18.0),
-                  //   child: Text(
-                  //     'Success',
-                  //     style: TextStyle(
-                  //       fontSize: 19.sp,
-                  //       fontWeight: FontWeight.w500,
-                  //       color: Colors.green,
-                  //     ),
-                  //   ),
-                  // ),
-                  SvgPicture.asset(
-                    icon,
-                    width: 50.sp,
-                    height: 50.sp,
-                  ),
-                  Padding(
-                    padding: EdgeInsets.symmetric(vertical: 20.sp),
-                    child: Text(
-                      message,
-                      textAlign: TextAlign.justify,
-                      style: TextStyle(
-                        fontSize: 14.sp,
-                        color: Colors.black54,
-                      ),
+      context: ctx,
+      builder: (_) {
+        return Dialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20.sp),
+          ),
+          child: Padding(
+            padding: EdgeInsets.symmetric(vertical: 30.sp, horizontal: 20.sp),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                // Padding(
+                //   padding: const EdgeInsets.only(bottom: 18.0),
+                //   child: Text(
+                //     'Success',
+                //     style: TextStyle(
+                //       fontSize: 19.sp,
+                //       fontWeight: FontWeight.w500,
+                //       color: Colors.green,
+                //     ),
+                //   ),
+                // ),
+                SvgPicture.asset(
+                  icon,
+                  width: 50.sp,
+                  height: 50.sp,
+                ),
+                Padding(
+                  padding: EdgeInsets.symmetric(vertical: 20.sp),
+                  child: Text(
+                    message,
+                    textAlign: TextAlign.justify,
+                    style: TextStyle(
+                      fontSize: 14.sp,
+                      color: Colors.black54,
                     ),
                   ),
-                  CustomElevatedButtonWidget(
-                    textChild: Strings.ok,
-                    onPressed: action,
-                    hasShadow: false,
-                  ),
-                ],
-              ),
+                ),
+                CustomElevatedButtonWidget(
+                  textChild: Strings.ok,
+                  onPressed: action,
+                  hasShadow: false,
+                ),
+              ],
             ),
-          );
-        });
+          ),
+        );
+      },
+    );
   }
 }

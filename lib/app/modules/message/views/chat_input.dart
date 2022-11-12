@@ -5,6 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:hi_doctor_v2/app/common/values/colors.dart';
 import 'package:hi_doctor_v2/app/modules/message/chat_page.dart';
+import 'package:hi_doctor_v2/app/modules/widgets/custom_icon_button.dart';
 
 class ChatInput extends StatelessWidget {
   final TextEditingController inputController;
@@ -19,53 +20,42 @@ class ChatInput extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 50.sp,
+      height: 60.sp,
       decoration: BoxDecoration(
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.2),
-            offset: const Offset(0, 8),
-            blurRadius: 8.sp,
-          ),
-        ],
-        color: Colors.white,
+        color: Colors.grey.shade200,
       ),
       child: Row(
         children: <Widget>[
           // Button send image
-          Material(
-            color: Colors.white,
-            child: IconButton(
-              icon: const Icon(CupertinoIcons.photo_fill),
-              onPressed: () {
-                // getImage();
-              },
-              color: Colors.black,
-            ),
+          CustomIconButton(
+            onPressed: () {
+              // getImage();
+            },
+            icon: Icon(CupertinoIcons.photo_fill, color: AppColors.grey600),
           ),
           // Edit text
           Flexible(
             child: TextField(
               onSubmitted: (value) => onMessageSend(TypeMessage.TEXT.index),
-              style: const TextStyle(color: Colors.black, fontSize: 15),
+              style: const TextStyle(fontSize: 15),
               controller: inputController,
-              decoration: InputDecoration.collapsed(
+              decoration: InputDecoration(
+                filled: true,
+                fillColor: Colors.white,
                 hintText: 'Type your message...',
                 hintStyle: TextStyle(color: Colors.blueGrey.shade200),
+                contentPadding: EdgeInsets.only(top: 10.sp, bottom: 10.sp, left: 18.sp, right: 18.sp),
+                border: OutlineInputBorder(
+                  borderSide: BorderSide.none,
+                  borderRadius: BorderRadius.circular(50),
+                ),
               ),
             ),
           ),
           // Button send message
-          Material(
-            color: Colors.white,
-            child: Container(
-              margin: const EdgeInsets.symmetric(horizontal: 8),
-              child: IconButton(
-                icon: const Icon(PhosphorIcons.paper_plane_right_fill),
-                onPressed: () => onMessageSend(TypeMessage.TEXT.index),
-                color: AppColors.secondary,
-              ),
-            ),
+          CustomIconButton(
+            onPressed: () => onMessageSend(TypeMessage.TEXT.index),
+            icon: Icon(PhosphorIcons.paper_plane_right_fill, color: AppColors.primary),
           ),
         ],
       ),

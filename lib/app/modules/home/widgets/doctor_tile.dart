@@ -2,12 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hi_doctor_v2/app/common/values/colors.dart';
 
+// ignore: must_be_immutable
 class DoctorTile extends StatelessWidget {
-  Icon? icon;
-  String? middleText;
-  String? bottomText;
+  final Icon? icon;
+  final String? middleText;
+  final String? bottomText;
 
-  DoctorTile({
+  const DoctorTile({
     Key? key,
     this.icon,
     this.middleText,

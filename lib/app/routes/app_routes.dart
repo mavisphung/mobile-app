@@ -25,4 +25,5 @@ abstract class Routes {
   static const HEALTH_RECORDS = '/healthRecords';
   static const EDIT_HEALTH_RECORD = '/editOtherHealthRecord';
   static const EDIT_PATHOLOGY_RECORD = '/editPathologyRecord';
+  static const IMAGE = '/image';
 }

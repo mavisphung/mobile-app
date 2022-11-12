@@ -7,7 +7,6 @@ import 'package:hi_doctor_v2/app/common/util/utils.dart';
 import 'package:hi_doctor_v2/app/modules/health_record/models/hr_res_model.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/custom_inkwell.dart';
 import 'package:hi_doctor_v2/app/routes/app_pages.dart';
-import 'package:intl/intl.dart';
 
 class OtherHealthRecordItem extends StatelessWidget {
   final HrResModel hr;

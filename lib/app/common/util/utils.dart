@@ -260,9 +260,7 @@ abstract class Utils {
 
   static String formatDate(DateTime date) => DateFormat('dd-MM-yyyy').format(date);
 
-  static String formatDateApi(DateTime date) => DateFormat('yyyy-MM-dd').format(date);
-
-  static String formatTime(DateTime date) => DateFormat.jm().format(date);
+  static String formatAMPM(DateTime date) => DateFormat.jm().format(date);
 
   static String formatHHmmTime(DateTime date) => DateFormat('HH:mm').format(date);
 
@@ -276,7 +274,7 @@ abstract class Utils {
 
   static DateTime? parseStrToDate(String str) {
     try {
-      return DateFormat('yyyy-MM-dd').parse(str);
+      return DateFormat('dd-MM-yyyy').parse(str);
     } catch (e) {
       return null;
     }
@@ -288,6 +286,11 @@ abstract class Utils {
     } catch (e) {
       return null;
     }
+  }
+
+  static String toDmY(String ymd) {
+    final dob = ymd.split('-');
+    return '${dob[2]}-${dob[1]}-${dob[0]}';
   }
 
   static String toYmd(String dmy) {
@@ -302,7 +305,7 @@ abstract class Utils {
 
       if (dob.year == now.year) {
         return '${now.month - dob.month} tháng';
-      } else if (dob.month < now.month || (dob.month == now.month && dob.day < now.day)) {
+      } else if (dob.month > now.month || (dob.month == now.month && dob.day > now.day)) {
         return '${now.year - dob.year - 1}';
       } else {
         return '${now.year - dob.year}';
@@ -310,5 +313,21 @@ abstract class Utils {
     } catch (e) {
       return '';
     }
+  }
+
+  static Map<String, String>? getDateTimeMap(String str) {
+    final dateTime = str.split(' ');
+    final date = DateFormat('yyyy-MM-dd').parse(dateTime[0]);
+    final now = DateTime.now();
+    late final bool isToday;
+    if (date.year == now.year && date.month == now.month && date.day == now.day) isToday = true;
+    final time = Utils.parseStrToTime(dateTime[1].replaceRange(5, null, ""));
+    if (time != null) {
+      return {
+        'date': '${Utils.toDmY(dateTime[0])}  ${isToday ? "(Hôm nay)" : ""}',
+        'time': Utils.formatAMPM(time),
+      };
+    }
+    return null;
   }
 }

@@ -78,7 +78,6 @@ class BookingDateTimePage extends StatelessWidget {
                       return GestureDetector(
                         onTap: () {
                           _cBooking.setSelectedTimeId(e.id!);
-                          print('E.VALUE: ${e.value}');
                           _cBooking.setSelectedTime(e.value!);
                         },
                         child: ObxValue<RxInt>(

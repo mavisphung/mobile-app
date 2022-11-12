@@ -97,7 +97,7 @@ class PatientProfileController extends GetxController {
                 id: e['id'],
                 firstName: e['firstName'],
                 lastName: e['lastName'],
-                dob: e['dob'],
+                dob: Utils.toDmY(e['dob']),
                 address: e['address'],
                 gender: e['gender'],
                 avatar: e['avatar'],
@@ -123,7 +123,7 @@ class PatientProfileController extends GetxController {
       final patient = Patient.fromMap(response.data);
       firstName.text = patient.firstName ?? '';
       lastName.text = patient.lastName ?? '';
-      dob.text = patient.dob ?? Utils.formatDate(DateTime.now());
+      dob.text = Utils.toDmY(patient.dob ?? '2000-10-24');
       if (patient.gender != null) {
         gender.value = patient.gender!;
       }
@@ -146,8 +146,7 @@ class PatientProfileController extends GetxController {
     Patient data = Patient(
       firstName: firstName.text,
       lastName: lastName.text,
-      // dob: Utils.toYmd(dob.text),
-      dob: dob.text,
+      dob: Utils.toYmd(dob.text),
       address: address.text,
       gender: gender.value,
       avatar: avatar.value,
@@ -171,15 +170,13 @@ class PatientProfileController extends GetxController {
       id: patientId,
       firstName: firstName.text,
       lastName: lastName.text,
-      // dob: Utils.toYmd(dob.text),
-      dob: dob.text,
+      dob: Utils.toYmd(dob.text),
       address: address.text,
       gender: gender.value,
       avatar: avatar.value,
     );
     var response = await _provider.putPatientProfile(patientId, data).futureValue();
     if (response != null && response.isSuccess == true) {
-      // TODO: update lại patient list
       await getPatientList();
       setStatusSuccess();
       Get.back();

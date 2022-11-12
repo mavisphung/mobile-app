@@ -52,7 +52,7 @@ class NavBar extends StatelessWidget {
               showUnselectedLabels: false,
               type: BottomNavigationBarType.fixed,
               backgroundColor: Colors.white,
-              elevation: 0,
+              elevation: 6,
               items: [
                 _bottomNavigationBarItem(
                   icon: CupertinoIcons.home,

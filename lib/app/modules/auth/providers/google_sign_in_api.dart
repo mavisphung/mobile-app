@@ -1,5 +1,4 @@
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:hi_doctor_v2/app/common/util/extensions.dart';
 
 class GoogleSignInApi {
   static final _googleSignIn = GoogleSignIn(

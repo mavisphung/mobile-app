@@ -41,8 +41,7 @@ class IncomingController extends GetxController {
     ResponseModel2 model = ResponseModel2.fromMap(response);
     var data = model.data as List<dynamic>;
     incomingList.value += data.map((e) {
-      print(data.toString());
-      return Appointment(
+      final appointment = Appointment(
         beginAt: e['beginAt'],
         id: e['id'],
         status: e['status'],
@@ -51,6 +50,8 @@ class IncomingController extends GetxController {
         checkInCode: e['checkInCode'],
         bookedAt: e['bookedAt'],
       );
+      print(appointment.toString());
+      return appointment;
     }).toList();
     incomingList.length.toString().debugLog('Items in list');
     update();

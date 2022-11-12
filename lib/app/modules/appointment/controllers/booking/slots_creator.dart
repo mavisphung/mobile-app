@@ -54,7 +54,7 @@ class SlotsCreator {
             print('endSlot 1: $endSlot');
             slots.add(WorkingHour(
               id: id++,
-              title: Utils.formatTime(endSlot),
+              title: Utils.formatAMPM(endSlot),
               value: '${Utils.formatHHmmTime(endSlot)}:00',
             ));
             endSlot = DateTime(selectedDate.year, selectedDate.month, selectedDate.day, endSlot.hour, endSlot.minute)
@@ -93,7 +93,7 @@ class SlotsCreator {
           print('endSlot 1: $endSlot');
           slots.add(WorkingHour(
             id: id++,
-            title: Utils.formatTime(endSlot),
+            title: Utils.formatAMPM(endSlot),
             value: '${Utils.formatHHmmTime(endSlot)}:00',
           ));
           endSlot = DateTime(selectedDate.year, selectedDate.month, selectedDate.day, endSlot.hour, endSlot.minute)

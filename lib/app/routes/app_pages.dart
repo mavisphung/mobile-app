@@ -25,6 +25,7 @@ import 'package:hi_doctor_v2/app/modules/search/views/search_result_page.dart';
 import 'package:hi_doctor_v2/app/modules/settings/views/patient_list.dart';
 import 'package:hi_doctor_v2/app/modules/settings/views/patient_profile_detail.dart';
 import 'package:hi_doctor_v2/app/modules/settings/views/user_profile_detail.dart';
+import 'package:hi_doctor_v2/app/modules/widgets/image_page.dart';
 
 part 'package:hi_doctor_v2/app/routes/app_routes.dart';
 
@@ -120,6 +121,10 @@ abstract class AppPages {
     GetPage(
       name: Routes.EDIT_PATHOLOGY_RECORD,
       page: () => EditPathologyRecordPage(),
+    ).custom(),
+    GetPage(
+      name: Routes.IMAGE,
+      page: () => ImagePage(),
     ).custom(),
   ];
 }

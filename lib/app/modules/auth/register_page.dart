@@ -73,7 +73,6 @@ class _RegisterPageState extends State<RegisterPage> {
 
   void _submitRegisterForm() async {
     if (!_checkForm(_formKey2)) return;
-    final formatedDob = Utils.toYmd(_dobController.text);
     RequestRegisterModel model = RequestRegisterModel(
       email: _emailController.text,
       password: _passwordController.text,
@@ -83,7 +82,7 @@ class _RegisterPageState extends State<RegisterPage> {
       address: _addressController.text.trim(),
       phoneNumber: _phoneNumberController.text,
       gender: _controller.gender.value,
-      dob: _dobController.text,
+      dob: Utils.toYmd(_dobController.text),
     );
     var isRegistrationSuccess = await _controller.register(model);
     if (isRegistrationSuccess) {

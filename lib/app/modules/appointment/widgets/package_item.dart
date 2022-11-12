@@ -4,12 +4,19 @@ import 'package:get/get.dart';
 
 import 'package:hi_doctor_v2/app/common/values/colors.dart';
 import 'package:hi_doctor_v2/app/modules/appointment/controllers/booking/booking_controller.dart';
+import 'package:intl/intl.dart';
+
+// ignore: constant_identifier_names
+enum CategoryType { AT_DOCTOR_HOME, AT_PATIENT_HOME, ONLINE }
+
+const List<String> _categoryStr = ['Tại nhà bác sĩ', 'Tại nhà bệnh nhân', 'Trực tuyến'];
 
 class PackageItem extends StatelessWidget {
   final int id;
   final String name;
   final String description;
   final double price;
+  final String? category;
 
   PackageItem({
     Key? key,
@@ -17,9 +24,20 @@ class PackageItem extends StatelessWidget {
     required this.name,
     required this.description,
     required this.price,
+    required this.category,
   }) : super(key: key);
 
   final _c = Get.find<BookingController>();
+
+  String getPrice() {
+    return NumberFormat.decimalPattern('vi,VN').format(price);
+  }
+
+  String getCategory() {
+    final index = CategoryType.values.indexWhere((e) => e.name == category);
+    if (index != -1) return _categoryStr[index];
+    return '';
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -45,27 +63,39 @@ class PackageItem extends StatelessWidget {
                   ),
                 ),
                 SizedBox(
-                  height: 5.sp,
+                  height: 10.sp,
                 ),
                 Text(
                   description,
-                  maxLines: 2,
                   style: TextStyle(
                     color: Colors.black,
-                    fontSize: 10.sp,
-                    overflow: TextOverflow.fade,
-                    // wordSpacing: 0.1,
+                    fontSize: 12.sp,
+                  ),
+                ),
+                SizedBox(
+                  height: 10.sp,
+                ),
+                Text(
+                  getCategory(),
+                  style: TextStyle(
+                    color: AppColors.secondary,
+                    fontSize: 15.sp,
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
               ],
             ),
           ),
+          SizedBox(
+            width: 8.sp,
+          ),
           Text(
-            '\$ $price',
+            '${getPrice()} VNĐ',
             style: TextStyle(
               color: AppColors.primary,
-              fontSize: 18.sp,
+              fontSize: 16.sp,
               fontWeight: FontWeight.w500,
+              fontFamily: 'OpenSans',
             ),
           ),
           ObxValue<RxInt>(

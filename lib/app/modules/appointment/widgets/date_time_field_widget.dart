@@ -61,7 +61,7 @@ class MyDateTimeField extends StatelessWidget {
                         ),
                       ),
                       onPressed: () {
-                        dob.text = Utils.formatDateApi(selectedDate!);
+                        dob.text = Utils.formatDate(selectedDate!);
                         dob.text.toString().debugLog('Picked date');
                         Get.back();
                       },

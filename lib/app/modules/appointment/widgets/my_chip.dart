@@ -1,18 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-
-import '../../../common/util/extensions.dart';
-import '../controllers/appointment_controller.dart';
+import 'package:hi_doctor_v2/app/common/util/extensions.dart';
+import 'package:hi_doctor_v2/app/modules/appointment/controllers/appointment_controller.dart';
 
 class MyTypeChip extends StatefulWidget {
-  Color backgroundColor;
-  Color? textColor;
-  BoxDecoration? avatarDecoration;
-  String label;
-  AppointmentType value;
+  final Color backgroundColor;
+  final Color? textColor;
+  final BoxDecoration? avatarDecoration;
+  final String label;
+  final AppointmentType value;
   bool isChosen;
-  Function()? action;
+  final Function()? action;
 
   MyTypeChip({
     Key? key,

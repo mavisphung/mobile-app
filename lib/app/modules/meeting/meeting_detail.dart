@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:permission_handler/permission_handler.dart';
+
 import 'package:hi_doctor_v2/app/common/util/transformation.dart';
 import 'package:hi_doctor_v2/app/common/util/utils.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/content_container.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/custom/doctor_card.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/custom_card.dart';
-
+import 'package:hi_doctor_v2/app/modules/widgets/custom_title_section.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/loading_widget.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/response_status_widget.dart';
-import 'package:permission_handler/permission_handler.dart';
 import 'package:hi_doctor_v2/app/modules/meeting/controllers/meeting_controller.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/base_page.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/custom_bottom_sheet.dart';
@@ -27,10 +27,6 @@ class MeetingDetailPage extends StatelessWidget {
     final cameraPermission = await Permission.camera.request();
     if (micPermission.isGranted && cameraPermission.isGranted) {
       final channelEntry = await _cMeeting.getChannelEntry();
-      // var channelEntry = {
-      //   'channel': 'aaa',
-      //   'token': '007eJxTYHjY+ELjp7aPnNU50YPq/GVrM3QEfG7vPHIwaVKVM2tGvqwCg5GxuaWRiUmigbllsompgaVFklmKpYGJQVKSsXliooVp+oS05OcM6cl/Xp9kZGRgZGAB4u986clMYJIZTLJA2YmJiQwMAC5/JMI=',
-      // };
       if (channelEntry != null) {
         Get.toNamed(Routes.CHANNEL, arguments: channelEntry);
       }
@@ -49,6 +45,7 @@ class MeetingDetailPage extends StatelessWidget {
           if (snapshot.hasData && snapshot.data == true) {
             final doctor = _cMeeting.appointment.doctor;
             final patient = _cMeeting.appointment.patient;
+            final dateTimeMap = Utils.getDateTimeMap(_cMeeting.appointment.bookedAt ?? '');
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -60,20 +57,26 @@ class MeetingDetailPage extends StatelessWidget {
                   address: doctor?['address'],
                 ),
                 const ContentTitle1(title: 'Thông tin lịch hẹn'),
-                const ContentRow(
-                  labelWidth: 100,
-                  hozPadding: 5,
-                  content: {
-                    'Ngày': 'lalalala',
-                    'Giờ': '16:00 - 16:30 PM (30 minutes)',
-                  },
-                ),
-                const ContentTitle1(title: 'Thông tin bệnh nhân'),
                 ContentRow(
                   labelWidth: 100,
                   hozPadding: 5,
                   content: {
-                    'Họ tên': Tx.getFullName(patient?['lastName'], patient?['lastName']),
+                    'Ngày': '${dateTimeMap?["date"]}',
+                    'Giờ': '${dateTimeMap?["time"]}',
+                  },
+                ),
+                CustomTitleSection(
+                  paddingLeft: 5,
+                  paddingTop: 20,
+                  title: 'Thông tin bệnh nhân',
+                  suffixText: 'Xem ảnh',
+                  suffixAction: () => Get.toNamed(Routes.IMAGE, arguments: patient?['avatar']),
+                ),
+                ContentRow(
+                  labelWidth: 100,
+                  hozPadding: 5,
+                  content: {
+                    'Họ tên': Tx.getFullName(patient?['lastName'], patient?['firstName']),
                     'Tuổi': Utils.getAge(patient?['dob']),
                     'Địa chỉ': patient?['address'],
                   },

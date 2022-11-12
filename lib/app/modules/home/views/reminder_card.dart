@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:hi_doctor_v2/app/common/constants.dart';
 
-import 'package:hi_doctor_v2/app/common/values/colors.dart';
+import 'package:hi_doctor_v2/app/modules/widgets/custom_card.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/image_container.dart';
 
 class ReminderCard extends StatelessWidget {
@@ -10,14 +9,9 @@ class ReminderCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      elevation: 10,
-      shadowColor: AppColors.shadow,
-      color: Colors.white,
-      shape: OutlineInputBorder(
-        borderSide: BorderSide.none,
-        borderRadius: BorderRadius.circular(Constants.borderRadius.sp),
-      ),
+    return CustomCard(
+      verticalPadding: 0,
+      horizontalPadding: 0,
       child: ListTile(
         dense: true,
         contentPadding: EdgeInsets.symmetric(vertical: 15.sp, horizontal: 10.sp),
@@ -39,7 +33,6 @@ class ReminderCard extends StatelessWidget {
                     maxLines: 2,
                     style: TextStyle(
                       fontSize: 14.sp,
-                      // color: Colors.black,
                       fontWeight: FontWeight.w600,
                       overflow: TextOverflow.ellipsis,
                     ),
@@ -72,7 +65,7 @@ class ReminderCard extends StatelessWidget {
                 child: Text(
                   'Wednesday, July 29',
                   style: TextStyle(
-                    color: Colors.black87,
+                    color: Colors.green.shade800,
                     fontSize: 13.2.sp,
                   ),
                 ),
@@ -90,7 +83,7 @@ class ReminderCard extends StatelessWidget {
                 child: Text(
                   '11:00 am - 12:00 am',
                   style: TextStyle(
-                    color: Colors.black87,
+                    color: Colors.pink.shade700,
                     fontSize: 13.2.sp,
                   ),
                 ),
