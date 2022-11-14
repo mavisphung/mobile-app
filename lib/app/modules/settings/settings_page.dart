@@ -15,11 +15,9 @@ import 'package:hi_doctor_v2/app/modules/widgets/my_appbar.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/custom/patient_tile.dart';
 import 'package:hi_doctor_v2/app/routes/app_pages.dart';
 
-enum SettingOption { myaccount, logout }
-
 // ignore: must_be_immutable
 class SettingsPage extends StatelessWidget {
-  final _cSettings = Get.find<SettingsController>();
+  final _cSettings = Get.put(SettingsController());
 
   SettingsPage({Key? key}) : super(key: key);
 

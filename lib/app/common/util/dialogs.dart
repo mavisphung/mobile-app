@@ -3,8 +3,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
+import 'package:hi_doctor_v2/app/common/values/colors.dart';
 import 'package:hi_doctor_v2/app/common/values/strings.dart';
-import 'package:hi_doctor_v2/app/modules/widgets/custom_elevate_btn_widget.dart';
 
 class Dialogs {
   static void statusDialog({
@@ -15,7 +15,8 @@ class Dialogs {
     required VoidCallback successAction,
     VoidCallback? failAction,
   }) {
-    final icon = isSuccess ? 'assets/icons/done.svg' : 'assets/icons/fail.svg';
+    final icon = isSuccess ? 'assets/icons/done1.svg' : 'assets/icons/fail1.svg';
+    final title = isSuccess ? 'Chúc mừng!' : 'Ôi, thất bại!';
     final message = isSuccess ? successMsg : failMsg;
     action() {
       Get.back();
@@ -27,47 +28,68 @@ class Dialogs {
       builder: (_) {
         return Dialog(
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(20.sp),
+            borderRadius: BorderRadius.circular(40.sp),
           ),
-          child: Padding(
-            padding: EdgeInsets.symmetric(vertical: 30.sp, horizontal: 20.sp),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                // Padding(
-                //   padding: const EdgeInsets.only(bottom: 18.0),
-                //   child: Text(
-                //     'Success',
-                //     style: TextStyle(
-                //       fontSize: 19.sp,
-                //       fontWeight: FontWeight.w500,
-                //       color: Colors.green,
-                //     ),
-                //   ),
-                // ),
-                SvgPicture.asset(
-                  icon,
-                  width: 50.sp,
-                  height: 50.sp,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Container(
+                width: double.infinity,
+                height: 150.sp,
+                padding: EdgeInsets.symmetric(vertical: 20.sp),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.only(topLeft: Radius.circular(40.sp), topRight: Radius.circular(40.sp)),
+                  color: isSuccess ? Colors.green.shade100 : Colors.red.shade100,
                 ),
-                Padding(
-                  padding: EdgeInsets.symmetric(vertical: 20.sp),
-                  child: Text(
-                    message,
-                    textAlign: TextAlign.justify,
-                    style: TextStyle(
-                      fontSize: 14.sp,
-                      color: Colors.black54,
+                child: SvgPicture.asset(
+                  icon,
+                  width: 20.sp,
+                  height: 20.sp,
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.symmetric(vertical: 20.sp),
+                child: Text(
+                  title,
+                  style: TextStyle(
+                    fontSize: 19.sp,
+                    color: isSuccess ? Colors.greenAccent.shade700 : Colors.redAccent.shade700,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.symmetric(
+                  horizontal: 30.sp,
+                ),
+                child: Text(
+                  message,
+                  textAlign: TextAlign.center,
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 30.sp, vertical: 30.sp),
+                child: GestureDetector(
+                  onTap: action,
+                  child: Container(
+                    height: 50.sp,
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(50),
+                      color: AppColors.primary,
+                    ),
+                    child: Text(
+                      Strings.ok,
+                      style: TextStyle(
+                        fontSize: 16.sp,
+                        color: Colors.white,
+                        fontWeight: FontWeight.w500,
+                      ),
                     ),
                   ),
                 ),
-                CustomElevatedButtonWidget(
-                  textChild: Strings.ok,
-                  onPressed: action,
-                  hasShadow: false,
-                ),
-              ],
-            ),
+              ),
+            ],
           ),
         );
       },

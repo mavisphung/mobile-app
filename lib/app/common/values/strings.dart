@@ -27,7 +27,7 @@ abstract class Strings {
   static String get dob => 'Ngày sinh';
 
   // Verb, Adjective
-  static String get ok => 'OK';
+  static String get ok => 'Ok';
   static String get yes => 'Có';
   static String get no => 'Không';
   static String get back => 'Quay lại';

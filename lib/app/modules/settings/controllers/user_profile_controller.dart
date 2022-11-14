@@ -30,6 +30,7 @@ class UserProfileController extends GetxController {
   final status = Status.init.obs;
 
   final _provider = Get.put(ApiSettingsImpl());
+  final _cCustom = Get.put(CustomController());
 
   UserInfo2 get profile => _profile;
 
@@ -102,8 +103,7 @@ class UserProfileController extends GetxController {
   }
 
   void setAvatar(bool isFromCamera) async {
-    final cCustom = Get.find<CustomController>();
-    final url = await cCustom.getImage(isFromCamera);
+    final url = await _cCustom.getImage(isFromCamera);
     if (url != null) avatar.value = url;
   }
 

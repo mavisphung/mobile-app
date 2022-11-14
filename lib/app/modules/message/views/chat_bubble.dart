@@ -3,14 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
+
 import 'package:hi_doctor_v2/app/common/constants.dart';
 import 'package:hi_doctor_v2/app/common/values/colors.dart';
-
 import 'package:hi_doctor_v2/app/modules/message/chat_page.dart';
 import 'package:hi_doctor_v2/app/modules/message/models/chat_message.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/image_container.dart';
 import 'package:hi_doctor_v2/app/routes/app_pages.dart';
-import 'package:intl/intl.dart';
 
 class ChatBubble extends StatelessWidget {
   final int userId;
@@ -106,23 +106,27 @@ class ChatBubble extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: <Widget>[
-                  messageChat.type == TypeMessage.TEXT.index
-                      ? Container(
-                          constraints: BoxConstraints(
-                            maxWidth: 250.sp,
-                          ),
-                          padding: EdgeInsets.fromLTRB(15.sp, 10.sp, 15.sp, 10.sp),
-                          decoration: BoxDecoration(
-                            color: Colors.blueAccent,
-                            borderRadius: BorderRadius.circular(Constants.borderRadius.sp),
-                          ),
-                          margin: EdgeInsets.only(right: 10.sp),
-                          child: Text(
-                            messageChat.content,
-                            style: const TextStyle(color: Colors.white),
-                          ),
-                        )
-                      : const SizedBox.shrink(),
+                  if (messageChat.type == TypeMessage.TEXT.index)
+                    Container(
+                      constraints: BoxConstraints(
+                        maxWidth: 250.sp,
+                      ),
+                      padding: EdgeInsets.symmetric(vertical: 10.sp, horizontal: 15.sp),
+                      decoration: BoxDecoration(
+                        color: Colors.blueAccent,
+                        borderRadius: BorderRadius.circular(Constants.borderRadius.sp),
+                      ),
+                      margin: EdgeInsets.only(right: 10.sp),
+                      child: Text(
+                        messageChat.content,
+                        style: const TextStyle(color: Colors.white),
+                      ),
+                    ),
+                  if (messageChat.type == TypeMessage.IMAGE.index)
+                    Padding(
+                      padding: EdgeInsets.symmetric(vertical: 10.sp, horizontal: 15.sp),
+                      child: _getImageWidget(messageChat.content),
+                    ),
                 ],
               ),
               if (isLastMessageRight(index))
@@ -133,58 +137,56 @@ class ChatBubble extends StatelessWidget {
             ],
           ),
         );
-      } else {
-        // Left (peer message)
-        return Padding(
-          padding: EdgeInsets.only(bottom: 10.sp),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Row(
-                children: <Widget>[
-                  isLastMessageLeft(index)
-                      ? ImageContainer(
-                          width: 35,
-                          height: 35,
-                          imgUrl: peerAvatar,
-                        ).circle()
-                      : SizedBox(width: 35.sp),
-                  if (messageChat.type == TypeMessage.TEXT.index)
-                    Container(
-                      constraints: BoxConstraints(
-                        maxWidth: 230.sp,
-                      ),
-                      padding: EdgeInsets.symmetric(vertical: 10.sp, horizontal: 15.sp),
-                      decoration: BoxDecoration(
-                        color: Colors.blueGrey.shade50,
-                        borderRadius: BorderRadius.circular(Constants.borderRadius.sp),
-                      ),
-                      margin: EdgeInsets.only(left: 10.sp),
-                      child: Text(
-                        messageChat.content,
-                        style: const TextStyle(color: Colors.black),
-                      ),
-                    ),
-                  if (messageChat.type == TypeMessage.IMAGE.index)
-                    Padding(
-                      padding: EdgeInsets.symmetric(vertical: 10.sp, horizontal: 15.sp),
-                      child: _getImageWidget(messageChat.content),
-                    )
-                ],
-              ),
-              // Time
-              isLastMessageLeft(index)
-                  ? _getDateWidget(
-                      EdgeInsets.only(left: 50.sp, top: 5.sp, bottom: 5.sp),
-                      messageChat.createdAt,
-                    )
-                  : const SizedBox.shrink()
-            ],
-          ),
-        );
       }
-    } else {
-      return const SizedBox.shrink();
+      // Left (peer message)
+      return Padding(
+        padding: EdgeInsets.only(bottom: 10.sp),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Row(
+              children: <Widget>[
+                isLastMessageLeft(index)
+                    ? ImageContainer(
+                        width: 35,
+                        height: 35,
+                        imgUrl: peerAvatar,
+                      ).circle()
+                    : SizedBox(width: 35.sp),
+                if (messageChat.type == TypeMessage.TEXT.index)
+                  Container(
+                    constraints: BoxConstraints(
+                      maxWidth: 230.sp,
+                    ),
+                    padding: EdgeInsets.symmetric(vertical: 10.sp, horizontal: 15.sp),
+                    decoration: BoxDecoration(
+                      color: Colors.blueGrey.shade50,
+                      borderRadius: BorderRadius.circular(Constants.borderRadius.sp),
+                    ),
+                    margin: EdgeInsets.only(left: 10.sp),
+                    child: Text(
+                      messageChat.content,
+                      style: const TextStyle(color: Colors.black),
+                    ),
+                  ),
+                if (messageChat.type == TypeMessage.IMAGE.index)
+                  Padding(
+                    padding: EdgeInsets.symmetric(vertical: 10.sp, horizontal: 15.sp),
+                    child: _getImageWidget(messageChat.content),
+                  )
+              ],
+            ),
+            // Time
+            isLastMessageLeft(index)
+                ? _getDateWidget(
+                    EdgeInsets.only(left: 50.sp, top: 5.sp, bottom: 5.sp),
+                    messageChat.createdAt,
+                  )
+                : const SizedBox.shrink()
+          ],
+        ),
+      );
     }
+    return const SizedBox.shrink();
   }
 }

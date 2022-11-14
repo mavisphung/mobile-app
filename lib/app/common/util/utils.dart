@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'dart:math';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -72,7 +71,7 @@ abstract class Utils {
               Divider(
                 height: 0,
                 color: AppColors.greyDivider,
-                thickness: 0.2.sp,
+                thickness: 0.8.sp,
               ),
               IntrinsicHeight(
                 child: Row(
@@ -101,7 +100,7 @@ abstract class Utils {
                     VerticalDivider(
                       width: 0,
                       color: AppColors.greyDivider,
-                      thickness: 0.2.sp,
+                      thickness: 0.8.sp,
                     ),
                     Expanded(
                       child: InkWell(
@@ -143,7 +142,7 @@ abstract class Utils {
       builder: (ctx) {
         return Dialog(
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12.sp),
+            borderRadius: BorderRadius.circular(17.sp),
           ),
           child: Column(
             mainAxisSize: MainAxisSize.min,
@@ -233,16 +232,6 @@ abstract class Utils {
     );
   }
 
-  static double getFileSize(String filepath, int decimals) {
-    var file = File(filepath);
-    int bytes = file.lengthSync();
-    if (bytes <= 0) return 0.0;
-    // const suffixes = ["B", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB"];
-    var i = (log(bytes) / log(1024)).floor();
-    // return '${((bytes / pow(1024, i)).toStringAsFixed(decimals))} ${suffixes[i]}';
-    return bytes / pow(1024, i);
-  }
-
   static Future<void> upload(String url, File file, String fileExt) async {
     final mime = lookupMimeType(file.path);
     print('============ MIME: $mime');
@@ -298,30 +287,13 @@ abstract class Utils {
     return '${dob[2]}-${dob[1]}-${dob[0]}';
   }
 
-  static String getAge(String ymd) {
-    try {
-      final dob = DateFormat('yyyy-MM-dd').parse(ymd);
-      final now = DateTime.now();
-
-      if (dob.year == now.year) {
-        return '${now.month - dob.month} tháng';
-      } else if (dob.month > now.month || (dob.month == now.month && dob.day > now.day)) {
-        return '${now.year - dob.year - 1}';
-      } else {
-        return '${now.year - dob.year}';
-      }
-    } catch (e) {
-      return '';
-    }
-  }
-
   static Map<String, String>? getDateTimeMap(String str) {
     final dateTime = str.split(' ');
     final date = DateFormat('yyyy-MM-dd').parse(dateTime[0]);
     final now = DateTime.now();
-    late final bool isToday;
+    bool isToday = false;
     if (date.year == now.year && date.month == now.month && date.day == now.day) isToday = true;
-    final time = Utils.parseStrToTime(dateTime[1].replaceRange(5, null, ""));
+    final time = Utils.parseStrToTime(dateTime[1]);
     if (time != null) {
       return {
         'date': '${Utils.toDmY(dateTime[0])}  ${isToday ? "(Hôm nay)" : ""}',

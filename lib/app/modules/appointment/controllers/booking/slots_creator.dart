@@ -42,9 +42,9 @@ class SlotsCreator {
         print('SUGGEST SHIFT: ${shift.toString()}');
         start = shift['from'] as String;
         end = shift['end'] as String;
-        startTime = Utils.parseStrToDateTime('$dateStr ${start.replaceRange(5, null, "")}');
+        startTime = Utils.parseStrToDateTime('$dateStr $start');
         print('fromTime: $startTime');
-        endTime = Utils.parseStrToDateTime('$dateStr ${end.replaceRange(5, null, "")}');
+        endTime = Utils.parseStrToDateTime('$dateStr $end');
         print('endTime: $endTime');
         if (startTime != null && endTime != null) {
           DateTime endSlot;
@@ -81,9 +81,9 @@ class SlotsCreator {
       print('SHIFT: ${shift.toString()}');
       start = shift['startTime'] as String;
       end = shift['endTime'] as String;
-      startTime = Utils.parseStrToDateTime('$dateStr ${start.replaceRange(5, null, "")}');
+      startTime = Utils.parseStrToDateTime('$dateStr $start');
       print('startTime: $startTime');
-      endTime = Utils.parseStrToDateTime('$dateStr ${end.replaceRange(5, null, "")}');
+      endTime = Utils.parseStrToDateTime('$dateStr $end');
       print('endTime: $endTime');
       if (startTime != null && endTime != null) {
         DateTime endSlot;

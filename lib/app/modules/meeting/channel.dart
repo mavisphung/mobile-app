@@ -45,7 +45,6 @@ class _ChannelPageState extends State<ChannelPage> {
     final args = Get.arguments as Map<String, String>;
     _channelName = args['channelId']!;
     _tempToken = args['token']!;
-    print('CHANNEL ID : $_channelName, token: $_tempToken');
 
     _infoStr = _cMeeting.infoStr;
     _isLocalUserJoined = _cMeeting.isLocalUserJoined;
@@ -162,7 +161,6 @@ class _ChannelPageState extends State<ChannelPage> {
               ),
             ),
           ),
-          // _panel(),
           _toolbar(),
         ],
       ),
@@ -234,57 +232,6 @@ class _ChannelPageState extends State<ChannelPage> {
             iconDataOff: PhosphorIcons.video_camera_fill,
           ),
         ],
-      ),
-    );
-  }
-
-  Widget _panel() {
-    return Container(
-      padding: const EdgeInsets.symmetric(vertical: 48),
-      alignment: Alignment.bottomCenter,
-      child: FractionallySizedBox(
-        heightFactor: 0.5,
-        child: Container(
-          padding: const EdgeInsets.symmetric(vertical: 48),
-          child: ListView.builder(
-            reverse: true,
-            itemCount: _infoStr.length,
-            itemBuilder: (_, index) {
-              if (_infoStr.isEmpty) {
-                return const Text('null');
-              }
-              return Padding(
-                padding: const EdgeInsets.symmetric(
-                  vertical: 3,
-                  horizontal: 10,
-                ),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Flexible(
-                      child: Container(
-                        padding: const EdgeInsets.symmetric(
-                          vertical: 2,
-                          horizontal: 5,
-                        ),
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(5),
-                        ),
-                        child: Text(
-                          _infoStr[index],
-                          style: const TextStyle(
-                            color: Colors.blueGrey,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              );
-            },
-          ),
-        ),
       ),
     );
   }

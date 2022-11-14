@@ -11,6 +11,7 @@ import 'package:hi_doctor_v2/app/modules/notification/controllers/notification_c
 import 'package:hi_doctor_v2/app/modules/notification/widgets/notification_list_tile.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/my_appbar.dart';
 
+// ignore: must_be_immutable
 class NotificationPage extends StatelessWidget {
   final NotificationController _controller = Get.put(NotificationController());
 

@@ -41,9 +41,7 @@ class MyApp extends StatelessWidget {
           debugShowCheckedModeBanner: false,
           theme: ThemeData(
             primarySwatch: Colors.lightBlue,
-            // fontFamily: 'Poppins',
             fontFamily: 'Quicksand',
-            // fontFamily: 'OpenSans',
             bottomSheetTheme: const BottomSheetThemeData(
               backgroundColor: Colors.transparent,
             ),

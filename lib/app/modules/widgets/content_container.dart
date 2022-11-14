@@ -71,26 +71,30 @@ class ContentRow extends StatelessWidget {
   });
 
   Widget _getRow(String key, String value) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        SizedBox(
-          height: 25.sp,
-          width: labelWidth.sp,
-          child: Text(
-            key,
-            style: const TextStyle(
-              fontWeight: FontWeight.w300,
+    return Padding(
+      padding: EdgeInsets.only(bottom: 10.sp),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          SizedBox(
+            width: labelWidth.sp,
+            child: Text(
+              key,
+              style: const TextStyle(
+                fontWeight: FontWeight.w300,
+              ),
             ),
           ),
-        ),
-        Text(
-          value,
-          style: const TextStyle(
-            fontWeight: FontWeight.w300,
+          Expanded(
+            child: Text(
+              value,
+              style: const TextStyle(
+                fontWeight: FontWeight.w300,
+              ),
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 

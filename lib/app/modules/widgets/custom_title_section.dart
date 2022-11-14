@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+
 import 'package:hi_doctor_v2/app/common/values/colors.dart';
 
 class CustomTitleSection extends StatelessWidget {
@@ -14,9 +15,9 @@ class CustomTitleSection extends StatelessWidget {
   const CustomTitleSection({
     Key? key,
     required this.title,
-    this.paddingTop = 25,
+    this.paddingTop = 15,
     this.paddingLeft = 5,
-    this.paddingBottom = 8,
+    this.paddingBottom = 5,
     this.suffixText,
     this.suffixAction,
     this.suffixTextStyle,
@@ -37,9 +38,9 @@ class CustomTitleSection extends StatelessWidget {
           Text(
             title,
             style: TextStyle(
-              fontSize: 15.6.sp,
+              fontSize: 15.sp,
               fontWeight: FontWeight.w500,
-              fontFamily: 'OpenSans',
+              // fontFamily: 'OpenSans',
             ),
           ),
           suffixText != null

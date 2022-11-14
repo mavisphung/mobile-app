@@ -50,7 +50,6 @@ class IncomingController extends GetxController {
         checkInCode: e['checkInCode'],
         bookedAt: e['bookedAt'],
       );
-      print(appointment.toString());
       return appointment;
     }).toList();
     incomingList.length.toString().debugLog('Items in list');

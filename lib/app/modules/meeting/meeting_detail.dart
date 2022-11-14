@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:hi_doctor_v2/app/modules/meeting/views/service_tile.dart';
+import 'package:hi_doctor_v2/app/modules/widgets/info_container.dart';
+import 'package:intl/intl.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 import 'package:hi_doctor_v2/app/common/util/transformation.dart';
@@ -15,6 +18,7 @@ import 'package:hi_doctor_v2/app/modules/widgets/base_page.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/custom_bottom_sheet.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/my_appbar.dart';
 import 'package:hi_doctor_v2/app/routes/app_pages.dart';
+import 'package:hi_doctor_v2/app/common/constants.dart';
 
 class MeetingDetailPage extends StatelessWidget {
   final _cMeeting = Get.put(MeetingController());
@@ -22,7 +26,7 @@ class MeetingDetailPage extends StatelessWidget {
 
   MeetingDetailPage({super.key});
 
-  Future<void> onJoin() async {
+  Future<void> _onJoin() async {
     final micPermission = await Permission.microphone.request();
     final cameraPermission = await Permission.camera.request();
     if (micPermission.isGranted && cameraPermission.isGranted) {
@@ -31,6 +35,10 @@ class MeetingDetailPage extends StatelessWidget {
         Get.toNamed(Routes.CHANNEL, arguments: channelEntry);
       }
     }
+  }
+
+  String _getPrice(double price) {
+    return NumberFormat.decimalPattern('vi,VN').format(price);
   }
 
   @override
@@ -45,7 +53,8 @@ class MeetingDetailPage extends StatelessWidget {
           if (snapshot.hasData && snapshot.data == true) {
             final doctor = _cMeeting.appointment.doctor;
             final patient = _cMeeting.appointment.patient;
-            final dateTimeMap = Utils.getDateTimeMap(_cMeeting.appointment.bookedAt ?? '');
+            final package = _cMeeting.appointment.package;
+            final dateTimeMap = Utils.getDateTimeMap(_cMeeting.appointment.bookedAt!);
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -68,23 +77,33 @@ class MeetingDetailPage extends StatelessWidget {
                 CustomTitleSection(
                   paddingLeft: 5,
                   paddingTop: 20,
+                  paddingBottom: 0,
                   title: 'Thông tin bệnh nhân',
                   suffixText: 'Xem ảnh',
-                  suffixAction: () => Get.toNamed(Routes.IMAGE, arguments: patient?['avatar']),
+                  suffixAction: () =>
+                      Get.toNamed(Routes.IMAGE, arguments: patient?['avatar'] ?? Constants.defaultAvatar),
                 ),
                 ContentRow(
                   labelWidth: 100,
                   hozPadding: 5,
                   content: {
                     'Họ tên': Tx.getFullName(patient?['lastName'], patient?['firstName']),
-                    'Tuổi': Utils.getAge(patient?['dob']),
+                    'Tuổi': Tx.getAge(patient?['dob']),
                     'Địa chỉ': patient?['address'],
                   },
                 ),
                 const ContentTitle1(title: 'Thông tin gói dịch vụ'),
-                CustomCard(
-                  child: Row(),
+                ContentRow(
+                  labelWidth: 100,
+                  hozPadding: 5,
+                  content: {
+                    'Tên dịch vụ': package?['name'],
+                    'Mô tả': package?['description'],
+                    'Giá dịch vụ': '${_getPrice(package?['price'])} VNĐ',
+                  },
                 ),
+                const InfoContainer(info: 'Dịch vụ chỉ được mở trong thời gian cuộc hẹn.', hasInfoIcon: true),
+                ServiceTile(category: package?['category']),
               ],
             );
           } else if (snapshot.hasData && snapshot.data == false) {
@@ -97,7 +116,7 @@ class MeetingDetailPage extends StatelessWidget {
       ),
       bottomSheet: CustomBottomSheet(
         buttonText: 'Video Call',
-        onPressed: onJoin,
+        onPressed: _onJoin,
       ),
     );
   }
