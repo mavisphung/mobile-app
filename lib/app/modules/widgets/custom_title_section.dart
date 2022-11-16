@@ -40,7 +40,6 @@ class CustomTitleSection extends StatelessWidget {
             style: TextStyle(
               fontSize: 15.sp,
               fontWeight: FontWeight.w500,
-              // fontFamily: 'OpenSans',
             ),
           ),
           suffixText != null

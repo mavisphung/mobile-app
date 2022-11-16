@@ -10,7 +10,6 @@ abstract class Routes {
   static const MESSAGE = '/message';
   static const HISTORY = '/history';
   static const USER_PROFILE_DETAIL = '/userProfileDetail';
-  static const SEARCH_RESULT = '/searchResult';
   static const DOCTOR_DETAIL = '/doctorDetail';
   static const BOOKING = '/booking';
   static const BOOKING_PACKAGE = '/bookingPackage';
@@ -26,4 +25,5 @@ abstract class Routes {
   static const EDIT_HEALTH_RECORD = '/editOtherHealthRecord';
   static const EDIT_PATHOLOGY_RECORD = '/editPathologyRecord';
   static const IMAGE = '/image';
+  static const SEARCH = '/search';
 }

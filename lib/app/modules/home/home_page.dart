@@ -17,7 +17,7 @@ import 'package:hi_doctor_v2/app/modules/home/views/doctor_item.dart';
 import 'package:hi_doctor_v2/app/modules/home/views/doctor_item_skeleton.dart';
 import 'package:hi_doctor_v2/app/modules/home/views/reminder_card.dart';
 import 'package:hi_doctor_v2/app/modules/home/views/welcome_item.dart';
-import 'package:hi_doctor_v2/app/modules/search/search_delegate.dart';
+import 'package:hi_doctor_v2/app/modules/search/doctor_search_delegate.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/base_page.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/custom_container.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/custom_icon_button.dart';
@@ -53,7 +53,7 @@ class HomePage extends StatelessWidget {
                     borderRadius: BorderRadius.circular(Constants.textFieldRadius.sp),
                     onTap: () => showSearch(
                       context: context,
-                      delegate: CustomSearchDelegate(),
+                      delegate: DoctorSearchDelegate(),
                     ),
                     child: Ink(
                       padding: EdgeInsets.symmetric(vertical: 12.sp, horizontal: 12.sp),

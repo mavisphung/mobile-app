@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
+import 'package:hi_doctor_v2/app/common/util/enum.dart' as mytag;
 import 'package:hi_doctor_v2/app/common/values/colors.dart';
 import 'package:hi_doctor_v2/app/models/pathology.dart';
 import 'package:hi_doctor_v2/app/modules/health_record/controllers/edit_pathology_controller.dart';
@@ -58,7 +59,7 @@ class EditPathologyRecordPage extends StatelessWidget {
     final parameters = Get.parameters;
     final tag = parameters['tag'];
     if (tag != null) {
-      if (tag == 'UPDATE') {
+      if (tag == mytag.Action.update.name) {
         _title = 'Cập nhật về bệnh lý';
         _funcLabel = 'Cập nhật';
         _func = _cEditPathology.updatePathology;

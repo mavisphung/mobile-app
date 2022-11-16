@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
+import 'package:hi_doctor_v2/app/common/util/enum.dart' as mytag;
 import 'package:hi_doctor_v2/app/common/util/transformation.dart';
 import 'package:hi_doctor_v2/app/common/values/colors.dart';
 import 'package:hi_doctor_v2/app/models/pathology.dart';
@@ -62,7 +63,7 @@ class PathologyView extends StatelessWidget {
                         size: 28.sp,
                         color: AppColors.grey300.withOpacity(0.7),
                         onPressed: () => Get.toNamed(Routes.EDIT_PATHOLOGY_RECORD,
-                            arguments: p.copyWith(), parameters: {'tag': 'UPDATE'}),
+                            arguments: p.copyWith(), parameters: {'tag': mytag.Action.update.name}),
                         icon: Icon(
                           Icons.edit,
                           size: 14.sp,

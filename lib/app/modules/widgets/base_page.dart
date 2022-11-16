@@ -9,6 +9,7 @@ class BasePage extends StatelessWidget {
   final Widget? bottomSheet;
   final Color? backgroundColor;
   final double? paddingTop, paddingBottom, paddingLeft, paddingRight;
+
   const BasePage({
     Key? key,
     this.appBar,
