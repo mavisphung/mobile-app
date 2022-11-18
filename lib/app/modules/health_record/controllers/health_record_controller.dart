@@ -31,7 +31,7 @@ class HealthRecordController extends GetxController with GetSingleTickerProvider
     final data = model.data as List<dynamic>;
 
     for (var item in data) {
-      if (item['patient']['id'] == (patient.value.id ?? -1) && item['record']['isPatientProvided'] == true) {
+      if (item['patient']['id'] == (patient.value.id ?? 7) && item['record']['isPatientProvided'] == true) {
         otherList.add(HrResModel.fromMap(item));
         otherList.refresh();
       }

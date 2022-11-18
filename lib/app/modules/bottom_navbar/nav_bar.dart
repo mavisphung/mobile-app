@@ -10,7 +10,7 @@ import 'package:hi_doctor_v2/app/modules/message/message_page.dart';
 import 'package:hi_doctor_v2/app/modules/appointment/appointment_page.dart';
 import 'package:hi_doctor_v2/app/modules/bottom_navbar/controllers/navbar_controller.dart';
 import 'package:hi_doctor_v2/app/modules/home/home_page.dart';
-import 'package:hi_doctor_v2/app/modules/search/search_result_page.dart';
+import 'package:hi_doctor_v2/app/modules/notification/notification_page.dart';
 import 'package:hi_doctor_v2/app/modules/settings/settings_page.dart';
 
 class NavBar extends StatelessWidget {
@@ -25,9 +25,9 @@ class NavBar extends StatelessWidget {
       case 1:
         return const AppoinmentPage();
       case 2:
-        return SearchResultPage();
-      case 3:
         return MessagePage();
+      case 3:
+        return NotificationPage();
       case 4:
         return SettingsPage();
       default:
@@ -67,13 +67,13 @@ class NavBar extends StatelessWidget {
                   size: 18.sp,
                 ),
                 _bottomNavigationBarItem(
-                  icon: CupertinoIcons.add_circled,
-                  activeIcon: CupertinoIcons.add_circled_solid,
+                  icon: CupertinoIcons.chat_bubble_2,
+                  activeIcon: CupertinoIcons.chat_bubble_2_fill,
                   label: Strings.message,
                 ),
                 _bottomNavigationBarItem(
-                  icon: CupertinoIcons.chat_bubble_2,
-                  activeIcon: CupertinoIcons.chat_bubble_2_fill,
+                  icon: CupertinoIcons.bell,
+                  activeIcon: CupertinoIcons.bell_fill,
                   label: Strings.message,
                 ),
                 _bottomNavigationBarItem(

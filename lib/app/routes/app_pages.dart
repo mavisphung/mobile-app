@@ -12,6 +12,7 @@ import 'package:hi_doctor_v2/app/modules/auth/login_page.dart';
 import 'package:hi_doctor_v2/app/modules/auth/register_page.dart';
 import 'package:hi_doctor_v2/app/modules/auth/splash_page.dart';
 import 'package:hi_doctor_v2/app/modules/bottom_navbar/nav_bar.dart';
+import 'package:hi_doctor_v2/app/modules/contract/create_contract_page.dart';
 import 'package:hi_doctor_v2/app/modules/health_record/edit_health_record_page.dart';
 import 'package:hi_doctor_v2/app/modules/health_record/edit_pathology_record_page.dart';
 import 'package:hi_doctor_v2/app/modules/health_record/health_record_page.dart';
@@ -21,7 +22,6 @@ import 'package:hi_doctor_v2/app/modules/meeting/channel.dart';
 import 'package:hi_doctor_v2/app/modules/meeting/meeting_detail.dart';
 import 'package:hi_doctor_v2/app/modules/message/chat_page.dart';
 import 'package:hi_doctor_v2/app/modules/notification/notification_page.dart';
-import 'package:hi_doctor_v2/app/modules/search/search_result_page.dart';
 import 'package:hi_doctor_v2/app/modules/settings/views/patient_list.dart';
 import 'package:hi_doctor_v2/app/modules/settings/views/patient_profile_detail.dart';
 import 'package:hi_doctor_v2/app/modules/settings/views/user_profile_detail.dart';
@@ -123,8 +123,8 @@ abstract class AppPages {
       page: () => ImagePage(),
     ).custom(),
     GetPage(
-      name: Routes.SEARCH,
-      page: () => SearchResultPage(),
+      name: Routes.CREATE_CONTRACT,
+      page: () => const CreateContractPage(),
     ).custom(),
   ];
 }

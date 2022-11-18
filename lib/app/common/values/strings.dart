@@ -31,7 +31,7 @@ abstract class Strings {
   static String get yes => 'Có';
   static String get no => 'Không';
   static String get back => 'Quay lại';
-  static String get kContinue => 'Tiếp tục';
+  static String get kContinue => 'Tiếp theo';
   static String get login => 'Đăng nhập';
   static String get logout => 'Đăng xuất';
   static String get signIn => 'Đăng nhập';
