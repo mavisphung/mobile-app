@@ -58,7 +58,13 @@ class _PathologyExtendableRowState extends State<PathologyExtendableRow> {
                       child: Row(
                         children: [
                           Expanded(child: Text(e['diseaseName']!)),
-                          Checkbox(value: true, onChanged: (value) {}),
+                          Checkbox(
+                              value: e['isChosen'],
+                              onChanged: (value) {
+                                setState(() {
+                                  e['isChosen'] = value;
+                                });
+                              }),
                         ],
                       ),
                     ))

@@ -21,17 +21,24 @@ class HealthRecordController extends GetxController with GetSingleTickerProvider
   List<OtherHealthRecord> get getSystemList => _systemList.toList();
   final otherList = <HrResModel>[].obs;
 
-  final patient = Patient().obs;
+  final rxPatient = Rxn<Patient>();
+
+  int? _nextPage = 1;
 
   Future<void> getOtherHealthRecords({int page = 1, int limit = 10}) async {
-    final response = await _provider.getHealthRecords();
+    if (rxPatient.value?.id == null) return;
+    final response = await _provider.getHealthRecords(page: page, limit: limit);
     final Map<String, dynamic> res = ApiResponse.getResponse(response);
     final model = ResponseModel2.fromMap(res);
+
+    _nextPage = model.nextPage;
+
     print('HR MODEL: ${model.toString()}');
+
     final data = model.data as List<dynamic>;
 
     for (var item in data) {
-      if (item['patient']['id'] == (patient.value.id ?? 7) && item['record']['isPatientProvided'] == true) {
+      if (item['patient']['id'] == rxPatient.value!.id && item['record']['isPatientProvided'] == true) {
         otherList.add(HrResModel.fromMap(item));
         otherList.refresh();
       }
@@ -60,7 +67,7 @@ class HealthRecordController extends GetxController with GetSingleTickerProvider
     otherScroll.addListener(
       () async {
         if (otherScroll.position.maxScrollExtent == otherScroll.offset) {
-          await getOtherHealthRecords();
+          if (_nextPage != null) await getOtherHealthRecords(page: _nextPage!);
         }
       },
     );
@@ -73,7 +80,7 @@ class HealthRecordController extends GetxController with GetSingleTickerProvider
     allScroll.dispose();
     systemScroll.dispose();
     otherScroll.dispose();
-    patient.close();
+    rxPatient.close();
     otherList.clear();
     otherList.close();
     super.dispose();

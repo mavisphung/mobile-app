@@ -120,11 +120,7 @@ class EditOtherHealthRecordPage extends StatelessWidget {
             focusNode: _cEditOtherHealthRecord.nameFocusNode,
             controller: _cEditOtherHealthRecord.nameController,
           ),
-          Row(
-            children: const [
-              PathologyTextField(),
-            ],
-          ),
+          const PathologyTextField(),
           Row(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [

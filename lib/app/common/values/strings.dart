@@ -65,6 +65,7 @@ abstract class Strings {
   // Error Message
   static String get unknownErrMsg => 'Hệ thống đã quá tải. Xin hãy thử lại sau.';
   static String get systemErrMsg => 'Hệ thống đang quá tải. Xin hãy thử lại sau.';
+  static String get failRespMsg => 'Không thể lấy dữ liệu từ hệ thống.';
   static String get conTimeOutMsg => 'Kết nối hết hạn. Xin hãy thử lại sau';
   static String get noConMsg => 'Không có kết nối mạng. Xin hãy kiểm tra kết nối của bạn.';
   static String get invalidInputMsg => 'Thông tin bạn nhập không hợp lệ.';

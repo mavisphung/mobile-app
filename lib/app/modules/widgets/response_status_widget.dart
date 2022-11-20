@@ -130,3 +130,30 @@ class SystemErrorWidget extends StatelessWidget {
     );
   }
 }
+
+class FailResponeWidget extends StatelessWidget {
+  const FailResponeWidget({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Column(
+        children: [
+          SvgPicture.asset(
+            'assets/icons/cancel_file.svg',
+            width: 40.sp,
+            height: 40.sp,
+          ),
+          const SizedBox(height: 20),
+          Text(
+            Strings.failRespMsg,
+            style: TextStyle(
+              fontSize: 14.sp,
+              color: Colors.amber,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}

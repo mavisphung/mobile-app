@@ -1,22 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:hi_doctor_v2/app/common/constants.dart';
 
+import 'package:hi_doctor_v2/app/common/constants.dart';
 import 'package:hi_doctor_v2/app/common/util/transformation.dart';
 import 'package:hi_doctor_v2/app/common/values/colors.dart';
+import 'package:hi_doctor_v2/app/common/values/strings.dart';
 import 'package:hi_doctor_v2/app/models/patient.dart';
 import 'package:hi_doctor_v2/app/modules/settings/controllers/patient_profile_controller.dart';
+import 'package:hi_doctor_v2/app/modules/widgets/content_container.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/image_container.dart';
+import 'package:hi_doctor_v2/app/modules/widgets/info_container.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/loading_widget.dart';
+import 'package:hi_doctor_v2/app/modules/widgets/response_status_widget.dart';
+import 'package:hi_doctor_v2/app/routes/app_pages.dart';
 
 class PatientOption {
+  final BuildContext context;
+  final void Function(Patient) setPatientFunc;
+
   final _cPatientProfile = Get.put(PatientProfileController());
 
-  void openPatientOptions(BuildContext ctx, void Function(Patient) onTap) {
-    _cPatientProfile.getPatientList();
+  PatientOption(this.context, this.setPatientFunc);
+
+  void openPatientOptions() {
     showDialog(
-        context: ctx,
+        context: context,
         builder: (_) {
           return Dialog(
             shape: RoundedRectangleBorder(
@@ -44,7 +53,7 @@ class PatientOption {
                           shrinkWrap: true,
                           physics: const NeverScrollableScrollPhysics(),
                           itemBuilder: (_, index) {
-                            return PatientTile(patient: data[index], onTap: onTap);
+                            return PatientTile(patient: data[index], onTap: setPatientFunc);
                           },
                           separatorBuilder: (_, __) => Divider(
                             color: AppColors.greyDivider,
@@ -77,6 +86,64 @@ class PatientOption {
             ),
           );
         });
+  }
+
+  Widget patientContainer(Rxn<Patient> rxPatient) {
+    return FutureBuilder(
+      future: _cPatientProfile.getPatientList(),
+      builder: (_, AsyncSnapshot<bool?> snapshot) {
+        if (snapshot.data == true) {
+          if (_cPatientProfile.patientList.isNotEmpty) {
+            setPatientFunc(_cPatientProfile.patientList[0]);
+            return ObxValue<Rxn<Patient>>(
+              (data) {
+                final patient = data.value!;
+                return ContentContainer(
+                  labelWidth: 100,
+                  content: {
+                    Strings.fullName: Tx.getFullName(patient.lastName, patient.firstName),
+                    Strings.gender: patient.gender ?? '',
+                    Strings.dob: patient.dob ?? '',
+                    Strings.address: patient.address ?? '',
+                  },
+                );
+              },
+              rxPatient,
+            );
+          } else if (_cPatientProfile.patientList.isEmpty) {
+            return Column(
+              children: [
+                const InfoContainer(
+                    info: 'Bạn cần có hồ sơ bệnh nhân để đặt lịch khám hoặc yêu cầu hợp đồng với bác sĩ.',
+                    hasInfoIcon: true),
+                OutlinedButton(
+                  style: ButtonStyle(
+                    padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
+                      EdgeInsets.all(10.sp),
+                    ),
+                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                      RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.sp)),
+                    ),
+                  ),
+                  onPressed: () => Get.toNamed(Routes.PATIENT_PROFILE_DETAIL),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: const [
+                      Icon(Icons.add),
+                      SizedBox(width: 5),
+                      Text('Thêm hồ sơ bệnh nhân'),
+                    ],
+                  ),
+                ),
+              ],
+            );
+          }
+        } else if (snapshot.hasData && snapshot.data == false) {
+          return const FailResponeWidget();
+        }
+        return const LoadingWidget();
+      },
+    );
   }
 }
 

@@ -41,8 +41,6 @@ class _CreateContractPageState extends State<CreateContractPage> {
         title: Strings.registration,
         hasBackBtn: true,
       ),
-      paddingTop: 29.sp,
-      paddingBottom: 330.sp,
       body: _step[_currentStep],
       bottomSheet: Container(
         height: 110.sp,

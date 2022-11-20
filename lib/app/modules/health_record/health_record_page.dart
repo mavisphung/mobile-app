@@ -11,7 +11,7 @@ import 'package:hi_doctor_v2/app/modules/health_record/views/other_tab.dart';
 import 'package:hi_doctor_v2/app/modules/health_record/views/system_tab.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/image_container.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/my_appbar.dart';
-import 'package:hi_doctor_v2/app/modules/widgets/custom/patient_tile.dart';
+import 'package:hi_doctor_v2/app/modules/widgets/custom/patient_option.dart';
 
 class OtherHealthRecordPage extends StatelessWidget {
   final _cHealthRecord = Get.put(HealthRecordController());
@@ -36,22 +36,23 @@ class OtherHealthRecordPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final patient = Get.arguments as Patient;
-    _cHealthRecord.patient.value = patient;
+    _cHealthRecord.rxPatient.value = patient;
+    _cHealthRecord.getOtherHealthRecords();
     return Scaffold(
       appBar: MyAppBar(
         title: 'Danh sách hồ sơ',
         actions: [
           GestureDetector(
             onTap: () {
-              final patientOption = PatientOption();
-              patientOption.openPatientOptions(context, (p) => _cHealthRecord.patient.value = p);
+              final patientOption = PatientOption(context, (p) => _cHealthRecord.rxPatient.value = p);
+              patientOption.openPatientOptions();
             },
-            child: ObxValue<Rx<Patient>>(
+            child: ObxValue<Rxn<Patient>>(
               (data) => Padding(
                 padding: EdgeInsets.only(right: Constants.padding.sp),
-                child: ImageContainer(width: 40, height: 40, imgUrl: data.value.avatar).circle(),
+                child: ImageContainer(width: 40, height: 40, imgUrl: data.value!.avatar).circle(),
               ),
-              _cHealthRecord.patient,
+              _cHealthRecord.rxPatient,
             ),
           ),
         ],

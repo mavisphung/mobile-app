@@ -1,8 +1,8 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 class MonitoredPathology {
-  final int id;
-  final Map<String, dynamic> pathology;
-  final Map<int, List<dynamic>> sharedRecord;
+  final int? id;
+  final Map<String, dynamic>? pathology;
+  final Map<int, List<dynamic>>? sharedRecord;
 
   MonitoredPathology(this.id, this.pathology, this.sharedRecord);
 

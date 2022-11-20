@@ -158,7 +158,7 @@ class EditOtherHealthRecordController extends GetxController {
       _records.toList(),
     );
 
-    final patientId = _cHealthRecord.patient.value.id;
+    final patientId = _cHealthRecord.rxPatient.value!.id;
     if (patientId != null) {
       final response = await _apiHealthRecord.postHealthRecord(patientId, hr).futureValue();
       print('ADD RESP: ${response.toString()}');
