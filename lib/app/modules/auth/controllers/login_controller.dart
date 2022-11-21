@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:google_sign_in/google_sign_in.dart';
-import 'package:hi_doctor_v2/app/api/google_sign_in_api.dart';
 
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:hi_doctor_v2/app/common/constants.dart';
 import 'package:hi_doctor_v2/app/common/storage/storage.dart';
 import 'package:hi_doctor_v2/app/common/util/extensions.dart';
-import 'package:hi_doctor_v2/app/common/util/status.dart';
+import 'package:hi_doctor_v2/app/common/util/enum.dart';
 import 'package:hi_doctor_v2/app/common/util/utils.dart';
 import 'package:hi_doctor_v2/app/models/user_info.dart';
 import 'package:hi_doctor_v2/app/modules/auth/providers/api_auth.dart';
 import 'package:hi_doctor_v2/app/modules/auth/providers/api_auth_impl.dart';
+import 'package:hi_doctor_v2/app/modules/auth/providers/google_sign_in_api.dart';
 import 'package:hi_doctor_v2/app/routes/app_pages.dart';
 
 class LoginController extends GetxController {

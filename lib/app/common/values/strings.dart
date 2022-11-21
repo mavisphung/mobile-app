@@ -27,11 +27,11 @@ abstract class Strings {
   static String get dob => 'Ngày sinh';
 
   // Verb, Adjective
-  static String get ok => 'OK';
+  static String get ok => 'Ok';
   static String get yes => 'Có';
   static String get no => 'Không';
   static String get back => 'Quay lại';
-  static String get kContinue => 'Tiếp tục';
+  static String get kContinue => 'Tiếp theo';
   static String get login => 'Đăng nhập';
   static String get logout => 'Đăng xuất';
   static String get signIn => 'Đăng nhập';
@@ -65,6 +65,7 @@ abstract class Strings {
   // Error Message
   static String get unknownErrMsg => 'Hệ thống đã quá tải. Xin hãy thử lại sau.';
   static String get systemErrMsg => 'Hệ thống đang quá tải. Xin hãy thử lại sau.';
+  static String get failRespMsg => 'Không thể lấy dữ liệu từ hệ thống.';
   static String get conTimeOutMsg => 'Kết nối hết hạn. Xin hãy thử lại sau';
   static String get noConMsg => 'Không có kết nối mạng. Xin hãy kiểm tra kết nối của bạn.';
   static String get invalidInputMsg => 'Thông tin bạn nhập không hợp lệ.';

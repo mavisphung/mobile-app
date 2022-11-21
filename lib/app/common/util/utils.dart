@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'dart:math';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -72,7 +71,7 @@ abstract class Utils {
               Divider(
                 height: 0,
                 color: AppColors.greyDivider,
-                thickness: 0.2.sp,
+                thickness: 0.8.sp,
               ),
               IntrinsicHeight(
                 child: Row(
@@ -101,7 +100,7 @@ abstract class Utils {
                     VerticalDivider(
                       width: 0,
                       color: AppColors.greyDivider,
-                      thickness: 0.2.sp,
+                      thickness: 0.8.sp,
                     ),
                     Expanded(
                       child: InkWell(
@@ -143,7 +142,7 @@ abstract class Utils {
       builder: (ctx) {
         return Dialog(
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12.sp),
+            borderRadius: BorderRadius.circular(17.sp),
           ),
           child: Column(
             mainAxisSize: MainAxisSize.min,
@@ -181,7 +180,8 @@ abstract class Utils {
               InkWell(
                 onTap: () => Navigator.pop(ctx, true),
                 customBorder: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.only(bottomLeft: Radius.circular(12.sp), bottomRight: Radius.circular(12.sp)),
+                  borderRadius:
+                      BorderRadius.only(bottomLeft: Radius.circular(12.sp), bottomRight: Radius.circular(12.sp)),
                 ),
                 child: Padding(
                   padding: EdgeInsets.symmetric(vertical: Constants.padding.sp),
@@ -232,16 +232,6 @@ abstract class Utils {
     );
   }
 
-  static double getFileSize(String filepath, int decimals) {
-    var file = File(filepath);
-    int bytes = file.lengthSync();
-    if (bytes <= 0) return 0.0;
-    // const suffixes = ["B", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB"];
-    var i = (log(bytes) / log(1024)).floor();
-    // return '${((bytes / pow(1024, i)).toStringAsFixed(decimals))} ${suffixes[i]}';
-    return bytes / pow(1024, i);
-  }
-
   static Future<void> upload(String url, File file, String fileExt) async {
     final mime = lookupMimeType(file.path);
     print('============ MIME: $mime');
@@ -259,9 +249,7 @@ abstract class Utils {
 
   static String formatDate(DateTime date) => DateFormat('dd-MM-yyyy').format(date);
 
-  static String formatDateApi(DateTime date) => DateFormat('yyyy-MM-dd').format(date);
-
-  static String formatTime(DateTime date) => DateFormat.jm().format(date);
+  static String formatAMPM(DateTime date) => DateFormat.jm().format(date);
 
   static String formatHHmmTime(DateTime date) => DateFormat('HH:mm').format(date);
 
@@ -275,7 +263,7 @@ abstract class Utils {
 
   static DateTime? parseStrToDate(String str) {
     try {
-      return DateFormat('yyyy-MM-dd').parse(str);
+      return DateFormat('dd-MM-yyyy').parse(str);
     } catch (e) {
       return null;
     }
@@ -289,8 +277,29 @@ abstract class Utils {
     }
   }
 
+  static String toDmY(String ymd) {
+    final dob = ymd.split('-');
+    return '${dob[2]}-${dob[1]}-${dob[0]}';
+  }
+
   static String toYmd(String dmy) {
     final dob = dmy.split('-');
     return '${dob[2]}-${dob[1]}-${dob[0]}';
+  }
+
+  static Map<String, String>? getDateTimeMap(String str) {
+    final dateTime = str.split(' ');
+    final date = DateFormat('yyyy-MM-dd').parse(dateTime[0]);
+    final now = DateTime.now();
+    bool isToday = false;
+    if (date.year == now.year && date.month == now.month && date.day == now.day) isToday = true;
+    final time = Utils.parseStrToTime(dateTime[1]);
+    if (time != null) {
+      return {
+        'date': '${Utils.toDmY(dateTime[0])}  ${isToday ? "(Hôm nay)" : ""}',
+        'time': Utils.formatAMPM(time),
+      };
+    }
+    return null;
   }
 }

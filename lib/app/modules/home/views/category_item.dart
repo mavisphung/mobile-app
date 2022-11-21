@@ -46,23 +46,23 @@ class CategoryItem extends StatelessWidget {
   String _getIconOfSpec(int specId) {
     switch (specId) {
       case 1:
-        return 'assets/icons/specs/skin.svg';
-      case 2:
-        return 'assets/icons/specs/skeleton.svg';
-      case 3:
-        return 'assets/icons/specs/earnose.svg';
-      case 4:
-        return 'assets/icons/specs/baby.svg';
-      case 5:
-        return 'assets/icons/specs/psychology.svg';
-      case 6:
-        return 'assets/icons/specs/cardiology.svg';
-      case 7:
         return 'assets/icons/specs/general.svg';
-      case 8:
-        return 'assets/icons/specs/traditional_medicine.svg';
-      case 9:
+      case 2:
+        return 'assets/icons/specs/cardiology.svg';
+      case 3:
+        return 'assets/icons/specs/baby.svg';
+      case 4:
+        return 'assets/icons/specs/skin.svg';
+      case 5:
+        return 'assets/icons/specs/earnose.svg';
+      case 6:
+        return 'assets/icons/specs/skeleton.svg';
+      case 7:
         return 'assets/icons/specs/eye.svg';
+      case 8:
+        return 'assets/icons/specs/psychology.svg';
+      case 9:
+        return 'assets/icons/specs/traditional_medicine.svg';
       default:
         return '';
     }

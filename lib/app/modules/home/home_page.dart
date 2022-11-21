@@ -4,18 +4,20 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import 'package:hi_doctor_v2/app/common/constants.dart';
-import 'package:hi_doctor_v2/app/common/util/extensions.dart';
+import 'package:hi_doctor_v2/app/common/storage/box.dart';
 import 'package:hi_doctor_v2/app/common/values/colors.dart';
 import 'package:hi_doctor_v2/app/common/values/strings.dart';
+import 'package:hi_doctor_v2/app/models/appointment.dart';
 import 'package:hi_doctor_v2/app/models/doctor.dart';
 import 'package:hi_doctor_v2/app/models/specialist.dart';
+import 'package:hi_doctor_v2/app/modules/appointment/controllers/incoming_controller.dart';
 import 'package:hi_doctor_v2/app/modules/home/controllers/home_controller.dart';
 import 'package:hi_doctor_v2/app/modules/home/views/category_item.dart';
 import 'package:hi_doctor_v2/app/modules/home/views/doctor_item.dart';
 import 'package:hi_doctor_v2/app/modules/home/views/doctor_item_skeleton.dart';
 import 'package:hi_doctor_v2/app/modules/home/views/reminder_card.dart';
-import 'package:hi_doctor_v2/app/modules/search/search_delegate.dart';
-import 'package:hi_doctor_v2/app/modules/settings/controllers/settings_controller.dart';
+import 'package:hi_doctor_v2/app/modules/home/views/welcome_item.dart';
+import 'package:hi_doctor_v2/app/modules/search/doctor_search_delegate.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/base_page.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/custom_container.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/custom_icon_button.dart';
@@ -23,23 +25,14 @@ import 'package:hi_doctor_v2/app/modules/widgets/custom_title_section.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/image_container.dart';
 
 class HomePage extends StatelessWidget {
-  HomePage({Key? key}) : super(key: key) {
-    _homeController = Get.put(HomeController());
-    _settingsController = Get.put(SettingsController());
-    _isNearestLoaded = _homeController.getNearestDoctorsApi();
-  }
+  final _homeController = Get.put(HomeController());
+  final _cIncoming = Get.put(IncomingController());
 
-  late final HomeController _homeController;
-  late final SettingsController _settingsController;
-  late Future<bool> _isNearestLoaded;
-
-  final _spacing = SizedBox(
-    height: 18.sp,
-  );
+  HomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final userInfo = _settingsController.userInfo.value;
+    final userInfo = Box.getCacheUser();
     return BasePage(
       appBar: null,
       paddingTop: 18.sp,
@@ -60,7 +53,7 @@ class HomePage extends StatelessWidget {
                     borderRadius: BorderRadius.circular(Constants.textFieldRadius.sp),
                     onTap: () => showSearch(
                       context: context,
-                      delegate: CustomSearchDelegate(),
+                      delegate: DoctorSearchDelegate(),
                     ),
                     child: Ink(
                       padding: EdgeInsets.symmetric(vertical: 12.sp, horizontal: 12.sp),
@@ -93,25 +86,22 @@ class HomePage extends StatelessWidget {
               ),
             ],
           ),
-          _spacing,
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  CustomTitleSection(title: Strings.upcomingAppointment),
-                  InkWell(
-                    onTap: () {},
-                    child: const Text(
-                      'Xem tất cả',
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                    ),
-                  ),
-                ],
+              WelcomeItem(
+                firstName: userInfo.firstName ?? '',
+                lastName: userInfo.lastName ?? '',
               ),
-              const ReminderCard(),
-              _spacing,
+              CustomTitleSection(
+                title: Strings.upcomingAppointment,
+                suffixText: 'Xem thêm',
+                suffixAction: () {},
+              ),
+              ObxValue<RxList<Appointment>>(
+                (data) => data.isNotEmpty ? ReminderCard(appointment: data[0]) : const SizedBox.shrink(),
+                _cIncoming.incomingList,
+              ),
               CustomTitleSection(title: Strings.category),
               ObxValue<RxList<Specialist>>(
                 (data) => CustomContainer(
@@ -132,7 +122,6 @@ class HomePage extends StatelessWidget {
                 ),
                 _homeController.specialistList,
               ),
-              _spacing,
               const CustomTitleSection(title: 'Bác sĩ gần khu vực'),
               SizedBox(
                 height: 135.sp,
@@ -155,7 +144,6 @@ class HomePage extends StatelessWidget {
                   _homeController.nearestList,
                 ),
               ),
-              _spacing,
               CustomTitleSection(title: Strings.latestSearchDoctor),
               SizedBox(
                 height: 125.sp,
@@ -179,9 +167,6 @@ class HomePage extends StatelessWidget {
                   },
                   _homeController.doctorList,
                 ),
-              ),
-              SizedBox(
-                height: 50.sp,
               ),
             ],
           ),

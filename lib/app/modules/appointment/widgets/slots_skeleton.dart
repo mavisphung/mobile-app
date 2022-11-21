@@ -21,7 +21,7 @@ class SlotsSkeleton extends StatelessWidget {
       itemBuilder: (_, int index) {
         return SkeletonAvatar(
           style: SkeletonAvatarStyle(
-            borderRadius: BorderRadius.circular(10.sp),
+            borderRadius: BorderRadius.circular(12.sp),
           ),
         );
       },

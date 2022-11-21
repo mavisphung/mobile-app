@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
-import '../../../common/values/colors.dart';
+import 'package:hi_doctor_v2/app/common/values/colors.dart';
 
 class DotIndicator extends StatelessWidget {
   final space = 3.8.sp;

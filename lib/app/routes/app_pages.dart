@@ -12,6 +12,7 @@ import 'package:hi_doctor_v2/app/modules/auth/login_page.dart';
 import 'package:hi_doctor_v2/app/modules/auth/register_page.dart';
 import 'package:hi_doctor_v2/app/modules/auth/splash_page.dart';
 import 'package:hi_doctor_v2/app/modules/bottom_navbar/nav_bar.dart';
+import 'package:hi_doctor_v2/app/modules/contract/create_contract_page.dart';
 import 'package:hi_doctor_v2/app/modules/health_record/edit_health_record_page.dart';
 import 'package:hi_doctor_v2/app/modules/health_record/edit_pathology_record_page.dart';
 import 'package:hi_doctor_v2/app/modules/health_record/health_record_page.dart';
@@ -21,10 +22,10 @@ import 'package:hi_doctor_v2/app/modules/meeting/channel.dart';
 import 'package:hi_doctor_v2/app/modules/meeting/meeting_detail.dart';
 import 'package:hi_doctor_v2/app/modules/message/chat_page.dart';
 import 'package:hi_doctor_v2/app/modules/notification/notification_page.dart';
-import 'package:hi_doctor_v2/app/modules/search/views/search_result_page.dart';
 import 'package:hi_doctor_v2/app/modules/settings/views/patient_list.dart';
 import 'package:hi_doctor_v2/app/modules/settings/views/patient_profile_detail.dart';
 import 'package:hi_doctor_v2/app/modules/settings/views/user_profile_detail.dart';
+import 'package:hi_doctor_v2/app/modules/widgets/image_page.dart';
 
 part 'package:hi_doctor_v2/app/routes/app_routes.dart';
 
@@ -60,10 +61,6 @@ abstract class AppPages {
     GetPage(
       name: Routes.HISTORY,
       page: () => const AppoinmentPage(),
-    ).custom(),
-    GetPage(
-      name: Routes.SEARCH_RESULT,
-      page: () => const SearchResultPage(),
     ).custom(),
     GetPage(
       name: Routes.USER_PROFILE_DETAIL,
@@ -120,6 +117,14 @@ abstract class AppPages {
     GetPage(
       name: Routes.EDIT_PATHOLOGY_RECORD,
       page: () => EditPathologyRecordPage(),
+    ).custom(),
+    GetPage(
+      name: Routes.IMAGE,
+      page: () => ImagePage(),
+    ).custom(),
+    GetPage(
+      name: Routes.CREATE_CONTRACT,
+      page: () => const CreateContractPage(),
     ).custom(),
   ];
 }

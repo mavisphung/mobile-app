@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
-import 'package:hi_doctor_v2/app/common/util/status.dart';
+import 'package:hi_doctor_v2/app/common/util/enum.dart';
 import 'package:hi_doctor_v2/app/common/values/colors.dart';
 
 class CustomElevatedButtonWidget extends StatelessWidget {
@@ -54,9 +54,8 @@ class CustomElevatedButtonWidget extends StatelessWidget {
             : Text(
                 textChild,
                 style: TextStyle(
-                  fontSize: 16.sp,
+                  fontSize: 15.sp,
                   color: Colors.white,
-                  fontWeight: FontWeight.w500,
                 ),
               ),
       ),

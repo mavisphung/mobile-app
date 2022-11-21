@@ -1,6 +1,4 @@
-import 'package:get/get.dart';
-
-import '../../common/values/strings.dart';
+import 'package:hi_doctor_v2/app/common/values/strings.dart';
 
 enum ErrorType {
   // It occurs when the connection is timeout

@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 
 import 'package:hi_doctor_v2/app/common/constants.dart';
 import 'package:hi_doctor_v2/app/common/util/extensions.dart';
-import 'package:hi_doctor_v2/app/common/util/status.dart';
+import 'package:hi_doctor_v2/app/common/util/enum.dart';
 import 'package:hi_doctor_v2/app/common/util/utils.dart';
 import 'package:hi_doctor_v2/app/data/api_response.dart';
 import 'package:hi_doctor_v2/app/data/custom_controller.dart';
@@ -28,6 +28,7 @@ class PatientProfileController extends GetxController {
   final status = Status.init.obs;
 
   final _provider = Get.put(ApiSettingsImpl());
+  final _cCustom = Get.put(CustomController());
 
   @override
   void onInit() {
@@ -97,7 +98,7 @@ class PatientProfileController extends GetxController {
                 id: e['id'],
                 firstName: e['firstName'],
                 lastName: e['lastName'],
-                dob: e['dob'],
+                dob: Utils.toDmY(e['dob']),
                 address: e['address'],
                 gender: e['gender'],
                 avatar: e['avatar'],
@@ -123,7 +124,7 @@ class PatientProfileController extends GetxController {
       final patient = Patient.fromMap(response.data);
       firstName.text = patient.firstName ?? '';
       lastName.text = patient.lastName ?? '';
-      dob.text = patient.dob ?? Utils.formatDate(DateTime.now());
+      dob.text = Utils.toDmY(patient.dob ?? '2000-10-24');
       if (patient.gender != null) {
         gender.value = patient.gender!;
       }
@@ -135,8 +136,7 @@ class PatientProfileController extends GetxController {
   }
 
   void setAvatar(bool isFromCamera) async {
-    final cCustom = Get.find<CustomController>();
-    final url = await cCustom.getImage(isFromCamera);
+    final url = await _cCustom.getImage(isFromCamera);
     if (url != null) avatar.value = url;
   }
 
@@ -146,8 +146,7 @@ class PatientProfileController extends GetxController {
     Patient data = Patient(
       firstName: firstName.text,
       lastName: lastName.text,
-      // dob: Utils.toYmd(dob.text),
-      dob: dob.text,
+      dob: Utils.toYmd(dob.text),
       address: address.text,
       gender: gender.value,
       avatar: avatar.value,
@@ -171,15 +170,13 @@ class PatientProfileController extends GetxController {
       id: patientId,
       firstName: firstName.text,
       lastName: lastName.text,
-      // dob: Utils.toYmd(dob.text),
-      dob: dob.text,
+      dob: Utils.toYmd(dob.text),
       address: address.text,
       gender: gender.value,
       avatar: avatar.value,
     );
     var response = await _provider.putPatientProfile(patientId, data).futureValue();
     if (response != null && response.isSuccess == true) {
-      // TODO: update lại patient list
       await getPatientList();
       setStatusSuccess();
       Get.back();

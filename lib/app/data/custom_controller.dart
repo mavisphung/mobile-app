@@ -34,7 +34,6 @@ class CustomController extends GetxController {
       String url = fullUrl.split('?')[0];
 
       await Utils.upload(fullUrl, File(file.path), fileExt);
-      print('URL: $url');
       return url;
     }
     return null;

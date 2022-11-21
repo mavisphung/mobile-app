@@ -5,7 +5,7 @@ import 'package:hi_doctor_v2/app/common/constants.dart';
 import 'package:hi_doctor_v2/app/common/storage/box.dart';
 import 'package:hi_doctor_v2/app/common/storage/storage.dart';
 import 'package:hi_doctor_v2/app/common/util/extensions.dart';
-import 'package:hi_doctor_v2/app/common/util/status.dart';
+import 'package:hi_doctor_v2/app/common/util/enum.dart';
 import 'package:hi_doctor_v2/app/common/util/utils.dart';
 import 'package:hi_doctor_v2/app/common/values/strings.dart';
 import 'package:hi_doctor_v2/app/data/custom_controller.dart';
@@ -30,6 +30,7 @@ class UserProfileController extends GetxController {
   final status = Status.init.obs;
 
   final _provider = Get.put(ApiSettingsImpl());
+  final _cCustom = Get.put(CustomController());
 
   UserInfo2 get profile => _profile;
 
@@ -39,7 +40,8 @@ class UserProfileController extends GetxController {
     address.text = profile.address ?? '';
     phoneNumber.text = profile.phoneNumber ?? '';
     avatar.value = profile.avatar ?? Constants.defaultAvatar;
-    dob.text = profile.dob ?? '2000-10-24';
+    dob.text = Utils.toDmY(profile.dob ?? '2000-10-24');
+    gender.value = profile.gender ?? userGender.first['value']!;
   }
 
   Future<bool> getProfile() async {
@@ -58,9 +60,6 @@ class UserProfileController extends GetxController {
           avatar: response.data['avatar'],
           dob: response.data['dob'],
         );
-        // dob.text = response.data['dob'] ?? Utils.formatDate(DateTime.now());
-        // gender.value = response.data['gender'];
-        // avatar.value = response.data['avatar'];
         _setInitialValue();
         return true;
       }
@@ -104,8 +103,7 @@ class UserProfileController extends GetxController {
   }
 
   void setAvatar(bool isFromCamera) async {
-    final cCustom = Get.find<CustomController>();
-    final url = await cCustom.getImage(isFromCamera);
+    final url = await _cCustom.getImage(isFromCamera);
     if (url != null) avatar.value = url;
   }
 
@@ -119,7 +117,7 @@ class UserProfileController extends GetxController {
       address: address.value.text,
       gender: gender.value,
       avatar: avatar.value,
-      dob: dob.value.text,
+      dob: Utils.toYmd(dob.value.text),
     );
     var response = await _provider.putUserProfile(info);
     if (response.isOk) {

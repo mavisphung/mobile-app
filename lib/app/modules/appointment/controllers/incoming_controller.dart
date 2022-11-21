@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 
 import 'package:hi_doctor_v2/app/common/constants.dart';
 import 'package:hi_doctor_v2/app/common/util/extensions.dart';
-import 'package:hi_doctor_v2/app/common/util/status.dart';
+import 'package:hi_doctor_v2/app/common/util/enum.dart';
 import 'package:hi_doctor_v2/app/data/api_response.dart';
 import 'package:hi_doctor_v2/app/data/response_model.dart';
 import 'package:hi_doctor_v2/app/models/appointment.dart';
@@ -41,8 +41,7 @@ class IncomingController extends GetxController {
     ResponseModel2 model = ResponseModel2.fromMap(response);
     var data = model.data as List<dynamic>;
     incomingList.value += data.map((e) {
-      // print(e['bookedAt']);
-      return Appointment(
+      final appointment = Appointment(
         beginAt: e['beginAt'],
         id: e['id'],
         status: e['status'],
@@ -51,6 +50,7 @@ class IncomingController extends GetxController {
         checkInCode: e['checkInCode'],
         bookedAt: e['bookedAt'],
       );
+      return appointment;
     }).toList();
     incomingList.length.toString().debugLog('Items in list');
     update();

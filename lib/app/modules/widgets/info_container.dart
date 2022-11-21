@@ -29,11 +29,8 @@ class InfoContainer extends StatelessWidget {
             ),
           ),
         Container(
-          margin: EdgeInsets.only(bottom: 8.sp),
-          padding: EdgeInsets.symmetric(
-            vertical: 12.sp,
-            horizontal: 18.sp,
-          ),
+          margin: EdgeInsets.only(bottom: 5.sp),
+          padding: EdgeInsets.all(Constants.padding.sp),
           decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.circular(Constants.textFieldRadius.sp),

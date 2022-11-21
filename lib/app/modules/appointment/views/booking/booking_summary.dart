@@ -83,8 +83,8 @@ class BookingSummary extends StatelessWidget {
       Dialogs.statusDialog(
         ctx: ctx,
         isSuccess: isSuccess,
-        successMsg: 'Đặt lịch hẹn khám thành công.',
-        failMsg: 'Lịch hẹn khám bị trùng. Xin hãy đặt lại.',
+        successMsg: 'Lịch hẹn khám đã được đặt thành công. Bạn sẽ được nhận thông báo để theo dõi lịch hẹn với bác sĩ.',
+        failMsg: 'Có vẻ như có ai đó đã đặt lịch trước bạn. Bạn hãy chọn một ca thời gian khác và thử lại xem.',
         successAction: () => Get.offAllNamed(Routes.NAVBAR),
       );
     }

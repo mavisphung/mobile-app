@@ -1,33 +1,53 @@
+import 'package:intl/intl.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:hi_doctor_v2/app/common/constants.dart';
 
-import 'package:hi_doctor_v2/app/common/values/colors.dart';
+import 'package:hi_doctor_v2/app/common/util/transformation.dart';
+import 'package:hi_doctor_v2/app/common/util/utils.dart';
+import 'package:hi_doctor_v2/app/models/appointment.dart';
+import 'package:hi_doctor_v2/app/modules/widgets/custom_card.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/image_container.dart';
 
 class ReminderCard extends StatelessWidget {
-  const ReminderCard({super.key});
+  final Appointment appointment;
+
+  const ReminderCard({super.key, required this.appointment});
+
+  Map<String, String>? _getDateTimeMap(String str) {
+    final dateTime = str.split(' ');
+    final date = DateFormat('yyyy-MM-dd').parse(dateTime[0]);
+    final now = DateTime.now();
+    bool isToday = false;
+    if (date.year == now.year && date.month == now.month && date.day == now.day) isToday = true;
+    final time = Utils.parseStrToTime(dateTime[1]);
+    if (time != null) {
+      final formattedDate = Utils.formatDate(date);
+      final endTime = time.add(const Duration(minutes: 30));
+      return {
+        'date': isToday ? 'Hôm nay' : formattedDate,
+        'time': '${Utils.formatAMPM(time)} - ${Utils.formatAMPM(endTime)}',
+      };
+    }
+    return null;
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      elevation: 10,
-      shadowColor: AppColors.shadow,
-      color: Colors.white,
-      shape: OutlineInputBorder(
-        borderSide: BorderSide.none,
-        borderRadius: BorderRadius.circular(Constants.borderRadius.sp),
-      ),
+    final dateTimeMap = _getDateTimeMap(appointment.bookedAt!);
+    return CustomCard(
+      verticalPadding: 0,
+      horizontalPadding: 0,
       child: ListTile(
         dense: true,
         contentPadding: EdgeInsets.symmetric(vertical: 15.sp, horizontal: 10.sp),
         title: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const ImageContainer(
+            ImageContainer(
               width: 50,
               height: 50,
-              imgUrl: null,
+              imgUrl: appointment.doctor?['avatar'],
             ).circle(),
             SizedBox(width: 10.sp),
             Expanded(
@@ -35,17 +55,16 @@ class ReminderCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Dr. Minh Thiên',
+                    Tx.getDoctorName(appointment.doctor?['lastName'], appointment.doctor?['firstName']),
                     maxLines: 2,
                     style: TextStyle(
                       fontSize: 14.sp,
-                      // color: Colors.black,
                       fontWeight: FontWeight.w600,
                       overflow: TextOverflow.ellipsis,
                     ),
                   ),
-                  const Text(
-                    'Dental specialist',
+                  Text(
+                    '${appointment.doctor?["specialist"]}',
                   ),
                 ],
               ),
@@ -70,9 +89,9 @@ class ReminderCard extends StatelessWidget {
                   borderRadius: BorderRadius.circular(10.sp),
                 ),
                 child: Text(
-                  'Wednesday, July 29',
+                  '${dateTimeMap?['date']}',
                   style: TextStyle(
-                    color: Colors.black87,
+                    color: Colors.green.shade800,
                     fontSize: 13.2.sp,
                   ),
                 ),
@@ -88,9 +107,9 @@ class ReminderCard extends StatelessWidget {
                   borderRadius: BorderRadius.circular(10.sp),
                 ),
                 child: Text(
-                  '11:00 am - 12:00 am',
+                  '${dateTimeMap?['time']}',
                   style: TextStyle(
-                    color: Colors.black87,
+                    color: Colors.pink.shade700,
                     fontSize: 13.2.sp,
                   ),
                 ),

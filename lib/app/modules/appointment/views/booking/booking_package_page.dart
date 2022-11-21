@@ -33,8 +33,10 @@ class BookingPackagePage extends StatelessWidget {
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(height: 20.sp),
-            const CustomTitleSection(title: 'Chọn gói dịch vụ'),
+            Padding(
+              padding: EdgeInsets.symmetric(vertical: 20.sp),
+              child: const CustomTitleSection(title: 'Chọn gói dịch vụ'),
+            ),
             FutureBuilder(
                 future: getService(),
                 builder: (_, AsyncSnapshot<bool?> snapshot) {

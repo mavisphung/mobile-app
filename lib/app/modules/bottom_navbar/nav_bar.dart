@@ -52,7 +52,7 @@ class NavBar extends StatelessWidget {
               showUnselectedLabels: false,
               type: BottomNavigationBarType.fixed,
               backgroundColor: Colors.white,
-              elevation: 0,
+              elevation: 6,
               items: [
                 _bottomNavigationBarItem(
                   icon: CupertinoIcons.home,
@@ -72,8 +72,8 @@ class NavBar extends StatelessWidget {
                   label: Strings.message,
                 ),
                 _bottomNavigationBarItem(
-                  icon: Icons.notifications_none_outlined,
-                  activeIcon: Icons.notifications,
+                  icon: CupertinoIcons.bell,
+                  activeIcon: CupertinoIcons.bell_fill,
                   label: Strings.message,
                 ),
                 _bottomNavigationBarItem(
@@ -82,37 +82,6 @@ class NavBar extends StatelessWidget {
                   label: Strings.settings,
                 ),
               ],
-            ),
-            floatingActionButton: PopupMenuButton(
-              itemBuilder: (_) => [
-                PopupMenuItem(
-                  onTap: () {},
-                  child: const Text('Book appointment'),
-                ),
-                PopupMenuItem(
-                  onTap: () {},
-                  child: const Text('Add a contract'),
-                ),
-              ],
-              offset: Offset(0, -106.sp),
-              color: Colors.white,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10.sp),
-              ),
-              elevation: 4,
-              child: Card(
-                color: AppColors.primary,
-                elevation: 4,
-                shape: const CircleBorder(),
-                child: Padding(
-                  padding: EdgeInsets.all(12.8.sp),
-                  child: Icon(
-                    CupertinoIcons.add,
-                    color: Colors.white,
-                    size: 24.sp,
-                  ),
-                ),
-              ),
             ),
           ),
         ),

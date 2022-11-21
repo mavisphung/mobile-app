@@ -4,7 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import 'package:hi_doctor_v2/app/common/util/dialogs.dart';
-import 'package:hi_doctor_v2/app/common/util/status.dart';
+import 'package:hi_doctor_v2/app/common/util/enum.dart';
 import 'package:hi_doctor_v2/app/common/values/colors.dart';
 import 'package:hi_doctor_v2/app/modules/health_record/controllers/edit_health_record_controller.dart';
 import 'package:hi_doctor_v2/app/modules/health_record/models/hr_res_model.dart';
@@ -120,11 +120,7 @@ class EditOtherHealthRecordPage extends StatelessWidget {
             focusNode: _cEditOtherHealthRecord.nameFocusNode,
             controller: _cEditOtherHealthRecord.nameController,
           ),
-          Row(
-            children: const [
-              PathologyTextField(),
-            ],
-          ),
+          const PathologyTextField(),
           Row(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
