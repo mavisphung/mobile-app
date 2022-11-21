@@ -18,7 +18,7 @@ class ApiBookAppointmentImpl extends GetConnect {
 
   Future<Response> getDoctorPackage(int doctorId) {
     return get(
-      '/doctor/$doctorId/packages/',
+      '/doctor/$doctorId/services/',
       headers: _headers,
     );
   }

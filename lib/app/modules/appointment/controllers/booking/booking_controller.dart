@@ -88,7 +88,7 @@ class BookingController extends GetxController {
   }
 
   Future<bool?> getPackages(int doctorId) async {
-    final result = await _apiBookAppointment.getDoctorPackage(6);
+    final result = await _apiBookAppointment.getDoctorPackage(doctorId);
     final Map<String, dynamic> response = ApiResponse.getResponse(result);
     final ResponseModel2 model = ResponseModel2.fromMap(response);
     if (model.success == true && model.status == Constants.successGetStatusCode) {
