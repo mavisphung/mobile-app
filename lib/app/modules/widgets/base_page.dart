@@ -9,6 +9,7 @@ class BasePage extends StatelessWidget {
   final Widget? bottomSheet;
   final Color? backgroundColor;
   final double? paddingTop, paddingBottom, paddingLeft, paddingRight;
+
   const BasePage({
     Key? key,
     this.appBar,
@@ -28,7 +29,7 @@ class BasePage extends StatelessWidget {
       child: Padding(
         padding: EdgeInsets.only(
           top: paddingTop ?? 0,
-          bottom: paddingBottom ?? (bottomSheet == null ? 30.sp : 100.sp),
+          bottom: paddingBottom ?? (bottomSheet == null ? 30.sp : 120.sp),
           left: paddingLeft ?? Constants.padding.sp,
           right: paddingRight ?? Constants.padding.sp,
         ),

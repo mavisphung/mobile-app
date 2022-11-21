@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
 import 'package:hi_doctor_v2/app/common/constants.dart';
 import 'package:hi_doctor_v2/app/common/util/extensions.dart';
@@ -9,8 +10,7 @@ import 'package:hi_doctor_v2/app/models/doctor.dart';
 import 'package:hi_doctor_v2/app/models/patient.dart';
 import 'package:hi_doctor_v2/app/modules/appointment/providers/api_book_appointment.dart';
 import 'package:hi_doctor_v2/app/modules/appointment/providers/req_appointment_model.dart';
-import 'package:hi_doctor_v2/app/modules/appointment/widgets/service_item.dart';
-import 'package:intl/intl.dart';
+import 'package:hi_doctor_v2/app/modules/appointment/widgets/package_item.dart';
 
 class BookingController extends GetxController {
   // select booking date time
@@ -96,10 +96,11 @@ class BookingController extends GetxController {
       if (data == null || data.isEmpty) return true;
       packageList = data
           .map((e) => PackageItem(
-                id: e['id'],
-                name: e['name'],
-                description: e['description'],
-                price: e['price'],
+                id: e['service']['id'],
+                name: e['service']['name'],
+                description: e['service']['description'],
+                price: e['service']['price'],
+                category: e['service']['category'],
               ))
           .toList();
       setServiceId(data[0]['id']);

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
-import 'package:hi_doctor_v2/app/common/util/status.dart';
+import 'package:hi_doctor_v2/app/common/util/enum.dart';
 import 'package:hi_doctor_v2/app/common/util/utils.dart';
 import 'package:hi_doctor_v2/app/common/values/strings.dart';
 import 'package:hi_doctor_v2/app/modules/auth/controllers/register_controller.dart';
@@ -73,7 +73,6 @@ class _RegisterPageState extends State<RegisterPage> {
 
   void _submitRegisterForm() async {
     if (!_checkForm(_formKey2)) return;
-    final formatedDob = Utils.toYmd(_dobController.text);
     RequestRegisterModel model = RequestRegisterModel(
       email: _emailController.text,
       password: _passwordController.text,
@@ -83,7 +82,7 @@ class _RegisterPageState extends State<RegisterPage> {
       address: _addressController.text.trim(),
       phoneNumber: _phoneNumberController.text,
       gender: _controller.gender.value,
-      dob: _dobController.text,
+      dob: Utils.toYmd(_dobController.text),
     );
     var isRegistrationSuccess = await _controller.register(model);
     if (isRegistrationSuccess) {
@@ -197,12 +196,13 @@ class _RegisterPageState extends State<RegisterPage> {
                   _currentStep.obs),
             ),
             ObxValue<Rx<Status>>(
-                (data) => CustomElevatedButtonWidget(
-                      textChild: _currentStep == 2 ? Strings.verify : Strings.kContinue,
-                      status: data.value,
-                      onPressed: _continue,
-                    ),
-                _controller.nextStatus),
+              (data) => CustomElevatedButtonWidget(
+                textChild: _currentStep == 2 ? Strings.verify : Strings.kContinue,
+                status: data.value,
+                onPressed: _continue,
+              ),
+              _controller.nextStatus,
+            ),
           ],
         ),
       ),

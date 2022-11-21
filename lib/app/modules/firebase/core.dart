@@ -1,9 +1,31 @@
+import 'dart:convert';
+
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:hi_doctor_v2/app/common/util/extensions.dart';
+import 'package:hi_doctor_v2/app/common/util/utils.dart';
 import 'package:permission_handler/permission_handler.dart';
+
+enum NotificationType { info, warn }
+
+extension NotificationTypeEx on NotificationType {
+  static Map<NotificationType, String> data = {
+    NotificationType.info: 'INFO',
+    NotificationType.warn: 'WARN',
+  };
+
+  String get value {
+    return data[this]!;
+  }
+}
+
+void performInfoNotification(Map<String, dynamic> data) {
+  for (var key in data.keys) {
+    print('$key: ${data[key]}');
+  }
+
+  Utils.showBottomSnackbar(data['message']);
+}
 
 class FirebaseHandler {
   static Future<void> processBackgroundMessage(RemoteMessage message) async {
@@ -39,11 +61,18 @@ class FirebaseHandler {
       // TODO: handle the received notifications
       FirebaseMessaging.onMessage.listen((RemoteMessage message) {
         print('From message opened app');
-        Get.snackbar(
-          message.notification!.title!.toString(),
-          message.data['payload'],
-          backgroundColor: Colors.redAccent,
-        );
+        // Get.snackbar(
+        //   message.notification!.title!.toString(),
+        //   message.data['payload'],
+        //   backgroundColor: Colors.redAccent,
+        // );
+        Map<String, dynamic> converted = jsonDecode(message.data['payload']);
+        if (converted['type'] == NotificationType.info.value) {
+          // TODO: Perform infomative notification
+          performInfoNotification(converted);
+        } else if (converted['type'] == NotificationType.warn.value) {
+          // TODO: Perform warning notification
+        }
       });
 
       FirebaseMessaging.onBackgroundMessage(processBackgroundMessage);

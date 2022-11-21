@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 
 import 'package:hi_doctor_v2/app/modules/health_record/models/hr_res_model.dart';
-import 'package:hi_doctor_v2/app/common/util/status.dart';
+import 'package:hi_doctor_v2/app/common/util/enum.dart';
 import 'package:hi_doctor_v2/app/data/api_custom.dart';
 import 'package:hi_doctor_v2/app/data/response_model.dart';
 import 'package:hi_doctor_v2/app/common/util/extensions.dart';
@@ -158,7 +158,7 @@ class EditOtherHealthRecordController extends GetxController {
       _records.toList(),
     );
 
-    final patientId = _cHealthRecord.patient.value.id;
+    final patientId = _cHealthRecord.rxPatient.value!.id;
     if (patientId != null) {
       final response = await _apiHealthRecord.postHealthRecord(patientId, hr).futureValue();
       print('ADD RESP: ${response.toString()}');

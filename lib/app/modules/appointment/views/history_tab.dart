@@ -3,7 +3,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import 'package:hi_doctor_v2/app/common/util/extensions.dart';
-import 'package:hi_doctor_v2/app/common/util/status.dart';
 import 'package:hi_doctor_v2/app/modules/appointment/controllers/history_controller.dart';
 import 'package:hi_doctor_v2/app/modules/appointment/widgets/appointment_tile.dart';
 import 'package:hi_doctor_v2/app/modules/appointment/widgets/filter_button.dart';
@@ -37,7 +36,7 @@ class _HistoryTabState extends State<HistoryTab> with AutomaticKeepAliveClientMi
               widget.histController.getUserHistoricalAppointments();
             }),
             child: SingleChildScrollView(
-              // controller: widget.histController.historyScrollController,
+              controller: widget.histController.scrollController,
               physics: const AlwaysScrollableScrollPhysics(),
               child: Padding(
                 padding: EdgeInsets.symmetric(horizontal: 16.sp),
@@ -60,9 +59,7 @@ class _HistoryTabState extends State<HistoryTab> with AutomaticKeepAliveClientMi
                       ],
                     ),
                     //--------------------------------------------------------
-                    if (widget.histController.loadingStatus.value == Status.loading)
-                      const CircularProgressIndicator()
-                    else if (widget.histController.historyList.isEmpty) ...[
+                    if (widget.histController.historyList.isEmpty) ...[
                       Center(
                         heightFactor: 0.06.sw,
                         child: Column(

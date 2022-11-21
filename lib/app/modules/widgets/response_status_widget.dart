@@ -43,25 +43,28 @@ class NoInternetWidget2 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: Column(
-        children: [
-          SvgPicture.asset(
-            'assets/icons/no_internet.svg',
-            width: 100.sp,
-            height: 100.sp,
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 20),
-            child: Text(
-              Strings.noInternetMsg2,
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: 14.sp,
-                color: Colors.orange.shade400,
+      child: Padding(
+        padding: const EdgeInsets.only(top: 200),
+        child: Column(
+          children: [
+            SvgPicture.asset(
+              'assets/icons/no_internet.svg',
+              width: 100.sp,
+              height: 100.sp,
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 20),
+              child: Text(
+                Strings.noInternetMsg2,
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 14.sp,
+                  color: Colors.orange.shade400,
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -74,22 +77,25 @@ class NoDataWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: Column(
-        children: [
-          SvgPicture.asset(
-            'assets/icons/empty_box.svg',
-            width: 100.sp,
-            height: 100.sp,
-          ),
-          const SizedBox(height: 30),
-          Text(
-            message,
-            style: TextStyle(
-              fontSize: 14.sp,
-              color: Colors.amber,
+      child: Padding(
+        padding: const EdgeInsets.only(top: 200),
+        child: Column(
+          children: [
+            SvgPicture.asset(
+              'assets/icons/empty_box.svg',
+              width: 100.sp,
+              height: 100.sp,
             ),
-          ),
-        ],
+            const SizedBox(height: 30),
+            Text(
+              message,
+              style: TextStyle(
+                fontSize: 14.sp,
+                color: Colors.amber,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -101,16 +107,46 @@ class SystemErrorWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
+      child: Padding(
+        padding: const EdgeInsets.only(top: 200),
+        child: Column(
+          children: [
+            SvgPicture.asset(
+              'assets/icons/system_error.svg',
+              width: 100.sp,
+              height: 100.sp,
+            ),
+            const SizedBox(height: 30),
+            Text(
+              Strings.systemErrMsg,
+              style: TextStyle(
+                fontSize: 14.sp,
+                color: Colors.amber,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class FailResponeWidget extends StatelessWidget {
+  const FailResponeWidget({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
       child: Column(
         children: [
           SvgPicture.asset(
-            'assets/icons/system_error.svg',
-            width: 50.sp,
-            height: 50.sp,
+            'assets/icons/cancel_file.svg',
+            width: 40.sp,
+            height: 40.sp,
           ),
-          const SizedBox(height: 30),
+          const SizedBox(height: 20),
           Text(
-            Strings.systemErrMsg,
+            Strings.failRespMsg,
             style: TextStyle(
               fontSize: 14.sp,
               color: Colors.amber,

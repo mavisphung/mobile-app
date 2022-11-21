@@ -17,18 +17,21 @@ class MeetingController extends GetxController {
 
   late ApiMeeting _provider;
 
-  Future<bool> getAppointmentDetail(int id) async {
+  Future<bool?> getAppointmentDetail(int id) async {
     final response = await _provider.getAppointmentWithId(id).futureValue();
     if (response != null && response.isSuccess && response.statusCode == Constants.successGetStatusCode) {
       _appointment = Appointment.fromMap(response.data);
       return true;
+    } else if (response != null && !response.isSuccess) {
+      return false;
     }
-    return false;
+    return null;
   }
 
   Future<Map<String, String>?> getChannelEntry() async {
     final response = await _provider.getAgoraChannelToken().futureValue();
     if (response != null && response.isSuccess && response.statusCode == Constants.successGetStatusCode) {
+      response.data.toString().debugLog('MeetingController');
       final String? channelName = response.data['channel'];
       final String? token = response.data['token'];
       if (channelName != null && token != null) {

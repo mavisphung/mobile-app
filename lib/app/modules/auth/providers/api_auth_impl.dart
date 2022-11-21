@@ -2,9 +2,9 @@ import 'dart:convert';
 
 import 'package:get/get.dart';
 
-import '../../../common/constants.dart';
-import './api_auth.dart';
-import './req_auth_model.dart';
+import 'package:hi_doctor_v2/app/common/constants.dart';
+import 'package:hi_doctor_v2/app/modules/auth/providers/api_auth.dart';
+import 'package:hi_doctor_v2/app/modules/auth/providers/req_auth_model.dart';
 
 class ApiAuthImpl extends GetConnect with ApiAuth {
   @override
@@ -74,6 +74,17 @@ class ApiAuthImpl extends GetConnect with ApiAuth {
       '/user/resend-code/',
       json.encode({
         "email": email,
+      }),
+    );
+  }
+
+  @override
+  Future<Response> postGoogleLogin(String accessToken) {
+    return post(
+      '/social-login/',
+      json.encode({
+        "platform": SocialPlatform.google,
+        "id": accessToken,
       }),
     );
   }

@@ -17,7 +17,6 @@ class ApiAppointmentImpl extends GetConnect {
   Future<Response> getUserIncomingAppointments({int page = 1, int limit = 10}) {
     return get(
       '/user/me/appointments/',
-      // '/appointments/',
       headers: headers,
       query: {
         'status': AppointmentStatus.pending.value,

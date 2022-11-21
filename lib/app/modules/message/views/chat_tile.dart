@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -8,7 +7,6 @@ import 'package:skeletons/skeletons.dart';
 
 import 'package:hi_doctor_v2/app/common/constants.dart';
 import 'package:hi_doctor_v2/app/common/util/transformation.dart';
-import 'package:hi_doctor_v2/app/common/values/strings.dart';
 import 'package:hi_doctor_v2/app/modules/home/controllers/doctor_controller.dart';
 import 'package:hi_doctor_v2/app/modules/message/chat_page.dart';
 import 'package:hi_doctor_v2/app/modules/message/models/chat_peer.dart';
@@ -25,6 +23,18 @@ class ChatTile extends StatelessWidget {
     color: Colors.black54,
   );
 
+  String _getDate(int timestamp) {
+    final date = DateTime.fromMillisecondsSinceEpoch(timestamp);
+    final now = DateTime.now();
+    if (date.year == now.year && date.month == now.month && date.day == now.day) {
+      return DateFormat('kk:mm').format(date);
+    }
+    if (date.year == now.year) {
+      return DateFormat('dd MMM').format(date);
+    }
+    return DateFormat('dd MMM yyyy').format(date);
+  }
+
   @override
   Widget build(BuildContext context) {
     ChatPeer chatPeer = ChatPeer.fromDocument(document);
@@ -33,14 +43,15 @@ class ChatTile extends StatelessWidget {
       builder: (_, snapshot) {
         if (snapshot.hasData) {
           if (snapshot.data == true) {
-            final fullName = '${Strings.doctor} ${Tx.getFullName(_cDoctor.doctor.lastName, _cDoctor.doctor.firstName)}';
+            final doctor = _cDoctor.doctor;
+            final doctorName = Tx.getDoctorName(doctor.lastName, doctor.firstName);
             return InkWell(
               onTap: () => Get.toNamed(
                 Routes.CHAT,
                 arguments: ChatPageArguments(
                   peerId: chatPeer.doctorId,
-                  peerName: fullName,
-                  peerAvatar: _cDoctor.doctor.avatar!,
+                  peerName: doctorName,
+                  peerAvatar: doctor.avatar ?? Constants.defaultAvatar,
                 ),
               ),
               child: Padding(
@@ -53,7 +64,7 @@ class ChatTile extends StatelessWidget {
                     ImageContainer(
                       width: 55,
                       height: 55,
-                      imgUrl: _cDoctor.doctor.avatar,
+                      imgUrl: doctor.avatar,
                     ).circle(),
                     SizedBox(width: 10.sp),
                     Expanded(
@@ -61,7 +72,7 @@ class ChatTile extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            '${Strings.doctor} $fullName',
+                            doctorName,
                             overflow: TextOverflow.ellipsis,
                             style: TextStyle(
                               fontSize: 15.sp,
@@ -80,8 +91,7 @@ class ChatTile extends StatelessWidget {
                                 ),
                               ),
                               Text(
-                                DateFormat('dd MMM kk:mm')
-                                    .format(DateTime.fromMillisecondsSinceEpoch(int.parse(chatPeer.lastTimeStamp))),
+                                _getDate(int.parse(chatPeer.lastTimeStamp)),
                                 style: TextStyle(
                                   color: Colors.blueGrey[300],
                                   fontSize: 12,
@@ -92,11 +102,6 @@ class ChatTile extends StatelessWidget {
                         ],
                       ),
                     ),
-                    Icon(
-                      PhosphorIcons.check_circle_thin,
-                      color: Colors.grey,
-                      size: 20.sp,
-                    )
                   ],
                 ),
               ),

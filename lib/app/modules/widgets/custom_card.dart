@@ -28,8 +28,8 @@ class CustomCard extends StatelessWidget {
       ),
       child: Padding(
         padding: EdgeInsets.symmetric(
-          vertical: verticalPadding ?? Constants.padding.sp,
-          horizontal: horizontalPadding ?? Constants.padding.sp,
+          vertical: verticalPadding?.sp ?? Constants.padding.sp,
+          horizontal: horizontalPadding?.sp ?? Constants.padding.sp,
         ),
         child: child,
       ),
