@@ -62,7 +62,7 @@ class _PathologyExtendableRowState extends State<PathologyExtendableRow> {
                               value: e['isChosen'],
                               onChanged: (value) {
                                 setState(() {
-                                  e['isChosen'] = value;
+                                  e['isChosen'] = value ?? false;
                                 });
                               }),
                         ],

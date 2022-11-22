@@ -2,14 +2,14 @@
 class MonitoredPathology {
   final int? id;
   final Map<String, dynamic>? pathology;
-  final Map<int, List<dynamic>>? sharedRecord;
+  final List<dynamic>? sharedRecord;
 
   MonitoredPathology(this.id, this.pathology, this.sharedRecord);
 
   MonitoredPathology copyWith({
     int? id,
     Map<String, dynamic>? pathology,
-    Map<int, List<dynamic>>? sharedRecord,
+    List<dynamic>? sharedRecord,
   }) {
     return MonitoredPathology(
       id ?? this.id,
