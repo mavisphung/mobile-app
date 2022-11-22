@@ -2,7 +2,7 @@
 class MonitoredPathology {
   final int? id;
   final Map<String, dynamic>? pathology;
-  final List<dynamic>? sharedRecord;
+  List<dynamic>? sharedRecord;
 
   MonitoredPathology(this.id, this.pathology, this.sharedRecord);
 

@@ -64,7 +64,7 @@ class OtherHealthRecordItem extends StatelessWidget {
             Row(
               children: [
                 SvgPicture.asset(
-                  'assets/icons/hr2.svg',
+                  'assets/icons/hr1.svg',
                   width: 32.sp,
                   height: 32.sp,
                 ),

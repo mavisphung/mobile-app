@@ -64,16 +64,22 @@ class MonitoredPathologyRow extends StatelessWidget {
   }
 }
 
-class RecommendContainer1 extends StatelessWidget {
+class RecommendContainer1 extends StatefulWidget {
   final MonitoredPathology data;
-  final _c = Get.find<CreateContractController>();
 
-  RecommendContainer1({super.key, required this.data});
+  const RecommendContainer1({super.key, required this.data});
+
+  @override
+  State<RecommendContainer1> createState() => _RecommendContainer1State();
+}
+
+class _RecommendContainer1State extends State<RecommendContainer1> {
+  final _c = Get.find<CreateContractController>();
 
   final List<Map<String, dynamic>> _lType = [];
 
   void _groupRecordType() {
-    final records = data.pathology?['records'] as List;
+    final records = widget.data.pathology?['records'] as List;
     for (var r in records) {
       final details = r['detail'] as List;
       for (var d in details) {
@@ -86,12 +92,12 @@ class RecommendContainer1 extends StatelessWidget {
             'details': [],
           };
         });
-        (typeItem['details'] as List).add({
+        (typeItem['details'] as List).add(
           {
             'record': r,
             'tickets': (d['tickets'] as List).map((e) => {'info': e, 'isChosen': false}).toList(),
           },
-        });
+        );
         if (isGenerated) _lType.add(typeItem);
       }
     }
@@ -142,19 +148,14 @@ class RecommendContainer1 extends StatelessWidget {
                     }
                     sharedTickets.add(data);
                   }
-                  final index = _c.lMonitoredPathology.indexOf(data);
-                  final pData = data.pathology!;
-                  _c.lMonitoredPathology[index] = MonitoredPathology(
-                    null,
-                    {
-                      'id': pData['id'],
-                      'code': pData['code'],
-                      'otherCode': pData['otherCode'],
-                      'generalName': pData['generalName'],
-                      'diseaseName': pData['diseaseName'],
-                    },
-                    sharedTickets,
-                  );
+                  widget.data.sharedRecord = sharedTickets;
+                  // final index = _c.lMonitoredPathology.indexOf(data);
+                  // _c.lMonitoredPathology[index] = MonitoredPathology(
+                  //   null,
+                  //   data.pathology!,
+                  //   sharedTickets,
+                  // );
+                  setState(() {});
                   Get.back();
                 },
               ),
@@ -166,8 +167,13 @@ class RecommendContainer1 extends StatelessWidget {
   }
 
   @override
-  Widget build(BuildContext context) {
+  void initState() {
     _groupRecordType();
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return _lType.isNotEmpty
         ? CustomContainer(
             color: Colors.grey.shade200,
@@ -175,25 +181,32 @@ class RecommendContainer1 extends StatelessWidget {
               children: [
                 Row(
                   children: [
-                    Text('Mã bệnh ${data.pathology?["otherCode"]}'),
+                    Text('Mã bệnh ${widget.data.pathology?["otherCode"]}'),
                     // Text('')/
                   ],
                 ),
-                ..._lType
-                    .map((e) => Row(
-                          children: [
-                            Text('${e["typeName"]}'),
-                            GestureDetector(
-                              onTap: () => _showModalSheet(context, e),
-                              child: SvgPicture.asset(
-                                'assets/icons/add_record.svg',
-                                width: 20.sp,
-                                height: 20.sp,
-                              ),
+                ..._lType.map((e) {
+                  final tickets = widget.data.sharedRecord?.firstWhereOrNull((r) => r['typeId'] == e['typeId']);
+                  return Column(
+                    children: [
+                      Row(
+                        children: [
+                          Text('${e["typeName"]}'),
+                          GestureDetector(
+                            onTap: () => _showModalSheet(context, e),
+                            child: SvgPicture.asset(
+                              'assets/icons/add_record.svg',
+                              width: 20.sp,
+                              height: 20.sp,
                             ),
-                          ],
-                        ))
-                    .toList(),
+                          ),
+                        ],
+                      ),
+                      if (tickets != null) Text('${(tickets["details"] as List).length} phiếu đã chọn'),
+                      Text(e.toString()),
+                    ],
+                  );
+                }).toList(),
               ],
             ),
           )

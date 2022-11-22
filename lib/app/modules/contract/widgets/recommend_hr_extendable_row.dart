@@ -34,7 +34,7 @@ class _ReccommendHrExtendableRowState extends State<ReccommendHrExtendableRow> {
           Row(
             children: [
               SvgPicture.asset(
-                'assets/icons/hr2.svg',
+                'assets/icons/hr1.svg',
                 width: 32.sp,
                 height: 32.sp,
               ),
@@ -52,7 +52,7 @@ class _ReccommendHrExtendableRowState extends State<ReccommendHrExtendableRow> {
                     ),
                     SizedBox(height: 2.sp),
                     Text(
-                      'Tạo lúc ${Utils.formatDateTime(DateTime.tryParse(widget.map["record"]["record"]["createAt"])!)}',
+                      'Tạo lúc ${Utils.formatDateTime(DateTime.tryParse(widget.map["record"]["record"]["createdAt"])!)}',
                       style: TextStyle(
                         color: Colors.black54,
                         fontSize: 10.5.sp,
@@ -82,15 +82,18 @@ class _ReccommendHrExtendableRowState extends State<ReccommendHrExtendableRow> {
                       child: Row(
                         children: [
                           Container(
+                            width: 60.sp,
+                            height: 80.sp,
                             decoration: BoxDecoration(
                               color: Colors.white,
                               borderRadius: BorderRadius.circular(5.sp),
                               image: DecorationImage(
-                                image: NetworkImage(e),
+                                image: NetworkImage(e['info']),
                                 fit: BoxFit.cover,
                               ),
                             ),
                           ),
+                          const SizedBox(width: 10),
                           Expanded(child: Text(widget.ticketType)),
                           Checkbox(
                               value: e['isChosen'],
