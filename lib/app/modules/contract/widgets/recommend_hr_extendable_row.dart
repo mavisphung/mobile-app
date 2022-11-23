@@ -22,6 +22,7 @@ class _ReccommendHrExtendableRowState extends State<ReccommendHrExtendableRow> {
 
   @override
   Widget build(BuildContext context) {
+    // return Text('${widget.map.toString()}');
     return Container(
       padding: EdgeInsets.all(15.sp),
       decoration: BoxDecoration(
@@ -44,7 +45,7 @@ class _ReccommendHrExtendableRowState extends State<ReccommendHrExtendableRow> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Hồ sơ ${widget.map["record"]["recordName"]}',
+                      'Hồ sơ ${widget.map["recordName"]}',
                       style: TextStyle(
                         fontSize: 15.sp,
                         fontWeight: FontWeight.w500,
@@ -52,7 +53,7 @@ class _ReccommendHrExtendableRowState extends State<ReccommendHrExtendableRow> {
                     ),
                     SizedBox(height: 2.sp),
                     Text(
-                      'Tạo lúc ${Utils.formatDateTime(DateTime.tryParse(widget.map["record"]["record"]["createdAt"])!)}',
+                      'Tạo lúc ${Utils.formatDateTime(DateTime.tryParse(widget.map["record"]["createdAt"])!)}',
                       style: TextStyle(
                         color: Colors.black54,
                         fontSize: 10.5.sp,

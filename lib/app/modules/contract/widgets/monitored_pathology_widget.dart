@@ -22,20 +22,6 @@ class MonitoredPathologyWidet extends StatelessWidget {
   MonitoredPathologyWidet({super.key});
 
   final List<Map<String, dynamic>> _lCategory = [];
-  final List<Map<String, dynamic>> _lOtherTicket = [];
-
-  void _getOtherTicket(HrResModel hr) {
-    final otherTicketList = hr.detail!['otherTickets'] as List;
-    for (var t in otherTicketList) {
-      _lOtherTicket.add({
-        'record': hr.record,
-        'recordName': hr.detail?['name'],
-        'id': t['id'],
-        'type': t['type'],
-        'tickets': t['tickets'],
-      });
-    }
-  }
 
   void _categorizeDisease(HrResModel hr) {
     final pList = hr.detail!['pathologies'] as List;
@@ -121,12 +107,8 @@ class MonitoredPathologyWidet extends StatelessWidget {
                           if (data.isNotEmpty) {
                             for (var hr in data) {
                               final pList = hr.detail?['pathologies'] as List?;
-                              final otherTicketList = hr.detail?['otherTickets'] as List?;
                               if (pList?.isNotEmpty ?? false) {
                                 _categorizeDisease(hr);
-                              }
-                              if (otherTicketList?.isNotEmpty ?? false) {
-                                _getOtherTicket(hr);
                               }
                             }
                             if (_lCategory.isNotEmpty) {

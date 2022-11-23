@@ -63,8 +63,9 @@ class ReminderCard extends StatelessWidget {
                       overflow: TextOverflow.ellipsis,
                     ),
                   ),
-                  Text(
-                    '${appointment.doctor?["specialist"]}',
+                  const Text(
+                    // '${appointment.doctor?["specialist"]}',
+                    'Chuyên khoa da liễu',
                   ),
                 ],
               ),

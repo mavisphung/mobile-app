@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hi_doctor_v2/app/modules/meeting/views/service_tile.dart';
+import 'package:hi_doctor_v2/app/modules/message/chat_page.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/info_container.dart';
 import 'package:intl/intl.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -9,7 +10,6 @@ import 'package:hi_doctor_v2/app/common/util/transformation.dart';
 import 'package:hi_doctor_v2/app/common/util/utils.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/content_container.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/custom/doctor_card.dart';
-import 'package:hi_doctor_v2/app/modules/widgets/custom_card.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/custom_title_section.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/loading_widget.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/response_status_widget.dart';
@@ -103,7 +103,15 @@ class MeetingDetailPage extends StatelessWidget {
                   },
                 ),
                 const InfoContainer(info: 'Dịch vụ chỉ được mở trong thời gian cuộc hẹn.', hasInfoIcon: true),
-                ServiceTile(category: package?['category']),
+                ServiceTile(
+                  category: package?['category'],
+                  chatPageargs: ChatPageArguments(
+                    peerId: doctor?['id'],
+                    peerName: Tx.getDoctorName(doctor?['lastName'], doctor?['firstName']),
+                    peerAvatar: doctor?['avatar'] ?? Constants.defaultAvatar,
+                  ),
+                  onJoin: _onJoin,
+                ),
               ],
             );
           } else if (snapshot.hasData && snapshot.data == false) {
@@ -114,10 +122,10 @@ class MeetingDetailPage extends StatelessWidget {
           return const LoadingWidget(topPadding: 200);
         },
       ),
-      bottomSheet: CustomBottomSheet(
-        buttonText: 'Video Call',
-        onPressed: _onJoin,
-      ),
+      // bottomSheet: CustomBottomSheet(
+      //   buttonText: 'Video Call',
+      //   onPressed: _onJoin,
+      // ),
     );
   }
 }

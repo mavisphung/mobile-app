@@ -6,11 +6,13 @@ class CreateContractController extends GetxController {
   final lMonitoredPathology = <MonitoredPathology>[].obs;
 
   final rxPatient = Rxn<Patient>();
+  final rxRecordId = 0.obs;
 
   @override
   void dispose() {
     lMonitoredPathology.close();
     rxPatient.close();
+    rxRecordId.close();
     super.dispose();
   }
 }
