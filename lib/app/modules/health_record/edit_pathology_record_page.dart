@@ -99,24 +99,14 @@ class EditPathologyRecordPage extends StatelessWidget {
             leftPadding: 18,
             bottomPadding: 2,
           ),
-          Container(
-            padding: EdgeInsets.symmetric(
-              vertical: 20.sp,
-              horizontal: 18.sp,
-            ),
-            decoration: BoxDecoration(
-              color: Colors.grey[100],
-              borderRadius: BorderRadius.circular(15.sp),
-            ),
-            child: ContentContainer(
-              labelWidth: 100,
-              content: {
-                'Mã bệnh': _p.code ?? '',
-                'Mã bệnh khác': _p.otherCode ?? '',
-                'Tên chung': _p.generalName ?? '',
-                'Tên bệnh': _p.diseaseName ?? '',
-              },
-            ),
+          ContentContainer(
+            labelWidth: 100,
+            content: {
+              'Mã bệnh': _p.code ?? '',
+              'Mã bệnh khác': _p.otherCode ?? '',
+              'Tên chung': _p.generalName ?? '',
+              'Tên bệnh': _p.diseaseName ?? '',
+            },
           ),
           _box10,
           const InfoContainer(

@@ -7,6 +7,7 @@ class CustomContainer extends StatelessWidget {
   final double? height;
   final Widget child;
   final double? borderRadius;
+  final Color? color;
 
   const CustomContainer({
     Key? key,
@@ -14,6 +15,7 @@ class CustomContainer extends StatelessWidget {
     this.height,
     required this.child,
     this.borderRadius,
+    this.color,
   }) : super(key: key);
 
   @override
@@ -23,7 +25,7 @@ class CustomContainer extends StatelessWidget {
       height: height,
       padding: EdgeInsets.all(12.sp),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: color ?? Colors.white,
         borderRadius: BorderRadius.circular(borderRadius ?? Constants.borderRadius.sp),
         boxShadow: [
           BoxShadow(

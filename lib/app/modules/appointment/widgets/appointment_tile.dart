@@ -38,7 +38,7 @@ class AppointmentTile extends StatelessWidget {
     }
     return theDay.day == now.day && theDay.month == now.month && theDay.year == now.year
         ? Text('Hôm nay | ${Utils.formatAMPM(theDay)} ${theDay.hour < 12 ? "AM" : "PM"}')
-        : Text('${Utils.formatDate(theDay)} | ${Utils.formatAMPM(theDay)} ${theDay.hour < 12 ? "AM" : "PM"}');
+        : Text('${Utils.formatDate(theDay)} | ${Utils.formatAMPM(theDay)}');
   }
 
   @override
@@ -227,7 +227,7 @@ class HistoryAppointmentTile extends StatelessWidget {
     }
     return theDay.day == now.day && theDay.month == now.month && theDay.year == now.year
         ? Text('Hôm nay | ${Utils.formatAMPM(theDay)} ${theDay.hour < 12 ? "AM" : "PM"}')
-        : Text('${Utils.formatDate(theDay)} | ${Utils.formatAMPM(theDay)} ${theDay.hour < 12 ? "AM" : "PM"}');
+        : Text('${Utils.formatDate(theDay)} | ${Utils.formatAMPM(theDay)}');
   }
 
   @override

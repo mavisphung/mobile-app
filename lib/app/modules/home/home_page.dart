@@ -103,7 +103,7 @@ class HomePage extends StatelessWidget {
                 },
               ),
               ObxValue<RxList<Appointment>>(
-                (data) => data.isNotEmpty ? ReminderCard(appointment: data[0]) : const SizedBox.shrink(),
+                (data) => data.isNotEmpty ? ReminderCard(appointment: data[data.length - 1]) : const SizedBox.shrink(),
                 _cIncoming.incomingList,
               ),
               CustomTitleSection(title: Strings.category),
