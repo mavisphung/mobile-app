@@ -36,4 +36,12 @@ class ApiAppointmentImpl extends GetConnect {
       },
     );
   }
+
+  Future<Response> cancelAppointment(int appId) {
+    return put(
+      '/appointments/$appId/cancel/',
+      null,
+      headers: headers,
+    );
+  }
 }

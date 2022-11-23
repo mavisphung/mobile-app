@@ -56,6 +56,15 @@ class IncomingController extends GetxController {
     update();
   }
 
+  Future<bool> cancelAppointment(int appId) async {
+    var response = await apiAppointment.cancelAppointment(appId);
+    if (response.isOk) {
+      incomingList.removeWhere((element) => element.id == appId);
+      update();
+    }
+    return response.isOk == true;
+  }
+
   void loadMore() {
     loadingStatus.value = Status.loading;
     update();

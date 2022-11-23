@@ -3,11 +3,13 @@ import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:hi_doctor_v2/app/common/constants.dart';
+import 'package:hi_doctor_v2/app/common/util/dialogs.dart';
 import 'package:hi_doctor_v2/app/common/util/extensions.dart';
 import 'package:hi_doctor_v2/app/common/util/utils.dart';
 import 'package:hi_doctor_v2/app/common/values/colors.dart';
 import 'package:hi_doctor_v2/app/common/values/strings.dart';
 import 'package:hi_doctor_v2/app/models/appointment.dart';
+import 'package:hi_doctor_v2/app/modules/appointment/controllers/incoming_controller.dart';
 import 'package:hi_doctor_v2/app/modules/appointment/widgets/appointment_tile_button.dart';
 import 'package:hi_doctor_v2/app/modules/message/chat_page.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/image_container.dart';
@@ -22,8 +24,9 @@ final Map<AppointmentStatus, Color> statusColors = {
 
 class AppointmentTile extends StatelessWidget {
   final Appointment data;
+  final IncomingController _ic = Get.find<IncomingController>();
 
-  const AppointmentTile({
+  AppointmentTile({
     Key? key,
     required this.data,
   }) : super(key: key);
@@ -46,9 +49,7 @@ class AppointmentTile extends StatelessWidget {
     final fullName = '${data.doctor!["firstName"]} ${data.doctor!["lastName"]}';
     return GestureDetector(
       onTap: () {
-        data.id != null
-            ? Get.toNamed(Routes.MEETING_DETAIL, arguments: data.id)
-            : Utils.showAlertDialog('Error to get appointment information');
+        data.id != null ? Get.toNamed(Routes.MEETING_DETAIL, arguments: data.id) : Utils.showAlertDialog('Error to get appointment information');
       },
       child: Container(
         width: double.infinity,
@@ -178,8 +179,16 @@ class AppointmentTile extends StatelessWidget {
               children: [
                 Expanded(
                   child: AppointmentButton(
-                    onTap: () {
+                    onTap: () async {
                       'Cancelling appointment'.debugLog('Cancellation');
+                      bool result = await _ic.cancelAppointment(data.id!);
+                      Dialogs.statusDialog(
+                        ctx: context,
+                        isSuccess: result,
+                        successMsg: 'Hủy lịch hẹn thành công',
+                        failMsg: 'Lỗi xảy ra khi hủy cuộc hẹn',
+                        successAction: () {},
+                      );
                     },
                     textColor: Colors.red,
                     borderColor: Colors.red,
