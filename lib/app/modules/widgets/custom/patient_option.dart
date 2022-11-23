@@ -88,6 +88,14 @@ class PatientOption {
         });
   }
 
+  String _formatAddress(String? address) {
+    return address == null
+        ? ''
+        : address.length >= 30
+            ? '${address.substring(0, 30)} ...'
+            : address;
+  }
+
   Widget patientContainer(Rxn<Patient> rxPatient) {
     return FutureBuilder(
       future: _cPatientProfile.getPatientList(),
@@ -104,7 +112,7 @@ class PatientOption {
                     Strings.fullName: Tx.getFullName(patient.lastName, patient.firstName),
                     Strings.gender: patient.gender ?? '',
                     Strings.dob: patient.dob ?? '',
-                    Strings.address: patient.address ?? '',
+                    Strings.address: _formatAddress(patient.address),
                   },
                 );
               },
@@ -113,9 +121,7 @@ class PatientOption {
           } else if (_cPatientProfile.patientList.isEmpty) {
             return Column(
               children: [
-                const InfoContainer(
-                    info: 'Bạn cần có hồ sơ bệnh nhân để đặt lịch khám hoặc yêu cầu hợp đồng với bác sĩ.',
-                    hasInfoIcon: true),
+                const InfoContainer(info: 'Bạn cần có hồ sơ bệnh nhân để đặt lịch khám hoặc yêu cầu hợp đồng với bác sĩ.', hasInfoIcon: true),
                 OutlinedButton(
                   style: ButtonStyle(
                     padding: MaterialStateProperty.all<EdgeInsetsGeometry>(

@@ -24,7 +24,7 @@ class BookingPatientDetailPage extends StatelessWidget {
     final patientOption = PatientOption(context, _cBooking.setPatient);
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      appBar: const MyAppBar(title: 'Patient Details'),
+      appBar: const MyAppBar(title: 'Chi tiết bệnh nhân'),
       body: BasePage(
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.start,

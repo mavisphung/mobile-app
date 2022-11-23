@@ -61,6 +61,7 @@ dependencies:
   agora_rtc_engine: ^6.0.0
   google_sign_in: ^5.4.2
   firebase_auth: ^4.1.1
+  url_launcher: ^6.1.6
 
 dev_dependencies:
   flutter_test:

@@ -182,7 +182,7 @@ class _ChannelPageState extends State<ChannelPage> {
           );
         }
         return const Text(
-          'Please wait for remote user to join',
+          'Vui lòng chờ trong giây lát',
           textAlign: TextAlign.center,
           style: TextStyle(
             color: Colors.white,

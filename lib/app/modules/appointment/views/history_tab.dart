@@ -47,13 +47,13 @@ class _HistoryTabState extends State<HistoryTab> with AutomaticKeepAliveClientMi
                     ),
                     Row(
                       children: [
-                        ElevatedButton(
-                          onPressed: () {
-                            widget.histController.clearHistoryList();
-                            'Cleared history list'.debugLog('Clear button');
-                          },
-                          child: const Text('Clear'),
-                        ),
+                        // ElevatedButton(
+                        //   onPressed: () {
+                        //     widget.histController.clearHistoryList();
+                        //     'Cleared history list'.debugLog('Clear button');
+                        //   },
+                        //   child: const Text('Clear'),
+                        // ),
                         const Spacer(),
                         const FilterButton(),
                       ],

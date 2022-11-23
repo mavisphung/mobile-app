@@ -45,17 +45,17 @@ class _IncomingTabState extends State<IncomingTab> with AutomaticKeepAliveClient
                   SizedBox(
                     height: 18.sp,
                   ),
-                  Row(
-                    children: [
-                      ElevatedButton(
-                        onPressed: () {
-                          widget.incController.clearIncomingList();
-                        },
-                        child: const Text('Clear'),
-                      ),
-                      const Spacer(),
-                    ],
-                  ),
+                  // Row(
+                  //   children: [
+                  //     ElevatedButton(
+                  //       onPressed: () {
+                  //         widget.incController.clearIncomingList();
+                  //       },
+                  //       child: const Text('Clear'),
+                  //     ),
+                  //     const Spacer(),
+                  //   ],
+                  // ),
                   //--------------------------------------------------------
                   if (widget.incController.incomingList.isEmpty) ...[
                     Center(

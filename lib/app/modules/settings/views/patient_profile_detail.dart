@@ -30,7 +30,7 @@ class PatientProfileDetailPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return BasePage(
       backgroundColor: Colors.white,
-      appBar: MyAppBar(title: _patientId == null ? 'New patient profile' : Strings.patientProfileDetail),
+      appBar: MyAppBar(title: _patientId == null ? 'Thêm mới hồ sơ' : Strings.patientProfileDetail),
       body: FutureBuilder<bool>(
         future: _patientId == null ? _c.emptyField() : _c.getPatientWithId(_patientId!),
         builder: (ctx, snapshot) {
@@ -38,7 +38,7 @@ class PatientProfileDetailPage extends StatelessWidget {
             return const ProfileSkeleton();
           }
           if (snapshot.data == false) {
-            return const Center(child: Text('System Error..'));
+            return const Center(child: Text('System Error...'));
           }
           return Column(
             children: [
@@ -114,13 +114,13 @@ class PatientProfileDetailPage extends StatelessWidget {
                 width: 1.sw,
                 child: ObxValue<Rx<Status>>(
                     (data) => CustomElevatedButtonWidget(
-                          textChild: _patientId == null ? 'Add patient profile' : Strings.saveProfile,
+                          textChild: _patientId == null ? 'Thêm bệnh nhân' : Strings.saveProfile,
                           status: data.value,
                           onPressed: () {
                             _formKey.currentState?.save();
                             final isValidate = _formKey.currentState?.validate() ?? false;
                             if (_c.avatar.value.isEmpty) {
-                              Utils.showAlertDialog('Please choose your picture');
+                              Utils.showAlertDialog('Vui lòng chọn ảnh');
                               return;
                             }
                             if (isValidate) {

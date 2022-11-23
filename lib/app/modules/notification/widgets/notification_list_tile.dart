@@ -25,7 +25,7 @@ class NotificationListTile extends StatelessWidget {
       dense: true,
       leading: leading ??
           SvgPicture.asset(
-            'assets/icons/chat_fill.svg',
+            'assets/icons/done1.svg',
             width: 48.sp,
             height: 48.sp,
           ),

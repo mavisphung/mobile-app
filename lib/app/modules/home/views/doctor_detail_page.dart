@@ -3,11 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:hi_doctor_v2/app/common/constants.dart';
 
 import 'package:hi_doctor_v2/app/common/util/extensions.dart';
 import 'package:hi_doctor_v2/app/common/util/transformation.dart';
+import 'package:hi_doctor_v2/app/common/util/utils.dart';
 import 'package:hi_doctor_v2/app/common/values/colors.dart';
 import 'package:hi_doctor_v2/app/common/values/strings.dart';
+import 'package:hi_doctor_v2/app/models/doctor.dart';
 import 'package:hi_doctor_v2/app/modules/home/controllers/doctor_controller.dart';
 import 'package:hi_doctor_v2/app/modules/home/views/doctor_tile.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/base_page.dart';
@@ -25,6 +28,14 @@ class DoctorDetailPage extends StatelessWidget {
   final doctorId = Get.arguments as int;
 
   final _cDoctor = Get.put(DoctorController());
+
+  String _getDoctorSpecialist(Doctor doctor) {
+    if (doctor.specialists == null) {
+      return "Đa khoa";
+    }
+
+    return doctor.specialists?[0]['name'];
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -90,20 +101,20 @@ class DoctorDetailPage extends StatelessWidget {
                                     thickness: 0.3.sp,
                                   ),
                                   Text(
-                                    'Bác sĩ khoa tổng hợp',
+                                    'Chuyên khoa: ${_getDoctorSpecialist(_cDoctor.doctor)}',
                                     style: TextStyle(fontSize: 11.5.sp),
                                   ),
-                                  Padding(
-                                    padding: EdgeInsets.only(top: 5.sp),
-                                    child: Text(
-                                      'Bệnh viện Hùng Vương, Tp. HCM, VN dkf dnfkd dknfk  sdkf dfk dfknskf knfk d knkd ',
-                                      maxLines: 2,
-                                      style: TextStyle(
-                                        fontSize: 11.5.sp,
-                                        overflow: TextOverflow.ellipsis,
-                                      ),
-                                    ),
-                                  ),
+                                  // Padding(
+                                  //   padding: EdgeInsets.only(top: 5.sp),
+                                  //   child: Text(
+                                  //     'Nơi làm việc: ${_cDoctor.doctor.address!.toString()}',
+                                  //     maxLines: 2,
+                                  //     style: TextStyle(
+                                  //       fontSize: 11.5.sp,
+                                  //       overflow: TextOverflow.ellipsis,
+                                  //     ),
+                                  //   ),
+                                  // ),
                                 ],
                               ),
                             ),
@@ -136,7 +147,7 @@ class DoctorDetailPage extends StatelessWidget {
                                 color: AppColors.primary,
                               ),
                               middleText: '10+',
-                              bottomText: 'Năm lam viec',
+                              bottomText: 'Năm',
                             ),
                             DoctorTile(
                               icon: Icon(
@@ -175,17 +186,14 @@ class DoctorDetailPage extends StatelessWidget {
                                 color: Colors.black,
                                 height: 1.25.sp, // Line height
                               ),
-                              text:
-                                  '${Strings.doctor} ${Tx.getFullName(_cDoctor.doctor.lastName, _cDoctor.doctor.firstName)} là một trong những bác sĩ '
-                                  'giỏi nhất trong khoa tổng hợp của bệnh viện Hùng Vương, TP. HCM. '
-                                  'Đã từng đạt nhiều mạng người trên tay từ thời gian thực tập. '
-                                  'Tôi đã hành nghề này được hơn 10 năm...',
+                              text: '${Strings.doctor} ${Tx.getFullName(_cDoctor.doctor.lastName, _cDoctor.doctor.firstName)} có kinh nghiệm lâu năm '
+                                  'trong các lĩnh vực liên quan về ${_getDoctorSpecialist(_cDoctor.doctor)}. Bác sĩ từng tham gia công tác tại bệnh viện da liễu tại TP.HCM hơn 8 năm. '
+                                  'Hiện tại đang công tác tại bệnh viện đại học Y Dược TP.HCM cơ sở 1...',
                               children: [
                                 TextSpan(
                                   text: 'Xem thêm',
                                   style: TextStyle(
                                     color: AppColors.primary,
-                                    fontWeight: FontWeight.bold,
                                   ),
                                   recognizer: TapGestureRecognizer()
                                     ..onTap = () {
@@ -203,9 +211,26 @@ class DoctorDetailPage extends StatelessWidget {
                       margin: EdgeInsets.only(top: 25.sp),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          CustomTitleSection(
+                            title: 'Địa điểm',
+                            suffixText: 'Xem địa điểm',
+                            suffixAction: () {
+                              Utils.openMap(_cDoctor.doctor.address!);
+                            },
+                          ),
+                          Text(_cDoctor.doctor.address!.toString()),
+                        ],
+                      ),
+                    ),
+                    Container(
+                      width: Get.width,
+                      margin: EdgeInsets.only(top: 25.sp),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: const [
                           CustomTitleSection(
-                            title: 'Giờ Làm Việc',
+                            title: 'Thời gian Làm Việc',
                           ),
                           Text('Thứ 2 - Thứ 6, 17:00 đến 20:00'),
                         ],
@@ -255,10 +280,10 @@ class DoctorDetailPage extends StatelessWidget {
                                     Row(
                                       mainAxisAlignment: MainAxisAlignment.start,
                                       children: [
-                                        ImageContainer(
+                                        const ImageContainer(
                                           width: 53,
                                           height: 53,
-                                          imgUrl: _cDoctor.doctor.avatar,
+                                          imgUrl: Constants.defaultAvatar,
                                         ).circle(),
                                         SizedBox(width: 20.sp),
                                         Text(
@@ -303,8 +328,7 @@ class DoctorDetailPage extends StatelessWidget {
                                           fontSize: 14.sp,
                                           color: Colors.black,
                                         ),
-                                        text:
-                                            'Tôi có thể thấy rằng đây có thể giải quyết cho cái lưng đau của tôi một cách triệt để',
+                                        text: 'Tôi có thể thấy rằng đây có thể giải quyết cho cái lưng đau của tôi một cách triệt để',
                                       ),
                                     ),
                                     Container(

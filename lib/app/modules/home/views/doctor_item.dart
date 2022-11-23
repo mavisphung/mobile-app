@@ -113,7 +113,7 @@ class DoctorItem extends StatelessWidget {
                                 ),
                               ),
                               Text(
-                                ' (3.9k bình luận)',
+                                ' (0 bình luận)',
                                 style: TextStyle(
                                   fontSize: 12.sp,
                                 ),

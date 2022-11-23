@@ -31,13 +31,13 @@ class BookingDateTimePage extends StatelessWidget {
     final slotsCreator = SlotsCreator(_doctor);
     return BasePage(
       appBar: const MyAppBar(
-        title: 'Book an appointment',
+        title: 'Hẹn khám',
       ),
       bottomSheet: CustomBottomSheet(
         buttonText: Strings.kContinue,
         onPressed: () {
           if (_cBooking.selectedTime.isEmpty) {
-            Utils.showAlertDialog('Please choose your booking time');
+            Utils.showAlertDialog('Vui lòng chọn giờ khám');
             return;
           }
           Get.toNamed(Routes.BOOKING_PACKAGE);
@@ -47,7 +47,7 @@ class BookingDateTimePage extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           CustomTitleSection(
-            title: 'Select date',
+            title: 'Chọn ngày',
             paddingLeft: 8.sp,
           ),
           DateCalendar(cBooking: _cBooking),

@@ -31,7 +31,7 @@ class UserProfileDetailPage extends StatelessWidget {
     return BasePage(
       backgroundColor: Colors.white,
       appBar: const MyAppBar(
-        title: 'User profile details',
+        title: 'Thông tin tài khoản',
       ),
       body: FutureBuilder<bool>(
         future: _c.getProfile(),

@@ -11,6 +11,7 @@ import 'package:hi_doctor_v2/app/models/appointment.dart';
 import 'package:hi_doctor_v2/app/models/doctor.dart';
 import 'package:hi_doctor_v2/app/models/specialist.dart';
 import 'package:hi_doctor_v2/app/modules/appointment/controllers/incoming_controller.dart';
+import 'package:hi_doctor_v2/app/modules/bottom_navbar/controllers/navbar_controller.dart';
 import 'package:hi_doctor_v2/app/modules/home/controllers/home_controller.dart';
 import 'package:hi_doctor_v2/app/modules/home/views/category_item.dart';
 import 'package:hi_doctor_v2/app/modules/home/views/doctor_item.dart';
@@ -27,6 +28,7 @@ import 'package:hi_doctor_v2/app/modules/widgets/image_container.dart';
 class HomePage extends StatelessWidget {
   final _homeController = Get.put(HomeController());
   final _cIncoming = Get.put(IncomingController());
+  final _navController = Get.find<NavBarController>();
 
   HomePage({super.key});
 
@@ -96,7 +98,9 @@ class HomePage extends StatelessWidget {
               CustomTitleSection(
                 title: Strings.upcomingAppointment,
                 suffixText: 'Xem thêm',
-                suffixAction: () {},
+                suffixAction: () {
+                  _navController.changeTabIndex(1);
+                },
               ),
               ObxValue<RxList<Appointment>>(
                 (data) => data.isNotEmpty ? ReminderCard(appointment: data[0]) : const SizedBox.shrink(),

@@ -39,27 +39,21 @@ class SlotsCreator {
 
     if (suggestShifts != null && suggestShifts.isNotEmpty) {
       for (var shift in suggestShifts) {
-        print('SUGGEST SHIFT: ${shift.toString()}');
         start = shift['from'] as String;
-        end = shift['end'] as String;
+        end = shift['to'] as String;
         startTime = Utils.parseStrToDateTime('$dateStr $start');
-        print('fromTime: $startTime');
         endTime = Utils.parseStrToDateTime('$dateStr $end');
-        print('endTime: $endTime');
         if (startTime != null && endTime != null) {
           DateTime endSlot;
 
           endSlot = startTime;
           do {
-            print('endSlot 1: $endSlot');
             slots.add(WorkingHour(
               id: id++,
               title: Utils.formatAMPM(endSlot),
               value: '${Utils.formatHHmmTime(endSlot)}:00',
             ));
-            endSlot = DateTime(selectedDate.year, selectedDate.month, selectedDate.day, endSlot.hour, endSlot.minute)
-                .add(const Duration(minutes: 30));
-            print('endSlot 2: $endSlot');
+            endSlot = DateTime(selectedDate.year, selectedDate.month, selectedDate.day, endSlot.hour, endSlot.minute).add(const Duration(minutes: 30));
           } while (endSlot.isBefore(endTime));
         }
       }
@@ -96,8 +90,7 @@ class SlotsCreator {
             title: Utils.formatAMPM(endSlot),
             value: '${Utils.formatHHmmTime(endSlot)}:00',
           ));
-          endSlot = DateTime(selectedDate.year, selectedDate.month, selectedDate.day, endSlot.hour, endSlot.minute)
-              .add(const Duration(minutes: 30));
+          endSlot = DateTime(selectedDate.year, selectedDate.month, selectedDate.day, endSlot.hour, endSlot.minute).add(const Duration(minutes: 30));
           print('endSlot 2: $endSlot');
         } while (endSlot.isBefore(endTime));
       }

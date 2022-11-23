@@ -91,8 +91,7 @@ class SettingsPage extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () {
-                    final patientOption =
-                        PatientOption(context, (p) => Get.toNamed(Routes.HEALTH_RECORDS, arguments: p));
+                    final patientOption = PatientOption(context, (p) => Get.toNamed(Routes.HEALTH_RECORDS, arguments: p));
                     patientOption.openPatientOptions();
                   },
                   child: const SettingItem2(
@@ -144,7 +143,7 @@ class SettingsPage extends StatelessWidget {
               children: [
                 SettingItem1(
                   icon: getIcon(PhosphorIcons.user_circle_thin),
-                  title: 'Hồ sơ của tôi',
+                  title: 'Thông tin tài khoản',
                   function: () => Get.toNamed(Routes.USER_PROFILE_DETAIL),
                 ),
                 SettingItem1(

@@ -62,7 +62,7 @@ class ContractStep1 extends StatelessWidget {
               'otherCode': d['otherCode'],
               'generalName': d['generalName'],
               'diseaseName': d['diseaseName'],
-              'records': [].addNonNull(record),
+              // 'records': [].addNonNull(record),
               'isChosen': false,
             },
           ],
@@ -82,7 +82,7 @@ class ContractStep1 extends StatelessWidget {
         'otherCode': d['otherCode'],
         'generalName': d['generalName'],
         'diseaseName': d['diseaseName'],
-        'records': [].addNonNull(record),
+        // 'records': [].addNonNull(record),
         'isChosen': false,
       });
       cate['diseases'] = updatedCate;
@@ -122,8 +122,7 @@ class ContractStep1 extends StatelessWidget {
                     padding: EdgeInsets.symmetric(vertical: 30.sp, horizontal: Constants.padding.sp),
                     decoration: BoxDecoration(
                       color: Colors.white,
-                      borderRadius:
-                          BorderRadius.only(topLeft: Radius.circular(40.sp), topRight: Radius.circular(40.sp)),
+                      borderRadius: BorderRadius.only(topLeft: Radius.circular(40.sp), topRight: Radius.circular(40.sp)),
                     ),
                     child: Column(
                       children: [

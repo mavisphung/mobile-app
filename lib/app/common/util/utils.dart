@@ -11,6 +11,7 @@ import 'package:http/http.dart' as http;
 import 'package:hi_doctor_v2/app/common/constants.dart';
 import 'package:hi_doctor_v2/app/common/values/colors.dart';
 import 'package:hi_doctor_v2/app/common/values/strings.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 abstract class Utils {
   static DateTime? currentBackPressTime;
@@ -180,8 +181,7 @@ abstract class Utils {
               InkWell(
                 onTap: () => Navigator.pop(ctx, true),
                 customBorder: RoundedRectangleBorder(
-                  borderRadius:
-                      BorderRadius.only(bottomLeft: Radius.circular(12.sp), bottomRight: Radius.circular(12.sp)),
+                  borderRadius: BorderRadius.only(bottomLeft: Radius.circular(12.sp), bottomRight: Radius.circular(12.sp)),
                 ),
                 child: Padding(
                   padding: EdgeInsets.symmetric(vertical: Constants.padding.sp),
@@ -301,5 +301,16 @@ abstract class Utils {
       };
     }
     return null;
+  }
+
+  static Future<void> openMap(String address) async {
+    String query = Uri.encodeComponent(address);
+    String googleUrl = 'https://www.google.com/maps/search/?api=1&query=$query';
+    if (!await launchUrl(
+      Uri.parse(googleUrl),
+      mode: LaunchMode.externalApplication,
+    )) {
+      throw 'Could not launch $googleUrl';
+    }
   }
 }

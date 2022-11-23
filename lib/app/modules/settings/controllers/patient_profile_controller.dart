@@ -56,7 +56,7 @@ class PatientProfileController extends GetxController {
     dob.text = '';
     gender.value = userGender.first['value']!;
     address.text = '';
-    avatar.value = '';
+    avatar.value = Constants.defaultAvatar;
     return Future.value(true);
   }
 

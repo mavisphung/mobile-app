@@ -27,7 +27,7 @@ class CustomTitleSection extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.only(
-        left: paddingLeft.sp,
+        // left: paddingLeft.sp,
         top: paddingTop.sp,
         bottom: paddingBottom.sp,
       ),

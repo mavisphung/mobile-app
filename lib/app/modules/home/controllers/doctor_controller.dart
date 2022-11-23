@@ -29,6 +29,7 @@ class DoctorController extends GetxController {
 
     if (response != null && response.isSuccess == true) {
       rxDoctor.value = Doctor.fromMap(response.data);
+      response.data.toString().debugLog('Doctor');
       return true;
     }
 

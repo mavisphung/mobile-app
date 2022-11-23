@@ -71,16 +71,21 @@ class BookingController extends GetxController {
     rxPatient.value = value;
   }
 
-  Future<List<Map<String, dynamic>>?> getSuggestHours() async {
+  Future<List<dynamic>?> getSuggestHours() async {
     final response = await _apiBookAppointment.getSuggestHours(_doctor.id!, DateFormat('yyyy-MM-dd').format(selectedDate)).futureValue();
     if (response != null && response.isSuccess == true && response.statusCode == Constants.successGetStatusCode) {
       final data = response.data;
       print(response.data.toString());
-      if (data is Map) {
-        if (data.isEmpty) return List.empty();
-      } else if (data is List<Map<String, dynamic>>) {
-        return data;
+      // if (data is Map) {
+      //   if (data.isEmpty) return List.empty();
+      // } else if (data is List<Map<String, dynamic>>) {
+      //   return data;
+      // }
+      if (data == null || data is Map || (data as List<dynamic>).isEmpty) {
+        return List.empty();
       }
+
+      return data as List<dynamic>;
     }
     return null;
   }
