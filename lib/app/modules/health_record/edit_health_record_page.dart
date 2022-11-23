@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
+import 'package:hi_doctor_v2/app/common/util/enum.dart' as mytag;
 import 'package:hi_doctor_v2/app/common/util/dialogs.dart';
 import 'package:hi_doctor_v2/app/common/util/enum.dart';
 import 'package:hi_doctor_v2/app/common/values/colors.dart';
@@ -16,6 +17,7 @@ import 'package:hi_doctor_v2/app/modules/widgets/base_page.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/custom_text_btn.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/custom_textfield_widget.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/my_appbar.dart';
+import 'package:hi_doctor_v2/app/routes/app_pages.dart';
 
 // ignore: must_be_immutable
 class EditOtherHealthRecordPage extends StatelessWidget {
@@ -120,7 +122,18 @@ class EditOtherHealthRecordPage extends StatelessWidget {
             focusNode: _cEditOtherHealthRecord.nameFocusNode,
             controller: _cEditOtherHealthRecord.nameController,
           ),
-          const PathologyTextField(),
+          PathologyTextField(
+            onChoose: (result) {
+              final existedItem = _cEditOtherHealthRecord.rxPathologies.firstWhereOrNull((e) => e.id == result.id);
+              if (existedItem == null) {
+                Get.toNamed(Routes.EDIT_PATHOLOGY_RECORD,
+                    arguments: result, parameters: {'tag': mytag.Action.create.name});
+                return;
+              }
+              Get.toNamed(Routes.EDIT_PATHOLOGY_RECORD,
+                  arguments: existedItem.copyWith(), parameters: {'tag': mytag.Action.update.name});
+            },
+          ),
           Row(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [

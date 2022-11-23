@@ -19,8 +19,6 @@ class RecommendItem extends StatefulWidget {
 }
 
 class _RecommendItemState extends State<RecommendItem> {
-  // final _c = Get.find<CreateContractController>();
-
   final List<Map<String, dynamic>> _lType = [];
 
   final _divider = Divider(color: Colors.grey.shade200, thickness: 0.5.sp);
@@ -148,7 +146,9 @@ class _RecommendItemState extends State<RecommendItem> {
                           ),
                         ],
                       ),
-                      if (tickets != null) Text('${(tickets["details"] as List).length} phiếu đã chọn'),
+                      tickets != null
+                          ? Text('${(tickets["details"] as List).length} phiếu đã chọn')
+                          : const Text('0 phieu da chon'),
                     ],
                   );
                 }).toList(),

@@ -3,10 +3,12 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:hi_doctor_v2/app/common/constants.dart';
 import 'package:hi_doctor_v2/app/common/values/colors.dart';
-import 'package:hi_doctor_v2/app/modules/health_record/views/pathology_search.dart';
+import 'package:hi_doctor_v2/app/models/pathology.dart';
+import 'package:hi_doctor_v2/app/modules/health_record/views/pathology_search_delegate.dart';
 
 class PathologyTextField extends StatelessWidget {
-  const PathologyTextField({super.key});
+  final void Function(Pathology) onChoose;
+  const PathologyTextField({super.key, required this.onChoose});
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +16,7 @@ class PathologyTextField extends StatelessWidget {
       onTap: () async {
         await showSearch(
           context: context,
-          delegate: PathologySearchDelegate(),
+          delegate: PathologySearchDelegate(onChoose: onChoose),
         );
       },
       child: SizedBox(
