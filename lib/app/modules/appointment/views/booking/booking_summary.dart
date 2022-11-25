@@ -3,7 +3,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:hi_doctor_v2/app/common/util/dialogs.dart';
+import 'package:hi_doctor_v2/app/common/util/extensions.dart';
 import 'package:hi_doctor_v2/app/common/util/transformation.dart';
+import 'package:hi_doctor_v2/app/common/util/utils.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/image_container.dart';
 import 'package:hi_doctor_v2/app/routes/app_pages.dart';
 import 'package:intl/intl.dart';
@@ -19,6 +21,7 @@ import 'package:hi_doctor_v2/app/modules/appointment/providers/req_appointment_m
 import 'package:hi_doctor_v2/app/modules/widgets/base_page.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/custom_bottom_sheet.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/my_appbar.dart';
+import 'package:vnpay_flutter/vnpay_flutter.dart';
 
 // ignore: must_be_immutable
 class BookingSummary extends StatelessWidget {
@@ -39,6 +42,7 @@ class BookingSummary extends StatelessWidget {
         text,
         style: TextStyle(
           fontSize: 14.sp,
+          fontWeight: FontWeight.bold,
         ),
       ),
     );
@@ -70,7 +74,27 @@ class BookingSummary extends StatelessWidget {
     return supervisor!.phoneNumber!.replaceRange(0, 6, '******');
   }
 
+  void processPayment(BuildContext ctx, String paymentUrl) {
+    VNPAYFlutter.instance.show(
+      paymentUrl: paymentUrl,
+      onPaymentSuccess: (params) async {
+        params.toString().debugLog('Payment success');
+        (params['vnp_ResponseCode'] as String).debugLog('vnp_ResponseCode on success');
+        _cBooking.setPaymentStatus(true);
+        // Utils.showTopSnackbar('Thanh toan thanh cong');
+      },
+      onPaymentError: (params) {
+        params.toString().debugLog('Payment fail');
+        (params['vnp_ResponseCode'] as String).debugLog('vnp_ResponseCode on error');
+        _cBooking.setPaymentStatus(false);
+        Utils.showAlertDialog('Thanh toan that bai');
+      },
+    );
+  }
+
   void createAppointment(BuildContext ctx) async {
+    // Booking trước, payment sau
+    'Creating appointment'.debugLog('Booking summary');
     final reqModel = ReqAppointmentModel(
       _cBooking.doctor.id!,
       _cBooking.patient!.id!,
@@ -78,17 +102,24 @@ class BookingSummary extends StatelessWidget {
       "${DateFormat('yyyy-MM-dd').format(_cBooking.selectedDate)} ${_cBooking.selectedTime}",
       _cBooking.problemController.text.trim(),
     );
+
     var isSuccess = await _cBooking.createAppointment(reqModel);
-    if (isSuccess != null) {
-      Dialogs.statusDialog(
-        ctx: ctx,
-        isSuccess: isSuccess,
-        successMsg: 'Lịch hẹn khám đã được đặt thành công. Bạn sẽ được nhận thông báo để theo dõi lịch hẹn với bác sĩ.',
-        failMsg: 'Có vẻ như có ai đó đã đặt lịch trước bạn. Bạn hãy chọn một ca thời gian khác và thử lại xem.',
-        successAction: () => Get.offAllNamed(Routes.NAVBAR),
-      );
+    if (isSuccess == null) {
+      Utils.showAlertDialog('Phát sinh lỗi hệ thống');
+      return;
+    } else if (isSuccess) {
+      final paymentUrl = Utils.getPaymentUrl(amount: _cBooking.rxService.value.price!, orderInfo: 'Thanh toan lich hen');
+      paymentUrl.debugLog('Payment Url');
+      processPayment(ctx, paymentUrl);
     }
-    // Utils.showAlertDialog('Lỗi hệ thống!');
+
+    Dialogs.statusDialog(
+      ctx: ctx,
+      isSuccess: isSuccess,
+      successMsg: 'Lịch hẹn khám đã được đặt thành công. Bạn sẽ được nhận thông báo để theo dõi lịch hẹn với bác sĩ.',
+      failMsg: 'Có vẻ như có ai đó đã đặt lịch trước bạn. Bạn hãy chọn một ca thời gian khác và thử lại xem.',
+      successAction: () => Get.offAllNamed(Routes.NAVBAR),
+    );
   }
 
   @override
@@ -131,7 +162,7 @@ class BookingSummary extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             _getSubText(Strings.gender),
-                            Text('${doctor.gender}'),
+                            Text(Utils.convertGender(doctor.gender!)),
                           ],
                         ),
                         Row(
@@ -185,7 +216,7 @@ class BookingSummary extends StatelessWidget {
                         Row(
                           children: [
                             _getTitle(Strings.gender),
-                            Text('${patient.gender}'),
+                            Text(Utils.convertGender(patient.gender!)),
                           ],
                         ),
                         Row(
@@ -230,14 +261,14 @@ class BookingSummary extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       _getSubText(Strings.package),
-                      Text(servicePackage.name),
+                      Text(servicePackage.name!),
                     ],
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       _getSubText('Mô tả'),
-                      Text(servicePackage.description),
+                      Text(servicePackage.description!),
                     ],
                   ),
                   Divider(
@@ -249,7 +280,7 @@ class BookingSummary extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       _getSubText(Strings.price),
-                      Text('${servicePackage.price} Vnđ'),
+                      Text('${servicePackage.price}'),
                     ],
                   ),
                 ],

@@ -90,7 +90,7 @@ class PackageItem extends StatelessWidget {
             width: 8.sp,
           ),
           Text(
-            '${getPrice()} VNĐ',
+            getPrice(),
             style: TextStyle(
               color: AppColors.primary,
               fontSize: 16.sp,
@@ -101,7 +101,9 @@ class PackageItem extends StatelessWidget {
           ObxValue<RxInt>(
             (data) => Radio(
               onChanged: (int? value) {
-                value != null ? _c.setServiceId(value) : null;
+                if (value != null) {
+                  _c.setServiceId(value);
+                }
               },
               value: id,
               groupValue: data.value,

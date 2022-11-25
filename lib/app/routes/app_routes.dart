@@ -26,4 +26,5 @@ abstract class Routes {
   static const EDIT_PATHOLOGY_RECORD = '/editPathologyRecord';
   static const IMAGE = '/image';
   static const CREATE_CONTRACT = '/createContract';
+  static const WALLET = '/wallet';
 }

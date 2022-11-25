@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:hi_doctor_v2/app/common/util/extensions.dart';
 import 'package:intl/intl.dart';
 import 'package:mime/mime.dart';
 import 'package:http/http.dart' as http;
@@ -11,7 +12,9 @@ import 'package:http/http.dart' as http;
 import 'package:hi_doctor_v2/app/common/constants.dart';
 import 'package:hi_doctor_v2/app/common/values/colors.dart';
 import 'package:hi_doctor_v2/app/common/values/strings.dart';
+import 'package:network_info_plus/network_info_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:vnpay_flutter/vnpay_flutter.dart';
 
 abstract class Utils {
   static DateTime? currentBackPressTime;
@@ -312,5 +315,34 @@ abstract class Utils {
     )) {
       throw 'Could not launch $googleUrl';
     }
+  }
+
+  static String convertGender(String gender) {
+    final map = {
+      Gender.male.value: Gender.male.label,
+      Gender.female.value: Gender.female.label,
+      Gender.init.value: Gender.init.label,
+      Gender.other: Gender.other.label,
+    };
+    return map[gender] ?? 'Khác';
+  }
+
+  static String getPaymentUrl({required double amount, required String orderInfo}) {
+    // final info = NetworkInfo();
+    // var wifiIP = await info.getWifiIP(); // 192.168.1.43
+
+    final paymentUrl = VNPAYFlutter.instance.generatePaymentUrl(
+      url: VNPayConfig.url, //vnpay url, default is https://sandbox.vnpayment.vn/paymentv2/vpcpay.html
+      version: VNPayConfig.version,
+      tmnCode: VNPayConfig.tmnCode, //vnpay tmn code, get from vnpay
+      txnRef: DateTime.now().millisecondsSinceEpoch.toString(),
+      orderInfo: 'Thanh toan tien dat hen $amount VND', //order info, default is Pay Order
+      amount: amount,
+      returnUrl: 'localhost', //https://sandbox.vnpayment.vn/apis/docs/huong-dan-tich-hop/#code-returnurl
+      ipAdress: '127.0.0.1',
+      vnpayHashKey: VNPayConfig.hashKey, //vnpay hash key, get from vnpay
+      vnPayHashType: VNPayConfig.hashKeyType, //hash type. Default is HmacSHA512, you can chang it in: https://sandbox.vnpayment.vn/merchantv2
+    );
+    return paymentUrl;
   }
 }

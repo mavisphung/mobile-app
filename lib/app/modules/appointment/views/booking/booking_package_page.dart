@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:hi_doctor_v2/app/common/util/utils.dart';
 
 import 'package:hi_doctor_v2/app/common/values/strings.dart';
+import 'package:hi_doctor_v2/app/models/service.dart';
 import 'package:hi_doctor_v2/app/modules/appointment/controllers/booking/booking_controller.dart';
+import 'package:hi_doctor_v2/app/modules/appointment/widgets/package_item.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/base_page.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/custom_bottom_sheet.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/loading_widget.dart';
@@ -48,7 +51,14 @@ class BookingPackagePage extends StatelessWidget {
                         physics: const NeverScrollableScrollPhysics(),
                         itemCount: list.length,
                         itemBuilder: (_, index) {
-                          return list[index];
+                          Service item = list[index];
+                          return PackageItem(
+                            id: item.id!,
+                            name: item.name!,
+                            description: item.description!,
+                            price: item.price!,
+                            category: item.category,
+                          );
                         },
                       );
                     } else {
@@ -68,6 +78,10 @@ class BookingPackagePage extends StatelessWidget {
         buttonText: Strings.kContinue,
         onPressed: () {
           if (_cBooking.packageList == null || _cBooking.packageList!.isEmpty) return;
+          if (_cBooking.serviceId == 0) {
+            Utils.showAlertDialog('Bạn chưa chọn dịch vụ');
+            return;
+          }
           Get.toNamed(Routes.BOOKING_PATIENT_DETAIL);
         },
       ),

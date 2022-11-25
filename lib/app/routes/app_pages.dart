@@ -25,6 +25,7 @@ import 'package:hi_doctor_v2/app/modules/notification/notification_page.dart';
 import 'package:hi_doctor_v2/app/modules/settings/views/patient_list.dart';
 import 'package:hi_doctor_v2/app/modules/settings/views/patient_profile_detail.dart';
 import 'package:hi_doctor_v2/app/modules/settings/views/user_profile_detail.dart';
+import 'package:hi_doctor_v2/app/modules/settings/views/wallet_page.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/image_page.dart';
 
 part 'package:hi_doctor_v2/app/routes/app_routes.dart';
@@ -125,6 +126,10 @@ abstract class AppPages {
     GetPage(
       name: Routes.CREATE_CONTRACT,
       page: () => const CreateContractPage(),
+    ).custom(),
+    GetPage(
+      name: Routes.WALLET,
+      page: () => WalletPage(),
     ).custom(),
   ];
 }

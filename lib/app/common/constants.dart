@@ -1,3 +1,5 @@
+import 'package:vnpay_flutter/vnpay_flutter.dart';
+
 abstract class Constants {
   static const String baseUrl = 'http://capstone-elb-1141242582.ap-southeast-1.elb.amazonaws.com';
   // static const String baseUrl = 'http://192.168.1.12:8000';
@@ -35,4 +37,12 @@ abstract class Constants {
 abstract class SocialPlatform {
   static const String google = 'GOOGLE';
   static const String facebook = 'FACEBOOK';
+}
+
+abstract class VNPayConfig {
+  static const String url = 'https://sandbox.vnpayment.vn/paymentv2/vpcpay.html';
+  static const String version = '2.0.1';
+  static const String tmnCode = 'IZC396TJ';
+  static const String hashKey = 'CQCQNOCFNKEQYSFXWPOJHOPXWGUJUZYF';
+  static const VNPayHashType hashKeyType = VNPayHashType.HMACSHA512;
 }

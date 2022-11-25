@@ -40,7 +40,7 @@ class AppointmentTile extends StatelessWidget {
       theDay = now;
     }
     return theDay.day == now.day && theDay.month == now.month && theDay.year == now.year
-        ? Text('Hôm nay | ${Utils.formatAMPM(theDay)} ${theDay.hour < 12 ? "AM" : "PM"}')
+        ? Text('Hôm nay | ${Utils.formatAMPM(theDay)}')
         : Text('${Utils.formatDate(theDay)} | ${Utils.formatAMPM(theDay)}');
   }
 
@@ -181,6 +181,10 @@ class AppointmentTile extends StatelessWidget {
                   child: AppointmentButton(
                     onTap: () async {
                       'Cancelling appointment'.debugLog('Cancellation');
+                      final isOk = await Utils.showConfirmDialog('Bạn có chắc là muốn hủy cuộc hẹn không?');
+                      if (isOk == null || !isOk) {
+                        return;
+                      }
                       bool result = await _ic.cancelAppointment(data.id!);
                       Dialogs.statusDialog(
                         ctx: context,
@@ -235,7 +239,7 @@ class HistoryAppointmentTile extends StatelessWidget {
       theDay = now;
     }
     return theDay.day == now.day && theDay.month == now.month && theDay.year == now.year
-        ? Text('Hôm nay | ${Utils.formatAMPM(theDay)} ${theDay.hour < 12 ? "AM" : "PM"}')
+        ? Text('Hôm nay | ${Utils.formatAMPM(theDay)}')
         : Text('${Utils.formatDate(theDay)} | ${Utils.formatAMPM(theDay)}');
   }
 
