@@ -20,4 +20,21 @@ class MonitoredPathology {
 
   @override
   String toString() => 'MonitoredPathology(id: $id, pathology: $pathology, sharedRecord: $sharedRecord)';
+
+  Map<String, dynamic> toMap() {
+    return <String, dynamic>{
+      "id": 13570,
+      "code": "T51",
+      "otherCode": "T51",
+      "generalName": "Ngộ độc cồn",
+      "diseaseName": "Ngộ độc cồn",
+      "tickets": [
+        {
+          "typeId": 0,
+          "typeName": "Phiếu điện tim",
+          "details": ["https: //...", "http://..."]
+        }
+      ]
+    };
+  }
 }

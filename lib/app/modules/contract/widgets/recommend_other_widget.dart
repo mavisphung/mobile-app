@@ -54,25 +54,26 @@ class _RecommendOtherWidgetState extends State<RecommendOtherWidget> {
           height: Get.height * 0.9,
           padding: EdgeInsets.symmetric(vertical: 30.sp, horizontal: Constants.padding.sp),
           decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.only(topLeft: Radius.circular(40.sp), topRight: Radius.circular(40.sp)),
+            color: Colors.grey.shade200,
+            borderRadius: BorderRadius.only(topLeft: Radius.circular(8.sp), topRight: Radius.circular(8.sp)),
           ),
           child: Column(
             children: [
               const Text('Danh sách phiếu khac'),
               RecordTypeDropDown(recordId: _c.rxRecordId),
+              const SizedBox(height: 15),
               Expanded(
                 child: ObxValue<RxInt>(
                   (data) {
                     final toChooseList = _lOtherTicket.where((e) => e['ticketId'] == _c.rxRecordId.value).toList();
-                    return toChooseList.isNotEmpty
-                        ? Column(
-                            children: toChooseList
-                                .map((e) => ReccommendHrExtendableRow(
-                                    map: e, ticketType: recordTypes[_c.rxRecordId.value]['label'] as String))
-                                .toList(),
-                          )
-                        : const SizedBox.shrink();
+                    return ListView.separated(
+                      itemBuilder: (_, index) {
+                        return ReccommendHrExtendableRow(
+                            map: toChooseList[index], ticketType: recordTypes[_c.rxRecordId.value]['label'] as String);
+                      },
+                      separatorBuilder: (_, __) => const Divider(),
+                      itemCount: toChooseList.length,
+                    );
                   },
                   _c.rxRecordId,
                 ),
@@ -121,6 +122,7 @@ class _RecommendOtherWidgetState extends State<RecommendOtherWidget> {
     return Column(
       children: [
         Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             const Text('Phiếu khác'),
             GestureDetector(
@@ -133,6 +135,7 @@ class _RecommendOtherWidgetState extends State<RecommendOtherWidget> {
             ),
           ],
         ),
+        const SizedBox(height: 10),
         Text('$totalSharedTickets phiếu đã chọn')
       ],
     );

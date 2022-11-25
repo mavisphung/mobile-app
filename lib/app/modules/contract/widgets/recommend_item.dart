@@ -4,6 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
 import 'package:hi_doctor_v2/app/common/constants.dart';
+import 'package:hi_doctor_v2/app/common/values/colors.dart';
 import 'package:hi_doctor_v2/app/modules/contract/models/monitored_pathology.dart';
 import 'package:hi_doctor_v2/app/modules/contract/widgets/recommend_hr_extendable_row.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/custom_container.dart';
@@ -21,7 +22,13 @@ class RecommendItem extends StatefulWidget {
 class _RecommendItemState extends State<RecommendItem> {
   final List<Map<String, dynamic>> _lType = [];
 
-  final _divider = Divider(color: Colors.grey.shade200, thickness: 0.5.sp);
+  Widget _getDivider() {
+    return Divider(
+      color: AppColors.greyDivider,
+      thickness: 0.5.sp,
+      height: 15,
+    );
+  }
 
   void _groupRecordType() {
     final records = widget.data.pathology?['records'] as List;
@@ -63,17 +70,19 @@ class _RecommendItemState extends State<RecommendItem> {
           height: Get.height * 0.9,
           padding: EdgeInsets.symmetric(vertical: 30.sp, horizontal: Constants.padding.sp),
           decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.only(topLeft: Radius.circular(40.sp), topRight: Radius.circular(40.sp)),
+            color: Colors.grey.shade200,
+            borderRadius: BorderRadius.only(topLeft: Radius.circular(8.sp), topRight: Radius.circular(8.sp)),
           ),
           child: Column(
             children: [
-              Text('Danh sách phiếu ${map["typeName"]}'),
+              Text('Danh sách ${map["typeName"]}'),
               Expanded(
-                child: Column(
-                  children: details
-                      .map((e) => ReccommendHrExtendableRow(map: e, ticketType: map["typeName"] as String))
-                      .toList(),
+                child: ListView.separated(
+                  itemBuilder: (_, index) {
+                    return ReccommendHrExtendableRow(map: details[index], ticketType: map["typeName"] as String);
+                  },
+                  separatorBuilder: (_, __) => const Divider(),
+                  itemCount: details.length,
                 ),
               ),
               CustomElevatedButtonWidget(
@@ -121,19 +130,27 @@ class _RecommendItemState extends State<RecommendItem> {
     return _lType.isNotEmpty
         ? CustomContainer(
             color: Colors.grey.shade200,
+            borderRadius: 5,
             child: Column(
               children: [
                 Row(
                   children: [
-                    Text('Mã bệnh ${widget.data.pathology?["otherCode"]}'),
-                    // Text('')/
+                    Text(
+                      'Mã bệnh ${widget.data.pathology?["otherCode"]}',
+                      style: TextStyle(
+                        color: AppColors.primary,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
                   ],
                 ),
+                SizedBox(height: 15.sp),
                 ..._lType.map((e) {
                   final tickets = widget.data.sharedRecord?.firstWhereOrNull((r) => r['typeId'] == e['typeId']);
                   return Column(
                     children: [
                       Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text('${e["typeName"]}'),
                           GestureDetector(
@@ -146,14 +163,16 @@ class _RecommendItemState extends State<RecommendItem> {
                           ),
                         ],
                       ),
+                      SizedBox(height: 10.sp),
                       tickets != null
                           ? Text('${(tickets["details"] as List).length} phiếu đã chọn')
                           : const Text('0 phieu da chon'),
                     ],
                   );
                 }).toList(),
-                _divider,
+                _getDivider(),
                 Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     const Text('Phiếu khác'),
                     GestureDetector(

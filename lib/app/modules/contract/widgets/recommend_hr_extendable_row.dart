@@ -4,7 +4,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import 'package:hi_doctor_v2/app/common/util/utils.dart';
-import 'package:hi_doctor_v2/app/common/values/colors.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/custom_icon_button.dart';
 
 class ReccommendHrExtendableRow extends StatefulWidget {
@@ -22,12 +21,8 @@ class _ReccommendHrExtendableRowState extends State<ReccommendHrExtendableRow> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.all(15.sp),
-      decoration: BoxDecoration(
-        color: Colors.grey.shade200,
-        borderRadius: BorderRadius.circular(15.sp),
-      ),
+    return Padding(
+      padding: EdgeInsets.symmetric(vertical: 5.sp, horizontal: 12.sp),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -35,10 +30,10 @@ class _ReccommendHrExtendableRowState extends State<ReccommendHrExtendableRow> {
             children: [
               SvgPicture.asset(
                 'assets/icons/hr1.svg',
-                width: 32.sp,
-                height: 32.sp,
+                width: 25.sp,
+                height: 25.sp,
               ),
-              SizedBox(width: 10.sp),
+              SizedBox(width: 15.sp),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -46,7 +41,7 @@ class _ReccommendHrExtendableRowState extends State<ReccommendHrExtendableRow> {
                     Text(
                       'Hồ sơ ${widget.map["recordName"]}',
                       style: TextStyle(
-                        fontSize: 15.sp,
+                        fontSize: 14.sp,
                         fontWeight: FontWeight.w500,
                       ),
                     ),
@@ -63,7 +58,7 @@ class _ReccommendHrExtendableRowState extends State<ReccommendHrExtendableRow> {
               ),
               CustomIconButton(
                 size: 28.sp,
-                color: AppColors.grey300.withOpacity(0.7),
+                color: Colors.white,
                 onPressed: () => setState(() {
                   _isExpanded = !_isExpanded;
                 }),
@@ -96,6 +91,7 @@ class _ReccommendHrExtendableRowState extends State<ReccommendHrExtendableRow> {
                           const SizedBox(width: 10),
                           Expanded(child: Text(widget.ticketType)),
                           Checkbox(
+                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(3.sp)),
                               value: e['isChosen'],
                               onChanged: (value) {
                                 setState(() {

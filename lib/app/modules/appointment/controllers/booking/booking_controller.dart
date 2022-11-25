@@ -72,7 +72,9 @@ class BookingController extends GetxController {
   }
 
   Future<List<dynamic>?> getSuggestHours() async {
-    final response = await _apiBookAppointment.getSuggestHours(_doctor.id!, DateFormat('yyyy-MM-dd').format(selectedDate)).futureValue();
+    final response = await _apiBookAppointment
+        .getSuggestHours(_doctor.id!, DateFormat('yyyy-MM-dd').format(selectedDate))
+        .futureValue();
     if (response != null && response.isSuccess == true && response.statusCode == Constants.successGetStatusCode) {
       final data = response.data;
       print(response.data.toString());

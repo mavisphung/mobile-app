@@ -89,7 +89,11 @@ class MonitoredPathologyWidet extends StatelessWidget {
               CustomTitleSection(
                 title: 'Cac benh ly da chon',
                 suffixText: 'Chon lai',
-                suffixAction: () => _c.lMonitoredPathology.clear(),
+                suffixAction: () {
+                  _c.lMonitoredPathology.clear();
+                  _pTmpList.clear();
+                  _c.rxPTmpListLength.value = 0;
+                },
               ),
               RecommendHr(data: data),
             ],
@@ -103,10 +107,10 @@ class MonitoredPathologyWidet extends StatelessWidget {
               _lCategory.clear();
               return Container(
                 height: Get.height * 0.9,
-                padding: EdgeInsets.symmetric(vertical: 30.sp, horizontal: Constants.padding.sp),
+                padding: EdgeInsets.symmetric(vertical: 20.sp, horizontal: Constants.padding.sp),
                 decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.only(topLeft: Radius.circular(40.sp), topRight: Radius.circular(40.sp)),
+                  color: Colors.grey.shade200,
+                  borderRadius: BorderRadius.only(topLeft: Radius.circular(8.sp), topRight: Radius.circular(8.sp)),
                 ),
                 child: Column(
                   children: [
@@ -126,11 +130,21 @@ class MonitoredPathologyWidet extends StatelessWidget {
                               },
                               null),
                         );
+                        _c.rxPTmpListLength.value = _pTmpList.length;
                         Get.back();
                       },
                     ),
-                    ..._pTmpList.map((e) => MonitoredPathologyRow(
-                        otherCode: e.pathology?['otherCode'], diseaseName: e.pathology?['diseaseName'])),
+                    ObxValue<RxInt>(
+                      (data) => data.value > 0
+                          ? Column(
+                              children: _pTmpList
+                                  .map((e) => MonitoredPathologyRow(
+                                      otherCode: e.pathology?['otherCode'], diseaseName: e.pathology?['diseaseName']))
+                                  .toList(),
+                            )
+                          : const SizedBox.shrink(),
+                      _c.rxPTmpListLength,
+                    ),
                     Expanded(
                       child: ObxValue<RxList<HrResModel>>(
                         (data) {
@@ -142,13 +156,14 @@ class MonitoredPathologyWidet extends StatelessWidget {
                               }
                             }
                             if (_lCategory.isNotEmpty) {
-                              return ListView.builder(
+                              return ListView.separated(
                                 itemBuilder: (_, index) {
                                   return PathologyExtendableRow(
                                     generalName: _lCategory[index]['generalName'],
                                     diseaseList: _lCategory[index]['diseases'] as List,
                                   );
                                 },
+                                separatorBuilder: (_, __) => const Divider(),
                                 itemCount: _lCategory.length,
                               );
                             }
@@ -161,6 +176,7 @@ class MonitoredPathologyWidet extends StatelessWidget {
                         _cHealthRecord.otherList,
                       ),
                     ),
+                    const SizedBox(height: 20),
                     CustomElevatedButtonWidget(
                         textChild: 'Xong',
                         onPressed: () {
@@ -196,7 +212,7 @@ class MonitoredPathologyWidet extends StatelessWidget {
             padding: EdgeInsets.all(Constants.padding.sp),
             decoration: BoxDecoration(
               color: Colors.blue.shade100,
-              borderRadius: BorderRadius.circular(Constants.textFieldRadius.sp),
+              borderRadius: BorderRadius.circular(5.sp),
             ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,

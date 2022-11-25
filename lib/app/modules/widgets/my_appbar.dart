@@ -12,6 +12,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
   final List<Widget>? actions;
   final bool hasBackBtn;
   final Rx<Status>? rxStatus;
+  final VoidCallback? backAction;
 
   const MyAppBar({
     Key? key,
@@ -19,6 +20,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
     this.actions,
     this.hasBackBtn = true,
     this.rxStatus,
+    this.backAction,
   }) : super(key: key);
 
   @override
@@ -47,6 +49,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
                       btnText: Strings.back,
                       iconData: CupertinoIcons.left_chevron,
                       status: data.value,
+                      action: backAction,
                     ),
                   ),
                   rxStatus!,
@@ -58,6 +61,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
                   child: CustomIconTextButton(
                     btnText: Strings.back,
                     iconData: CupertinoIcons.left_chevron,
+                    action: backAction,
                   ),
                 ))
           : null,

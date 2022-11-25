@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:hi_doctor_v2/app/common/values/colors.dart';
 
 class DotIndicator extends StatelessWidget {
   final space = 3.8.sp;
@@ -29,9 +28,9 @@ class DotIndicator extends StatelessWidget {
               decoration: BoxDecoration(
                 border: Border.all(
                   width: 1.sp,
-                  color: AppColors.greyDivider,
+                  color: Colors.grey.shade500,
                 ),
-                color: step == currentStep ? AppColors.greyDivider : Colors.grey[200], // border color
+                color: step == currentStep ? Colors.grey.shade500 : Colors.grey[200], // border color
                 shape: BoxShape.circle,
               ),
             ),

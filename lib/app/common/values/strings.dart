@@ -117,4 +117,7 @@ abstract class Strings {
   static String get noInternetMsg2 =>
       'Xảy ra lỗi mạng. Xin hãy kiểm tra lại kết nối internet của bạn và kéo xuống để thử lại.';
   static String get noDataPatient => 'Bạn chưa tạo hồ sơ bệnh nhân nào.';
+  static String get contractNoteHint =>
+      'Mô tả thêm về mong muốn trong quá trình chăm khám của bác sĩ và chi tiết thêm các vấn đề bệnh lý (nếu có)';
+  static String get startContractDateAlertMsg => 'Ngày bắt đầu hợp đồng nên cách ngày gửi yêu cầu 5 ngày.';
 }

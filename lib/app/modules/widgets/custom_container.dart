@@ -23,10 +23,10 @@ class CustomContainer extends StatelessWidget {
     return Container(
       width: width,
       height: height,
-      padding: EdgeInsets.all(12.sp),
+      padding: EdgeInsets.all(Constants.padding.sp),
       decoration: BoxDecoration(
         color: color ?? Colors.white,
-        borderRadius: BorderRadius.circular(borderRadius ?? Constants.borderRadius.sp),
+        borderRadius: BorderRadius.circular(borderRadius?.sp ?? Constants.borderRadius.sp),
         boxShadow: [
           BoxShadow(
             color: Colors.blue.withOpacity(0.03),

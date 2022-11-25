@@ -105,7 +105,7 @@ class Step2 extends StatelessWidget {
           children: [
             Obx(() => Checkbox(
                   fillColor: MaterialStateProperty.all(Theme.of(context).primaryColor),
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0)),
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(3)),
                   value: _c.isPolicyAgreed.value,
                   onChanged: (_) => _toggleIsPolicyAgreed(),
                 )),

@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
 import 'package:hi_doctor_v2/app/common/values/colors.dart';
+
 import 'package:hi_doctor_v2/app/modules/widgets/custom_icon_button.dart';
 
 class PathologyExtendableRow extends StatefulWidget {
@@ -20,12 +20,8 @@ class _PathologyExtendableRowState extends State<PathologyExtendableRow> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.all(15.sp),
-      decoration: BoxDecoration(
-        color: Colors.grey.shade200,
-        borderRadius: BorderRadius.circular(15.sp),
-      ),
+    return Padding(
+      padding: EdgeInsets.symmetric(vertical: 10.sp, horizontal: 12.sp),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -34,12 +30,13 @@ class _PathologyExtendableRowState extends State<PathologyExtendableRow> {
               Expanded(
                 child: Text(
                   widget.generalName,
+                  style: const TextStyle(fontWeight: FontWeight.w500),
                 ),
               ),
               SizedBox(width: 10.sp),
               CustomIconButton(
                 size: 28.sp,
-                color: AppColors.grey300.withOpacity(0.7),
+                color: Colors.white,
                 onPressed: () => setState(() {
                   _isExpanded = !_isExpanded;
                 }),
@@ -53,20 +50,35 @@ class _PathologyExtendableRowState extends State<PathologyExtendableRow> {
           ),
           if (_isExpanded)
             ...widget.diseaseList
-                .map((e) => Padding(
-                      padding: EdgeInsets.symmetric(vertical: 5.sp),
-                      child: Row(
-                        children: [
-                          Expanded(child: Text(e['diseaseName']!)),
-                          Checkbox(
-                              value: e['isChosen'],
-                              onChanged: (value) {
-                                setState(() {
-                                  e['isChosen'] = value ?? false;
-                                });
-                              }),
-                        ],
-                      ),
+                .map((e) => Row(
+                      children: [
+                        Expanded(
+                          child: Row(
+                            children: [
+                              SizedBox(
+                                  width: 42.sp,
+                                  child: Text(
+                                    e['otherCode'],
+                                    style: TextStyle(color: AppColors.primary),
+                                  )),
+                              Flexible(
+                                child: Text(
+                                  e['diseaseName'] ?? '',
+                                  style: TextStyle(color: AppColors.primary),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Checkbox(
+                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(3.sp)),
+                            value: e['isChosen'],
+                            onChanged: (value) {
+                              setState(() {
+                                e['isChosen'] = value ?? false;
+                              });
+                            }),
+                      ],
                     ))
                 .toList()
         ],

@@ -14,7 +14,6 @@ import 'package:hi_doctor_v2/app/models/doctor.dart';
 import 'package:hi_doctor_v2/app/modules/home/controllers/doctor_controller.dart';
 import 'package:hi_doctor_v2/app/modules/home/views/doctor_tile.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/base_page.dart';
-import 'package:hi_doctor_v2/app/modules/widgets/custom_bottom_sheet.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/custom_container.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/custom_elevate_btn_widget.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/image_container.dart';
@@ -186,7 +185,8 @@ class DoctorDetailPage extends StatelessWidget {
                                 color: Colors.black,
                                 height: 1.25.sp, // Line height
                               ),
-                              text: '${Strings.doctor} ${Tx.getFullName(_cDoctor.doctor.lastName, _cDoctor.doctor.firstName)} có kinh nghiệm lâu năm '
+                              text:
+                                  '${Strings.doctor} ${Tx.getFullName(_cDoctor.doctor.lastName, _cDoctor.doctor.firstName)} có kinh nghiệm lâu năm '
                                   'trong các lĩnh vực liên quan về ${_getDoctorSpecialist(_cDoctor.doctor)}. Bác sĩ từng tham gia công tác tại bệnh viện da liễu tại TP.HCM hơn 8 năm. '
                                   'Hiện tại đang công tác tại bệnh viện đại học Y Dược TP.HCM cơ sở 1...',
                               children: [
@@ -328,7 +328,8 @@ class DoctorDetailPage extends StatelessWidget {
                                           fontSize: 14.sp,
                                           color: Colors.black,
                                         ),
-                                        text: 'Tôi có thể thấy rằng đây có thể giải quyết cho cái lưng đau của tôi một cách triệt để',
+                                        text:
+                                            'Tôi có thể thấy rằng đây có thể giải quyết cho cái lưng đau của tôi một cách triệt để',
                                       ),
                                     ),
                                     Container(

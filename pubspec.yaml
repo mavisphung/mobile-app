@@ -118,6 +118,13 @@ flutter:
         - asset: assets/fonts/OpenSans-Medium.ttf
         - asset: assets/fonts/OpenSans-Regular.ttf
         - asset: assets/fonts/OpenSans-SemiBold.ttf
+
+    - family: NotoSerif
+      fonts:
+        - asset: assets/fonts/NotoSerif-Bold.ttf
+        - asset: assets/fonts/NotoSerif-BoldItalic.ttf
+        - asset: assets/fonts/NotoSerif-Italic.ttf
+        - asset: assets/fonts/NotoSerif-Regular.ttf
   
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages

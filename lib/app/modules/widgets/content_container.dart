@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import 'package:hi_doctor_v2/app/common/constants.dart';
-
 class ContentContainer extends StatelessWidget {
   final Color? color;
   final Map<String, String> content;
@@ -47,7 +45,7 @@ class ContentContainer extends StatelessWidget {
       ),
       decoration: BoxDecoration(
         color: color ?? Colors.grey.shade200,
-        borderRadius: BorderRadius.circular(Constants.padding.sp),
+        borderRadius: BorderRadius.circular(5.sp),
       ),
       child: Column(
         children: content.entries.map((e) => _getRow(e.key, e.value)).toList(),
