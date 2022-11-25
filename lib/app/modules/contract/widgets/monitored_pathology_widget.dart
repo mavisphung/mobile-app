@@ -13,11 +13,13 @@ import 'package:hi_doctor_v2/app/modules/health_record/controllers/health_record
 import 'package:hi_doctor_v2/app/modules/health_record/models/hr_res_model.dart';
 import 'package:hi_doctor_v2/app/modules/health_record/widgets/pathology_textfield.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/custom_elevate_btn_widget.dart';
+import 'package:hi_doctor_v2/app/modules/widgets/custom_title_section.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/loading_widget.dart';
 
 class MonitoredPathologyWidet extends StatelessWidget {
   final _cHealthRecord = Get.find<HealthRecordController>();
   final _c = Get.find<CreateContractController>();
+  final _pTmpList = <MonitoredPathology>[];
 
   MonitoredPathologyWidet({super.key});
 
@@ -82,7 +84,16 @@ class MonitoredPathologyWidet extends StatelessWidget {
     return ObxValue<RxList<MonitoredPathology>>(
       (data) {
         if (data.isNotEmpty) {
-          return RecommendHr(data: data);
+          return Column(
+            children: [
+              CustomTitleSection(
+                title: 'Cac benh ly da chon',
+                suffixText: 'Chon lai',
+                suffixAction: () => _c.lMonitoredPathology.clear(),
+              ),
+              RecommendHr(data: data),
+            ],
+          );
         }
         return GestureDetector(
           onTap: () => showModalBottomSheet(
@@ -100,7 +111,26 @@ class MonitoredPathologyWidet extends StatelessWidget {
                 child: Column(
                   children: [
                     const Text('Danh sách bệnh lý bạn đã thêm'),
-                    const PathologyTextField(),
+                    PathologyTextField(
+                      onChoose: (result) {
+                        _pTmpList.add(
+                          MonitoredPathology(
+                              null,
+                              {
+                                'id': result.id,
+                                'code': result.code,
+                                'otherCode': result.otherCode,
+                                'generalName': result.generalName,
+                                'diseaseName': result.diseaseName,
+                                'records': [],
+                              },
+                              null),
+                        );
+                        Get.back();
+                      },
+                    ),
+                    ..._pTmpList.map((e) => MonitoredPathologyRow(
+                        otherCode: e.pathology?['otherCode'], diseaseName: e.pathology?['diseaseName'])),
                     Expanded(
                       child: ObxValue<RxList<HrResModel>>(
                         (data) {
@@ -154,6 +184,7 @@ class MonitoredPathologyWidet extends StatelessWidget {
                                 },
                                 null));
                           }
+                          if (_pTmpList.isNotEmpty) _c.lMonitoredPathology.addAll(_pTmpList);
                           Get.back();
                         }),
                   ],

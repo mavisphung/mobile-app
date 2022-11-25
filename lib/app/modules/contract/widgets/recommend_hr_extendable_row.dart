@@ -22,7 +22,6 @@ class _ReccommendHrExtendableRowState extends State<ReccommendHrExtendableRow> {
 
   @override
   Widget build(BuildContext context) {
-    // return Text('${widget.map.toString()}');
     return Container(
       padding: EdgeInsets.all(15.sp),
       decoration: BoxDecoration(
