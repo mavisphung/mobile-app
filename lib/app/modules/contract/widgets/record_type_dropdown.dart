@@ -3,7 +3,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import 'package:hi_doctor_v2/app/common/constants.dart';
-import 'package:hi_doctor_v2/app/common/values/colors.dart';
 import 'package:hi_doctor_v2/app/modules/health_record/widgets/record_dropdown.dart';
 
 class RecordTypeDropDown extends StatelessWidget {
@@ -35,7 +34,7 @@ class RecordTypeDropDown extends StatelessWidget {
             horizontal: 18.sp,
           ),
           decoration: BoxDecoration(
-            color: AppColors.whiteHighlight,
+            color: Colors.white,
             borderRadius: BorderRadius.circular(Constants.textFieldRadius.sp),
           ),
           child: ObxValue<RxInt>(

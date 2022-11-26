@@ -16,6 +16,7 @@ import 'package:hi_doctor_v2/app/modules/home/controllers/home_controller.dart';
 import 'package:hi_doctor_v2/app/modules/home/views/category_item.dart';
 import 'package:hi_doctor_v2/app/modules/home/views/doctor_item.dart';
 import 'package:hi_doctor_v2/app/modules/home/views/doctor_item_skeleton.dart';
+import 'package:hi_doctor_v2/app/modules/home/views/no_appointment_card.dart';
 import 'package:hi_doctor_v2/app/modules/home/views/reminder_card.dart';
 import 'package:hi_doctor_v2/app/modules/home/views/welcome_item.dart';
 import 'package:hi_doctor_v2/app/modules/search/doctor_search_delegate.dart';
@@ -103,7 +104,8 @@ class HomePage extends StatelessWidget {
                 },
               ),
               ObxValue<RxList<Appointment>>(
-                (data) => data.isNotEmpty ? ReminderCard(appointment: data[data.length - 1]) : const SizedBox.shrink(),
+                (data) =>
+                    data.isNotEmpty ? ReminderCard(appointment: data[data.length - 1]) : const NoAppointmentCard(),
                 _cIncoming.incomingList,
               ),
               CustomTitleSection(title: Strings.category),

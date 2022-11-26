@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:hi_doctor_v2/app/common/constants.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 import 'package:hi_doctor_v2/app/common/util/extensions.dart';
@@ -39,7 +40,7 @@ class DateCalendar extends StatelessWidget {
       ),
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(25.sp),
+        borderRadius: BorderRadius.circular(Constants.borderRadius.sp),
         boxShadow: [
           BoxShadow(
             color: Colors.black.withOpacity(0.12),

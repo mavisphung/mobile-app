@@ -49,7 +49,9 @@ class AppointmentTile extends StatelessWidget {
     final fullName = '${data.doctor!["firstName"]} ${data.doctor!["lastName"]}';
     return GestureDetector(
       onTap: () {
-        data.id != null ? Get.toNamed(Routes.MEETING_DETAIL, arguments: data.id) : Utils.showAlertDialog('Error to get appointment information');
+        data.id != null
+            ? Get.toNamed(Routes.MEETING_DETAIL, arguments: data.id)
+            : Utils.showAlertDialog('Error to get appointment information');
       },
       child: Container(
         width: double.infinity,
@@ -292,8 +294,8 @@ class HistoryAppointmentTile extends StatelessWidget {
                             ),
                           ),
                           Container(
-                            margin: EdgeInsets.symmetric(horizontal: 12.sp),
-                            width: 12.sp,
+                            margin: EdgeInsets.symmetric(horizontal: 5.sp),
+                            width: 10.sp,
                             child: Divider(
                               // color: Colors.red,
                               thickness: 1.5.sp,

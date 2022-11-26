@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 class MonitoredPathology {
   final int? id;
@@ -20,4 +22,24 @@ class MonitoredPathology {
 
   @override
   String toString() => 'MonitoredPathology(id: $id, pathology: $pathology, sharedRecord: $sharedRecord)';
+
+  Map<String, dynamic> toMap() {
+    return <String, dynamic>{
+      "id": pathology?['id'],
+      "code": pathology?['code'],
+      "otherCode": pathology?['otherCode'],
+      "generalName": pathology?['generalName'],
+      "diseaseName": pathology?['diseaseName'],
+      "tickets": sharedRecord
+              ?.map((e) => {
+                    "typeId": e['typeId'],
+                    "typeName": e['typeName'],
+                    "details": e['details'],
+                  })
+              .toList() ??
+          [],
+    };
+  }
+
+  String toJson() => json.encode(toMap());
 }

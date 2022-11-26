@@ -99,6 +99,15 @@ class PatientOption {
   }
 
   Widget patientContainer(Rxn<Patient> rxPatient) {
+    if (rxPatient.value != null) {
+      final patient = rxPatient.value!;
+      return ContentContainer(labelWidth: 100, content: {
+        Strings.fullName: Tx.getFullName(patient.lastName, patient.firstName),
+        Strings.gender: patient.gender ?? '',
+        Strings.dob: patient.dob ?? '',
+        Strings.address: _formatAddress(patient.address),
+      });
+    }
     return FutureBuilder(
       future: _cPatientProfile.getPatientList(),
       builder: (_, AsyncSnapshot<bool?> snapshot) {
@@ -123,7 +132,9 @@ class PatientOption {
           } else if (_cPatientProfile.patientList.isEmpty) {
             return Column(
               children: [
-                const InfoContainer(info: 'Bạn cần có hồ sơ bệnh nhân để đặt lịch khám hoặc yêu cầu hợp đồng với bác sĩ.', hasInfoIcon: true),
+                const InfoContainer(
+                    info: 'Bạn cần có hồ sơ bệnh nhân để đặt lịch khám hoặc yêu cầu hợp đồng với bác sĩ.',
+                    hasInfoIcon: true),
                 OutlinedButton(
                   style: ButtonStyle(
                     padding: MaterialStateProperty.all<EdgeInsetsGeometry>(

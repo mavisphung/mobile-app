@@ -17,8 +17,8 @@ abstract class Constants {
   static const nextPage = 'nextPage';
   static const previousPage = 'previousPage';
   static const totalItems = 'totalItems';
-  static const borderRadius = 20;
-  static const textFieldRadius = 15;
+  static const borderRadius = 5;
+  static const textFieldRadius = 8;
   static const padding = 12.5;
 
   // firebase constants

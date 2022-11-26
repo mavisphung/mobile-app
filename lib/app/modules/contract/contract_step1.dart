@@ -11,7 +11,7 @@ import 'package:hi_doctor_v2/app/modules/widgets/custom_title_section.dart';
 
 class ContractStep1 extends StatelessWidget {
   final _cHealthRecord = Get.put(HealthRecordController());
-  final _c = Get.put(CreateContractController());
+  final _c = Get.find<CreateContractController>();
 
   ContractStep1({super.key});
 

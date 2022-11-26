@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:hi_doctor_v2/app/common/constants.dart';
 
 import 'package:hi_doctor_v2/app/common/util/enum.dart';
 import 'package:hi_doctor_v2/app/common/values/colors.dart';
@@ -29,7 +30,7 @@ class CustomElevatedButtonWidget extends StatelessWidget {
         height: 50.sp,
         alignment: Alignment.center,
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(16.sp),
+          borderRadius: BorderRadius.circular(Constants.borderRadius.sp),
           color: AppColors.primary,
           boxShadow: hasShadow
               ? [

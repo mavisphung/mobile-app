@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
 import 'package:hi_doctor_v2/app/common/constants.dart';
+import 'package:hi_doctor_v2/app/common/values/colors.dart';
 import 'package:hi_doctor_v2/app/modules/contract/controllers/create_contract_controller.dart';
 import 'package:hi_doctor_v2/app/modules/contract/widgets/recommend_hr_extendable_row.dart';
 import 'package:hi_doctor_v2/app/modules/contract/widgets/record_type_dropdown.dart';
 import 'package:hi_doctor_v2/app/modules/health_record/controllers/health_record_controller.dart';
 import 'package:hi_doctor_v2/app/modules/health_record/widgets/record_dropdown.dart';
+import 'package:hi_doctor_v2/app/modules/widgets/custom_container.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/custom_elevate_btn_widget.dart';
 
 class RecommendOtherWidget extends StatefulWidget {
@@ -54,25 +56,26 @@ class _RecommendOtherWidgetState extends State<RecommendOtherWidget> {
           height: Get.height * 0.9,
           padding: EdgeInsets.symmetric(vertical: 30.sp, horizontal: Constants.padding.sp),
           decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.only(topLeft: Radius.circular(40.sp), topRight: Radius.circular(40.sp)),
+            color: Colors.grey.shade200,
+            borderRadius: BorderRadius.only(topLeft: Radius.circular(8.sp), topRight: Radius.circular(8.sp)),
           ),
           child: Column(
             children: [
               const Text('Danh sách phiếu khac'),
               RecordTypeDropDown(recordId: _c.rxRecordId),
+              const SizedBox(height: 15),
               Expanded(
                 child: ObxValue<RxInt>(
                   (data) {
                     final toChooseList = _lOtherTicket.where((e) => e['ticketId'] == _c.rxRecordId.value).toList();
-                    return toChooseList.isNotEmpty
-                        ? Column(
-                            children: toChooseList
-                                .map((e) => ReccommendHrExtendableRow(
-                                    map: e, ticketType: recordTypes[_c.rxRecordId.value]['label'] as String))
-                                .toList(),
-                          )
-                        : const SizedBox.shrink();
+                    return ListView.separated(
+                      itemBuilder: (_, index) {
+                        return ReccommendHrExtendableRow(
+                            map: toChooseList[index], ticketType: recordTypes[_c.rxRecordId.value]['label'] as String);
+                      },
+                      separatorBuilder: (_, __) => const Divider(),
+                      itemCount: toChooseList.length,
+                    );
                   },
                   _c.rxRecordId,
                 ),
@@ -118,23 +121,37 @@ class _RecommendOtherWidgetState extends State<RecommendOtherWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Row(
-          children: [
-            const Text('Phiếu khác'),
-            GestureDetector(
-              onTap: () => _showModalBottom(context),
-              child: SvgPicture.asset(
-                'assets/icons/add_record.svg',
-                width: 20.sp,
-                height: 20.sp,
+    return CustomContainer(
+      color: Colors.grey.shade200,
+      borderRadius: 5,
+      padding: 18,
+      child: Column(
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              const Text('Phiếu khác'),
+              GestureDetector(
+                onTap: () => _showModalBottom(context),
+                child: Icon(
+                  PhosphorIcons.folder_notch_plus_light,
+                  color: AppColors.primary,
+                  size: 27.sp,
+                ),
               ),
+            ],
+          ),
+          const SizedBox(height: 5),
+          Container(
+            padding: EdgeInsets.symmetric(vertical: 5.sp, horizontal: 8.sp),
+            decoration: BoxDecoration(
+              color: Colors.blue.shade100,
+              borderRadius: BorderRadius.circular(Constants.textFieldRadius.sp),
             ),
-          ],
-        ),
-        Text('$totalSharedTickets phiếu đã chọn')
-      ],
+            child: Text('$totalSharedTickets phiếu đã chọn'),
+          ),
+        ],
+      ),
     );
   }
 }

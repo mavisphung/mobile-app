@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:skeletons/skeletons.dart';
 
+import 'package:hi_doctor_v2/app/common/constants.dart';
+
 class SlotsSkeleton extends StatelessWidget {
   const SlotsSkeleton({super.key});
 
@@ -21,7 +23,7 @@ class SlotsSkeleton extends StatelessWidget {
       itemBuilder: (_, int index) {
         return SkeletonAvatar(
           style: SkeletonAvatarStyle(
-            borderRadius: BorderRadius.circular(12.sp),
+            borderRadius: BorderRadius.circular(Constants.borderRadius.sp),
           ),
         );
       },

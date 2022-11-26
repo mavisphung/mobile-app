@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:hi_doctor_v2/app/modules/meeting/views/service_tile.dart';
-import 'package:hi_doctor_v2/app/modules/message/chat_page.dart';
-import 'package:hi_doctor_v2/app/modules/widgets/info_container.dart';
 import 'package:intl/intl.dart';
 import 'package:permission_handler/permission_handler.dart';
 
+import 'package:hi_doctor_v2/app/modules/meeting/views/service_tile.dart';
+import 'package:hi_doctor_v2/app/modules/message/chat_page.dart';
+import 'package:hi_doctor_v2/app/modules/widgets/info_container.dart';
 import 'package:hi_doctor_v2/app/common/util/transformation.dart';
 import 'package:hi_doctor_v2/app/common/util/utils.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/content_container.dart';
@@ -15,7 +15,6 @@ import 'package:hi_doctor_v2/app/modules/widgets/loading_widget.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/response_status_widget.dart';
 import 'package:hi_doctor_v2/app/modules/meeting/controllers/meeting_controller.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/base_page.dart';
-import 'package:hi_doctor_v2/app/modules/widgets/custom_bottom_sheet.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/my_appbar.dart';
 import 'package:hi_doctor_v2/app/routes/app_pages.dart';
 import 'package:hi_doctor_v2/app/common/constants.dart';

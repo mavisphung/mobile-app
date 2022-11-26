@@ -2,31 +2,29 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:hi_doctor_v2/app/common/constants.dart';
 
+import 'package:hi_doctor_v2/app/common/constants.dart';
 import 'package:hi_doctor_v2/app/common/util/extensions.dart';
-import 'package:hi_doctor_v2/app/common/util/utils.dart';
+import 'package:hi_doctor_v2/app/common/util/transformation.dart';
 import 'package:hi_doctor_v2/app/common/util/validators.dart';
 import 'package:hi_doctor_v2/app/common/values/colors.dart';
 import 'package:hi_doctor_v2/app/common/values/strings.dart';
 
-class MyDateTimeField extends StatelessWidget {
+class ContractPickDateWidget extends StatelessWidget {
   final TextEditingController dob;
-  final GlobalKey<FormState>? formKey;
+  final Rx<DateTime> rxSelectedDate;
 
-  const MyDateTimeField({
+  const ContractPickDateWidget({
     Key? key,
     required this.dob,
-    this.formKey,
+    required this.rxSelectedDate,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    DateTime? selectedDate;
     final isValid = true.obs;
     String? warningText;
-    selectedDate = Utils.parseStrToDate(dob.text) ?? DateTime.now();
-    selectedDate.toString().debugLog('SELECTED DATE');
+    rxSelectedDate.value.toString().debugLog('SELECTED DATE');
     return GestureDetector(
       onTap: () {
         showModalBottomSheet(
@@ -42,12 +40,12 @@ class MyDateTimeField extends StatelessWidget {
                     child: CupertinoDatePicker(
                       mode: CupertinoDatePickerMode.date,
                       dateOrder: DatePickerDateOrder.dmy,
-                      initialDateTime: selectedDate,
-                      minimumYear: 1901,
-                      maximumDate: DateTime.now(),
-                      maximumYear: DateTime.now().year,
+                      initialDateTime: rxSelectedDate.value,
+                      minimumDate: DateTime.now().add(const Duration(days: 5)),
+                      // maximumDate: DateTime.now(),
+                      maximumYear: DateTime.now().year + 2,
                       onDateTimeChanged: (DateTime val) {
-                        selectedDate = val;
+                        rxSelectedDate.value = val;
                       },
                     ),
                   ),
@@ -62,7 +60,7 @@ class MyDateTimeField extends StatelessWidget {
                         ),
                       ),
                       onPressed: () {
-                        dob.text = Utils.formatDate(selectedDate!);
+                        dob.text = Tx.getDateString(rxSelectedDate.value);
                         dob.text.toString().debugLog('Picked date');
                         Get.back();
                       },
@@ -89,25 +87,7 @@ class MyDateTimeField extends StatelessWidget {
                       },
                       controller: dob,
                       decoration: InputDecoration(
-                        label: Padding(
-                          padding: EdgeInsets.only(bottom: 22.sp),
-                          child: RichText(
-                            text: TextSpan(
-                              text: Strings.dob,
-                              style: DefaultTextStyle.of(context).style.copyWith(
-                                    fontSize: 16.5.sp,
-                                    color: Colors.grey[600],
-                                  ),
-                              children: [
-                                TextSpan(
-                                  text: ' *',
-                                  style: TextStyle(color: AppColors.error),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                        floatingLabelBehavior: FloatingLabelBehavior.always,
+                        floatingLabelBehavior: FloatingLabelBehavior.never,
                         contentPadding: EdgeInsets.only(
                           top: 16.sp,
                           bottom: 16.sp,
@@ -115,9 +95,7 @@ class MyDateTimeField extends StatelessWidget {
                           right: 18.sp,
                         ),
                         disabledBorder: OutlineInputBorder(
-                          borderSide: data.value
-                              ? BorderSide.none
-                              : BorderSide(color: Colors.red[700] ?? const Color(0xFFD32F2F)),
+                          borderSide: data.value ? BorderSide.none : BorderSide(color: Colors.red.shade700),
                           borderRadius: BorderRadius.circular(Constants.textFieldRadius.sp),
                         ),
                         filled: true,
@@ -132,7 +110,7 @@ class MyDateTimeField extends StatelessWidget {
                           warningText ?? Strings.fieldCantBeEmpty,
                           style: TextStyle(
                             fontSize: 11.sp,
-                            color: Colors.red[700],
+                            color: Colors.red.shade700,
                           ),
                         ),
                       ),

@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
@@ -32,6 +32,7 @@ class BookingDateTimePage extends StatelessWidget {
     return BasePage(
       appBar: const MyAppBar(
         title: 'Hẹn khám',
+        actions: [BackHomeWidget()],
       ),
       bottomSheet: CustomBottomSheet(
         buttonText: Strings.kContinue,

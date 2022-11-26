@@ -2,16 +2,19 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:hi_doctor_v2/app/common/util/enum.dart';
 
+import 'package:hi_doctor_v2/app/common/util/enum.dart';
 import 'package:hi_doctor_v2/app/common/values/strings.dart';
+import 'package:hi_doctor_v2/app/modules/widgets/custom_icon_button.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/custom_icon_text_btn.dart';
+import 'package:hi_doctor_v2/app/routes/app_pages.dart';
 
 class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
   final List<Widget>? actions;
   final bool hasBackBtn;
   final Rx<Status>? rxStatus;
+  final VoidCallback? backAction;
 
   const MyAppBar({
     Key? key,
@@ -19,6 +22,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
     this.actions,
     this.hasBackBtn = true,
     this.rxStatus,
+    this.backAction,
   }) : super(key: key);
 
   @override
@@ -47,6 +51,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
                       btnText: Strings.back,
                       iconData: CupertinoIcons.left_chevron,
                       status: data.value,
+                      action: backAction,
                     ),
                   ),
                   rxStatus!,
@@ -58,6 +63,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
                   child: CustomIconTextButton(
                     btnText: Strings.back,
                     iconData: CupertinoIcons.left_chevron,
+                    action: backAction,
                   ),
                 ))
           : null,
@@ -66,4 +72,19 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Size get preferredSize => const Size.fromHeight(kToolbarHeight);
+}
+
+class BackHomeWidget extends StatelessWidget {
+  const BackHomeWidget({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.only(right: 10.sp),
+      child: CustomIconButton(
+        onPressed: () => Get.offAllNamed(Routes.NAVBAR),
+        icon: Icon(CupertinoIcons.home, size: 22.sp),
+      ),
+    );
+  }
 }

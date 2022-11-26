@@ -35,4 +35,10 @@ class Tx {
       return '';
     }
   }
+
+  static String getDateString(DateTime date) {
+    final String day = date.day < 10 ? '0${date.day}' : '${date.day}';
+    final String month = date.month < 10 ? '0${date.month}' : '${date.month}';
+    return 'ngày $day tháng $month, năm ${date.year}';
+  }
 }
