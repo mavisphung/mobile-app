@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import 'package:hi_doctor_v2/app/common/constants.dart';
 import 'package:hi_doctor_v2/app/common/values/colors.dart';
 import 'package:hi_doctor_v2/app/modules/contract/models/monitored_pathology.dart';
 import 'package:hi_doctor_v2/app/modules/contract/widgets/recommend_item.dart';
 import 'package:hi_doctor_v2/app/modules/contract/widgets/recommend_other_widget.dart';
+import 'package:hi_doctor_v2/app/modules/widgets/content_container.dart';
+import 'package:hi_doctor_v2/app/modules/widgets/info_container.dart';
 
 class RecommendHr extends StatelessWidget {
   final List<MonitoredPathology> data;
@@ -20,15 +23,19 @@ class RecommendHr extends StatelessWidget {
             .map((e) =>
                 MonitoredPathologyRow(otherCode: e.pathology?['otherCode'], diseaseName: e.pathology?['diseaseName']))
             .toList(),
-        const Text('Chia sẻ phiếu y lệnh'),
-        const Text(
-            'Sau đây là những phiếu y lệnh mà hệ thống gợi ý cho bạn để chia sẻ cho bác sĩ. Những phiếu này tương ứng với bệnh lý mà bạn đã chọn.'),
+        Divider(color: AppColors.greyDivider, height: 30.sp),
+        const ContentTitle1(title: 'Chia sẻ phiếu y lệnh', topPadding: 0, bottomPadding: 8),
+        const InfoContainer(
+            info:
+                'Sau đây là những phiếu y lệnh mà hệ thống gợi ý cho bạn để chia sẻ cho bác sĩ. Những phiếu này tương ứng với bệnh lý mà bạn đã chọn.'),
         ...data
             .map((e) => Padding(
                   padding: EdgeInsets.symmetric(vertical: 5.sp),
                   child: RecommendItem(data: e),
                 ))
             .toList(),
+        Divider(color: AppColors.greyDivider, height: 30.sp),
+        const ContentTitle1(title: 'Chia sẻ phiếu y lệnh khác', topPadding: 0, bottomPadding: 8),
         const RecommendOtherWidget(),
       ],
     );
@@ -44,9 +51,9 @@ class MonitoredPathologyRow extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.symmetric(vertical: 2.sp),
-      padding: EdgeInsets.symmetric(vertical: 10.sp, horizontal: 18.sp),
+      padding: EdgeInsets.symmetric(vertical: 10.sp, horizontal: Constants.padding.sp),
       decoration: BoxDecoration(
-        color: Colors.blue.shade100,
+        color: AppColors.blue100,
         borderRadius: BorderRadius.circular(5.sp),
       ),
       child: Row(

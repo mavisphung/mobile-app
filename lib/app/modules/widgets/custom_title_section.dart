@@ -51,7 +51,6 @@ class CustomTitleSection extends StatelessWidget {
                       suffixText!,
                       style: TextStyle(
                         color: AppColors.primary,
-                        fontSize: 12.sp,
                         fontWeight: FontWeight.w500,
                       ),
                     ),

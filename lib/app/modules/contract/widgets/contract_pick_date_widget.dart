@@ -25,6 +25,7 @@ class ContractPickDateWidget extends StatelessWidget {
     final isValid = true.obs;
     String? warningText;
     rxSelectedDate.value.toString().debugLog('SELECTED DATE');
+    final minimumDate = DateTime.now().add(const Duration(days: 5));
     return GestureDetector(
       onTap: () {
         showModalBottomSheet(
@@ -41,7 +42,7 @@ class ContractPickDateWidget extends StatelessWidget {
                       mode: CupertinoDatePickerMode.date,
                       dateOrder: DatePickerDateOrder.dmy,
                       initialDateTime: rxSelectedDate.value,
-                      minimumDate: DateTime.now().add(const Duration(days: 5)),
+                      minimumDate: minimumDate.isAfter(rxSelectedDate.value) ? rxSelectedDate.value : minimumDate,
                       // maximumDate: DateTime.now(),
                       maximumYear: DateTime.now().year + 2,
                       onDateTimeChanged: (DateTime val) {
@@ -91,8 +92,8 @@ class ContractPickDateWidget extends StatelessWidget {
                         contentPadding: EdgeInsets.only(
                           top: 16.sp,
                           bottom: 16.sp,
-                          left: 18.sp,
-                          right: 18.sp,
+                          left: Constants.padding.sp,
+                          right: Constants.padding.sp,
                         ),
                         disabledBorder: OutlineInputBorder(
                           borderSide: data.value ? BorderSide.none : BorderSide(color: Colors.red.shade700),
@@ -105,7 +106,7 @@ class ContractPickDateWidget extends StatelessWidget {
                     Visibility(
                       visible: !data.value,
                       child: Padding(
-                        padding: EdgeInsets.only(left: 18.sp, top: 5.sp),
+                        padding: EdgeInsets.only(left: Constants.padding.sp, top: 5.sp),
                         child: Text(
                           warningText ?? Strings.fieldCantBeEmpty,
                           style: TextStyle(

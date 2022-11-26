@@ -56,25 +56,35 @@ class _RecommendOtherWidgetState extends State<RecommendOtherWidget> {
           height: Get.height * 0.9,
           padding: EdgeInsets.symmetric(vertical: 30.sp, horizontal: Constants.padding.sp),
           decoration: BoxDecoration(
-            color: Colors.grey.shade200,
+            color: AppColors.grey200,
             borderRadius: BorderRadius.only(topLeft: Radius.circular(8.sp), topRight: Radius.circular(8.sp)),
           ),
           child: Column(
             children: [
               const Text('Danh sách phiếu khac'),
-              RecordTypeDropDown(recordId: _c.rxRecordId),
-              const SizedBox(height: 15),
               Expanded(
                 child: ObxValue<RxInt>(
                   (data) {
                     final toChooseList = _lOtherTicket.where((e) => e['ticketId'] == _c.rxRecordId.value).toList();
-                    return ListView.separated(
-                      itemBuilder: (_, index) {
-                        return ReccommendHrExtendableRow(
-                            map: toChooseList[index], ticketType: recordTypes[_c.rxRecordId.value]['label'] as String);
-                      },
-                      separatorBuilder: (_, __) => const Divider(),
-                      itemCount: toChooseList.length,
+                    return Column(
+                      children: [
+                        RecordTypeDropDown(
+                          recordId: data.value,
+                          setRecordId: (value) => data.value = value ?? 7,
+                        ),
+                        const SizedBox(height: 15),
+                        Expanded(
+                          child: ListView.separated(
+                            itemBuilder: (_, index) {
+                              return ReccommendHrExtendableRow(
+                                  map: toChooseList[index],
+                                  ticketType: recordTypes[_c.rxRecordId.value]['label'] as String);
+                            },
+                            separatorBuilder: (_, __) => const Divider(),
+                            itemCount: toChooseList.length,
+                          ),
+                        ),
+                      ],
                     );
                   },
                   _c.rxRecordId,
@@ -122,9 +132,8 @@ class _RecommendOtherWidgetState extends State<RecommendOtherWidget> {
   @override
   Widget build(BuildContext context) {
     return CustomContainer(
-      color: Colors.grey.shade200,
+      color: AppColors.grey200,
       borderRadius: 5,
-      padding: 18,
       child: Column(
         children: [
           Row(
@@ -145,7 +154,7 @@ class _RecommendOtherWidgetState extends State<RecommendOtherWidget> {
           Container(
             padding: EdgeInsets.symmetric(vertical: 5.sp, horizontal: 8.sp),
             decoration: BoxDecoration(
-              color: Colors.blue.shade100,
+              color: AppColors.blue100,
               borderRadius: BorderRadius.circular(Constants.textFieldRadius.sp),
             ),
             child: Text('$totalSharedTickets phiếu đã chọn'),

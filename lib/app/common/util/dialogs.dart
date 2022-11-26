@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:hi_doctor_v2/app/common/constants.dart';
 
 import 'package:hi_doctor_v2/app/common/values/colors.dart';
 import 'package:hi_doctor_v2/app/common/values/strings.dart';
@@ -25,10 +26,11 @@ class Dialogs {
 
     showDialog(
       context: ctx,
+      barrierDismissible: false,
       builder: (_) {
         return Dialog(
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(40.sp),
+            borderRadius: BorderRadius.circular(Constants.borderRadius.sp),
           ),
           child: Column(
             mainAxisSize: MainAxisSize.min,
@@ -38,7 +40,9 @@ class Dialogs {
                 height: 150.sp,
                 padding: EdgeInsets.symmetric(vertical: 20.sp),
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.only(topLeft: Radius.circular(40.sp), topRight: Radius.circular(40.sp)),
+                  borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(Constants.borderRadius.sp),
+                      topRight: Radius.circular(Constants.borderRadius.sp)),
                   color: isSuccess ? Colors.green.shade100 : Colors.red.shade100,
                 ),
                 child: SvgPicture.asset(
@@ -64,7 +68,7 @@ class Dialogs {
                 ),
                 child: Text(
                   message,
-                  textAlign: TextAlign.center,
+                  textAlign: TextAlign.justify,
                 ),
               ),
               Padding(
@@ -75,7 +79,7 @@ class Dialogs {
                     height: 50.sp,
                     alignment: Alignment.center,
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(50),
+                      borderRadius: BorderRadius.circular(Constants.borderRadius.sp),
                       color: AppColors.primary,
                     ),
                     child: Text(

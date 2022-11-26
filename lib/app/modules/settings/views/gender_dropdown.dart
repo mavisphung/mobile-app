@@ -39,7 +39,7 @@ class GenderDropdown extends StatelessWidget {
           Container(
             padding: EdgeInsets.symmetric(
               vertical: 3.sp,
-              horizontal: 18.sp,
+              horizontal: Constants.padding.sp,
             ),
             decoration: BoxDecoration(
               color: AppColors.whiteHighlight,

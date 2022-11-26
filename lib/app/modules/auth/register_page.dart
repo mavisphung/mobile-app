@@ -82,7 +82,7 @@ class _RegisterPageState extends State<RegisterPage> {
       address: _addressController.text.trim(),
       phoneNumber: _phoneNumberController.text,
       gender: _controller.gender.value,
-      dob: Utils.toYmd(_dobController.text),
+      dob: Utils.reverseDate(_dobController.text),
     );
     var isRegistrationSuccess = await _controller.register(model);
     if (isRegistrationSuccess) {

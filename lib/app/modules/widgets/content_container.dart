@@ -50,7 +50,7 @@ class ContentContainer extends StatelessWidget {
     return Container(
       padding: EdgeInsets.symmetric(
         vertical: verPadding?.sp ?? 20.sp,
-        horizontal: hozPadding?.sp ?? 18.sp,
+        horizontal: hozPadding?.sp ?? Constants.padding.sp,
       ),
       decoration: BoxDecoration(
         color: color ?? AppColors.grey200,
@@ -112,7 +112,7 @@ class ContentRow extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.symmetric(
         vertical: verPadding?.sp ?? 20.sp,
-        horizontal: hozPadding?.sp ?? 18.sp,
+        horizontal: hozPadding?.sp ?? Constants.padding.sp,
       ),
       child: Column(
         children: content.entries.map((e) => _getRow(e.key, e.value)).toList(),

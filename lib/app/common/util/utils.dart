@@ -7,11 +7,11 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:mime/mime.dart';
 import 'package:http/http.dart' as http;
+import 'package:url_launcher/url_launcher.dart';
 
 import 'package:hi_doctor_v2/app/common/constants.dart';
 import 'package:hi_doctor_v2/app/common/values/colors.dart';
 import 'package:hi_doctor_v2/app/common/values/strings.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 abstract class Utils {
   static DateTime? currentBackPressTime;
@@ -39,14 +39,14 @@ abstract class Utils {
       builder: (ctx) {
         return Dialog(
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(17.sp),
+            borderRadius: BorderRadius.circular(Constants.borderRadius.sp),
           ),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
               Padding(
                 padding: EdgeInsets.only(
-                  top: 8.sp,
+                  top: 10.sp,
                   bottom: 15.sp,
                   left: 30.sp,
                   right: 30.sp,
@@ -62,11 +62,11 @@ abstract class Utils {
               Center(
                 child: Padding(
                   padding: EdgeInsets.only(
-                    bottom: 15.sp,
+                    bottom: 25.sp,
                     left: 20.sp,
                     right: 20.sp,
                   ),
-                  child: Text(message),
+                  child: Text(message, textAlign: TextAlign.center),
                 ),
               ),
               Divider(
@@ -82,16 +82,17 @@ abstract class Utils {
                       child: InkWell(
                         onTap: () => Navigator.pop(ctx, false),
                         customBorder: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.only(bottomLeft: Radius.circular(12.sp)),
+                          borderRadius: BorderRadius.only(bottomLeft: Radius.circular(Constants.borderRadius.sp)),
                         ),
                         child: Padding(
                           padding: EdgeInsets.symmetric(vertical: Constants.padding.sp),
                           child: Center(
                             child: Text(
                               cancelText ?? Strings.cancel,
-                              style: const TextStyle(
+                              style: TextStyle(
+                                fontSize: 15.sp,
                                 fontWeight: FontWeight.w500,
-                                color: Colors.lightBlueAccent,
+                                color: AppColors.primary,
                               ),
                             ),
                           ),
@@ -107,16 +108,18 @@ abstract class Utils {
                       child: InkWell(
                         onTap: () => Navigator.pop(ctx, true),
                         customBorder: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.only(bottomRight: Radius.circular(12.sp)),
-                        ),
+                            borderRadius: BorderRadius.only(
+                                bottomLeft: Radius.circular(Constants.borderRadius.sp),
+                                bottomRight: Radius.circular(Constants.borderRadius.sp))),
                         child: Padding(
                           padding: EdgeInsets.symmetric(vertical: Constants.padding.sp),
                           child: Center(
                             child: Text(
                               confirmText ?? Strings.confirm,
-                              style: const TextStyle(
+                              style: TextStyle(
+                                fontSize: 15.sp,
                                 fontWeight: FontWeight.w500,
-                                color: Colors.lightBlueAccent,
+                                color: AppColors.primary,
                               ),
                             ),
                           ),
@@ -143,14 +146,14 @@ abstract class Utils {
       builder: (ctx) {
         return Dialog(
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(17.sp),
+            borderRadius: BorderRadius.circular(Constants.borderRadius.sp),
           ),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
               Padding(
                 padding: EdgeInsets.only(
-                  top: 8.sp,
+                  top: 10.sp,
                   bottom: 15.sp,
                   left: 30.sp,
                   right: 30.sp,
@@ -166,11 +169,11 @@ abstract class Utils {
               Center(
                 child: Padding(
                   padding: EdgeInsets.only(
-                    bottom: 15.sp,
+                    bottom: 25.sp,
                     left: 20.sp,
                     right: 20.sp,
                   ),
-                  child: Text(message),
+                  child: Text(message, textAlign: TextAlign.center),
                 ),
               ),
               Divider(
@@ -181,17 +184,19 @@ abstract class Utils {
               InkWell(
                 onTap: () => Navigator.pop(ctx, true),
                 customBorder: RoundedRectangleBorder(
-                  borderRadius:
-                      BorderRadius.only(bottomLeft: Radius.circular(12.sp), bottomRight: Radius.circular(12.sp)),
+                  borderRadius: BorderRadius.only(
+                      bottomLeft: Radius.circular(Constants.borderRadius.sp),
+                      bottomRight: Radius.circular(Constants.borderRadius.sp)),
                 ),
                 child: Padding(
                   padding: EdgeInsets.symmetric(vertical: Constants.padding.sp),
                   child: Center(
                     child: Text(
                       Strings.ok,
-                      style: const TextStyle(
+                      style: TextStyle(
+                        fontSize: 15.sp,
                         fontWeight: FontWeight.w500,
-                        color: Colors.blue,
+                        color: AppColors.primary,
                       ),
                     ),
                   ),
@@ -278,14 +283,9 @@ abstract class Utils {
     }
   }
 
-  static String toDmY(String? ymd) {
+  static String reverseDate(String? ymd) {
     final dob = ymd?.split('-');
     return dob?.length == 3 ? '${dob![2]}-${dob[1]}-${dob[0]}' : '';
-  }
-
-  static String toYmd(String dmy) {
-    final dob = dmy.split('-');
-    return '${dob[2]}-${dob[1]}-${dob[0]}';
   }
 
   static Map<String, String>? getDateTimeMap(String str) {
@@ -297,7 +297,7 @@ abstract class Utils {
     final time = Utils.parseStrToTime(dateTime[1]);
     if (time != null) {
       return {
-        'date': '${Utils.toDmY(dateTime[0])}  ${isToday ? "(Hôm nay)" : ""}',
+        'date': '${reverseDate(dateTime[0])}  ${isToday ? "(Hôm nay)" : ""}',
         'time': Utils.formatAMPM(time),
       };
     }

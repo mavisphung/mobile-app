@@ -16,13 +16,15 @@ import 'package:hi_doctor_v2/app/modules/widgets/custom_elevate_btn_widget.dart'
 import 'package:hi_doctor_v2/app/modules/widgets/custom_title_section.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/loading_widget.dart';
 
-class MonitoredPathologyWidet extends StatelessWidget {
+class MonitoredPathologyWidget extends StatelessWidget {
   final _cHealthRecord = Get.find<HealthRecordController>();
   final _c = Get.find<CreateContractController>();
   final _pTmpList = <MonitoredPathology>[];
 
-  MonitoredPathologyWidet({super.key});
+  MonitoredPathologyWidget({super.key});
 
+  final _sizedBox10 = const SizedBox(height: 10);
+  final _sizedBox20 = const SizedBox(height: 20);
   final List<Map<String, dynamic>> _lCategory = [];
 
   void _categorizeDisease(HrResModel hr) {
@@ -87,8 +89,8 @@ class MonitoredPathologyWidet extends StatelessWidget {
           return Column(
             children: [
               CustomTitleSection(
-                title: 'Cac benh ly da chon',
-                suffixText: 'Chon lai',
+                title: 'Các bệnh lý theo dõi đã chọn',
+                suffixText: 'Chọn lại',
                 suffixAction: () {
                   _c.lMonitoredPathology.clear();
                   _pTmpList.clear();
@@ -109,13 +111,14 @@ class MonitoredPathologyWidet extends StatelessWidget {
                 height: Get.height * 0.9,
                 padding: EdgeInsets.symmetric(vertical: 20.sp, horizontal: Constants.padding.sp),
                 decoration: BoxDecoration(
-                  color: Colors.grey.shade200,
+                  color: AppColors.grey200,
                   borderRadius: BorderRadius.only(topLeft: Radius.circular(8.sp), topRight: Radius.circular(8.sp)),
                 ),
                 child: Column(
                   children: [
-                    const Text('Danh sách bệnh lý bạn đã thêm'),
                     PathologyTextField(
+                      height: 60,
+                      hasLabel: false,
                       onChoose: (result) {
                         _pTmpList.add(
                           MonitoredPathology(
@@ -134,17 +137,23 @@ class MonitoredPathologyWidet extends StatelessWidget {
                         Get.back();
                       },
                     ),
+                    _sizedBox10,
                     ObxValue<RxInt>(
                       (data) => data.value > 0
                           ? Column(
-                              children: _pTmpList
-                                  .map((e) => MonitoredPathologyRow(
-                                      otherCode: e.pathology?['otherCode'], diseaseName: e.pathology?['diseaseName']))
-                                  .toList(),
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const Text('Danh sách bệnh lý bạn đã chọn từ khung tìm kiếm'),
+                                ..._pTmpList
+                                    .map((e) => MonitoredPathologyRow(
+                                        otherCode: e.pathology?['otherCode'], diseaseName: e.pathology?['diseaseName']))
+                                    .toList()
+                              ],
                             )
                           : const SizedBox.shrink(),
                       _c.rxPTmpListLength,
                     ),
+                    _sizedBox20,
                     Expanded(
                       child: ObxValue<RxList<HrResModel>>(
                         (data) {
@@ -156,15 +165,24 @@ class MonitoredPathologyWidet extends StatelessWidget {
                               }
                             }
                             if (_lCategory.isNotEmpty) {
-                              return ListView.separated(
-                                itemBuilder: (_, index) {
-                                  return PathologyExtendableRow(
-                                    generalName: _lCategory[index]['generalName'],
-                                    diseaseList: _lCategory[index]['diseases'] as List,
-                                  );
-                                },
-                                separatorBuilder: (_, __) => const Divider(),
-                                itemCount: _lCategory.length,
+                              return Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  const Text(
+                                      'Danh sách dưới đây tương ứng với những bệnh lý có trong hồ sơ từ hệ thống và hồ sơ ngoài hệ thống bạn đã thêm của bệnh nhân'),
+                                  Expanded(
+                                    child: ListView.separated(
+                                      itemBuilder: (_, index) {
+                                        return PathologyExtendableRow(
+                                          generalName: _lCategory[index]['generalName'],
+                                          diseaseList: _lCategory[index]['diseases'] as List,
+                                        );
+                                      },
+                                      separatorBuilder: (_, __) => const Divider(),
+                                      itemCount: _lCategory.length,
+                                    ),
+                                  )
+                                ],
                               );
                             }
                             return const SizedBox.shrink();
@@ -211,7 +229,7 @@ class MonitoredPathologyWidet extends StatelessWidget {
           child: Container(
             padding: EdgeInsets.all(Constants.padding.sp),
             decoration: BoxDecoration(
-              color: Colors.blue.shade100,
+              color: AppColors.blue100,
               borderRadius: BorderRadius.circular(5.sp),
             ),
             child: Row(

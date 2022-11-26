@@ -34,7 +34,7 @@ class ContractStep1 extends StatelessWidget {
         ),
         patientOption.patientContainer(_c.rxPatient),
         _spacing,
-        MonitoredPathologyWidet(),
+        MonitoredPathologyWidget(),
       ],
     );
   }

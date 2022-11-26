@@ -70,7 +70,7 @@ class _RecommendItemState extends State<RecommendItem> {
           height: Get.height * 0.9,
           padding: EdgeInsets.symmetric(vertical: 30.sp, horizontal: Constants.padding.sp),
           decoration: BoxDecoration(
-            color: Colors.grey.shade200,
+            color: AppColors.grey200,
             borderRadius: BorderRadius.only(topLeft: Radius.circular(8.sp), topRight: Radius.circular(8.sp)),
           ),
           child: Column(
@@ -129,9 +129,8 @@ class _RecommendItemState extends State<RecommendItem> {
   Widget build(BuildContext context) {
     return _lType.isNotEmpty
         ? CustomContainer(
-            color: Colors.grey.shade200,
+            color: AppColors.grey200,
             borderRadius: 5,
-            padding: 18,
             child: Column(
               children: [
                 Row(
@@ -174,7 +173,7 @@ class _RecommendItemState extends State<RecommendItem> {
                       Container(
                         padding: EdgeInsets.symmetric(vertical: 5.sp, horizontal: 8.sp),
                         decoration: BoxDecoration(
-                          color: Colors.blue.shade100,
+                          color: AppColors.blue100,
                           borderRadius: BorderRadius.circular(Constants.textFieldRadius.sp),
                         ),
                         child: tickets != null
@@ -202,6 +201,9 @@ class _RecommendItemState extends State<RecommendItem> {
               ],
             ),
           )
-        : const SizedBox.shrink();
+        : Padding(
+            padding: EdgeInsets.only(left: 5.sp),
+            child: const Text('Không có phiếu y lệnh được gợi ý.'),
+          );
   }
 }

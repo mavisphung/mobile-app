@@ -34,7 +34,7 @@ class _RecordItemState extends State<RecordItem> {
     return Container(
       padding: EdgeInsets.all(15.sp),
       decoration: BoxDecoration(
-        color: Colors.grey.shade200,
+        color: AppColors.grey200,
         borderRadius: BorderRadius.circular(15.sp),
       ),
       child: Column(

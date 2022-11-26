@@ -1,5 +1,6 @@
 import 'package:intl/intl.dart';
 
+import 'package:hi_doctor_v2/app/models/user_info.dart';
 import 'package:hi_doctor_v2/app/common/values/strings.dart';
 
 class Tx {
@@ -40,5 +41,13 @@ class Tx {
     final String day = date.day < 10 ? '0${date.day}' : '${date.day}';
     final String month = date.month < 10 ? '0${date.month}' : '${date.month}';
     return 'ngày $day tháng $month, năm ${date.year}';
+  }
+
+  static String getGender(String gender) {
+    final index = userGender.indexWhere((e) => e['value'] == gender);
+    if (index > -1) {
+      return userGender[index]['label'] ?? '';
+    }
+    return '';
   }
 }

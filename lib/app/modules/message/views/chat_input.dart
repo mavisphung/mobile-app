@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import 'package:hi_doctor_v2/app/common/constants.dart';
 import 'package:hi_doctor_v2/app/common/values/colors.dart';
 import 'package:hi_doctor_v2/app/modules/message/chat_page.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/custom_icon_button.dart';
@@ -22,7 +23,7 @@ class ChatInput extends StatelessWidget {
     return Container(
       height: 60.sp,
       decoration: BoxDecoration(
-        color: Colors.grey.shade200,
+        color: AppColors.grey200,
       ),
       child: Row(
         children: <Widget>[
@@ -44,7 +45,8 @@ class ChatInput extends StatelessWidget {
                 fillColor: Colors.white,
                 hintText: 'Type your message...',
                 hintStyle: TextStyle(color: Colors.blueGrey.shade200),
-                contentPadding: EdgeInsets.only(top: 10.sp, bottom: 10.sp, left: 18.sp, right: 18.sp),
+                contentPadding:
+                    EdgeInsets.only(top: 10.sp, bottom: 10.sp, left: Constants.padding.sp, right: Constants.padding.sp),
                 border: OutlineInputBorder(
                   borderSide: BorderSide.none,
                   borderRadius: BorderRadius.circular(50),
