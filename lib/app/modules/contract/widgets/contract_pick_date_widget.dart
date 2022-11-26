@@ -5,26 +5,26 @@ import 'package:get/get.dart';
 
 import 'package:hi_doctor_v2/app/common/constants.dart';
 import 'package:hi_doctor_v2/app/common/util/extensions.dart';
-import 'package:hi_doctor_v2/app/common/util/utils.dart';
+import 'package:hi_doctor_v2/app/common/util/transformation.dart';
 import 'package:hi_doctor_v2/app/common/util/validators.dart';
 import 'package:hi_doctor_v2/app/common/values/colors.dart';
 import 'package:hi_doctor_v2/app/common/values/strings.dart';
 
 class ContractPickDateWidget extends StatelessWidget {
   final TextEditingController dob;
+  final Rx<DateTime> rxSelectedDate;
 
   const ContractPickDateWidget({
     Key? key,
     required this.dob,
+    required this.rxSelectedDate,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    DateTime? selectedDate;
     final isValid = true.obs;
     String? warningText;
-    selectedDate = Utils.parseStrToDate(dob.text) ?? DateTime.now();
-    selectedDate.toString().debugLog('SELECTED DATE');
+    rxSelectedDate.value.toString().debugLog('SELECTED DATE');
     return GestureDetector(
       onTap: () {
         showModalBottomSheet(
@@ -40,12 +40,12 @@ class ContractPickDateWidget extends StatelessWidget {
                     child: CupertinoDatePicker(
                       mode: CupertinoDatePickerMode.date,
                       dateOrder: DatePickerDateOrder.dmy,
-                      initialDateTime: selectedDate,
-                      minimumYear: 1901,
-                      maximumDate: DateTime.now(),
-                      maximumYear: DateTime.now().year,
+                      initialDateTime: rxSelectedDate.value,
+                      minimumDate: DateTime.now().add(const Duration(days: 5)),
+                      // maximumDate: DateTime.now(),
+                      maximumYear: DateTime.now().year + 2,
                       onDateTimeChanged: (DateTime val) {
-                        selectedDate = val;
+                        rxSelectedDate.value = val;
                       },
                     ),
                   ),
@@ -60,7 +60,7 @@ class ContractPickDateWidget extends StatelessWidget {
                         ),
                       ),
                       onPressed: () {
-                        dob.text = Utils.formatDate(selectedDate!);
+                        dob.text = Tx.getDateString(rxSelectedDate.value);
                         dob.text.toString().debugLog('Picked date');
                         Get.back();
                       },

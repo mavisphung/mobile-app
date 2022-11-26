@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
 import 'package:hi_doctor_v2/app/common/constants.dart';
@@ -131,10 +131,17 @@ class _RecommendItemState extends State<RecommendItem> {
         ? CustomContainer(
             color: Colors.grey.shade200,
             borderRadius: 5,
+            padding: 18,
             child: Column(
               children: [
                 Row(
                   children: [
+                    Icon(
+                      PhosphorIcons.first_aid,
+                      color: AppColors.primary,
+                      size: 25.sp,
+                    ),
+                    SizedBox(width: 5.sp),
                     Text(
                       'Mã bệnh ${widget.data.pathology?["otherCode"]}',
                       style: TextStyle(
@@ -155,18 +162,25 @@ class _RecommendItemState extends State<RecommendItem> {
                           Text('${e["typeName"]}'),
                           GestureDetector(
                             onTap: () => _showModalSheet(context, e),
-                            child: SvgPicture.asset(
-                              'assets/icons/add_record.svg',
-                              width: 20.sp,
-                              height: 20.sp,
+                            child: Icon(
+                              PhosphorIcons.folder_notch_plus_light,
+                              color: AppColors.primary,
+                              size: 27.sp,
                             ),
                           ),
                         ],
                       ),
-                      SizedBox(height: 10.sp),
-                      tickets != null
-                          ? Text('${(tickets["details"] as List).length} phiếu đã chọn')
-                          : const Text('0 phieu da chon'),
+                      SizedBox(height: 5.sp),
+                      Container(
+                        padding: EdgeInsets.symmetric(vertical: 5.sp, horizontal: 8.sp),
+                        decoration: BoxDecoration(
+                          color: Colors.blue.shade100,
+                          borderRadius: BorderRadius.circular(Constants.textFieldRadius.sp),
+                        ),
+                        child: tickets != null
+                            ? Text('${(tickets["details"] as List).length} phiếu đã chọn')
+                            : const Text('0 phieu da chon'),
+                      ),
                     ],
                   );
                 }).toList(),
@@ -177,10 +191,10 @@ class _RecommendItemState extends State<RecommendItem> {
                     const Text('Phiếu khác'),
                     GestureDetector(
                       onTap: () {},
-                      child: SvgPicture.asset(
-                        'assets/icons/add_record.svg',
-                        width: 20.sp,
-                        height: 20.sp,
+                      child: Icon(
+                        PhosphorIcons.folder_notch_plus_light,
+                        color: AppColors.primary,
+                        size: 27.sp,
                       ),
                     ),
                   ],

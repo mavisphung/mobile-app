@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
 import 'package:hi_doctor_v2/app/common/constants.dart';
+import 'package:hi_doctor_v2/app/common/values/colors.dart';
 import 'package:hi_doctor_v2/app/modules/contract/controllers/create_contract_controller.dart';
 import 'package:hi_doctor_v2/app/modules/contract/widgets/recommend_hr_extendable_row.dart';
 import 'package:hi_doctor_v2/app/modules/contract/widgets/record_type_dropdown.dart';
 import 'package:hi_doctor_v2/app/modules/health_record/controllers/health_record_controller.dart';
 import 'package:hi_doctor_v2/app/modules/health_record/widgets/record_dropdown.dart';
+import 'package:hi_doctor_v2/app/modules/widgets/custom_container.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/custom_elevate_btn_widget.dart';
 
 class RecommendOtherWidget extends StatefulWidget {
@@ -119,25 +121,37 @@ class _RecommendOtherWidgetState extends State<RecommendOtherWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            const Text('Phiếu khác'),
-            GestureDetector(
-              onTap: () => _showModalBottom(context),
-              child: SvgPicture.asset(
-                'assets/icons/add_record.svg',
-                width: 20.sp,
-                height: 20.sp,
+    return CustomContainer(
+      color: Colors.grey.shade200,
+      borderRadius: 5,
+      padding: 18,
+      child: Column(
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              const Text('Phiếu khác'),
+              GestureDetector(
+                onTap: () => _showModalBottom(context),
+                child: Icon(
+                  PhosphorIcons.folder_notch_plus_light,
+                  color: AppColors.primary,
+                  size: 27.sp,
+                ),
               ),
+            ],
+          ),
+          const SizedBox(height: 5),
+          Container(
+            padding: EdgeInsets.symmetric(vertical: 5.sp, horizontal: 8.sp),
+            decoration: BoxDecoration(
+              color: Colors.blue.shade100,
+              borderRadius: BorderRadius.circular(Constants.textFieldRadius.sp),
             ),
-          ],
-        ),
-        const SizedBox(height: 10),
-        Text('$totalSharedTickets phiếu đã chọn')
-      ],
+            child: Text('$totalSharedTickets phiếu đã chọn'),
+          ),
+        ],
+      ),
     );
   }
 }

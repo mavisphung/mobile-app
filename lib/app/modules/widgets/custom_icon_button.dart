@@ -18,8 +18,8 @@ class CustomIconButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: size ?? 45.sp,
-      height: size ?? 45.sp,
+      width: size ?? 40.sp,
+      height: size ?? 40.sp,
       child: Material(
         shape: const CircleBorder(),
         clipBehavior: Clip.hardEdge,

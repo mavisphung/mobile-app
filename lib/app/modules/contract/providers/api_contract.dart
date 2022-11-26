@@ -2,8 +2,11 @@ import 'dart:convert';
 
 import 'package:get/get.dart';
 import 'package:hi_doctor_v2/app/common/constants.dart';
+import 'package:hi_doctor_v2/app/common/storage/box.dart';
 
 class ApiContract extends GetConnect {
+  final headers = Box.getAuthorization();
+
   @override
   void onInit() {
     httpClient.baseUrl = Constants.baseUrl;
@@ -21,11 +24,11 @@ class ApiContract extends GetConnect {
     super.onInit();
   }
 
-  @override
   Future<Response> postContract(Map<String, dynamic> map) {
     return post(
       '/contract/',
       json.encode(map),
+      headers: headers,
     );
   }
 }

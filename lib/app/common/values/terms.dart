@@ -25,6 +25,7 @@ class Terms {
         '1. Quyền lợi của bên',
         '2. Nghĩa vụ của bên',
         'Điều 4: Nghĩa vụ và quyền lợi của bên B',
+        'Điều 5: Giải quyết tranh chấp',
         'Điều 6: Tiền dịch vụ và phương thức thanh toán',
         'Điều 7: Cam kết chung',
       ];

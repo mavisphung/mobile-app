@@ -2,14 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:hi_doctor_v2/app/common/util/dialogs.dart';
-import 'package:hi_doctor_v2/app/common/util/transformation.dart';
-import 'package:hi_doctor_v2/app/modules/widgets/image_container.dart';
-import 'package:hi_doctor_v2/app/routes/app_pages.dart';
 import 'package:intl/intl.dart';
 
-import 'package:hi_doctor_v2/app/common/storage/storage.dart';
-import 'package:hi_doctor_v2/app/models/user_info.dart';
+import 'package:hi_doctor_v2/app/common/util/dialogs.dart';
+import 'package:hi_doctor_v2/app/common/util/transformation.dart';
+import 'package:hi_doctor_v2/app/modules/widgets/content_container.dart';
+import 'package:hi_doctor_v2/app/modules/widgets/image_container.dart';
+import 'package:hi_doctor_v2/app/routes/app_pages.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/custom_container.dart';
 import 'package:hi_doctor_v2/app/common/constants.dart';
 import 'package:hi_doctor_v2/app/common/values/colors.dart';
@@ -31,44 +30,6 @@ class BookingSummary extends StatelessWidget {
   final _spacing = SizedBox(
     height: 15.sp,
   );
-
-  Widget _getLabel(String text) {
-    return Padding(
-      padding: EdgeInsets.only(top: 15.sp, bottom: 8.sp),
-      child: Text(
-        text,
-        style: TextStyle(
-          fontSize: 14.sp,
-        ),
-      ),
-    );
-  }
-
-  Widget _getSubText(String text) {
-    return Text(
-      text,
-      style: const TextStyle(
-        color: Colors.grey,
-      ),
-    );
-  }
-
-  Widget _getTitle(String text) {
-    return SizedBox(
-      width: 115.sp,
-      child: Text(
-        text,
-        style: const TextStyle(
-          fontWeight: FontWeight.w500,
-        ),
-      ),
-    );
-  }
-
-  String getFormatedPhone() {
-    final supervisor = Storage.getValue<UserInfo2>(CacheKey.USER_INFO.name);
-    return supervisor!.phoneNumber!.replaceRange(0, 6, '******');
-  }
 
   void createAppointment(BuildContext ctx) async {
     final reqModel = ReqAppointmentModel(
@@ -97,13 +58,17 @@ class BookingSummary extends StatelessWidget {
     final doctor = _cBooking.doctor;
     final servicePackage = _cBooking.packageList!.firstWhere((e) => e.id == _cBooking.serviceId);
     return BasePage(
-        appBar: MyAppBar(title: Strings.reviewSummary),
+        appBar: MyAppBar(
+          title: Strings.reviewSummary,
+          actions: const [BackHomeWidget()],
+        ),
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            _getLabel(Strings.doctorInfo),
+            ContentTitle1(title: Strings.doctorInfo, bottomPadding: 5),
             CustomContainer(
               child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   ImageContainer(
                     width: _imageSize,
@@ -125,28 +90,17 @@ class BookingSummary extends StatelessWidget {
                         ),
                         Divider(
                           color: AppColors.greyDivider,
-                          thickness: 0.8.sp,
+                          thickness: 0.3.sp,
                         ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            _getSubText(Strings.gender),
-                            Text('${doctor.gender}'),
-                          ],
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            _getSubText(Strings.age),
-                            Text('${doctor.age}'),
-                          ],
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            _getSubText(Strings.expYrs),
-                            Text('${doctor.experienceYears}'),
-                          ],
+                        ContentRow(
+                          hozPadding: 0,
+                          verPadding: 0,
+                          content: {
+                            Strings.gender: '${doctor.gender}',
+                            Strings.age: '${doctor.age}',
+                            Strings.address: doctor.address ?? '',
+                          },
+                          labelWidth: 60,
                         ),
                       ],
                     ),
@@ -155,9 +109,10 @@ class BookingSummary extends StatelessWidget {
               ),
             ),
             _spacing,
-            _getLabel(Strings.patientInfo),
+            ContentTitle1(title: Strings.patientInfo, bottomPadding: 5),
             CustomContainer(
               child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   ImageContainer(
                     width: _imageSize,
@@ -180,26 +135,17 @@ class BookingSummary extends StatelessWidget {
                         ),
                         Divider(
                           color: AppColors.greyDivider,
-                          thickness: 0.8.sp,
+                          thickness: 0.3.sp,
                         ),
-                        Row(
-                          children: [
-                            _getTitle(Strings.gender),
-                            Text('${patient.gender}'),
-                          ],
-                        ),
-                        Row(
-                          children: [
-                            _getTitle(Strings.dob),
-                            const Text('25/6/2000'),
-                          ],
-                        ),
-                        Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            _getTitle(Strings.dob),
-                            Flexible(child: Text('${patient.address}')),
-                          ],
+                        ContentRow(
+                          hozPadding: 0,
+                          verPadding: 0,
+                          content: {
+                            Strings.gender: '${patient.gender}',
+                            Strings.age: Tx.getAge(patient.dob ?? ""),
+                            Strings.address: patient.address ?? '',
+                          },
+                          labelWidth: 60,
                         ),
                       ],
                     ),
@@ -208,55 +154,24 @@ class BookingSummary extends StatelessWidget {
               ),
             ),
             _spacing,
-            _getLabel(Strings.appointmentDetail),
+            ContentTitle1(title: Strings.appointmentDetail, bottomPadding: 5),
             CustomContainer(
-              child: Column(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      _getSubText(Strings.bookAt),
-                      Text("${DateFormat('yyyy-MM-dd').format(_cBooking.selectedDate)} ${_cBooking.selectedTime}"),
-                    ],
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      _getSubText(Strings.duration),
-                      const Text('30 minutes'),
-                    ],
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      _getSubText(Strings.package),
-                      Text(servicePackage.name),
-                    ],
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      _getSubText('Mô tả'),
-                      Text(servicePackage.description),
-                    ],
-                  ),
-                  Divider(
-                    height: 0,
-                    color: AppColors.greyDivider,
-                    thickness: 0.8.sp,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      _getSubText(Strings.price),
-                      Text('${servicePackage.price} Vnđ'),
-                    ],
-                  ),
-                ],
+              child: ContentRow(
+                hozPadding: 0,
+                verPadding: 0,
+                content: {
+                  Strings.bookAt:
+                      "${DateFormat('yyyy-MM-dd').format(_cBooking.selectedDate)} ${_cBooking.selectedTime}",
+                  Strings.duration: '30 phút',
+                  Strings.package: servicePackage.name,
+                  'Mô tả': servicePackage.description,
+                  Strings.price: '${servicePackage.price} Vnđ',
+                },
+                labelWidth: 100,
               ),
             ),
             _spacing,
-            _getLabel('Ví của bạn'),
+            const ContentTitle1(title: 'Ví của bạn', bottomPadding: 5),
             CustomContainer(
               child: Row(
                 children: [

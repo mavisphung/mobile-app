@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
@@ -27,42 +27,43 @@ class BookingPackagePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: const MyAppBar(title: 'Gói dịch vụ'),
-      body: BasePage(
-        body: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-              padding: EdgeInsets.symmetric(vertical: 20.sp),
-              child: const CustomTitleSection(title: 'Chọn gói dịch vụ'),
-            ),
-            FutureBuilder(
-                future: getService(),
-                builder: (_, AsyncSnapshot<bool?> snapshot) {
-                  if (snapshot.hasData && snapshot.data == true) {
-                    final list = _cBooking.packageList;
-                    if (list != null && list.isNotEmpty) {
-                      return ListView.builder(
-                        shrinkWrap: true,
-                        physics: const NeverScrollableScrollPhysics(),
-                        itemCount: list.length,
-                        itemBuilder: (_, index) {
-                          return list[index];
-                        },
-                      );
-                    } else {
-                      return const NoDataWidget(message: 'Không có sẵn gói dịch vụ nào.');
-                    }
-                  } else if (snapshot.hasData && snapshot.data == false) {
-                    return const SystemErrorWidget();
-                  } else if (snapshot.connectionState == ConnectionState.none) {
-                    return const NoInternetWidget2();
+    return BasePage(
+      appBar: const MyAppBar(
+        title: 'Gói dịch vụ',
+        actions: [BackHomeWidget()],
+      ),
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: EdgeInsets.symmetric(vertical: 20.sp),
+            child: const CustomTitleSection(title: 'Chọn gói dịch vụ'),
+          ),
+          FutureBuilder(
+              future: getService(),
+              builder: (_, AsyncSnapshot<bool?> snapshot) {
+                if (snapshot.hasData && snapshot.data == true) {
+                  final list = _cBooking.packageList;
+                  if (list != null && list.isNotEmpty) {
+                    return ListView.builder(
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemCount: list.length,
+                      itemBuilder: (_, index) {
+                        return list[index];
+                      },
+                    );
+                  } else {
+                    return const NoDataWidget(message: 'Không có sẵn gói dịch vụ nào.');
                   }
-                  return const LoadingWidget();
-                }),
-          ],
-        ),
+                } else if (snapshot.hasData && snapshot.data == false) {
+                  return const SystemErrorWidget();
+                } else if (snapshot.connectionState == ConnectionState.none) {
+                  return const NoInternetWidget2();
+                }
+                return const LoadingWidget();
+              }),
+        ],
       ),
       bottomSheet: CustomBottomSheet(
         buttonText: Strings.kContinue,

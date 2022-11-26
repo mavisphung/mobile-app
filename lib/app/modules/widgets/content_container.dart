@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:hi_doctor_v2/app/common/constants.dart';
+import 'package:hi_doctor_v2/app/common/values/colors.dart';
 
 class ContentContainer extends StatelessWidget {
   final Color? color;
@@ -7,6 +9,7 @@ class ContentContainer extends StatelessWidget {
   final double? verPadding;
   final double? hozPadding;
   final double labelWidth;
+  final String? fontFamily;
 
   const ContentContainer({
     super.key,
@@ -15,6 +18,7 @@ class ContentContainer extends StatelessWidget {
     this.color,
     this.verPadding,
     this.hozPadding,
+    this.fontFamily,
   });
 
   Widget _getRow(String key, String value) {
@@ -26,12 +30,17 @@ class ContentContainer extends StatelessWidget {
           width: labelWidth.sp,
           child: Text(
             key,
-            style: const TextStyle(
+            style: TextStyle(
               fontWeight: FontWeight.w500,
+              fontFamily: fontFamily,
             ),
           ),
         ),
-        Text(value),
+        Flexible(
+            child: Text(
+          value,
+          style: TextStyle(fontFamily: fontFamily),
+        )),
       ],
     );
   }
@@ -44,8 +53,8 @@ class ContentContainer extends StatelessWidget {
         horizontal: hozPadding?.sp ?? 18.sp,
       ),
       decoration: BoxDecoration(
-        color: color ?? Colors.grey.shade200,
-        borderRadius: BorderRadius.circular(5.sp),
+        color: color ?? AppColors.grey200,
+        borderRadius: BorderRadius.circular(Constants.borderRadius.sp),
       ),
       child: Column(
         children: content.entries.map((e) => _getRow(e.key, e.value)).toList(),
@@ -86,6 +95,8 @@ class ContentRow extends StatelessWidget {
           Expanded(
             child: Text(
               value,
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
               style: const TextStyle(
                 fontWeight: FontWeight.w300,
               ),

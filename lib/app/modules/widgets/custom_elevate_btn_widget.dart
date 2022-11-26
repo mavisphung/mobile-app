@@ -30,7 +30,7 @@ class CustomElevatedButtonWidget extends StatelessWidget {
         height: 50.sp,
         alignment: Alignment.center,
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(Constants.textFieldRadius.sp),
+          borderRadius: BorderRadius.circular(Constants.borderRadius.sp),
           color: AppColors.primary,
           boxShadow: hasShadow
               ? [

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:hi_doctor_v2/app/common/constants.dart';
 
 import 'package:hi_doctor_v2/app/common/values/colors.dart';
 import 'package:hi_doctor_v2/app/modules/appointment/controllers/booking/booking_controller.dart';
@@ -44,7 +45,7 @@ class PackageItem extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         color: AppColors.whiteHighlight,
-        borderRadius: BorderRadius.circular(12.sp),
+        borderRadius: BorderRadius.circular(Constants.borderRadius.sp),
       ),
       margin: EdgeInsets.only(bottom: 20.sp),
       padding: EdgeInsets.symmetric(horizontal: 16.sp, vertical: 16.sp),
@@ -80,7 +81,7 @@ class PackageItem extends StatelessWidget {
                   style: TextStyle(
                     color: AppColors.secondary,
                     fontSize: 15.sp,
-                    fontWeight: FontWeight.bold,
+                    fontWeight: FontWeight.w500,
                   ),
                 ),
               ],

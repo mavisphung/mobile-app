@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
+import 'package:hi_doctor_v2/app/common/constants.dart';
 import 'package:hi_doctor_v2/app/common/values/colors.dart';
 import 'package:hi_doctor_v2/app/common/values/strings.dart';
 import 'package:hi_doctor_v2/app/modules/appointment/controllers/booking/booking_controller.dart';
@@ -22,73 +23,73 @@ class BookingPatientDetailPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final patientOption = PatientOption(context, _cBooking.setPatient);
-    return Scaffold(
-      resizeToAvoidBottomInset: false,
-      appBar: const MyAppBar(title: 'Chi tiết bệnh nhân'),
-      body: BasePage(
-        body: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Container(
-              padding: EdgeInsets.only(top: 15.sp),
-              child: Form(
-                key: _formKey,
-                child: GetBuilder<BookingController>(
-                  init: _cBooking,
-                  builder: (_) {
-                    return Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        // ------------- Choose patient section -------------
-                        CustomTitleSection(
-                          title: Strings.patientInfo,
-                          suffixText: Strings.change,
-                          suffixAction: patientOption.openPatientOptions,
-                        ),
-                        patientOption.patientContainer(_cBooking.rxPatient),
-                        SizedBox(
-                          height: 8.sp,
-                        ),
-                        SizedBox(
-                          height: 16.sp,
-                        ),
-                        CustomTitleSection(title: Strings.healthIssue),
-                        TextFormField(
-                          validator: (String? value) {
-                            if (value == null || value.isEmpty) {
-                              return Strings.fieldCantBeEmpty;
-                            }
-                            if (value.length >= 1000) {
-                              return Strings.problemLengthMsg;
-                            }
-                            return null;
-                          },
-                          focusNode: FocusNode(),
-                          controller: _cBooking.problemController,
-                          decoration: InputDecoration(
-                            hintText: Strings.problemMsg,
-                            contentPadding: EdgeInsets.only(top: 16.sp, bottom: 16.sp, left: 18.sp, right: -18.sp),
-                            enabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide.none,
-                              borderRadius: BorderRadius.circular(15.0),
-                            ),
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(15.0),
-                            ),
-                            filled: true,
-                            fillColor: AppColors.whiteHighlight,
+    return BasePage(
+      appBar: const MyAppBar(
+        title: 'Chi tiết bệnh nhân',
+        actions: [BackHomeWidget()],
+      ),
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            padding: EdgeInsets.only(top: 15.sp),
+            child: Form(
+              key: _formKey,
+              child: GetBuilder<BookingController>(
+                init: _cBooking,
+                builder: (_) {
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      // ------------- Choose patient section -------------
+                      CustomTitleSection(
+                        title: Strings.patientInfo,
+                        suffixText: Strings.change,
+                        suffixAction: patientOption.openPatientOptions,
+                      ),
+                      patientOption.patientContainer(_cBooking.rxPatient),
+                      SizedBox(
+                        height: 8.sp,
+                      ),
+                      SizedBox(
+                        height: 16.sp,
+                      ),
+                      CustomTitleSection(title: Strings.healthIssue),
+                      TextFormField(
+                        validator: (String? value) {
+                          if (value == null || value.isEmpty) {
+                            return Strings.fieldCantBeEmpty;
+                          }
+                          if (value.length >= 1000) {
+                            return Strings.problemLengthMsg;
+                          }
+                          return null;
+                        },
+                        focusNode: FocusNode(),
+                        controller: _cBooking.problemController,
+                        decoration: InputDecoration(
+                          hintText: Strings.problemMsg,
+                          contentPadding: EdgeInsets.only(top: 16.sp, bottom: 16.sp, left: 18.sp, right: 18.sp),
+                          enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide.none,
+                            borderRadius: BorderRadius.circular(Constants.borderRadius.sp),
                           ),
-                          keyboardType: TextInputType.multiline,
-                          maxLines: 5,
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(Constants.borderRadius.sp),
+                          ),
+                          filled: true,
+                          fillColor: AppColors.grey200,
                         ),
-                      ],
-                    );
-                  },
-                ),
+                        keyboardType: TextInputType.multiline,
+                        maxLines: 7,
+                      ),
+                    ],
+                  );
+                },
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
       bottomSheet: CustomBottomSheet(
         buttonText: Strings.kContinue,

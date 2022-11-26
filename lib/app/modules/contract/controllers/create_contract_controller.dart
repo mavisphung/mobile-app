@@ -1,13 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
-import 'package:hi_doctor_v2/app/common/constants.dart';
 import 'package:hi_doctor_v2/app/common/util/enum.dart';
 import 'package:hi_doctor_v2/app/common/util/extensions.dart';
 import 'package:hi_doctor_v2/app/models/doctor.dart';
 import 'package:hi_doctor_v2/app/models/patient.dart';
 import 'package:hi_doctor_v2/app/modules/contract/models/monitored_pathology.dart';
 import 'package:hi_doctor_v2/app/modules/contract/providers/api_contract.dart';
+import 'package:intl/intl.dart';
 
 class CreateContractController extends GetxController {
   final _apiContract = Get.put(ApiContract());
@@ -24,48 +24,41 @@ class CreateContractController extends GetxController {
 
   final contractNoteController = TextEditingController();
   final startDateController = TextEditingController();
+  Rx<DateTime> rxSelectedDate = DateTime.now().add(const Duration(days: 6)).obs;
 
   Future<bool?> createContract() async {
     status.value = Status.loading;
-    final response = await _apiContract.postContract({
+    final tmp1 = lMonitoredPathology.map((e) => e.toMap()).toList();
+    final tmp2 = lOtherSharedRecord
+        .map((e) => {
+              "typeId": e['typeId'],
+              "typeName": e['typeName'],
+              "details": e['details'],
+            })
+        .toList();
+    final startDate = DateFormat('yyyy-MM-dd').format(rxSelectedDate.value);
+    final reqModel = {
       "doctor": doctor.id,
       "patient": rxPatient.value!.id,
       "package": 1,
-      "startedAt": "2022-12-28 00:00:00",
-      "endedAt": "2022-12-29 00:00:00",
-      "prescription": [21, 22],
+      "startedAt": "$startDate 00:00:00",
+      "endedAt": "2024-02-01 00:00:00",
+      "prescription": [],
       "instruction": [],
       "detail": {
-        "monitoredPathology": [
-          {
-            "id": 13570,
-            "code": "T51",
-            "otherCode": "T51",
-            "generalName": "Ngộ độc cồn",
-            "diseaseName": "Ngộ độc cồn",
-            "tickets": [
-              {
-                "typeId": 0,
-                "typeName": "Phiếu điện tim",
-                "details": ["https: //...", "http://..."]
-              }
-            ]
-          }
-        ],
-        "otherSharedTickets": [
-          {
-            "typeId": 0,
-            "typeName": "Phiếu điện tim",
-            "details": ["https: //...", "http://..."]
-          }
-        ]
+        "monitoredPathology": tmp1,
+        "otherSharedTickets": tmp2,
       }
-    }).futureValue();
+    };
+    print('REGMODEL: ${reqModel.toString()}');
+    final response = await _apiContract.postContract(reqModel).futureValue();
 
     if (response != null) {
-      if (response.isSuccess == true && response.statusCode == Constants.successPostStatusCode) {
+      if (response.isSuccess == true) {
+        status.value = Status.success;
         return true;
       } else {
+        status.value = Status.fail;
         return false;
       }
     }

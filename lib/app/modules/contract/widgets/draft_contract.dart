@@ -2,10 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:hi_doctor_v2/app/common/util/transformation.dart';
+import 'package:hi_doctor_v2/app/common/util/utils.dart';
 
 import 'package:hi_doctor_v2/app/common/values/colors.dart';
 import 'package:hi_doctor_v2/app/common/values/terms.dart';
+import 'package:hi_doctor_v2/app/models/user_info.dart';
 import 'package:hi_doctor_v2/app/modules/contract/controllers/create_contract_controller.dart';
+import 'package:hi_doctor_v2/app/modules/widgets/content_container.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/custom_container.dart';
 
 class DraftContract extends StatelessWidget {
@@ -22,7 +25,7 @@ class DraftContract extends StatelessWidget {
     return Text(
       'Bên ${isDoctor ? "B" : "A"}: $lastName $firstName ${isDoctor ? "(Bác sĩ)" : "(Bệnh nhân)"}',
       style: TextStyle(
-        fontWeight: FontWeight.w500,
+        fontWeight: FontWeight.bold,
         fontSize: 14.sp,
       ).contractFontFamily(),
     );
@@ -34,7 +37,7 @@ class DraftContract extends StatelessWidget {
       child: Text(
         text,
         style: TextStyle(
-          fontWeight: FontWeight.w500,
+          fontWeight: FontWeight.bold,
           fontSize: 14.sp,
         ).contractFontFamily(),
       ),
@@ -61,8 +64,7 @@ class DraftContract extends StatelessWidget {
           Text(
             'CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM',
             textAlign: TextAlign.center,
-            style: TextStyle(
-              fontSize: 14.sp,
+            style: const TextStyle(
               fontWeight: FontWeight.bold,
             ).contractFontFamily(),
           ),
@@ -73,6 +75,7 @@ class DraftContract extends StatelessWidget {
               decoration: TextDecoration.underline,
             ).contractFontFamily(),
           ),
+          _sizeBox30,
           Text(
             'HỢP ĐỒNG KHÁM CHỮA BỆNH',
             style: TextStyle(
@@ -95,7 +98,34 @@ class DraftContract extends StatelessWidget {
               ),
               _sizeBox20,
               _getSideTitle(false, patient.lastName ?? '', patient.firstName ?? ''),
+              ContentContainer(
+                labelWidth: 100,
+                hozPadding: 0,
+                fontFamily: 'NotoSerif',
+                content: {
+                  'Địa chỉ:': patient.address ?? '',
+                  'Ngày sinh:': patient.dob ?? '',
+                  'Giới tính:': (userGender.firstWhereOrNull((e) => e['value'] == patient.gender))?['label'] ?? '',
+                },
+              ),
               _getSideTitle(true, doctor.lastName ?? '', doctor.firstName ?? ''),
+              ContentContainer(
+                labelWidth: 100,
+                hozPadding: 0,
+                fontFamily: 'NotoSerif',
+                content: {
+                  'Chuyên khoa:': doctor.specialists?[0]['name'] ?? '',
+                  'Địa chỉ:': doctor.address ?? '',
+                  'Ngày sinh:': Utils.toDmY(doctor.dob),
+                  'Giới tính:': (userGender.firstWhereOrNull((e) => e['value'] == doctor.gender))?['label'] ?? '',
+                },
+              ),
+              Text(
+                _terms.claims[0],
+                style: const TextStyle(
+                  fontStyle: FontStyle.italic,
+                ).contractFontFamily(),
+              ),
               _getArticle(_terms.articles[0]),
               _getContent('Thời hạn hợp đồng kể từ ${Tx.getDateString(_now)}.'),
               _getArticle(_terms.articles[1]),
@@ -111,16 +141,11 @@ class DraftContract extends StatelessWidget {
               _getArticle('${_terms.articles[4]} B:'),
               _getContent(_terms.contents.sublist(10, 14).join('\n')),
               _getArticle(_terms.articles[6]),
-              _getContent(_terms.contents.sublist(16, 18).join('\n')),
+              _getContent(_terms.contents.sublist(14, 16).join('\n')),
               _getArticle(_terms.articles[7]),
+              _getContent(_terms.contents.sublist(16, 18).join('\n')),
+              _getArticle(_terms.articles[8]),
               _getContent(_terms.contents.sublist(18).join('\n')),
-              Text(
-                _terms.claims[0],
-                style: const TextStyle(
-                  fontWeight: FontWeight.w500,
-                  fontStyle: FontStyle.italic,
-                ).contractFontFamily(),
-              ),
             ],
           ),
         ],

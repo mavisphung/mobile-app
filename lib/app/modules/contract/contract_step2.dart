@@ -73,7 +73,16 @@ class ContractStep2 extends StatelessWidget {
           keyboardType: TextInputType.multiline,
           maxLines: 6,
         ),
-        const ContentTitle1(title: 'Ngày bắt đầu hợp đồng mong muốn'),
+        Row(
+          children: [
+            const ContentTitle1(title: 'Ngày bắt đầu hợp đồng mong muốn'),
+            const SizedBox(width: 3),
+            Padding(
+              padding: EdgeInsets.only(top: 15.sp),
+              child: Text('*', style: TextStyle(color: AppColors.error)),
+            ),
+          ],
+        ),
         Padding(
           padding: EdgeInsets.symmetric(horizontal: 5.sp, vertical: 5.sp),
           child: Text(
@@ -81,7 +90,10 @@ class ContractStep2 extends StatelessWidget {
             style: TextStyle(fontSize: 12.sp),
           ),
         ),
-        ContractPickDateWidget(dob: _c.startDateController),
+        ContractPickDateWidget(
+          dob: _c.startDateController,
+          rxSelectedDate: _c.rxSelectedDate,
+        ),
       ],
     );
   }

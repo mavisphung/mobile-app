@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:hi_doctor_v2/app/common/constants.dart';
 
 import 'package:hi_doctor_v2/app/common/values/colors.dart';
 
@@ -24,7 +25,7 @@ class HourItem extends StatelessWidget {
         horizontal: 16.sp,
       ),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10.sp),
+        borderRadius: BorderRadius.circular(Constants.borderRadius.sp),
         color: isSelected ? AppColors.primary : Colors.white,
         boxShadow: [
           BoxShadow(

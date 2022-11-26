@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:hi_doctor_v2/app/common/util/dialogs.dart';
 
 import 'package:hi_doctor_v2/app/common/util/enum.dart';
 import 'package:hi_doctor_v2/app/common/util/utils.dart';
@@ -15,6 +16,7 @@ import 'package:hi_doctor_v2/app/modules/contract/controllers/create_contract_co
 import 'package:hi_doctor_v2/app/modules/widgets/base_page.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/custom_elevate_btn_widget.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/my_appbar.dart';
+import 'package:hi_doctor_v2/app/routes/app_pages.dart';
 
 class CreateContractPage extends StatefulWidget {
   const CreateContractPage({Key? key}) : super(key: key);
@@ -34,7 +36,7 @@ class _CreateContractPageState extends State<CreateContractPage> {
     });
   }
 
-  void _continue() async {
+  void _continue(BuildContext ctx) async {
     if (_currentStep == 0) {
       if (_c.lMonitoredPathology.isNotEmpty && _c.rxPatient.value != null) _nextStep();
     } else if (_currentStep == 1) {
@@ -44,6 +46,16 @@ class _CreateContractPageState extends State<CreateContractPage> {
         Utils.showAlertDialog('Alert');
       } else {
         final isSuccess = await _c.createContract();
+        if (isSuccess != null) {
+          Dialogs.statusDialog(
+            ctx: ctx,
+            isSuccess: isSuccess,
+            successMsg:
+                'Lịch hẹn khám đã được đặt thành công. Bạn sẽ được nhận thông báo để theo dõi lịch hẹn với bác sĩ.',
+            failMsg: 'Có vẻ như có ai đó đã đặt lịch trước bạn. Bạn hãy chọn một ca thời gian khác và thử lại xem.',
+            successAction: () => Get.offAllNamed(Routes.NAVBAR),
+          );
+        }
       }
     }
   }
@@ -118,7 +130,7 @@ class _CreateContractPageState extends State<CreateContractPage> {
               (data) => CustomElevatedButtonWidget(
                 textChild: _currentStep == 2 ? 'Gửi yêu cầu' : Strings.kContinue,
                 status: data.value,
-                onPressed: _continue,
+                onPressed: () => _continue(context),
               ),
               _c.status,
             ),
