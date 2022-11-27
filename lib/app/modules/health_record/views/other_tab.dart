@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 import 'package:hi_doctor_v2/app/common/values/colors.dart';
 import 'package:hi_doctor_v2/app/modules/health_record/controllers/health_record_controller.dart';
 import 'package:hi_doctor_v2/app/modules/health_record/models/hr_res_model.dart';
-import 'package:hi_doctor_v2/app/modules/health_record/widgets/health_record_item.dart';
+import 'package:hi_doctor_v2/app/modules/health_record/widgets/other_health_record_item.dart';
 import 'package:hi_doctor_v2/app/modules/health_record/widgets/health_records_skeleton.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/info_container.dart';
 import 'package:hi_doctor_v2/app/routes/app_pages.dart';

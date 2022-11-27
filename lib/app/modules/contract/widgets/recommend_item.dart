@@ -5,7 +5,6 @@ import 'package:get/get.dart';
 
 import 'package:hi_doctor_v2/app/common/constants.dart';
 import 'package:hi_doctor_v2/app/common/values/colors.dart';
-import 'package:hi_doctor_v2/app/modules/contract/controllers/create_contract_controller.dart';
 import 'package:hi_doctor_v2/app/modules/contract/models/monitored_pathology.dart';
 import 'package:hi_doctor_v2/app/modules/contract/widgets/recommend_hr_extendable_row.dart';
 import 'package:hi_doctor_v2/app/modules/contract/widgets/recommend_other_widget.dart';

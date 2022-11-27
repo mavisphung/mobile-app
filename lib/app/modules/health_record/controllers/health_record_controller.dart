@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 
 import 'package:hi_doctor_v2/app/data/api_response.dart';
 import 'package:hi_doctor_v2/app/data/response_model.dart';
-import 'package:hi_doctor_v2/app/models/other_health_record.dart';
 import 'package:hi_doctor_v2/app/models/patient.dart';
 import 'package:hi_doctor_v2/app/modules/health_record/models/hr_res_model.dart';
 import 'package:hi_doctor_v2/app/modules/health_record/providers/api_health_record.dart';
@@ -15,18 +14,19 @@ class HealthRecordController extends GetxController with GetSingleTickerProvider
   late final ScrollController systemScroll;
   late final ScrollController otherScroll;
 
-  final List<OtherHealthRecord> _allList = <OtherHealthRecord>[];
-  List<OtherHealthRecord> get getAllList => _allList.toList();
-  final List<OtherHealthRecord> _systemList = <OtherHealthRecord>[];
-  List<OtherHealthRecord> get getSystemList => _systemList.toList();
+  final allList = <HrResModel>[].obs;
+  final systemList = <HrResModel>[].obs;
   final otherList = <HrResModel>[].obs;
 
   final rxPatient = Rxn<Patient>();
 
   int? _nextPage = 1;
 
-  Future<void> getOtherHealthRecords({int page = 1, int limit = 10}) async {
-    if (rxPatient.value?.id == null) return;
+  Future<void> getSystemHealthRecords({int page = 1, int limit = 10}) async {
+    if (rxPatient.value?.id == null) {
+      print('NULL');
+      return;
+    }
     final response = await _provider.getHealthRecords(rxPatient.value!.id!, page: page, limit: limit);
     final Map<String, dynamic> res = ApiResponse.getResponse(response);
     final model = ResponseModel2.fromMap(res);
@@ -38,7 +38,28 @@ class HealthRecordController extends GetxController with GetSingleTickerProvider
     final data = model.data as List<dynamic>;
 
     for (var item in data) {
-      if (item['patient']['id'] == rxPatient.value!.id && item['record']['isPatientProvided'] == true) {
+      print('DATA: ${data.toString()}');
+      if (item['record']['isPatientProvided'] == false) {
+        systemList.add(HrResModel.fromMap(item));
+        systemList.refresh();
+      }
+    }
+  }
+
+  Future<void> getOtherHealthRecords({int page = 1, int limit = 10}) async {
+    if (rxPatient.value?.id == null) return;
+    final response = await _provider.getHealthRecords(rxPatient.value!.id!, page: page, limit: limit);
+    final Map<String, dynamic> res = ApiResponse.getResponse(response);
+    final model = ResponseModel2.fromMap(res);
+
+    _nextPage = model.nextPage;
+
+    // print('HR MODEL: ${model.toString()}');
+
+    final data = model.data as List<dynamic>;
+
+    for (var item in data) {
+      if (item['record']['isPatientProvided'] == true) {
         otherList.add(HrResModel.fromMap(item));
         otherList.refresh();
       }
@@ -61,7 +82,9 @@ class HealthRecordController extends GetxController with GetSingleTickerProvider
     );
     systemScroll.addListener(
       () async {
-        if (systemScroll.position.maxScrollExtent == systemScroll.offset) {}
+        if (systemScroll.position.maxScrollExtent == systemScroll.offset) {
+          if (_nextPage != null) await getSystemHealthRecords(page: _nextPage!);
+        }
       },
     );
     otherScroll.addListener(
@@ -71,7 +94,8 @@ class HealthRecordController extends GetxController with GetSingleTickerProvider
         }
       },
     );
-    getOtherHealthRecords();
+    // getOtherHealthRecords();
+    getSystemHealthRecords();
   }
 
   @override
@@ -81,6 +105,10 @@ class HealthRecordController extends GetxController with GetSingleTickerProvider
     systemScroll.dispose();
     otherScroll.dispose();
     rxPatient.close();
+    allList.clear();
+    allList.close();
+    systemList.clear();
+    systemList.close();
     otherList.clear();
     otherList.close();
     super.dispose();

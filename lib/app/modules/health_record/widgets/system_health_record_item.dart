@@ -8,10 +8,10 @@ import 'package:hi_doctor_v2/app/modules/health_record/models/hr_res_model.dart'
 import 'package:hi_doctor_v2/app/modules/widgets/custom_inkwell.dart';
 import 'package:hi_doctor_v2/app/routes/app_pages.dart';
 
-class OtherHealthRecordItem extends StatelessWidget {
+class SystemHealthRecordItem extends StatelessWidget {
   final HrResModel hr;
 
-  const OtherHealthRecordItem({
+  const SystemHealthRecordItem({
     super.key,
     required this.hr,
   });
@@ -49,8 +49,9 @@ class OtherHealthRecordItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final list = hr.detail?['pathologies'] as List?;
-    if (list == null) return const SizedBox.shrink();
+    final lDisease = hr.detail?['disease'] as List?;
+    final lInstruction = hr.detail?['instruction'] as List?;
+    final lPrescription = hr.detail?['prescription'] as List?;
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 5.sp),
       child: CustomInkWell(
@@ -81,7 +82,7 @@ class OtherHealthRecordItem extends StatelessWidget {
                     ),
                     SizedBox(height: 2.sp),
                     Text(
-                      'Tạo lúc ${Utils.formatDateTime(DateTime.tryParse(hr.record?['createdAt'])!)}',
+                      'Tạo lúc ${Utils.formatDate(DateTime.tryParse(hr.record?['createdAt'])!)}',
                       style: TextStyle(
                         color: Colors.black54,
                         fontSize: 10.5.sp,
@@ -105,19 +106,18 @@ class OtherHealthRecordItem extends StatelessWidget {
                 ),
               ),
             ),
-            SizedBox(
-              height: 80.sp,
-              child: ListView.builder(
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                itemBuilder: (_, index) {
-                  if (index >= list.length) return const SizedBox.shrink();
-                  final e = list[index];
-                  return _getPathologyRow('${e['code']}', '${e['diseaseName']}');
-                },
-                itemCount: 3,
+            if (lDisease != null)
+              Column(
+                children: lDisease.map((e) {
+                  final splitDiseaseArr = (e as String).split(' - ');
+
+                  return splitDiseaseArr.length > 1
+                      ? _getPathologyRow(splitDiseaseArr[0], splitDiseaseArr[1])
+                      : const SizedBox.shrink();
+                }).toList(),
               ),
-            ),
+            if (lInstruction?.isNotEmpty ?? false) Text('${lInstruction?.length} y lệnh'),
+            if (lPrescription?.isNotEmpty ?? false) Text('${lPrescription?.length} đơn thuốc'),
           ],
         ),
       ),
