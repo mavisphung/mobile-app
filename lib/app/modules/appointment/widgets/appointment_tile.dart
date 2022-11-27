@@ -49,9 +49,7 @@ class AppointmentTile extends StatelessWidget {
     final fullName = '${data.doctor!["firstName"]} ${data.doctor!["lastName"]}';
     return GestureDetector(
       onTap: () {
-        data.id != null
-            ? Get.toNamed(Routes.MEETING_DETAIL, arguments: data.id)
-            : Utils.showAlertDialog('Error to get appointment information');
+        data.id != null ? Get.toNamed(Routes.MEETING_DETAIL, arguments: data.id) : Utils.showAlertDialog('Error to get appointment information');
       },
       child: Container(
         width: double.infinity,
@@ -187,14 +185,17 @@ class AppointmentTile extends StatelessWidget {
                       if (isOk == null || !isOk) {
                         return;
                       }
-                      bool result = await _ic.cancelAppointment(data.id!);
-                      Dialogs.statusDialog(
-                        ctx: context,
-                        isSuccess: result,
-                        successMsg: 'Hủy lịch hẹn thành công',
-                        failMsg: 'Lỗi xảy ra khi hủy cuộc hẹn',
-                        successAction: () {},
-                      );
+                      // bool result = await _ic.cancelAppointment(data.id!);
+                      // Dialogs.statusDialog(
+                      //   ctx: context,
+                      //   isSuccess: result,
+                      //   successMsg: 'Hủy lịch hẹn thành công',
+                      //   failMsg: 'Lỗi xảy ra khi hủy cuộc hẹn',
+                      //   successAction: () {},
+                      // );
+                      Get.toNamed(Routes.CANCEL, arguments: {
+                        'appId': data.id,
+                      });
                     },
                     textColor: Colors.red,
                     borderColor: Colors.red,

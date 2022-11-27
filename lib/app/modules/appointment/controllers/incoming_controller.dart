@@ -17,6 +17,8 @@ class IncomingController extends GetxController {
   RxInt currentPage = 1.obs;
 
   late ApiAppointmentImpl apiAppointment;
+  TextEditingController textController = TextEditingController();
+  RxString rxReason = CancelReason.item1.obs;
 
   void clearIncomingList() {
     incomingList.clear();
@@ -56,8 +58,9 @@ class IncomingController extends GetxController {
     update();
   }
 
-  Future<bool> cancelAppointment(int appId) async {
-    var response = await apiAppointment.cancelAppointment(appId);
+  Future<bool> cancelAppointment(int appId, String reason) async {
+    var response = await apiAppointment.cancelAppointment(appId, reason);
+    response.body.toString().debugLog('IncomingController#cancelAppointment: ');
     if (response.isOk) {
       incomingList.removeWhere((element) => element.id == appId);
       update();
@@ -73,6 +76,11 @@ class IncomingController extends GetxController {
   void complete() {
     loadingStatus.value = Status.success;
     update();
+  }
+
+  bool validateCancelReason() {
+    loadMore();
+    return textController.text.isNotEmpty;
   }
 
   @override
@@ -98,6 +106,8 @@ class IncomingController extends GetxController {
     incomingList.close();
     apiAppointment.dispose();
     scrollController.dispose();
+    textController.dispose();
+    rxReason.close();
     super.dispose();
   }
 }

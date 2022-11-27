@@ -46,3 +46,13 @@ abstract class VNPayConfig {
   static const String hashKey = 'CQCQNOCFNKEQYSFXWPOJHOPXWGUJUZYF';
   static const VNPayHashType hashKeyType = VNPayHashType.HMACSHA512;
 }
+
+abstract class CancelReason {
+  static const String item1 = 'Tôi bận việc đột xuất';
+  static const String item2 = 'Tôi cảm thấy bác sĩ không uy tín như lúc đầu';
+  static const String item3 = 'Tôi cảm thấy không an toàn';
+  static const String item4 = 'Bệnh nhân bận việc đột xuất';
+  static const String itemOther = 'Khác';
+
+  static List<String> reasons = [item1, item2, item3, item4, itemOther];
+}

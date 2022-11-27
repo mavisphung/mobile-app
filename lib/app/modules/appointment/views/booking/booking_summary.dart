@@ -137,7 +137,7 @@ class BookingSummary extends StatelessWidget {
                           hozPadding: 0,
                           verPadding: 0,
                           content: {
-                            Strings.gender: '${doctor.gender}',
+                            Strings.gender: Utils.convertGender(doctor.gender!),
                             Strings.age: '${doctor.age}',
                             Strings.address: doctor.address ?? '',
                           },
@@ -182,7 +182,7 @@ class BookingSummary extends StatelessWidget {
                           hozPadding: 0,
                           verPadding: 0,
                           content: {
-                            Strings.gender: '${patient.gender}',
+                            Strings.gender: Utils.convertGender(patient.gender!),
                             Strings.age: Tx.getAge(patient.dob ?? ""),
                             Strings.address: patient.address ?? '',
                           },
