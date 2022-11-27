@@ -27,7 +27,7 @@ class HealthRecordController extends GetxController with GetSingleTickerProvider
 
   Future<void> getOtherHealthRecords({int page = 1, int limit = 10}) async {
     if (rxPatient.value?.id == null) return;
-    final response = await _provider.getHealthRecords(page: page, limit: limit);
+    final response = await _provider.getHealthRecords(rxPatient.value!.id!, page: page, limit: limit);
     final Map<String, dynamic> res = ApiResponse.getResponse(response);
     final model = ResponseModel2.fromMap(res);
 

@@ -89,7 +89,7 @@ class _ReccommendHrExtendableRowState extends State<ReccommendHrExtendableRow> {
                             ),
                           ),
                           const SizedBox(width: 10),
-                          Expanded(child: Text(widget.ticketType)),
+                          Expanded(child: Text('${e['info']}')),
                           Checkbox(
                               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(3.sp)),
                               value: e['isChosen'],

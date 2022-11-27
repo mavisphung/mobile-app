@@ -10,11 +10,11 @@ import 'package:hi_doctor_v2/app/modules/contract/widgets/recommend_hr_extendabl
 import 'package:hi_doctor_v2/app/modules/contract/widgets/record_type_dropdown.dart';
 import 'package:hi_doctor_v2/app/modules/health_record/controllers/health_record_controller.dart';
 import 'package:hi_doctor_v2/app/modules/health_record/widgets/record_dropdown.dart';
-import 'package:hi_doctor_v2/app/modules/widgets/custom_container.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/custom_elevate_btn_widget.dart';
 
 class RecommendOtherWidget extends StatefulWidget {
-  const RecommendOtherWidget({super.key});
+  final void Function(List<Map<String, dynamic>>) setChosenList;
+  const RecommendOtherWidget({super.key, required this.setChosenList});
 
   @override
   State<RecommendOtherWidget> createState() => _RecommendOtherWidgetState();
@@ -111,7 +111,7 @@ class _RecommendOtherWidgetState extends State<RecommendOtherWidget> {
                       }
                     }
                   }
-                  _c.lOtherSharedRecord.value = chosenList;
+                  widget.setChosenList(chosenList);
                   setState(() {});
                   Get.back();
                 },
@@ -131,36 +131,32 @@ class _RecommendOtherWidgetState extends State<RecommendOtherWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return CustomContainer(
-      color: AppColors.grey200,
-      borderRadius: 5,
-      child: Column(
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              const Text('Phiếu khác'),
-              GestureDetector(
-                onTap: () => _showModalBottom(context),
-                child: Icon(
-                  PhosphorIcons.folder_notch_plus_light,
-                  color: AppColors.primary,
-                  size: 27.sp,
-                ),
+    return Column(
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            const Text('Phiếu khác'),
+            GestureDetector(
+              onTap: () => _showModalBottom(context),
+              child: Icon(
+                PhosphorIcons.folder_notch_plus_light,
+                color: AppColors.primary,
+                size: 27.sp,
               ),
-            ],
-          ),
-          const SizedBox(height: 5),
-          Container(
-            padding: EdgeInsets.symmetric(vertical: 5.sp, horizontal: 8.sp),
-            decoration: BoxDecoration(
-              color: AppColors.blue100,
-              borderRadius: BorderRadius.circular(Constants.textFieldRadius.sp),
             ),
-            child: Text('$totalSharedTickets phiếu đã chọn'),
+          ],
+        ),
+        const SizedBox(height: 5),
+        Container(
+          padding: EdgeInsets.symmetric(vertical: 5.sp, horizontal: 8.sp),
+          decoration: BoxDecoration(
+            color: AppColors.blue100,
+            borderRadius: BorderRadius.circular(Constants.textFieldRadius.sp),
           ),
-        ],
-      ),
+          child: Text('$totalSharedTickets phiếu đã chọn'),
+        ),
+      ],
     );
   }
 }

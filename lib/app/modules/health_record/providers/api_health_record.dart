@@ -14,13 +14,14 @@ class ApiHealthRecord extends GetConnect {
     super.onInit();
   }
 
-  Future<Response> getHealthRecords({int page = 1, int limit = 10}) {
+  Future<Response> getHealthRecords(int patientId, {int page = 1, int limit = 10}) {
     return get(
       '/user/health-records/',
       headers: headers,
       query: {
         'page': page.toString(),
         'limit': limit.toString(),
+        'patientId': patientId.toString(),
       },
     );
   }
