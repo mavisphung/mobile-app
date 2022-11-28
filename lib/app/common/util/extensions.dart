@@ -97,15 +97,19 @@ extension GenderExt2 on Gender {
   }
 }
 
-enum AppointmentType { all, online, offline }
+enum AppointmentType { all, atPatientHome, atDoctorHome, contract, online }
 
 extension AppointmentTypeExt on AppointmentType {
   String get value {
     switch (this) {
       case AppointmentType.online:
         return 'ONLINE';
-      case AppointmentType.offline:
-        return 'OFFLINE';
+      case AppointmentType.atPatientHome:
+        return 'AT_PATIENT_HOME';
+      case AppointmentType.atDoctorHome:
+        return 'AT_DOCTOR_HOME';
+      case AppointmentType.contract:
+        return 'CONTRACT';
       default:
         return 'ALL';
     }
@@ -117,8 +121,12 @@ extension AppointmentTypeExt2 on AppointmentType {
     switch (this) {
       case AppointmentType.online:
         return 'Online';
-      case AppointmentType.offline:
-        return 'Offline';
+      case AppointmentType.atPatientHome:
+        return 'Nhà bệnh nhân';
+      case AppointmentType.atDoctorHome:
+        return 'Nhà bác sĩ';
+      case AppointmentType.contract:
+        return 'Hợp đồng';
       default:
         return 'Tất cả';
     }
@@ -166,8 +174,12 @@ extension StringToEnum on String {
     switch (this) {
       case 'ONLINE':
         return AppointmentType.online;
-      case 'OFFLINE':
-        return AppointmentType.offline;
+      case 'AT_PATIENT_HOME':
+        return AppointmentType.atPatientHome;
+      case 'AT_DOCTOR_HOME':
+        return AppointmentType.atDoctorHome;
+      case 'CONTRACT':
+        return AppointmentType.contract;
       default:
         return AppointmentType.all;
     }

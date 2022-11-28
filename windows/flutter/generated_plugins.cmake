@@ -5,6 +5,7 @@
 list(APPEND FLUTTER_PLUGIN_LIST
   agora_rtc_engine
   iris_event
+  network_info_plus
   permission_handler_windows
   url_launcher_windows
 )

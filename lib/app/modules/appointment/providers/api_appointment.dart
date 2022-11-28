@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:get/get.dart';
 
 import 'package:hi_doctor_v2/app/common/constants.dart';
@@ -37,10 +39,12 @@ class ApiAppointmentImpl extends GetConnect {
     );
   }
 
-  Future<Response> cancelAppointment(int appId) {
+  Future<Response> cancelAppointment(int appId, String reason) {
     return put(
       '/appointments/$appId/cancel/',
-      null,
+      json.encode({
+        'cancelReason': reason,
+      }),
       headers: headers,
     );
   }

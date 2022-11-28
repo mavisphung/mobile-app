@@ -49,7 +49,7 @@ class SystemHealthRecordItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final lDisease = hr.detail?['disease'] as List?;
+    final lDiagnose = hr.detail?['diagnose'] as List?;
     final lInstruction = hr.detail?['instruction'] as List?;
     final lPrescription = hr.detail?['prescription'] as List?;
     return Padding(
@@ -106,15 +106,9 @@ class SystemHealthRecordItem extends StatelessWidget {
                 ),
               ),
             ),
-            if (lDisease != null)
+            if (lDiagnose?.isNotEmpty ?? false)
               Column(
-                children: lDisease.map((e) {
-                  final splitDiseaseArr = (e as String).split(' - ');
-
-                  return splitDiseaseArr.length > 1
-                      ? _getPathologyRow(splitDiseaseArr[0], splitDiseaseArr[1])
-                      : const SizedBox.shrink();
-                }).toList(),
+                children: lDiagnose!.map((e) => _getPathologyRow(e['code'], e['diseaseName'])).toList(),
               ),
             if (lInstruction?.isNotEmpty ?? false) Text('${lInstruction?.length} y lệnh'),
             if (lPrescription?.isNotEmpty ?? false) Text('${lPrescription?.length} đơn thuốc'),

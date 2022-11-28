@@ -33,6 +33,7 @@ class _RecommendItemState extends State<RecommendItem> {
 
   void _groupRecordType() {
     final records = widget.data.pathology?['records'] as List;
+    final prescriptions = widget.data.pathology?['prescriptions'] as List;
     for (var r in records) {
       final details = r['detail'] as List;
       for (var d in details) {
@@ -58,6 +59,29 @@ class _RecommendItemState extends State<RecommendItem> {
         );
         if (isGenerated) _lType.add(typeItem);
       }
+    }
+    for (var p in prescriptions) {
+      bool isGenerated = false;
+      final typeItem = _lType.firstWhere((e) => e['typeId'] == 5, orElse: () {
+        isGenerated = true;
+        return {
+          'typeId': 5,
+          'typeName': 'Đơn thuốc',
+          'details': [],
+        };
+      });
+      (typeItem['details'] as List).add(
+        {
+          'record': {
+            'id': p['record']['id'],
+            'createdAt': p['record']['createdAt'],
+            'isPatientProvided': p['record']['isPatientProvided'],
+          },
+          'recordName': p['recordName'],
+          'prescription': (p['detail'] as List).map((e) => {'info': e, 'isChosen': false}).toList(),
+        },
+      );
+      if (isGenerated) _lType.add(typeItem);
     }
   }
 

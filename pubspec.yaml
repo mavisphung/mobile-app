@@ -62,6 +62,11 @@ dependencies:
   google_sign_in: ^5.4.2
   firebase_auth: ^4.1.1
   url_launcher: ^6.1.6
+  vnpay_flutter: ^1.0.1
+  network_info_plus: ^3.0.1
+  # QR Code Scanner
+  mobile_scanner: ^2.1.0
+  # qr_code_scanner: ^1.0.1
 
 dev_dependencies:
   flutter_test:

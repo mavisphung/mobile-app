@@ -110,7 +110,9 @@ class SettingsPage extends StatelessWidget {
                 SettingItem1(
                   icon: getIcon(PhosphorIcons.wallet_thin),
                   title: 'Ví của bạn',
-                  function: () {},
+                  function: () {
+                    Get.toNamed(Routes.WALLET);
+                  },
                 ),
                 SettingItem1(
                   icon: getIcon(PhosphorIcons.star_thin),

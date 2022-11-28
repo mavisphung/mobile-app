@@ -68,7 +68,7 @@ class AppointmentController extends GetxController {
         beginAt: e['beginAt'],
         id: e['id'],
         status: e['status'],
-        type: e['type'],
+        category: e['category'],
         doctor: e['doctor'],
         checkInCode: e['checkInCode'],
         bookedAt: e['bookedAt'],

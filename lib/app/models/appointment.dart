@@ -8,7 +8,7 @@ class Appointment {
   final String? endAt;
   final String? estEndAt;
   final String? checkInCode;
-  final String? type;
+  final String? category;
   final String? status;
   final String? cancelReason;
   final String? diseaseDescription;
@@ -25,7 +25,7 @@ class Appointment {
     this.endAt,
     this.estEndAt,
     this.checkInCode,
-    this.type,
+    this.category,
     this.status,
     this.cancelReason,
     this.diseaseDescription,
@@ -43,7 +43,7 @@ class Appointment {
     String? endAt,
     String? estEndAt,
     String? checkInCode,
-    String? type,
+    String? category,
     String? status,
     String? cancelReason,
     String? diseaseDescription,
@@ -60,7 +60,7 @@ class Appointment {
       endAt: endAt ?? this.endAt,
       estEndAt: estEndAt ?? this.estEndAt,
       checkInCode: checkInCode ?? this.checkInCode,
-      type: type ?? this.type,
+      category: category ?? this.category,
       status: status ?? this.status,
       cancelReason: cancelReason ?? this.cancelReason,
       diseaseDescription: diseaseDescription ?? this.diseaseDescription,
@@ -80,7 +80,7 @@ class Appointment {
       'endAt': endAt,
       'estEndAt': estEndAt,
       'checkInCode': checkInCode,
-      'type': type,
+      'category': category,
       'status': status,
       'cancelReason': cancelReason,
       'diseaseDescription': diseaseDescription,
@@ -100,15 +100,14 @@ class Appointment {
       endAt: map['endAt'] != null ? map['endAt'] as String : null,
       estEndAt: map['estEndAt'] != null ? map['estEndAt'] as String : null,
       checkInCode: map['checkInCode'] != null ? map['checkInCode'] as String : null,
-      type: map['type'] != null ? map['type'] as String : null,
+      category: map['category'] != null ? map['category'] as String : null,
       status: map['status'] != null ? map['status'] as String : null,
       cancelReason: map['cancelReason'] != null ? map['cancelReason'] as String : null,
       diseaseDescription: map['diseaseDescription'] != null ? map['diseaseDescription'] as String : null,
       patient: map['patient'] != null ? Map<String, dynamic>.from((map['patient'] as Map<String, dynamic>)) : null,
       doctor: map['doctor'] != null ? Map<String, dynamic>.from((map['doctor'] as Map<String, dynamic>)) : null,
       booker: map['booker'] != null ? Map<String, dynamic>.from((map['booker'] as Map<String, dynamic>)) : null,
-      historical:
-          map['historical'] != null ? Map<String, dynamic>.from((map['historical'] as Map<String, dynamic>)) : null,
+      historical: map['historical'] != null ? Map<String, dynamic>.from((map['historical'] as Map<String, dynamic>)) : null,
       package: map['package'] != null ? Map<String, dynamic>.from((map['package'] as Map<String, dynamic>)) : null,
     );
   }
@@ -119,6 +118,6 @@ class Appointment {
 
   @override
   String toString() {
-    return 'Appointment(id: $id, bookedAt: $bookedAt, beginAt: $beginAt, endAt: $endAt, estEndAt: $estEndAt, checkInCode: $checkInCode, type: $type, status: $status, cancelReason: $cancelReason, diseaseDescription: $diseaseDescription, patient: $patient, doctor: $doctor, booker: $booker, historical: $historical, package: $package)';
+    return 'Appointment(id: $id, bookedAt: $bookedAt, beginAt: $beginAt, endAt: $endAt, estEndAt: $estEndAt, checkInCode: $checkInCode, category: $category, status: $status, cancelReason: $cancelReason, diseaseDescription: $diseaseDescription, patient: $patient, doctor: $doctor, booker: $booker, historical: $historical, package: $package)';
   }
 }

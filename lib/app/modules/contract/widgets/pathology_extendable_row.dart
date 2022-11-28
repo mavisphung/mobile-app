@@ -21,7 +21,7 @@ class _PathologyExtendableRowState extends State<PathologyExtendableRow> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(vertical: 10.sp, horizontal: 12.sp),
+      padding: EdgeInsets.symmetric(vertical: 10.sp),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

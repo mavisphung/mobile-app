@@ -40,7 +40,7 @@ class AppointmentTile extends StatelessWidget {
       theDay = now;
     }
     return theDay.day == now.day && theDay.month == now.month && theDay.year == now.year
-        ? Text('Hôm nay | ${Utils.formatAMPM(theDay)} ${theDay.hour < 12 ? "AM" : "PM"}')
+        ? Text('Hôm nay | ${Utils.formatAMPM(theDay)}')
         : Text('${Utils.formatDate(theDay)} | ${Utils.formatAMPM(theDay)}');
   }
 
@@ -100,7 +100,7 @@ class AppointmentTile extends StatelessWidget {
                         child: Row(
                           children: [
                             Text(
-                              data.type.toString().enumType.label,
+                              data.category.toString().enumType.label,
                               style: TextStyle(
                                 // color: data.type == AppointmentType.online.value ? Colors.green : Colors.red,
                                 fontSize: 12.sp,
@@ -108,27 +108,30 @@ class AppointmentTile extends StatelessWidget {
                             ),
                             Container(
                               margin: EdgeInsets.symmetric(horizontal: 8.sp),
-                              width: 8.sp,
+                              width: 5.sp,
                               child: Divider(
                                 color: Colors.grey[350],
                                 thickness: 1.2.sp,
                               ),
                             ),
-                            Container(
-                              padding: EdgeInsets.symmetric(horizontal: 12.sp, vertical: 4.sp),
-                              decoration: BoxDecoration(
-                                border: Border.all(
-                                  color: statusColors[data.status.toString().enumStatus]!,
-                                  width: 1.sp,
+                            Expanded(
+                              child: Container(
+                                padding: EdgeInsets.symmetric(horizontal: 12.sp, vertical: 4.sp),
+                                decoration: BoxDecoration(
+                                  border: Border.all(
+                                    color: statusColors[data.status.toString().enumStatus]!,
+                                    width: 1.sp,
+                                  ),
+                                  borderRadius: BorderRadius.circular(5.sp),
                                 ),
-                                borderRadius: BorderRadius.circular(5.sp),
-                              ),
-                              child: Text(
-                                data.status.toString().enumStatus.label,
-                                style: TextStyle(
-                                  color: statusColors[data.status.toString().enumStatus]!,
-                                  fontSize: 12.sp,
-                                  fontWeight: FontWeight.w500,
+                                child: Text(
+                                  data.status.toString().enumStatus.label,
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    color: statusColors[data.status.toString().enumStatus]!,
+                                    fontSize: 12.sp,
+                                    fontWeight: FontWeight.w500,
+                                  ),
                                 ),
                               ),
                             ),
@@ -138,39 +141,6 @@ class AppointmentTile extends StatelessWidget {
                       buildDay(data.bookedAt!),
                     ],
                   ),
-                ),
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    GestureDetector(
-                      onTap: () => Get.toNamed(
-                        Routes.CHAT,
-                        arguments: ChatPageArguments(
-                          peerId: data.doctor!['id'],
-                          peerName: fullName,
-                          peerAvatar: data.doctor!['avatar'],
-                        ),
-                      ),
-                      child: Container(
-                        padding: EdgeInsets.all(9.sp),
-                        alignment: Alignment.center,
-                        decoration: BoxDecoration(
-                          color: Colors.grey[100]?.withOpacity(0.7),
-                          borderRadius: BorderRadius.circular(20.sp),
-                        ),
-                        child: data.type.toString().enumType == AppointmentType.online
-                            ? Icon(
-                                PhosphorIcons.phone,
-                                color: AppColors.primary,
-                              )
-                            : Icon(
-                                PhosphorIcons.messenger_logo,
-                                color: AppColors.primary,
-                              ),
-                      ),
-                    ),
-                  ],
                 ),
               ],
             ),
@@ -183,14 +153,21 @@ class AppointmentTile extends StatelessWidget {
                   child: AppointmentButton(
                     onTap: () async {
                       'Cancelling appointment'.debugLog('Cancellation');
-                      bool result = await _ic.cancelAppointment(data.id!);
-                      Dialogs.statusDialog(
-                        ctx: context,
-                        isSuccess: result,
-                        successMsg: 'Hủy lịch hẹn thành công',
-                        failMsg: 'Lỗi xảy ra khi hủy cuộc hẹn',
-                        successAction: () {},
-                      );
+                      final isOk = await Utils.showConfirmDialog('Bạn có chắc là muốn hủy cuộc hẹn không?');
+                      if (isOk == null || !isOk) {
+                        return;
+                      }
+                      // bool result = await _ic.cancelAppointment(data.id!);
+                      // Dialogs.statusDialog(
+                      //   ctx: context,
+                      //   isSuccess: result,
+                      //   successMsg: 'Hủy lịch hẹn thành công',
+                      //   failMsg: 'Lỗi xảy ra khi hủy cuộc hẹn',
+                      //   successAction: () {},
+                      // );
+                      Get.toNamed(Routes.CANCEL, arguments: {
+                        'appId': data.id,
+                      });
                     },
                     textColor: Colors.red,
                     borderColor: Colors.red,
@@ -204,11 +181,12 @@ class AppointmentTile extends StatelessWidget {
                   child: AppointmentButton(
                     onTap: () {
                       'Rescheduling appointment'.debugLog('Reschedule');
+                      Get.toNamed(Routes.QR_SCANNER);
                     },
                     textColor: Colors.white,
                     backgroundColor: AppColors.primary,
                     borderColor: AppColors.primary,
-                    label: 'Đặt lại lịch hẹn',
+                    label: 'Check in',
                   ),
                 ),
               ],
@@ -237,7 +215,7 @@ class HistoryAppointmentTile extends StatelessWidget {
       theDay = now;
     }
     return theDay.day == now.day && theDay.month == now.month && theDay.year == now.year
-        ? Text('Hôm nay | ${Utils.formatAMPM(theDay)} ${theDay.hour < 12 ? "AM" : "PM"}')
+        ? Text('Hôm nay | ${Utils.formatAMPM(theDay)}')
         : Text('${Utils.formatDate(theDay)} | ${Utils.formatAMPM(theDay)}');
   }
 
@@ -283,7 +261,7 @@ class HistoryAppointmentTile extends StatelessWidget {
                       child: Row(
                         children: [
                           Text(
-                            data.type.toString().enumType.label,
+                            data.category.toString().enumType.label,
                             style: TextStyle(
                               // color: data.type == AppointmentType.online.value ? Colors.green : Colors.red,
                               fontSize: 12.sp,
@@ -291,27 +269,29 @@ class HistoryAppointmentTile extends StatelessWidget {
                           ),
                           Container(
                             margin: EdgeInsets.symmetric(horizontal: 5.sp),
-                            width: 10.sp,
+                            width: 5.sp,
                             child: Divider(
-                              // color: Colors.red,
-                              thickness: 1.5.sp,
+                              thickness: 0.8.sp,
                             ),
                           ),
-                          Container(
-                            padding: EdgeInsets.symmetric(horizontal: 12.sp, vertical: 4.sp),
-                            decoration: BoxDecoration(
-                              border: Border.all(
-                                color: statusColors[data.status.toString().enumStatus]!,
-                                width: 1.6.sp,
+                          Expanded(
+                            child: Container(
+                              padding: EdgeInsets.symmetric(horizontal: 12.sp, vertical: 4.sp),
+                              decoration: BoxDecoration(
+                                border: Border.all(
+                                  color: statusColors[data.status.toString().enumStatus]!,
+                                  width: 1.6.sp,
+                                ),
+                                borderRadius: BorderRadius.circular(7.sp),
                               ),
-                              borderRadius: BorderRadius.circular(7.sp),
-                            ),
-                            child: Text(
-                              data.status.toString().enumStatus.label,
-                              style: TextStyle(
-                                color: statusColors[data.status.toString().enumStatus]!,
-                                fontSize: 12.sp,
-                                fontWeight: FontWeight.w500,
+                              child: Text(
+                                data.status.toString().enumStatus.label,
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  color: statusColors[data.status.toString().enumStatus]!,
+                                  fontSize: 12.sp,
+                                  fontWeight: FontWeight.w500,
+                                ),
                               ),
                             ),
                           ),
@@ -321,39 +301,6 @@ class HistoryAppointmentTile extends StatelessWidget {
                     buildDay(data.bookedAt!),
                   ],
                 ),
-              ),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  GestureDetector(
-                    onTap: () => Get.toNamed(
-                      Routes.CHAT,
-                      arguments: ChatPageArguments(
-                        peerId: data.doctor!['id'],
-                        peerName: fullName,
-                        peerAvatar: data.doctor!['avatar'],
-                      ),
-                    ),
-                    child: Container(
-                      padding: EdgeInsets.all(9.sp),
-                      alignment: Alignment.center,
-                      decoration: BoxDecoration(
-                        color: Colors.grey[100]?.withOpacity(0.7),
-                        borderRadius: BorderRadius.circular(20.sp),
-                      ),
-                      child: data.type.toString().enumType == AppointmentType.online
-                          ? Icon(
-                              PhosphorIcons.phone,
-                              color: AppColors.primary,
-                            )
-                          : Icon(
-                              PhosphorIcons.messenger_logo,
-                              color: AppColors.primary,
-                            ),
-                    ),
-                  ),
-                ],
               ),
             ],
           ),

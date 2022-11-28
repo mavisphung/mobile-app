@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:hi_doctor_v2/app/models/service.dart';
 import 'package:intl/intl.dart';
 
 import 'package:hi_doctor_v2/app/common/constants.dart';
@@ -17,7 +18,15 @@ class BookingController extends GetxController {
   Rx<DateTime> rxSelectedDate = DateTime.now().obs;
   Rx<DateTime> rxFocusedDate = DateTime.now().obs;
   RxInt rxSelectedTimeId = 0.obs;
+
+  // selected service
+  Rx<Service> rxService = Service().obs;
   String _selectedTime = '';
+
+  // payment status
+  RxBool rxPaymentStatus = false.obs;
+
+  bool get paymentStatus => rxPaymentStatus.value;
 
   DateTime get selectedDate => rxSelectedDate.value;
   DateTime get focusedDate => rxSelectedDate.value;
@@ -25,6 +34,12 @@ class BookingController extends GetxController {
   int get selectedTimeId => rxSelectedTimeId.value;
 
   String get selectedTime => _selectedTime;
+
+  void setPaymentStatus(bool value) {
+    rxPaymentStatus.value = value;
+    rxPaymentStatus.value.toString().debugLog('PaymentStatus');
+    update();
+  }
 
   void setSelectedTime(String value) {
     _selectedTime = value;
@@ -49,9 +64,11 @@ class BookingController extends GetxController {
 
   void setServiceId(int serviceId) {
     rxServiceId.value = serviceId;
+    rxService.value = packageList!.firstWhere((service) => service.id == serviceId);
+    update();
   }
 
-  List<PackageItem>? packageList;
+  List<Service>? packageList;
 
   // patient detail
   final problemController = TextEditingController();
@@ -77,7 +94,6 @@ class BookingController extends GetxController {
         .futureValue();
     if (response != null && response.isSuccess == true && response.statusCode == Constants.successGetStatusCode) {
       final data = response.data;
-      print(response.data.toString());
       // if (data is Map) {
       //   if (data.isEmpty) return List.empty();
       // } else if (data is List<Map<String, dynamic>>) {
@@ -99,17 +115,12 @@ class BookingController extends GetxController {
     if (model.success == true && model.status == Constants.successGetStatusCode) {
       final data = model.data as List<dynamic>?;
       if (data == null || data.isEmpty) return true;
-      packageList = data
-          .where((e) => e['isActive'] == true)
-          .map((e) => PackageItem(
-                id: e['service']['id'],
-                name: e['service']['name'],
-                description: e['service']['description'],
-                price: e['service']['price'],
-                category: e['service']['category'],
-              ))
-          .toList();
+      packageList = data.where((e) => e['isActive'] == true).map((e) {
+        dynamic data = e['service'] as Map<String, dynamic>;
+        return Service.fromMap(data);
+      }).toList();
       setServiceId(data[0]['service']['id']);
+      // setServiceId(0);
       return true;
     } else if (model.success == false) {
       packageList = null;
@@ -141,6 +152,7 @@ class BookingController extends GetxController {
 
     // select service package
     rxServiceId.close();
+    rxService.close();
 
     // patient detail
     problemController.dispose();

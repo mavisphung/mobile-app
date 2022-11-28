@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:hi_doctor_v2/app/modules/appointment/widgets/package_item.dart';
 import 'package:intl/intl.dart';
 import 'package:permission_handler/permission_handler.dart';
 
@@ -103,15 +104,15 @@ class MeetingDetailPage extends StatelessWidget {
                   },
                 ),
                 const InfoContainer(info: 'Dịch vụ chỉ được mở trong thời gian cuộc hẹn.', hasInfoIcon: true),
-                ServiceTile(
-                  category: package?['category'],
-                  chatPageargs: ChatPageArguments(
-                    peerId: doctor?['id'],
-                    peerName: Tx.getDoctorName(doctor?['lastName'], doctor?['firstName']),
-                    peerAvatar: doctor?['avatar'] ?? Constants.defaultAvatar,
+                if (_cMeeting.appointment.category == CategoryType.ONLINE.name)
+                  ServiceTile(
+                    chatPageargs: ChatPageArguments(
+                      peerId: doctor?['id'],
+                      peerName: Tx.getDoctorName(doctor?['lastName'], doctor?['firstName']),
+                      peerAvatar: doctor?['avatar'] ?? Constants.defaultAvatar,
+                    ),
+                    onJoin: _onJoin,
                   ),
-                  onJoin: _onJoin,
-                ),
               ],
             );
           } else if (snapshot.hasData && snapshot.data == false) {
