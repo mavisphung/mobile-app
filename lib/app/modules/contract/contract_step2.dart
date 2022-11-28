@@ -31,6 +31,16 @@ class ContractStep2 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
+      children: [
+        Text(_c.lMonitoredPathology.toString()),
+        const SizedBox(
+          height: 40,
+        ),
+        Text(_c.lOtherSharedRecord.toString()),
+      ],
+    );
+
+    return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         CustomContainer(

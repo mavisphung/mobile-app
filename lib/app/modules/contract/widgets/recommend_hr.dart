@@ -1,18 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 
 import 'package:hi_doctor_v2/app/common/constants.dart';
 import 'package:hi_doctor_v2/app/common/values/colors.dart';
+import 'package:hi_doctor_v2/app/modules/contract/controllers/create_contract_controller.dart';
 import 'package:hi_doctor_v2/app/modules/contract/models/monitored_pathology.dart';
 import 'package:hi_doctor_v2/app/modules/contract/widgets/recommend_item.dart';
 import 'package:hi_doctor_v2/app/modules/contract/widgets/recommend_other_widget.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/content_container.dart';
+import 'package:hi_doctor_v2/app/modules/widgets/custom_container.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/info_container.dart';
 
 class RecommendHr extends StatelessWidget {
   final List<MonitoredPathology> data;
-
-  const RecommendHr({super.key, required this.data});
+  final _c = Get.find<CreateContractController>();
+  RecommendHr({super.key, required this.data});
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +39,10 @@ class RecommendHr extends StatelessWidget {
             .toList(),
         Divider(color: AppColors.greyDivider, height: 30.sp),
         const ContentTitle1(title: 'Chia sẻ phiếu y lệnh khác', topPadding: 0, bottomPadding: 8),
-        const RecommendOtherWidget(),
+        CustomContainer(
+          color: AppColors.grey200,
+          child: RecommendOtherWidget(setChosenList: (list) => _c.lOtherSharedRecord.value = list),
+        ),
       ],
     );
   }

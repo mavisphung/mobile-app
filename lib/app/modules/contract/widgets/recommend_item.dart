@@ -7,6 +7,7 @@ import 'package:hi_doctor_v2/app/common/constants.dart';
 import 'package:hi_doctor_v2/app/common/values/colors.dart';
 import 'package:hi_doctor_v2/app/modules/contract/models/monitored_pathology.dart';
 import 'package:hi_doctor_v2/app/modules/contract/widgets/recommend_hr_extendable_row.dart';
+import 'package:hi_doctor_v2/app/modules/contract/widgets/recommend_other_widget.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/custom_container.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/custom_elevate_btn_widget.dart';
 
@@ -184,19 +185,24 @@ class _RecommendItemState extends State<RecommendItem> {
                   );
                 }).toList(),
                 _getDivider(),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    const Text('Phiếu khác'),
-                    GestureDetector(
-                      onTap: () {},
-                      child: Icon(
-                        PhosphorIcons.folder_notch_plus_light,
-                        color: AppColors.primary,
-                        size: 27.sp,
-                      ),
-                    ),
-                  ],
+                RecommendOtherWidget(
+                  setChosenList: (list) {
+                    for (var item in list) {
+                      final tickets =
+                          widget.data.sharedRecord?.firstWhereOrNull((r) => r['typeId'] == item['ticketId']);
+                      if (tickets != null) {
+                        (tickets['details'] as List).addAll(item['tickets']);
+                        return;
+                      }
+                      final tmp = widget.data.sharedRecord ?? [];
+                      tmp.add({
+                        'typeId': item['ticketId'],
+                        'typeName': item['typeName'],
+                        'details': item['tickets'],
+                      });
+                      widget.data.sharedRecord = tmp;
+                    }
+                  },
                 ),
               ],
             ),
