@@ -45,40 +45,6 @@ class BookingSummary extends StatelessWidget {
     return supervisor!.phoneNumber!.replaceRange(0, 6, '******');
   }
 
-  void processPayment(BuildContext ctx, String paymentUrl) {
-    bool result = false;
-    VNPAYFlutter.instance.show(
-      paymentUrl: paymentUrl,
-      onPaymentSuccess: (params) {
-        params.toString().debugLog('Payment success');
-        (params['vnp_ResponseCode'] as String).debugLog('vnp_ResponseCode on success');
-        _cBooking.setPaymentStatus(true);
-        result = true;
-        Dialogs.statusDialog(
-          ctx: ctx,
-          isSuccess: result,
-          successMsg: 'Lịch hẹn khám đã được đặt thành công. Bạn sẽ được nhận thông báo để theo dõi lịch hẹn với bác sĩ.',
-          failMsg: 'Có vẻ như có ai đó đã đặt lịch trước bạn. Bạn hãy chọn một ca thời gian khác và thử lại xem.',
-          successAction: () => Get.offAllNamed(Routes.NAVBAR),
-        );
-      },
-      onPaymentError: (params) {
-        params.toString().debugLog('Payment fail');
-        (params['vnp_ResponseCode'] as String).debugLog('vnp_ResponseCode on error');
-        _cBooking.setPaymentStatus(false);
-        Utils.showAlertDialog('Thanh toan that bai');
-        result = false;
-        Dialogs.statusDialog(
-          ctx: ctx,
-          isSuccess: result,
-          successMsg: 'Lịch hẹn khám đã được đặt thành công. Bạn sẽ được nhận thông báo để theo dõi lịch hẹn với bác sĩ.',
-          failMsg: 'Có vẻ như có ai đó đã đặt lịch trước bạn. Bạn hãy chọn một ca thời gian khác và thử lại xem.',
-          successAction: () => Get.offAllNamed(Routes.NAVBAR),
-        );
-      },
-    );
-  }
-
   void createAppointment(BuildContext ctx) async {
     // Booking trước, payment sau
     'Creating appointment'.debugLog('Booking summary');
@@ -94,11 +60,20 @@ class BookingSummary extends StatelessWidget {
     if (isSuccess == null) {
       Utils.showAlertDialog('Phát sinh lỗi hệ thống');
       return;
-    } else if (isSuccess) {
-      final paymentUrl = Utils.getPaymentUrl(amount: _cBooking.rxService.value.price!, orderInfo: 'Thanh toan lich hen');
-      paymentUrl.debugLog('Payment Url');
-      processPayment(ctx, paymentUrl);
     }
+    // else if (isSuccess) {
+    //   final paymentUrl = Utils.getPaymentUrl(amount: _cBooking.rxService.value.price!, orderInfo: 'Thanh toan lich hen');
+    //   paymentUrl.debugLog('Payment Url');
+    //   // processPayment(ctx, paymentUrl);
+
+    // }
+    Dialogs.statusDialog(
+      ctx: ctx,
+      isSuccess: isSuccess,
+      successMsg: 'Lịch hẹn khám đã được đặt thành công. Bạn sẽ được nhận thông báo để theo dõi lịch hẹn với bác sĩ.',
+      failMsg: 'Có vẻ như có ai đó đã đặt lịch trước bạn. Bạn hãy chọn một ca thời gian khác và thử lại xem.',
+      successAction: () => Get.offAllNamed(Routes.NAVBAR),
+    );
   }
 
   @override
