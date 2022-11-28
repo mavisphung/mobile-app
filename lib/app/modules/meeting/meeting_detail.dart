@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:hi_doctor_v2/app/modules/appointment/widgets/package_item.dart';
 import 'package:intl/intl.dart';
 import 'package:permission_handler/permission_handler.dart';
 
@@ -21,7 +22,7 @@ import 'package:hi_doctor_v2/app/common/constants.dart';
 
 class MeetingDetailPage extends StatelessWidget {
   final _cMeeting = Get.put(MeetingController());
-  final _doctorId = Get.arguments as int;
+  final _appointmentId = Get.arguments as int;
 
   MeetingDetailPage({super.key});
 
@@ -42,12 +43,13 @@ class MeetingDetailPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print('APP ID: $_appointmentId');
     return BasePage(
       appBar: const MyAppBar(
         title: 'Chi tiết cuộc hẹn',
       ),
       body: FutureBuilder(
-        future: _cMeeting.getAppointmentDetail(_doctorId),
+        future: _cMeeting.getAppointmentDetail(_appointmentId),
         builder: (_, AsyncSnapshot<bool?> snapshot) {
           if (snapshot.hasData && snapshot.data == true) {
             final doctor = _cMeeting.appointment.doctor;
@@ -79,7 +81,8 @@ class MeetingDetailPage extends StatelessWidget {
                   paddingBottom: 0,
                   title: 'Thông tin bệnh nhân',
                   suffixText: 'Xem ảnh',
-                  suffixAction: () => Get.toNamed(Routes.IMAGE, arguments: patient?['avatar'] ?? Constants.defaultAvatar),
+                  suffixAction: () =>
+                      Get.toNamed(Routes.IMAGE, arguments: patient?['avatar'] ?? Constants.defaultAvatar),
                 ),
                 ContentRow(
                   labelWidth: 100,
@@ -101,15 +104,15 @@ class MeetingDetailPage extends StatelessWidget {
                   },
                 ),
                 const InfoContainer(info: 'Dịch vụ chỉ được mở trong thời gian cuộc hẹn.', hasInfoIcon: true),
-                ServiceTile(
-                  category: _cMeeting.appointment.category!,
-                  chatPageargs: ChatPageArguments(
-                    peerId: doctor?['id'],
-                    peerName: Tx.getDoctorName(doctor?['lastName'], doctor?['firstName']),
-                    peerAvatar: doctor?['avatar'] ?? Constants.defaultAvatar,
+                if (_cMeeting.appointment.category == CategoryType.ONLINE.name)
+                  ServiceTile(
+                    chatPageargs: ChatPageArguments(
+                      peerId: doctor?['id'],
+                      peerName: Tx.getDoctorName(doctor?['lastName'], doctor?['firstName']),
+                      peerAvatar: doctor?['avatar'] ?? Constants.defaultAvatar,
+                    ),
+                    onJoin: _onJoin,
                   ),
-                  onJoin: _onJoin,
-                ),
               ],
             );
           } else if (snapshot.hasData && snapshot.data == false) {

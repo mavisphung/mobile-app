@@ -42,6 +42,7 @@ class EditOtherHealthRecordController extends GetxController {
   Future<bool> initialize(HrResModel? hr) {
     if (hr != null) {
       _hrResModel = hr;
+      nameController.text = _hrResModel!.detail?['name'] ?? '';
       final pList = hr.detail?['pathologies'] as List;
       _pathologies = pList.map((e) => Pathology.fromMap(e)).toList().obs;
       final rList = hr.detail?['otherTickets'] as List;

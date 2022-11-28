@@ -57,6 +57,15 @@ class BookingSummary extends StatelessWidget {
     );
 
     var isSuccess = await _cBooking.createAppointment(reqModel);
+    // if (isSuccess != null) {
+    //   Dialogs.statusDialog(
+    //     ctx: ctx,
+    //     isSuccess: isSuccess,
+    //     successMsg: 'Lịch hẹn khám đã được đặt thành công. Bạn sẽ được nhận thông báo để theo dõi lịch hẹn với bác sĩ.',
+    //     failMsg: 'Có vẻ như có ai đó đã đặt lịch trước bạn. Bạn hãy chọn một ca thời gian khác và thử lại xem.',
+    //     successAction: () => Get.offAllNamed(Routes.NAVBAR),
+    //   );
+    // }
     if (isSuccess == null) {
       Utils.showAlertDialog('Phát sinh lỗi hệ thống');
       return;
@@ -65,7 +74,6 @@ class BookingSummary extends StatelessWidget {
     //   final paymentUrl = Utils.getPaymentUrl(amount: _cBooking.rxService.value.price!, orderInfo: 'Thanh toan lich hen');
     //   paymentUrl.debugLog('Payment Url');
     //   // processPayment(ctx, paymentUrl);
-
     // }
     Dialogs.statusDialog(
       ctx: ctx,

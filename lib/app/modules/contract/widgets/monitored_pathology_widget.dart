@@ -28,21 +28,36 @@ class MonitoredPathologyWidget extends StatelessWidget {
   final List<Map<String, dynamic>> _lCategory = [];
 
   void _categorizeDisease(HrResModel hr) {
-    final pList = hr.detail!['pathologies'] as List;
-    for (var d in pList) {
+    late List? pList;
+    if (hr.record!['isPatientProvided'] == true) {
+      pList = hr.detail?['pathologies'];
+    } else {
+      pList = hr.detail?['diagnose'];
+    }
+    if (pList?.isEmpty ?? true) return;
+    for (var d in pList!) {
       final cate = _lCategory.firstWhereOrNull((e) => e['generalName'] == d['generalName']);
 
-      final record = (d['records'] as List).isNotEmpty
+      final record = (d['records'] as List?)?.isNotEmpty == true
           ? {
               'record': hr.record,
               'recordName': hr.detail?['name'],
               'detail': d['records'],
             }
           : null;
+      final prescription = (hr.detail!['prescription'] as List?)?.isNotEmpty == true
+          ? {
+              'record': hr.record,
+              'recordName': hr.detail?['name'],
+              'detail': hr.detail!['prescription'],
+            }
+          : null;
 
       if (cate == null) {
         final tmp1 = [];
+        final tmp2 = [];
         tmp1.addNonNull(record);
+        tmp2.addNonNull(prescription);
         _lCategory.add({
           'generalName': d['generalName'],
           'diseases': [
@@ -53,6 +68,7 @@ class MonitoredPathologyWidget extends StatelessWidget {
               'generalName': d['generalName'],
               'diseaseName': d['diseaseName'],
               'records': tmp1,
+              'prescriptions': tmp2,
               'isChosen': false,
             },
           ],
@@ -62,19 +78,24 @@ class MonitoredPathologyWidget extends StatelessWidget {
       final updatedCate = cate['diseases'] as List;
       final existedP = updatedCate.firstWhereOrNull((e) => e['diseaseName'] == d['diseaseName']);
       if (existedP != null) {
-        final tmp = existedP['records'] as List;
-        tmp.addNonNull(record);
+        final tmp1 = existedP['records'] as List;
+        final tmp2 = existedP['prescriptions'] as List;
+        tmp1.addNonNull(record);
+        tmp2.addNonNull(prescription);
         continue;
       }
+      final tmp1 = [];
       final tmp2 = [];
-      tmp2.addNonNull(record);
+      tmp1.addNonNull(record);
+      tmp2.addNonNull(prescription);
       updatedCate.add({
         'id': d['id'],
         'code': d['code'],
         'otherCode': d['otherCode'],
         'generalName': d['generalName'],
         'diseaseName': d['diseaseName'],
-        'records': tmp2,
+        'records': tmp1,
+        'prescriptions': tmp2,
         'isChosen': false,
       });
       cate['diseases'] = updatedCate;
@@ -159,17 +180,16 @@ class MonitoredPathologyWidget extends StatelessWidget {
                         (data) {
                           if (data.isNotEmpty) {
                             for (var hr in data) {
-                              final pList = hr.detail?['pathologies'] as List?;
-                              if (pList?.isNotEmpty ?? false) {
-                                _categorizeDisease(hr);
-                              }
+                              _categorizeDisease(hr);
                             }
                             if (_lCategory.isNotEmpty) {
                               return Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   const Text(
-                                      'Danh sách dưới đây tương ứng với những bệnh lý có trong hồ sơ từ hệ thống và hồ sơ ngoài hệ thống bạn đã thêm của bệnh nhân'),
+                                    'Danh sách dưới đây tương ứng với những bệnh lý có trong hồ sơ từ hệ thống và hồ sơ ngoài hệ thống bạn đã thêm của bệnh nhân',
+                                    textAlign: TextAlign.justify,
+                                  ),
                                   Expanded(
                                     child: ListView.separated(
                                       itemBuilder: (_, index) {
@@ -191,7 +211,7 @@ class MonitoredPathologyWidget extends StatelessWidget {
                           }
                           return const LoadingWidget();
                         },
-                        _cHealthRecord.otherList,
+                        _cHealthRecord.allList,
                       ),
                     ),
                     const SizedBox(height: 20),
@@ -215,6 +235,7 @@ class MonitoredPathologyWidget extends StatelessWidget {
                                   'generalName': i['generalName'],
                                   'diseaseName': i['diseaseName'],
                                   'records': i['records'],
+                                  'prescriptions': i['prescriptions'],
                                 },
                                 null));
                           }

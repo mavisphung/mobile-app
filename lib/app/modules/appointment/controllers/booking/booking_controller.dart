@@ -115,7 +115,7 @@ class BookingController extends GetxController {
     if (model.success == true && model.status == Constants.successGetStatusCode) {
       final data = model.data as List<dynamic>?;
       if (data == null || data.isEmpty) return true;
-      packageList = data.map((e) {
+      packageList = data.where((e) => e['isActive'] == true).map((e) {
         dynamic data = e['service'] as Map<String, dynamic>;
         return Service.fromMap(data);
       }).toList();

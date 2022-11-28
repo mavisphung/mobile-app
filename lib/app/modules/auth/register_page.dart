@@ -169,7 +169,10 @@ class _RegisterPageState extends State<RegisterPage> {
       backgroundColor: Colors.white,
       appBar: MyAppBar(
         title: Strings.registration,
-        hasBackBtn: true,
+        backAction: () async {
+          final isConfirm = await Utils.showConfirmDialog('Quay lại trang đăng nhập?');
+          if (isConfirm == true) Get.back();
+        },
       ),
       paddingTop: 29.sp,
       paddingBottom: 330.sp,

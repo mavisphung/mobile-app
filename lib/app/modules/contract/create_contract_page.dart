@@ -73,12 +73,6 @@ class _CreateContractPageState extends State<CreateContractPage> {
     }
   }
 
-  void _back() {
-    setState(() {
-      --_currentStep;
-    });
-  }
-
   final List<Widget> _step = [ContractStep1(), ContractStep2(), ContractStep3()];
 
   @override
@@ -94,7 +88,11 @@ class _CreateContractPageState extends State<CreateContractPage> {
       backgroundColor: Colors.white,
       appBar: MyAppBar(
         title: 'Yêu cầu hợp đồng',
-        backAction: _currentStep > 0 ? _back : null,
+        backAction: () async {
+          final isConfirm = await Utils.showConfirmDialog(
+              'Quay lại trang thông tin chi tiết của bác sĩ? Dữ liệu bạn chọn ở các bước yêu cầu hợp đồng sẽ không được lưu lại.');
+          if (isConfirm == true) Get.back();
+        },
         rxStatus: _c.status,
       ),
       body: _step[_currentStep],
