@@ -151,7 +151,8 @@ class CustomTextFieldWidget extends StatelessWidget {
                                           : const Icon(CupertinoIcons.eye),
                                     ).noSplash()
                                   : null),
-                      contentPadding: EdgeInsets.only(top: 16.sp, bottom: 16.sp, left: 18.sp, right: -18.sp),
+                      contentPadding: EdgeInsets.only(
+                          top: 16.sp, bottom: 16.sp, left: Constants.padding.sp, right: -Constants.padding.sp),
                       floatingLabelBehavior: FloatingLabelBehavior.always,
                       enabledBorder: OutlineInputBorder(
                         borderSide: BorderSide.none,

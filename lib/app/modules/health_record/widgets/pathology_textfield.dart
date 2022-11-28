@@ -8,7 +8,9 @@ import 'package:hi_doctor_v2/app/modules/health_record/views/pathology_search_de
 
 class PathologyTextField extends StatelessWidget {
   final void Function(Pathology) onChoose;
-  const PathologyTextField({super.key, required this.onChoose});
+  final bool? hasLabel;
+  final double? height;
+  const PathologyTextField({super.key, required this.onChoose, this.hasLabel, this.height});
 
   @override
   Widget build(BuildContext context) {
@@ -20,27 +22,28 @@ class PathologyTextField extends StatelessWidget {
         );
       },
       child: SizedBox(
-        height: 80.sp,
+        height: height?.sp ?? 80.sp,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Padding(
-              padding: EdgeInsets.only(
-                left: 19.sp,
-                bottom: 1.sp,
+            if (hasLabel ?? true)
+              Padding(
+                padding: EdgeInsets.only(
+                  left: 19.sp,
+                  bottom: 1.sp,
+                ),
+                child: Text(
+                  'Bệnh lý',
+                  style: DefaultTextStyle.of(context).style.copyWith(
+                        fontSize: 11.5.sp,
+                        color: Colors.grey[600],
+                      ),
+                ),
               ),
-              child: Text(
-                'Bệnh lý',
-                style: DefaultTextStyle.of(context).style.copyWith(
-                      fontSize: 11.5.sp,
-                      color: Colors.grey[600],
-                    ),
-              ),
-            ),
             Container(
               padding: EdgeInsets.symmetric(
                 vertical: 16.sp,
-                horizontal: 18.sp,
+                horizontal: Constants.padding.sp,
               ),
               decoration: BoxDecoration(
                 color: AppColors.whiteHighlight,
@@ -50,7 +53,7 @@ class PathologyTextField extends StatelessWidget {
                 children: [
                   Flexible(
                     child: Text(
-                      'Tap to search and add pathology',
+                      'Nhấn để tìm và chọn bệnh lý',
                       maxLines: 1,
                       style: TextStyle(
                         fontFamily: 'Quicksand',

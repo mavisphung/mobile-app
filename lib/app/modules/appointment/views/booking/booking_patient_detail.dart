@@ -69,7 +69,8 @@ class BookingPatientDetailPage extends StatelessWidget {
                         controller: _cBooking.problemController,
                         decoration: InputDecoration(
                           hintText: Strings.problemMsg,
-                          contentPadding: EdgeInsets.only(top: 16.sp, bottom: 16.sp, left: 18.sp, right: 18.sp),
+                          contentPadding: EdgeInsets.only(
+                              top: 16.sp, bottom: 16.sp, left: Constants.padding.sp, right: Constants.padding.sp),
                           enabledBorder: OutlineInputBorder(
                             borderSide: BorderSide.none,
                             borderRadius: BorderRadius.circular(Constants.borderRadius.sp),

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:hi_doctor_v2/app/common/util/dialogs.dart';
 
+import 'package:hi_doctor_v2/app/common/util/dialogs.dart';
 import 'package:hi_doctor_v2/app/common/util/enum.dart';
 import 'package:hi_doctor_v2/app/common/util/utils.dart';
 import 'package:hi_doctor_v2/app/common/values/colors.dart';
@@ -38,24 +38,37 @@ class _CreateContractPageState extends State<CreateContractPage> {
 
   void _continue(BuildContext ctx) async {
     if (_currentStep == 0) {
-      if (_c.lMonitoredPathology.isNotEmpty && _c.rxPatient.value != null) _nextStep();
+      if (_c.lMonitoredPathology.isEmpty) {
+        Utils.showAlertDialog('Bạn cần chọn bệnh lý cần theo dõi để bác sĩ có thể xem xét hợp đồng.',
+            title: Strings.notification);
+        return;
+      }
+      if (_c.rxPatient.value != null) _nextStep();
     } else if (_currentStep == 1) {
-      if (_c.startDateController.text.isNotEmpty) _nextStep();
+      if (_c.startDateController.text.isEmpty) {
+        Utils.showAlertDialog(
+            'Bạn cần chọn ngày bắt đầu hợp đồng mong muốn.\n\nNgày bắt đầu hợp đồng cần phải cách ngày gửi yêu cầu 5 ngày.',
+            title: Strings.notification);
+        return;
+      }
+      _nextStep();
     } else if (_currentStep == 2) {
       if (_c.rxAgreedStatus.value == false) {
-        Utils.showAlertDialog('Alert');
-      } else {
-        final isSuccess = await _c.createContract();
-        if (isSuccess != null) {
-          Dialogs.statusDialog(
-            ctx: ctx,
-            isSuccess: isSuccess,
-            successMsg:
-                'Lịch hẹn khám đã được đặt thành công. Bạn sẽ được nhận thông báo để theo dõi lịch hẹn với bác sĩ.',
-            failMsg: 'Có vẻ như có ai đó đã đặt lịch trước bạn. Bạn hãy chọn một ca thời gian khác và thử lại xem.',
-            successAction: () => Get.offAllNamed(Routes.NAVBAR),
-          );
-        }
+        Utils.showAlertDialog(
+            'Hãy xác nhận tất cả các thông tin mà bạn chia sẻ là sự thật và bạn hoàn toàn chịu trách nhiệm trước pháp luật để gửi yêu cầu hợp đồng với bác sĩ.',
+            title: Strings.notification);
+        return;
+      }
+      final isSuccess = await _c.createContract();
+      if (isSuccess != null) {
+        Dialogs.statusDialog(
+          ctx: ctx,
+          isSuccess: isSuccess,
+          successMsg:
+              'Gửi yêu cầu hợp đồng với bác sĩ thành công.\n\nGiá trị của hợp đồng sẽ được hệ thống tính toán và đưa ra thông báo trạng thái của yêu cầu đến bạn trong thời gian sớm nhất (chậm nhất là 5 ngày kể từ ngày gửi yêu cầu).',
+          failMsg: 'Gửi yêu cầu hợp đồng thất bại. Xin hãy thử lại sau.',
+          successAction: () => Get.offAllNamed(Routes.NAVBAR),
+        );
       }
     }
   }

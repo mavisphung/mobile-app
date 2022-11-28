@@ -24,7 +24,7 @@ class CreateContractController extends GetxController {
 
   final contractNoteController = TextEditingController();
   final startDateController = TextEditingController();
-  Rx<DateTime> rxSelectedDate = DateTime.now().add(const Duration(days: 6)).obs;
+  Rx<DateTime> rxSelectedDate = DateTime.now().add(const Duration(days: 5)).obs;
 
   Future<bool?> createContract() async {
     status.value = Status.loading;
@@ -62,6 +62,7 @@ class CreateContractController extends GetxController {
         return false;
       }
     }
+    status.value = Status.fail;
     return null;
   }
 

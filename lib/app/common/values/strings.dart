@@ -25,6 +25,7 @@ abstract class Strings {
   static String get latestSearchDoctor => 'Bác sĩ đã xem gần đây';
   static String get recentViewDoctor => 'Bác sĩ đã xem gần đây';
   static String get dob => 'Ngày sinh';
+  static String get notification => 'Thông báo';
 
   // Verb, Adjective
   static String get ok => 'Ok';
@@ -101,7 +102,7 @@ abstract class Strings {
   static String get appointmentType => 'Loại cuộc hẹn';
   static String get package => 'Gói dịch vụ';
   static String get price => 'Giá dịch vụ';
-  static String get change => 'THAY ĐỔI';
+  static String get change => 'Thay đổi';
   static String get sentOtpMsg => 'Mã xác thực đã được gửi đến email';
   static String get enterOtp => 'Nhập mã xác thực gồm 6 số';
   static String get notReceiveOtpMsg => 'Bạn không nhận được mã xác thực?';

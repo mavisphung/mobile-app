@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
+import 'package:hi_doctor_v2/app/common/constants.dart';
 import 'package:hi_doctor_v2/app/common/util/enum.dart';
 import 'package:hi_doctor_v2/app/common/values/colors.dart';
 import 'package:hi_doctor_v2/app/common/values/strings.dart';
@@ -31,11 +32,11 @@ class GgLoginButton extends StatelessWidget {
           bottom: 5.0,
         ),
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(12.sp),
+          borderRadius: BorderRadius.circular(Constants.borderRadius.sp),
           color: Colors.white,
           border: Border.all(
             color: AppColors.grey300,
-            width: 0.5.sp,
+            width: 0.8.sp,
           ),
         ),
         child: status == Status.loading

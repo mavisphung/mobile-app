@@ -80,7 +80,7 @@ class _IncomingTabState extends State<IncomingTab> with AutomaticKeepAliveClient
                               data: Appointment(
                                 id: e.id,
                                 status: e.status,
-                                type: e.type,
+                                category: e.category,
                                 doctor: e.doctor,
                                 bookedAt: e.bookedAt,
                                 checkInCode: e.checkInCode,

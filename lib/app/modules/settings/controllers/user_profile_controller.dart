@@ -40,7 +40,7 @@ class UserProfileController extends GetxController {
     address.text = profile.address ?? '';
     phoneNumber.text = profile.phoneNumber ?? '';
     avatar.value = profile.avatar ?? Constants.defaultAvatar;
-    dob.text = Utils.toDmY(profile.dob ?? '2000-10-24');
+    dob.text = Utils.reverseDate(profile.dob ?? '2000-10-24');
     gender.value = profile.gender ?? userGender.first['value']!;
   }
 
@@ -117,7 +117,7 @@ class UserProfileController extends GetxController {
       address: address.value.text,
       gender: gender.value,
       avatar: avatar.value,
-      dob: Utils.toYmd(dob.value.text),
+      dob: Utils.reverseDate(dob.value.text),
     );
     var response = await _provider.putUserProfile(info);
     if (response.isOk) {

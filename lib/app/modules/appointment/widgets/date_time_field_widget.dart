@@ -111,8 +111,8 @@ class MyDateTimeField extends StatelessWidget {
                         contentPadding: EdgeInsets.only(
                           top: 16.sp,
                           bottom: 16.sp,
-                          left: 18.sp,
-                          right: 18.sp,
+                          left: Constants.padding.sp,
+                          right: Constants.padding.sp,
                         ),
                         disabledBorder: OutlineInputBorder(
                           borderSide: data.value
@@ -127,7 +127,7 @@ class MyDateTimeField extends StatelessWidget {
                     Visibility(
                       visible: !data.value,
                       child: Padding(
-                        padding: EdgeInsets.only(left: 18.sp, top: 5.sp),
+                        padding: EdgeInsets.only(left: Constants.padding.sp, top: 5.sp),
                         child: Text(
                           warningText ?? Strings.fieldCantBeEmpty,
                           style: TextStyle(

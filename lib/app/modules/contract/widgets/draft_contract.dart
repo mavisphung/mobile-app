@@ -105,7 +105,7 @@ class DraftContract extends StatelessWidget {
                 content: {
                   'Địa chỉ:': patient.address ?? '',
                   'Ngày sinh:': patient.dob ?? '',
-                  'Giới tính:': (userGender.firstWhereOrNull((e) => e['value'] == patient.gender))?['label'] ?? '',
+                  'Giới tính:': Tx.getGender(patient.gender ?? ''),
                 },
               ),
               _getSideTitle(true, doctor.lastName ?? '', doctor.firstName ?? ''),
@@ -116,8 +116,8 @@ class DraftContract extends StatelessWidget {
                 content: {
                   'Chuyên khoa:': doctor.specialists?[0]['name'] ?? '',
                   'Địa chỉ:': doctor.address ?? '',
-                  'Ngày sinh:': Utils.toDmY(doctor.dob),
-                  'Giới tính:': (userGender.firstWhereOrNull((e) => e['value'] == doctor.gender))?['label'] ?? '',
+                  'Ngày sinh:': Utils.reverseDate(doctor.dob),
+                  'Giới tính:': Tx.getGender(doctor.gender ?? ''),
                 },
               ),
               Text(

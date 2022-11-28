@@ -98,7 +98,7 @@ class PatientProfileController extends GetxController {
                 id: e['id'],
                 firstName: e['firstName'],
                 lastName: e['lastName'],
-                dob: Utils.toDmY(e['dob']),
+                dob: Utils.reverseDate(e['dob']),
                 address: e['address'],
                 gender: e['gender'],
                 avatar: e['avatar'],
@@ -124,7 +124,7 @@ class PatientProfileController extends GetxController {
       final patient = Patient.fromMap(response.data);
       firstName.text = patient.firstName ?? '';
       lastName.text = patient.lastName ?? '';
-      dob.text = Utils.toDmY(patient.dob ?? '2000-10-24');
+      dob.text = Utils.reverseDate(patient.dob ?? '2000-10-24');
       if (patient.gender != null) {
         gender.value = patient.gender!;
       }
@@ -146,7 +146,7 @@ class PatientProfileController extends GetxController {
     Patient data = Patient(
       firstName: firstName.text,
       lastName: lastName.text,
-      dob: Utils.toYmd(dob.text),
+      dob: Utils.reverseDate(dob.text),
       address: address.text,
       gender: gender.value,
       avatar: avatar.value,
@@ -170,7 +170,7 @@ class PatientProfileController extends GetxController {
       id: patientId,
       firstName: firstName.text,
       lastName: lastName.text,
-      dob: Utils.toYmd(dob.text),
+      dob: Utils.reverseDate(dob.text),
       address: address.text,
       gender: gender.value,
       avatar: avatar.value,

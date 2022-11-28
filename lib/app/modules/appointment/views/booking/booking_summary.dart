@@ -46,19 +46,35 @@ class BookingSummary extends StatelessWidget {
   }
 
   void processPayment(BuildContext ctx, String paymentUrl) {
+    bool result = false;
     VNPAYFlutter.instance.show(
       paymentUrl: paymentUrl,
-      onPaymentSuccess: (params) async {
+      onPaymentSuccess: (params) {
         params.toString().debugLog('Payment success');
         (params['vnp_ResponseCode'] as String).debugLog('vnp_ResponseCode on success');
         _cBooking.setPaymentStatus(true);
-        // Utils.showTopSnackbar('Thanh toan thanh cong');
+        result = true;
+        Dialogs.statusDialog(
+          ctx: ctx,
+          isSuccess: result,
+          successMsg: 'Lịch hẹn khám đã được đặt thành công. Bạn sẽ được nhận thông báo để theo dõi lịch hẹn với bác sĩ.',
+          failMsg: 'Có vẻ như có ai đó đã đặt lịch trước bạn. Bạn hãy chọn một ca thời gian khác và thử lại xem.',
+          successAction: () => Get.offAllNamed(Routes.NAVBAR),
+        );
       },
       onPaymentError: (params) {
         params.toString().debugLog('Payment fail');
         (params['vnp_ResponseCode'] as String).debugLog('vnp_ResponseCode on error');
         _cBooking.setPaymentStatus(false);
         Utils.showAlertDialog('Thanh toan that bai');
+        result = false;
+        Dialogs.statusDialog(
+          ctx: ctx,
+          isSuccess: result,
+          successMsg: 'Lịch hẹn khám đã được đặt thành công. Bạn sẽ được nhận thông báo để theo dõi lịch hẹn với bác sĩ.',
+          failMsg: 'Có vẻ như có ai đó đã đặt lịch trước bạn. Bạn hãy chọn một ca thời gian khác và thử lại xem.',
+          successAction: () => Get.offAllNamed(Routes.NAVBAR),
+        );
       },
     );
   }
@@ -83,14 +99,6 @@ class BookingSummary extends StatelessWidget {
       paymentUrl.debugLog('Payment Url');
       processPayment(ctx, paymentUrl);
     }
-
-    Dialogs.statusDialog(
-      ctx: ctx,
-      isSuccess: isSuccess,
-      successMsg: 'Lịch hẹn khám đã được đặt thành công. Bạn sẽ được nhận thông báo để theo dõi lịch hẹn với bác sĩ.',
-      failMsg: 'Có vẻ như có ai đó đã đặt lịch trước bạn. Bạn hãy chọn một ca thời gian khác và thử lại xem.',
-      successAction: () => Get.offAllNamed(Routes.NAVBAR),
-    );
   }
 
   @override

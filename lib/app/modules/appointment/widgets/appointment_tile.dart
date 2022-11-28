@@ -98,7 +98,7 @@ class AppointmentTile extends StatelessWidget {
                         child: Row(
                           children: [
                             Text(
-                              data.type.toString().enumType.label,
+                              data.category.toString().enumType.label,
                               style: TextStyle(
                                 // color: data.type == AppointmentType.online.value ? Colors.green : Colors.red,
                                 fontSize: 12.sp,
@@ -157,7 +157,7 @@ class AppointmentTile extends StatelessWidget {
                           color: Colors.grey[100]?.withOpacity(0.7),
                           borderRadius: BorderRadius.circular(20.sp),
                         ),
-                        child: data.type.toString().enumType == AppointmentType.online
+                        child: data.category.toString().enumType == AppointmentType.online
                             ? Icon(
                                 PhosphorIcons.phone,
                                 color: AppColors.primary,
@@ -288,7 +288,7 @@ class HistoryAppointmentTile extends StatelessWidget {
                       child: Row(
                         children: [
                           Text(
-                            data.type.toString().enumType.label,
+                            data.category.toString().enumType.label,
                             style: TextStyle(
                               // color: data.type == AppointmentType.online.value ? Colors.green : Colors.red,
                               fontSize: 12.sp,
@@ -347,7 +347,7 @@ class HistoryAppointmentTile extends StatelessWidget {
                         color: Colors.grey[100]?.withOpacity(0.7),
                         borderRadius: BorderRadius.circular(20.sp),
                       ),
-                      child: data.type.toString().enumType == AppointmentType.online
+                      child: data.category.toString().enumType == AppointmentType.online
                           ? Icon(
                               PhosphorIcons.phone,
                               color: AppColors.primary,

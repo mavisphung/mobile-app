@@ -81,8 +81,9 @@ class CancelPage extends StatelessWidget {
                       return;
                     }
                     bool isOk = false;
-                    if (!_ic.validateCancelReason()) {
+                    if (_ic.validateCancelReason()) {
                       Utils.showAlertDialog('Vui lòng nhập lí do');
+                      return;
                     }
 
                     String reason = '${_ic.rxReason.value}|${_ic.textController.text}';

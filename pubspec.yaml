@@ -64,6 +64,8 @@ dependencies:
   url_launcher: ^6.1.6
   vnpay_flutter: ^1.0.1
   network_info_plus: ^3.0.1
+  # QR Code Scanner
+  mobile_scanner: ^2.1.0
 
 dev_dependencies:
   flutter_test:
