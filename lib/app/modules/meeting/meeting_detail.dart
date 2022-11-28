@@ -79,8 +79,7 @@ class MeetingDetailPage extends StatelessWidget {
                   paddingBottom: 0,
                   title: 'Thông tin bệnh nhân',
                   suffixText: 'Xem ảnh',
-                  suffixAction: () =>
-                      Get.toNamed(Routes.IMAGE, arguments: patient?['avatar'] ?? Constants.defaultAvatar),
+                  suffixAction: () => Get.toNamed(Routes.IMAGE, arguments: patient?['avatar'] ?? Constants.defaultAvatar),
                 ),
                 ContentRow(
                   labelWidth: 100,
@@ -103,7 +102,7 @@ class MeetingDetailPage extends StatelessWidget {
                 ),
                 const InfoContainer(info: 'Dịch vụ chỉ được mở trong thời gian cuộc hẹn.', hasInfoIcon: true),
                 ServiceTile(
-                  category: package?['category'],
+                  category: _cMeeting.appointment.category!,
                   chatPageargs: ChatPageArguments(
                     peerId: doctor?['id'],
                     peerName: Tx.getDoctorName(doctor?['lastName'], doctor?['firstName']),

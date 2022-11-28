@@ -66,6 +66,7 @@ dependencies:
   network_info_plus: ^3.0.1
   # QR Code Scanner
   mobile_scanner: ^2.1.0
+  # qr_code_scanner: ^1.0.1
 
 dev_dependencies:
   flutter_test:

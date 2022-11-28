@@ -209,11 +209,12 @@ class AppointmentTile extends StatelessWidget {
                   child: AppointmentButton(
                     onTap: () {
                       'Rescheduling appointment'.debugLog('Reschedule');
+                      Get.toNamed(Routes.QR_SCANNER);
                     },
                     textColor: Colors.white,
                     backgroundColor: AppColors.primary,
                     borderColor: AppColors.primary,
-                    label: 'Đặt lại lịch hẹn',
+                    label: 'Check in',
                   ),
                 ),
               ],

@@ -28,4 +28,5 @@ abstract class Routes {
   static const CREATE_CONTRACT = '/createContract';
   static const WALLET = '/wallet';
   static const CANCEL = '/cancel';
+  static const QR_SCANNER = '/qr-scanner';
 }
