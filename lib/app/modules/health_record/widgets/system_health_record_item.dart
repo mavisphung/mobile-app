@@ -57,7 +57,7 @@ class SystemHealthRecordItem extends StatelessWidget {
       child: CustomInkWell(
         verticalPadding: 20,
         onTap: () {
-          Get.toNamed(Routes.EDIT_HEALTH_RECORD, arguments: hr);
+          Get.toNamed(Routes.SYSTEM_HR_DETAIL, arguments: hr.record?['id']);
         },
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,

@@ -21,7 +21,7 @@ import 'package:hi_doctor_v2/app/common/constants.dart';
 
 class MeetingDetailPage extends StatelessWidget {
   final _cMeeting = Get.put(MeetingController());
-  final _doctorId = Get.arguments as int;
+  final _appointmentId = Get.arguments as int;
 
   MeetingDetailPage({super.key});
 
@@ -42,12 +42,13 @@ class MeetingDetailPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print('APP ID: $_appointmentId');
     return BasePage(
       appBar: const MyAppBar(
         title: 'Chi tiết cuộc hẹn',
       ),
       body: FutureBuilder(
-        future: _cMeeting.getAppointmentDetail(_doctorId),
+        future: _cMeeting.getAppointmentDetail(_appointmentId),
         builder: (_, AsyncSnapshot<bool?> snapshot) {
           if (snapshot.hasData && snapshot.data == true) {
             final doctor = _cMeeting.appointment.doctor;

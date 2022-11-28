@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
+import 'package:hi_doctor_v2/app/common/values/colors.dart';
 import 'package:hi_doctor_v2/app/common/values/strings.dart';
 
 class NoInternetWidget extends StatelessWidget {
@@ -26,7 +27,7 @@ class NoInternetWidget extends StatelessWidget {
             textAlign: TextAlign.center,
             style: TextStyle(
               fontSize: 14.sp,
-              color: Colors.amber,
+              color: AppColors.secondary,
             ),
           ),
           const SizedBox(height: 5),
@@ -44,7 +45,7 @@ class NoInternetWidget2 extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: Padding(
-        padding: const EdgeInsets.only(top: 200),
+        padding: const EdgeInsets.only(top: 150),
         child: Column(
           children: [
             SvgPicture.asset(
@@ -59,7 +60,7 @@ class NoInternetWidget2 extends StatelessWidget {
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 14.sp,
-                  color: Colors.orange.shade400,
+                  color: AppColors.secondary,
                 ),
               ),
             ),
@@ -78,7 +79,7 @@ class NoDataWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: Padding(
-        padding: const EdgeInsets.only(top: 200),
+        padding: const EdgeInsets.only(top: 150),
         child: Column(
           children: [
             SvgPicture.asset(
@@ -89,9 +90,10 @@ class NoDataWidget extends StatelessWidget {
             const SizedBox(height: 30),
             Text(
               message,
+              textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: 14.sp,
-                color: Colors.amber,
+                color: AppColors.secondary,
               ),
             ),
           ],
@@ -121,7 +123,7 @@ class SystemErrorWidget extends StatelessWidget {
               Strings.systemErrMsg,
               style: TextStyle(
                 fontSize: 14.sp,
-                color: Colors.amber,
+                color: AppColors.secondary,
               ),
             ),
           ],
@@ -149,7 +151,7 @@ class FailResponeWidget extends StatelessWidget {
             Strings.failRespMsg,
             style: TextStyle(
               fontSize: 14.sp,
-              color: Colors.amber,
+              color: AppColors.secondary,
             ),
           ),
         ],

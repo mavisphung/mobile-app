@@ -37,15 +37,18 @@ class OtherHealthRecordPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final patient = Get.arguments as Patient;
     _cHealthRecord.rxPatient.value = patient;
-    // _cHealthRecord.getOtherHealthRecords();
-    _cHealthRecord.getSystemHealthRecords();
+    _cHealthRecord.getAllHealthRecords();
     return Scaffold(
       appBar: MyAppBar(
         title: 'Danh sách hồ sơ',
         actions: [
           GestureDetector(
             onTap: () {
-              final patientOption = PatientOption(context, (p) => _cHealthRecord.rxPatient.value = p);
+              final patientOption = PatientOption(context, (p) {
+                _cHealthRecord.rxPatient.value = p;
+                _cHealthRecord.reset();
+                _cHealthRecord.getAllHealthRecords();
+              });
               patientOption.openPatientOptions();
             },
             child: ObxValue<Rxn<Patient>>(

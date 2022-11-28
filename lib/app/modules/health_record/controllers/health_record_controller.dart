@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:hi_doctor_v2/app/common/util/enum.dart';
+import 'package:hi_doctor_v2/app/common/util/extensions.dart';
 
 import 'package:hi_doctor_v2/app/data/api_response.dart';
 import 'package:hi_doctor_v2/app/data/response_model.dart';
 import 'package:hi_doctor_v2/app/models/patient.dart';
 import 'package:hi_doctor_v2/app/modules/health_record/models/hr_res_model.dart';
+import 'package:hi_doctor_v2/app/modules/health_record/models/system_hr_res_model.dart';
 import 'package:hi_doctor_v2/app/modules/health_record/providers/api_health_record.dart';
 
 class HealthRecordController extends GetxController with GetSingleTickerProviderStateMixin {
@@ -20,49 +23,57 @@ class HealthRecordController extends GetxController with GetSingleTickerProvider
 
   final rxPatient = Rxn<Patient>();
 
+  Status status = Status.init;
+  SystemHrResModel? systemHrResModel;
+
   int? _nextPage = 1;
+  int _totalItems = 0;
 
-  Future<void> getSystemHealthRecords({int page = 1, int limit = 10}) async {
-    if (rxPatient.value?.id == null) {
-      print('NULL');
-      return;
-    }
-    final response = await _provider.getHealthRecords(rxPatient.value!.id!, page: page, limit: limit);
-    final Map<String, dynamic> res = ApiResponse.getResponse(response);
-    final model = ResponseModel2.fromMap(res);
-
-    _nextPage = model.nextPage;
-
-    print('HR MODEL: ${model.toString()}');
-
-    final data = model.data as List<dynamic>;
-
-    for (var item in data) {
-      print('DATA: ${data.toString()}');
-      if (item['record']['isPatientProvided'] == false) {
-        systemList.add(HrResModel.fromMap(item));
-        systemList.refresh();
-      }
-    }
+  void reset() {
+    allList.clear();
+    systemList.clear();
+    otherList.clear();
+    _nextPage = 1;
+    _totalItems = 0;
   }
 
-  Future<void> getOtherHealthRecords({int page = 1, int limit = 10}) async {
+  Future<bool?> getHrWithId(int recordId) async {
+    var response = await _provider.getHealthRecordWithId(recordId).futureValue();
+
+    if (response?.isSuccess == true) {
+      final data = response!.data as Map<String, dynamic>;
+      systemHrResModel = SystemHrResModel.fromMap(data);
+      return true;
+    } else if (response?.isSuccess == false) {
+      return false;
+    }
+    return null;
+  }
+
+  Future<void> getAllHealthRecords({int page = 1, int limit = 10}) async {
     if (rxPatient.value?.id == null) return;
+    status = Status.loading;
     final response = await _provider.getHealthRecords(rxPatient.value!.id!, page: page, limit: limit);
     final Map<String, dynamic> res = ApiResponse.getResponse(response);
     final model = ResponseModel2.fromMap(res);
 
     _nextPage = model.nextPage;
-
-    // print('HR MODEL: ${model.toString()}');
+    if (model.totalItems != null) _totalItems = model.totalItems!;
 
     final data = model.data as List<dynamic>;
+    status = Status.success;
 
     for (var item in data) {
       if (item['record']['isPatientProvided'] == true) {
         otherList.add(HrResModel.fromMap(item));
         otherList.refresh();
       }
+      if (item['record']['isPatientProvided'] == false) {
+        systemList.add(HrResModel.fromMap(item));
+        systemList.refresh();
+      }
+      allList.add(HrResModel.fromMap(item));
+      allList.refresh();
     }
   }
 
@@ -77,25 +88,28 @@ class HealthRecordController extends GetxController with GetSingleTickerProvider
     otherScroll = ScrollController();
     allScroll.addListener(
       () async {
-        if (allScroll.position.maxScrollExtent == allScroll.offset) {}
+        if (allScroll.position.maxScrollExtent == allScroll.offset) {
+          if (allList.length >= _totalItems) return;
+          if (_nextPage != null) await getAllHealthRecords(page: _nextPage!);
+        }
       },
     );
     systemScroll.addListener(
       () async {
         if (systemScroll.position.maxScrollExtent == systemScroll.offset) {
-          if (_nextPage != null) await getSystemHealthRecords(page: _nextPage!);
+          if (allList.length >= _totalItems) return;
+          if (_nextPage != null) await getAllHealthRecords(page: _nextPage!);
         }
       },
     );
     otherScroll.addListener(
       () async {
         if (otherScroll.position.maxScrollExtent == otherScroll.offset) {
-          if (_nextPage != null) await getOtherHealthRecords(page: _nextPage!);
+          if (allList.length >= _totalItems) return;
+          if (_nextPage != null) await getAllHealthRecords(page: _nextPage!);
         }
       },
     );
-    // getOtherHealthRecords();
-    getSystemHealthRecords();
   }
 
   @override

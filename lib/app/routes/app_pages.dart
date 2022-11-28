@@ -16,6 +16,7 @@ import 'package:hi_doctor_v2/app/modules/contract/create_contract_page.dart';
 import 'package:hi_doctor_v2/app/modules/health_record/edit_health_record_page.dart';
 import 'package:hi_doctor_v2/app/modules/health_record/edit_pathology_record_page.dart';
 import 'package:hi_doctor_v2/app/modules/health_record/health_record_page.dart';
+import 'package:hi_doctor_v2/app/modules/health_record/views/system_hr_detail_page.dart';
 import 'package:hi_doctor_v2/app/modules/home/home_page.dart';
 import 'package:hi_doctor_v2/app/modules/home/views/doctor_detail_page.dart';
 import 'package:hi_doctor_v2/app/modules/meeting/channel.dart';
@@ -125,6 +126,10 @@ abstract class AppPages {
     GetPage(
       name: Routes.CREATE_CONTRACT,
       page: () => const CreateContractPage(),
+    ).custom(),
+    GetPage(
+      name: Routes.SYSTEM_HR_DETAIL,
+      page: () => SystemHrDetailPage(),
     ).custom(),
   ];
 }

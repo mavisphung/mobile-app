@@ -100,6 +100,7 @@ class BookingController extends GetxController {
       final data = model.data as List<dynamic>?;
       if (data == null || data.isEmpty) return true;
       packageList = data
+          .where((e) => e['isActive'] == true)
           .map((e) => PackageItem(
                 id: e['service']['id'],
                 name: e['service']['name'],
@@ -108,7 +109,7 @@ class BookingController extends GetxController {
                 category: e['service']['category'],
               ))
           .toList();
-      setServiceId(data[0]['id']);
+      setServiceId(data[0]['service']['id']);
       return true;
     } else if (model.success == false) {
       packageList = null;
