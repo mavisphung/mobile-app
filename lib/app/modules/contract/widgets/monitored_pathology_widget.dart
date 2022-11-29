@@ -142,6 +142,13 @@ class MonitoredPathologyWidget extends StatelessWidget {
                       height: 60,
                       hasLabel: false,
                       onChoose: (result) {
+                        dynamic cate;
+                        for (var c in _lCategory) {
+                          cate = (c['diseases'] as List).firstWhereOrNull((e) => e['id'] == result.id);
+                          if (cate != null) break;
+                        }
+                        final records = cate?['records'] ?? [];
+                        final prescriptions = cate?['prescriptions'] ?? [];
                         _pTmpList.add(
                           MonitoredPathology(
                               null,
@@ -151,8 +158,8 @@ class MonitoredPathologyWidget extends StatelessWidget {
                                 'otherCode': result.otherCode,
                                 'generalName': result.generalName,
                                 'diseaseName': result.diseaseName,
-                                'records': [],
-                                'prescriptions': [],
+                                'records': records,
+                                'prescriptions': prescriptions,
                               },
                               null),
                         );

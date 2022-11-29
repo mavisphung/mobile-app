@@ -46,7 +46,7 @@ class _AppoinmentPageState extends State<AppoinmentPage> with SingleTickerProvid
         return Scaffold(
           backgroundColor: AppColors.background,
           appBar: const MyAppBar(
-            title: 'Lịch hẹn',
+            title: 'Danh sách cuộc hẹn',
             hasBackBtn: false,
           ),
           body: Column(

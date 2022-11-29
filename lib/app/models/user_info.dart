@@ -28,6 +28,8 @@ class UserInfo2 {
   final String? dob;
   final String? gender;
   final String? avatar;
+  final double? tempBalance;
+  final double? mainBalance;
 
   UserInfo2({
     this.id,
@@ -39,6 +41,8 @@ class UserInfo2 {
     this.dob,
     this.gender,
     this.avatar,
+    this.tempBalance,
+    this.mainBalance,
   });
 
   UserInfo2 copyWith({
@@ -51,6 +55,8 @@ class UserInfo2 {
     String? dob,
     String? gender,
     String? avatar,
+    double? tempBalance,
+    double? mainBalance,
   }) {
     return UserInfo2(
       id: id ?? this.id,
@@ -62,6 +68,8 @@ class UserInfo2 {
       dob: dob ?? this.dob,
       gender: gender ?? this.gender,
       avatar: avatar ?? this.avatar,
+      tempBalance: tempBalance ?? this.tempBalance,
+      mainBalance: mainBalance ?? this.mainBalance,
     );
   }
 
@@ -76,6 +84,8 @@ class UserInfo2 {
       'dob': dob,
       'gender': gender,
       'avatar': avatar,
+      'tempBalance': tempBalance,
+      'mainBalance': mainBalance,
     };
   }
 
@@ -90,6 +100,8 @@ class UserInfo2 {
       dob: map['dob'] != null ? map['dob'] as String : null,
       gender: map['gender'] != null ? map['gender'] as String : null,
       avatar: map['avatar'] != null ? map['avatar'] as String : null,
+      tempBalance: map['tempBalance'] != null ? map['tempBalance'] as double : null,
+      mainBalance: map['mainBalance'] != null ? map['mainBalance'] as double : null,
     );
   }
 
@@ -99,6 +111,6 @@ class UserInfo2 {
 
   @override
   String toString() {
-    return 'UserInfo2(id: $id, email: $email, firstName: $firstName, lastName: $lastName, address: $address, phoneNumber: $phoneNumber, dob: $dob, gender: $gender, avatar: $avatar)';
+    return 'UserInfo2(id: $id, email: $email, firstName: $firstName, lastName: $lastName, address: $address, phoneNumber: $phoneNumber, dob: $dob, gender: $gender, avatar: $avatar, tempBalance: $tempBalance, mainBalance: $mainBalance)';
   }
 }

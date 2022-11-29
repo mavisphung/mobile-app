@@ -100,8 +100,8 @@ class EditOtherHealthRecordPage extends StatelessWidget {
                       Dialogs.statusDialog(
                         ctx: context,
                         isSuccess: isSuccess,
-                        successMsg: 'Thêm hồ sơ ngoài hệ thống thành công.',
-                        failMsg: 'Xảy ra lỗi khi thêm hồ sơ ngoài hệ thống',
+                        successMsg: '${_hr == null ? "Thêm" : "Cập nhật"} hồ sơ ngoài hệ thống thành công.',
+                        failMsg: 'Xảy ra lỗi khi {_hr == null ? "thêm" : "cập nhật"} hồ sơ ngoài hệ thống',
                         successAction: () => Get.back(),
                       );
                     }

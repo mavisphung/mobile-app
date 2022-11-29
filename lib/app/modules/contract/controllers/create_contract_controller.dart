@@ -45,7 +45,7 @@ class CreateContractController extends GetxController {
     final reqModel = {
       "doctor": doctor.id,
       "patient": rxPatient.value!.id,
-      "package": 9,
+      // "package": 1,
       "startedAt": "$startDate 00:00:00",
       "endedAt": "$endDate 00:00:00",
       "prescription": tmp3,

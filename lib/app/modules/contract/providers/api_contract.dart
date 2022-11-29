@@ -31,4 +31,16 @@ class ApiContract extends GetConnect {
       headers: headers,
     );
   }
+
+  Future<Response> getFilterContract(String status, {int page = 1, int limit = 10}) {
+    return get(
+      '/contract/supervisor/list',
+      headers: headers,
+      query: {
+        'page': page.toString(),
+        'limit': limit.toString(),
+        'status': status,
+      },
+    );
+  }
 }

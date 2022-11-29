@@ -55,4 +55,15 @@ class ApiHealthRecord extends GetConnect {
       headers: headers,
     );
   }
+
+  Future<Response> putHealthRecord(int hrId, int patientId, OtherHealthRecord hr) {
+    return post(
+      '/supervisor/health-records/$hrId/',
+      {
+        "patient": patientId,
+        "detail": hr.toMap(),
+      },
+      headers: headers,
+    );
+  }
 }

@@ -18,11 +18,13 @@ class ChatPageArguments {
   final int peerId;
   final String peerAvatar;
   final String peerName;
+  final bool hasInputWidget;
 
   ChatPageArguments({
     required this.peerId,
     required this.peerAvatar,
     required this.peerName,
+    required this.hasInputWidget,
   });
 }
 
@@ -45,7 +47,6 @@ class ChatPageState extends State<ChatPage> {
   final int _limitIncrement = 20;
   late final String _groupChatId;
 
-  final _inputController = TextEditingController();
   final _listScrollController = ScrollController();
 
   _scrollListener() {
@@ -73,15 +74,18 @@ class ChatPageState extends State<ChatPage> {
   @override
   void dispose() {
     Utils.unfocus();
-    _inputController.dispose();
     super.dispose();
   }
 
-  void _onMessageSend(int type) async {
-    final content = _inputController.text.trim();
-    if (content.isEmpty) return;
-    _inputController.clear();
-    await _cMessage.sendMessage(content, type, _groupChatId, _userId, _peerId);
+  void _onMessageSend(int type, String? imgUrl) async {
+    final content = _cMessage.inputController.text.trim();
+    if (type == TypeMessage.TEXT.index) {
+      if (content.isEmpty) return;
+      await _cMessage.sendMessage(content, type, _groupChatId, _userId, _peerId);
+    } else if (type == TypeMessage.IMAGE.index) {
+      await _cMessage.sendMessage(imgUrl!, type, _groupChatId, _userId, _peerId);
+    }
+    _cMessage.inputController.clear();
 
     await _cMessage.setDataFirestore(
       Constants.pathMessageCollection,
@@ -89,7 +93,7 @@ class ChatPageState extends State<ChatPage> {
       {
         Constants.supervisorId: _userId,
         Constants.doctorId: _peerId,
-        Constants.lastMessage: content,
+        Constants.lastMessage: type == TypeMessage.TEXT.index ? content : '[hình ảnh]',
         Constants.lastTimeStamp: DateTime.now().millisecondsSinceEpoch.toString(),
       },
     );
@@ -140,7 +144,7 @@ class ChatPageState extends State<ChatPage> {
       body: Column(
         children: <Widget>[
           buildListMessage(),
-          ChatInput(inputController: _inputController, onMessageSend: _onMessageSend),
+          if (!widget.arguments.hasInputWidget) ChatInput(onMessageSend: _onMessageSend),
         ],
       ),
     );

@@ -28,6 +28,7 @@ abstract class Routes {
   static const CREATE_CONTRACT = '/createContract';
   static const SYSTEM_HR_DETAIL = '/systemHrDetail';
   static const WALLET = '/wallet';
+  static const WALLET_DETAIL = '/wallet-detail';
   static const CANCEL = '/cancel';
   static const QR_SCANNER = '/qr-scanner';
 }

@@ -29,6 +29,7 @@ import 'package:hi_doctor_v2/app/modules/notification/notification_page.dart';
 import 'package:hi_doctor_v2/app/modules/settings/views/patient_list.dart';
 import 'package:hi_doctor_v2/app/modules/settings/views/patient_profile_detail.dart';
 import 'package:hi_doctor_v2/app/modules/settings/views/user_profile_detail.dart';
+import 'package:hi_doctor_v2/app/modules/settings/views/wallet_detail_page.dart';
 import 'package:hi_doctor_v2/app/modules/settings/views/wallet_page.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/image_page.dart';
 
@@ -146,6 +147,10 @@ abstract class AppPages {
     GetPage(
       name: Routes.QR_SCANNER,
       page: () => QrScannerPage(),
+    ).custom(),
+    GetPage(
+      name: Routes.WALLET_DETAIL,
+      page: () => WalletDetailPage(),
     ).custom(),
   ];
 }

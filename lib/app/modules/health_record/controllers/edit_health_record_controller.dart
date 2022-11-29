@@ -146,7 +146,7 @@ class EditOtherHealthRecordController extends GetxController {
 
   Future<bool?> addOtherHealthRecord() async {
     if (nameController.text.isEmpty || (_pathologies.isEmpty && _records.isEmpty)) {
-      Utils.showAlertDialog('Bạn cần đặt tên hồ sơ và thêm ít nhất một bệnh lý hoặc phiếu sức khỏe.');
+      Utils.showAlertDialog('Bạn cần đặt tên hồ sơ và thêm ít nhất một bệnh lý hoặc phiếu sức khỏe ngoài bệnh lý.');
       return null;
     }
     setStatusLoading();
@@ -171,6 +171,7 @@ class EditOtherHealthRecordController extends GetxController {
         return false;
       }
     }
+    setStatusFail();
     return null;
   }
 
@@ -200,7 +201,9 @@ class EditOtherHealthRecordController extends GetxController {
           final pXFiles = r.xFiles;
           if (pXFiles != null) {
             urls = await _registerImgs(pXFiles) ?? [];
-            r.tickets = urls;
+            final tmp = r.tickets ?? [];
+            tmp.addAll(urls);
+            r.tickets = tmp;
           }
         }
       }
@@ -209,14 +212,42 @@ class EditOtherHealthRecordController extends GetxController {
       final hrXFiles = r.xFiles;
       if (hrXFiles != null) {
         urls = await _registerImgs(hrXFiles) ?? [];
-        r.tickets = urls;
+        final tmp = r.tickets ?? [];
+        tmp.addAll(urls);
+        r.tickets = tmp;
       }
     }
   }
 
-  Future<bool?> updateOtherHealthRecord() {
-    Get.back();
-    return Future.value(false);
+  Future<bool?> updateOtherHealthRecord() async {
+    if (nameController.text.isEmpty || (_pathologies.isEmpty && _records.isEmpty)) {
+      Utils.showAlertDialog('Hồ sơ cần có tên hồ sơ và ít nhất một bệnh lý hoặc phiếu sức khỏe ngoài bệnh lý.');
+      return null;
+    }
+    setStatusLoading();
+    await _assignUrls();
+    final hr = OtherHealthRecord(
+      null,
+      nameController.text.trim(),
+      DateTime.now(),
+      _pathologies.toList(),
+      _records.toList(),
+    );
+
+    final patientId = _cHealthRecord.rxPatient.value!.id;
+    if (patientId != null) {
+      final response = await _apiHealthRecord.putHealthRecord(_hrResModel!.record!['id']!, patientId, hr).futureValue();
+      print('UPDATE RESP: ${response.toString()}');
+      if (response != null && response.isSuccess) {
+        setStatusSuccess();
+        return true;
+      } else if (response != null && !response.isSuccess) {
+        setStatusFail();
+        return false;
+      }
+    }
+    setStatusFail();
+    return null;
   }
 
   @override

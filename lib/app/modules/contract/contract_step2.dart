@@ -30,19 +30,19 @@ class ContractStep2 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Text(_c.lMonitoredPathology.toString()),
-        const SizedBox(
-          height: 40,
-        ),
-        Text(_c.lOtherSharedRecord.toString()),
-        const SizedBox(
-          height: 40,
-        ),
-        Text(_c.lPrescription.toString()),
-      ],
-    );
+    // return Column(
+    //   children: [
+    //     Text(_c.lMonitoredPathology.toString()),
+    //     const SizedBox(
+    //       height: 40,
+    //     ),
+    //     Text(_c.lOtherSharedRecord.toString()),
+    //     const SizedBox(
+    //       height: 40,
+    //     ),
+    //     Text(_c.lPrescription.toString()),
+    //   ],
+    // );
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -61,32 +61,32 @@ class ContractStep2 extends StatelessWidget {
             ],
           ),
         ),
-        const ContentTitle1(title: 'Ghi chú'),
-        TextFormField(
-          validator: (String? value) {
-            if (value != null && value.length >= 1000) {
-              return Strings.problemLengthMsg;
-            }
-            return null;
-          },
-          focusNode: FocusNode(),
-          controller: _c.contractNoteController,
-          decoration: InputDecoration(
-            hintText: Strings.contractNoteHint,
-            contentPadding: EdgeInsets.only(top: 16.sp, bottom: 16.sp, left: 12.sp, right: 12.sp),
-            enabledBorder: OutlineInputBorder(
-              borderSide: BorderSide.none,
-              borderRadius: BorderRadius.circular(15.0),
-            ),
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(15.0),
-            ),
-            filled: true,
-            fillColor: AppColors.whiteHighlight,
-          ),
-          keyboardType: TextInputType.multiline,
-          maxLines: 6,
-        ),
+        // const ContentTitle1(title: 'Ghi chú'),
+        // TextFormField(
+        //   validator: (String? value) {
+        //     if (value != null && value.length >= 1000) {
+        //       return Strings.problemLengthMsg;
+        //     }
+        //     return null;
+        //   },
+        //   focusNode: FocusNode(),
+        //   controller: _c.contractNoteController,
+        //   decoration: InputDecoration(
+        //     hintText: Strings.contractNoteHint,
+        //     contentPadding: EdgeInsets.only(top: 16.sp, bottom: 16.sp, left: 12.sp, right: 12.sp),
+        //     enabledBorder: OutlineInputBorder(
+        //       borderSide: BorderSide.none,
+        //       borderRadius: BorderRadius.circular(15.0),
+        //     ),
+        //     border: OutlineInputBorder(
+        //       borderRadius: BorderRadius.circular(15.0),
+        //     ),
+        //     filled: true,
+        //     fillColor: AppColors.whiteHighlight,
+        //   ),
+        //   keyboardType: TextInputType.multiline,
+        //   maxLines: 6,
+        // ),
         Row(
           children: [
             const ContentTitle1(title: 'Ngày bắt đầu hợp đồng mong muốn'),

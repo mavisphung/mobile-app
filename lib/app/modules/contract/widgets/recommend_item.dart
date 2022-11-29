@@ -82,10 +82,7 @@ class _RecommendItemState extends State<RecommendItem> {
             'isPatientProvided': p['record']['isPatientProvided'],
           },
           'recordName': p['recordName'],
-          'prescription': {
-            'info': p['detail'],
-            'isChosen': false,
-          },
+          'prescriptions': [],
         },
       );
       if (isGenerated) _lType.add(typeItem);
@@ -93,6 +90,7 @@ class _RecommendItemState extends State<RecommendItem> {
   }
 
   void _showModalSheet(BuildContext ctx, Map<String, dynamic> map) {
+    prescriptionCount = 0;
     final details = map['details'] as List;
     showModalBottomSheet(
       isScrollControlled: true,
@@ -143,14 +141,18 @@ class _RecommendItemState extends State<RecommendItem> {
                   }
 
                   final item5 = _lType.firstWhereOrNull((e) => e['typeId'] == 5);
-                  final dListItem5 = item5!['details'] as List;
-                  for (var d in dListItem5) {
-                    if (d['prescription']?['isChosen'] == true) {
-                      _c.lPrescription.add(d['record']['id']);
-                      ++prescriptionCount;
-                    } else if (d['prescription']?['isChosen'] == false) {
-                      _c.lPrescription.remove(d['record']['id']);
-                      --prescriptionCount;
+                  final dListItem5 = item5?['details'] as List?;
+                  if (dListItem5 != null) {
+                    for (var d in dListItem5) {
+                      final lPrescriptions = d['prescriptions'] as List;
+                      for (var p in lPrescriptions) {
+                        if (p['isChosen'] == true) {
+                          _c.lPrescription.add(p['id']);
+                          ++prescriptionCount;
+                        } else if (p['isChosen'] == false) {
+                          _c.lPrescription.remove(p['id']);
+                        }
+                      }
                     }
                   }
 
@@ -218,15 +220,13 @@ class _RecommendItemState extends State<RecommendItem> {
                       ),
                       SizedBox(height: 5.sp),
                       Container(
-                        padding: EdgeInsets.symmetric(vertical: 5.sp, horizontal: 8.sp),
-                        decoration: BoxDecoration(
-                          color: AppColors.blue100,
-                          borderRadius: BorderRadius.circular(Constants.textFieldRadius.sp),
-                        ),
-                        child: tickets != null
-                            ? Text('${(tickets["details"] as List).length + prescriptionCount} phiếu đã chọn')
-                            : const Text('0 phieu da chon'),
-                      ),
+                          padding: EdgeInsets.symmetric(vertical: 5.sp, horizontal: 8.sp),
+                          decoration: BoxDecoration(
+                            color: AppColors.blue100,
+                            borderRadius: BorderRadius.circular(Constants.textFieldRadius.sp),
+                          ),
+                          child: Text(
+                              '${((tickets?["details"] as List?)?.length) ?? 0 + prescriptionCount} phiếu đã chọn')),
                     ],
                   );
                 }).toList(),

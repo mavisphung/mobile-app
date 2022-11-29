@@ -112,14 +112,13 @@ class BookingController extends GetxController {
     final Map<String, dynamic> response = ApiResponse.getResponse(result);
     final ResponseModel2 model = ResponseModel2.fromMap(response);
     if (model.success == true && model.status == Constants.successGetStatusCode) {
-      final data = model.data as List<dynamic>?;
+      var data = model.data as List<dynamic>?;
       if (data == null || data.isEmpty) return true;
-      packageList = data.where((e) => e['isActive'] == true).map((e) {
+      packageList = data.where((e) => e['isActive'] == true && e['service']['category'] != "CONTRACT").map((e) {
         dynamic data = e['service'] as Map<String, dynamic>;
         return Service.fromMap(data);
       }).toList();
-      setServiceId(data[0]['service']['id']);
-      // setServiceId(0);
+      setServiceId(packageList![0].id!);
       return true;
     } else if (model.success == false) {
       packageList = null;

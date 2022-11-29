@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import 'package:hi_doctor_v2/app/common/constants.dart';
@@ -6,6 +7,7 @@ import 'package:hi_doctor_v2/app/common/storage/box.dart';
 import 'package:hi_doctor_v2/app/modules/message/models/chat_message.dart';
 
 class MessageController extends GetxController {
+  final inputController = TextEditingController();
   final FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
 
   int get userId => Box.getCacheUser().id!;
@@ -54,6 +56,7 @@ class MessageController extends GetxController {
 
   @override
   void dispose() {
+    inputController.dispose();
     _firebaseFirestore.terminate();
     super.dispose();
   }

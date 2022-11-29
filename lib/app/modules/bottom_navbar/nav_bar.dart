@@ -6,11 +6,11 @@ import 'package:get/get.dart';
 import 'package:hi_doctor_v2/app/common/values/colors.dart';
 import 'package:hi_doctor_v2/app/common/values/strings.dart';
 import 'package:hi_doctor_v2/app/common/util/utils.dart';
+import 'package:hi_doctor_v2/app/modules/contract/contract_list_page.dart';
 import 'package:hi_doctor_v2/app/modules/message/message_page.dart';
 import 'package:hi_doctor_v2/app/modules/appointment/appointment_page.dart';
 import 'package:hi_doctor_v2/app/modules/bottom_navbar/controllers/navbar_controller.dart';
 import 'package:hi_doctor_v2/app/modules/home/home_page.dart';
-import 'package:hi_doctor_v2/app/modules/notification/notification_page.dart';
 import 'package:hi_doctor_v2/app/modules/settings/settings_page.dart';
 
 class NavBar extends StatelessWidget {
@@ -25,9 +25,9 @@ class NavBar extends StatelessWidget {
       case 1:
         return const AppoinmentPage();
       case 2:
-        return MessagePage();
+        return ContractListPage();
       case 3:
-        return NotificationPage();
+        return MessagePage();
       case 4:
         return SettingsPage();
       default:
@@ -67,13 +67,13 @@ class NavBar extends StatelessWidget {
                   size: 18.sp,
                 ),
                 _bottomNavigationBarItem(
-                  icon: CupertinoIcons.chat_bubble_2,
-                  activeIcon: CupertinoIcons.chat_bubble_2_fill,
+                  icon: CupertinoIcons.collections,
+                  activeIcon: CupertinoIcons.collections_solid,
                   label: Strings.message,
                 ),
                 _bottomNavigationBarItem(
-                  icon: CupertinoIcons.bell,
-                  activeIcon: CupertinoIcons.bell_fill,
+                  icon: CupertinoIcons.chat_bubble_2,
+                  activeIcon: CupertinoIcons.chat_bubble_2_fill,
                   label: Strings.message,
                 ),
                 _bottomNavigationBarItem(

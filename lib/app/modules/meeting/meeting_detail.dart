@@ -110,6 +110,7 @@ class MeetingDetailPage extends StatelessWidget {
                       peerId: doctor?['id'],
                       peerName: Tx.getDoctorName(doctor?['lastName'], doctor?['firstName']),
                       peerAvatar: doctor?['avatar'] ?? Constants.defaultAvatar,
+                      hasInputWidget: true,
                     ),
                     onJoin: _onJoin,
                   ),

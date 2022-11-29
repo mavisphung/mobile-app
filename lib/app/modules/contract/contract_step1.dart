@@ -23,7 +23,7 @@ class ContractStep1 extends StatelessWidget {
       _c.rxPatient.value = p;
       _cHealthRecord.rxPatient.value = p;
       _cHealthRecord.reset();
-      _cHealthRecord.getAllHealthRecords(limit: 15);
+      _cHealthRecord.getAllHealthRecords(limit: 50);
     });
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,

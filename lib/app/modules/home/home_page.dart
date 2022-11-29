@@ -25,6 +25,7 @@ import 'package:hi_doctor_v2/app/modules/widgets/custom_container.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/custom_icon_button.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/custom_title_section.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/image_container.dart';
+import 'package:hi_doctor_v2/app/routes/app_pages.dart';
 
 class HomePage extends StatelessWidget {
   final _homeController = Get.put(HomeController());
@@ -81,7 +82,7 @@ class HomePage extends StatelessWidget {
                 ),
               ),
               CustomIconButton(
-                onPressed: () {},
+                onPressed: () => Get.toNamed(Routes.NOTIFICATION_PAGE),
                 icon: Icon(
                   CupertinoIcons.bell_fill,
                   color: AppColors.primary,
