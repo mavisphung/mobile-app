@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:hi_doctor_v2/app/common/constants.dart';
 
 import 'package:hi_doctor_v2/app/common/util/utils.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/custom_icon_button.dart';
@@ -21,6 +22,8 @@ class _ReccommendHrExtendableRowState extends State<ReccommendHrExtendableRow> {
 
   @override
   Widget build(BuildContext context) {
+    final list1 = widget.map['tickets'] as List?;
+    final list2 = widget.map['prescription']?['info'] as List?;
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 5.sp, horizontal: 12.sp),
       child: Column(
@@ -47,7 +50,7 @@ class _ReccommendHrExtendableRowState extends State<ReccommendHrExtendableRow> {
                     ),
                     SizedBox(height: 2.sp),
                     Text(
-                      'Tạo lúc ${Utils.formatDateTime(DateTime.tryParse(widget.map["record"]["createdAt"])!)}',
+                      'Tạo ngày ${Utils.formatDate(DateTime.tryParse(widget.map["record"]["createdAt"])!)}',
                       style: TextStyle(
                         color: Colors.black54,
                         fontSize: 10.5.sp,
@@ -71,37 +74,75 @@ class _ReccommendHrExtendableRowState extends State<ReccommendHrExtendableRow> {
             ],
           ),
           if (_isExpanded)
-            ...(widget.map['tickets'] as List)
-                .map((e) => Padding(
-                      padding: EdgeInsets.symmetric(vertical: 5.sp),
-                      child: Row(
-                        children: [
-                          Container(
-                            width: 60.sp,
-                            height: 80.sp,
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(5.sp),
-                              image: DecorationImage(
-                                image: NetworkImage(e['info']),
-                                fit: BoxFit.cover,
+            if (list1?.isNotEmpty == true)
+              ...list1!
+                  .map((e) => Padding(
+                        padding: EdgeInsets.symmetric(vertical: 5.sp),
+                        child: Row(
+                          children: [
+                            Container(
+                              width: 60.sp,
+                              height: 80.sp,
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(5.sp),
+                                image: DecorationImage(
+                                  image: NetworkImage(e['info']),
+                                  fit: BoxFit.cover,
+                                ),
                               ),
                             ),
-                          ),
-                          const SizedBox(width: 10),
-                          Expanded(child: Text('${e['info']}')),
-                          Checkbox(
-                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(3.sp)),
-                              value: e['isChosen'],
-                              onChanged: (value) {
-                                setState(() {
-                                  e['isChosen'] = value ?? false;
-                                });
-                              }),
-                        ],
+                            const SizedBox(width: 10),
+                            Expanded(child: Text(widget.ticketType)),
+                            Checkbox(
+                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(3.sp)),
+                                value: e['isChosen'],
+                                onChanged: (value) {
+                                  setState(() {
+                                    e['isChosen'] = value ?? false;
+                                  });
+                                }),
+                          ],
+                        ),
+                      ))
+                  .toList(),
+          if (_isExpanded)
+            if (list2?.isNotEmpty == true)
+              Padding(
+                padding: EdgeInsets.symmetric(vertical: 5.sp),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      width: 60.sp,
+                      height: 80.sp,
+                      padding: EdgeInsets.symmetric(horizontal: Constants.padding.sp),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(5.sp),
                       ),
-                    ))
-                .toList()
+                      child: SvgPicture.asset(
+                        'assets/icons/medicine1.svg',
+                      ),
+                    ),
+                    const SizedBox(width: 10),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: list2!.map((e) => Text(e['medicineName'])).toList(),
+                      ),
+                    ),
+                    Checkbox(
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(3.sp)),
+                        value: widget.map['prescription']['isChosen'],
+                        onChanged: (value) {
+                          setState(() {
+                            widget.map['prescription']['isChosen'] = value ?? false;
+                          });
+                        }),
+                  ],
+                ),
+              ),
         ],
       ),
     );

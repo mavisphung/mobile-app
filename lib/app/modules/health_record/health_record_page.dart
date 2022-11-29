@@ -37,6 +37,7 @@ class OtherHealthRecordPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final patient = Get.arguments as Patient;
     _cHealthRecord.rxPatient.value = patient;
+    _cHealthRecord.reset();
     _cHealthRecord.getAllHealthRecords();
     return Scaffold(
       appBar: MyAppBar(

@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import 'package:hi_doctor_v2/app/common/constants.dart';
+import 'package:hi_doctor_v2/app/common/util/transformation.dart';
 import 'package:hi_doctor_v2/app/common/values/colors.dart';
 import 'package:hi_doctor_v2/app/modules/contract/controllers/create_contract_controller.dart';
 import 'package:hi_doctor_v2/app/modules/contract/models/monitored_pathology.dart';
@@ -48,7 +49,7 @@ class MonitoredPathologyWidget extends StatelessWidget {
       final prescription = (hr.detail!['prescription'] as List?)?.isNotEmpty == true
           ? {
               'record': hr.record,
-              'recordName': hr.detail?['name'],
+              'recordName': 'từ ${Tx.getDoctorName(hr.doctor?['lastName'], hr.doctor?['firstName'])}',
               'detail': hr.detail!['prescription'],
             }
           : null;
@@ -151,6 +152,7 @@ class MonitoredPathologyWidget extends StatelessWidget {
                                 'generalName': result.generalName,
                                 'diseaseName': result.diseaseName,
                                 'records': [],
+                                'prescriptions': [],
                               },
                               null),
                         );

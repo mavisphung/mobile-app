@@ -22,6 +22,7 @@ class ContractStep1 extends StatelessWidget {
     final patientOption = PatientOption(context, (p) {
       _c.rxPatient.value = p;
       _cHealthRecord.rxPatient.value = p;
+      _cHealthRecord.reset();
       _cHealthRecord.getAllHealthRecords(limit: 15);
     });
     return Column(

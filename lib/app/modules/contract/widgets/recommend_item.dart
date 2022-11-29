@@ -5,9 +5,11 @@ import 'package:get/get.dart';
 
 import 'package:hi_doctor_v2/app/common/constants.dart';
 import 'package:hi_doctor_v2/app/common/values/colors.dart';
+import 'package:hi_doctor_v2/app/modules/contract/controllers/create_contract_controller.dart';
 import 'package:hi_doctor_v2/app/modules/contract/models/monitored_pathology.dart';
 import 'package:hi_doctor_v2/app/modules/contract/widgets/recommend_hr_extendable_row.dart';
 import 'package:hi_doctor_v2/app/modules/contract/widgets/recommend_other_widget.dart';
+import 'package:hi_doctor_v2/app/modules/health_record/widgets/record_dropdown.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/custom_container.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/custom_elevate_btn_widget.dart';
 
@@ -21,7 +23,9 @@ class RecommendItem extends StatefulWidget {
 }
 
 class _RecommendItemState extends State<RecommendItem> {
+  final _c = Get.find<CreateContractController>();
   final List<Map<String, dynamic>> _lType = [];
+  int prescriptionCount = 0;
 
   Widget _getDivider() {
     return Divider(
@@ -65,8 +69,8 @@ class _RecommendItemState extends State<RecommendItem> {
       final typeItem = _lType.firstWhere((e) => e['typeId'] == 5, orElse: () {
         isGenerated = true;
         return {
-          'typeId': 5,
-          'typeName': 'Đơn thuốc',
+          'typeId': recordTypes[5]['value'],
+          'typeName': recordTypes[5]['label'],
           'details': [],
         };
       });
@@ -78,7 +82,10 @@ class _RecommendItemState extends State<RecommendItem> {
             'isPatientProvided': p['record']['isPatientProvided'],
           },
           'recordName': p['recordName'],
-          'prescription': (p['detail'] as List).map((e) => {'info': e, 'isChosen': false}).toList(),
+          'prescription': {
+            'info': p['detail'],
+            'isChosen': false,
+          },
         },
       );
       if (isGenerated) _lType.add(typeItem);
@@ -123,15 +130,30 @@ class _RecommendItemState extends State<RecommendItem> {
 
                     final dList = item['details'] as List;
                     for (var d in dList) {
-                      final tList = d['tickets'] as List;
-                      for (var t in tList) {
-                        if (t['isChosen'] == true) {
-                          (data['details'] as List).add(t['info']);
+                      final tList = d['tickets'] as List?;
+                      if (tList?.isNotEmpty == true) {
+                        for (var t in tList!) {
+                          if (t['isChosen'] == true) {
+                            (data['details'] as List).add(t['info']);
+                          }
                         }
                       }
                     }
-                    sharedTickets.add(data);
+                    sharedTickets.addIf((data['details'] as List).isNotEmpty, data);
                   }
+
+                  final item5 = _lType.firstWhereOrNull((e) => e['typeId'] == 5);
+                  final dListItem5 = item5!['details'] as List;
+                  for (var d in dListItem5) {
+                    if (d['prescription']?['isChosen'] == true) {
+                      _c.lPrescription.add(d['record']['id']);
+                      ++prescriptionCount;
+                    } else if (d['prescription']?['isChosen'] == false) {
+                      _c.lPrescription.remove(d['record']['id']);
+                      --prescriptionCount;
+                    }
+                  }
+
                   widget.data.sharedRecord = sharedTickets;
                   setState(() {});
                   Get.back();
@@ -202,7 +224,7 @@ class _RecommendItemState extends State<RecommendItem> {
                           borderRadius: BorderRadius.circular(Constants.textFieldRadius.sp),
                         ),
                         child: tickets != null
-                            ? Text('${(tickets["details"] as List).length} phiếu đã chọn')
+                            ? Text('${(tickets["details"] as List).length + prescriptionCount} phiếu đã chọn')
                             : const Text('0 phieu da chon'),
                       ),
                     ],

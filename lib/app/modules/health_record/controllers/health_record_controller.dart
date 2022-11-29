@@ -66,13 +66,13 @@ class HealthRecordController extends GetxController with GetSingleTickerProvider
     for (var item in data) {
       if (item['record']['isPatientProvided'] == true) {
         otherList.add(HrResModel.fromMap(item));
-        otherList.refresh();
       }
       if (item['record']['isPatientProvided'] == false) {
         systemList.add(HrResModel.fromMap(item));
-        systemList.refresh();
       }
       allList.add(HrResModel.fromMap(item));
+      otherList.refresh();
+      systemList.refresh();
       allList.refresh();
     }
   }
