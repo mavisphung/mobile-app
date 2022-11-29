@@ -12,6 +12,7 @@ import 'package:hi_doctor_v2/app/modules/settings/widgets/wallet_item.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/custom_title_section.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/my_appbar.dart';
 import 'package:hi_doctor_v2/app/routes/app_pages.dart';
+import 'package:intl/intl.dart';
 import 'package:vnpay_flutter/vnpay_flutter.dart';
 
 class WalletPage extends StatelessWidget {
@@ -22,38 +23,9 @@ class WalletPage extends StatelessWidget {
 
   final double padding = 32.sp;
 
-  void processPayment(BuildContext ctx, String paymentUrl) {
-    bool result = false;
-    VNPAYFlutter.instance.show(
-      paymentUrl: paymentUrl,
-      onPaymentSuccess: (params) {
-        params.toString().debugLog('Payment success');
-        (params['vnp_ResponseCode'] as String).debugLog('vnp_ResponseCode on success');
-        _c.paymentStatus = true;
-        result = true;
-        Dialogs.statusDialog(
-          ctx: ctx,
-          isSuccess: result,
-          successMsg: 'Lịch hẹn khám đã được đặt thành công. Bạn sẽ được nhận thông báo để theo dõi lịch hẹn với bác sĩ.',
-          failMsg: 'Có vẻ như có ai đó đã đặt lịch trước bạn. Bạn hãy chọn một ca thời gian khác và thử lại xem.',
-          successAction: () => Get.offAllNamed(Routes.NAVBAR),
-        );
-      },
-      onPaymentError: (params) {
-        params.toString().debugLog('Payment fail');
-        (params['vnp_ResponseCode'] as String).debugLog('vnp_ResponseCode on error');
-        _c.paymentStatus = false;
-        Utils.showAlertDialog('Thanh toan that bai');
-        result = false;
-        Dialogs.statusDialog(
-          ctx: ctx,
-          isSuccess: result,
-          successMsg: 'Lịch hẹn khám đã được đặt thành công. Bạn sẽ được nhận thông báo để theo dõi lịch hẹn với bác sĩ.',
-          failMsg: 'Có vẻ như có ai đó đã đặt lịch trước bạn. Bạn hãy chọn một ca thời gian khác và thử lại xem.',
-          successAction: () => Get.offAllNamed(Routes.NAVBAR),
-        );
-      },
-    );
+  String _formatCurrency(double s) {
+    final formatter = NumberFormat.currency(locale: 'vi_VN', symbol: 'đ');
+    return formatter.format(s);
   }
 
   @override
@@ -71,18 +43,20 @@ class WalletPage extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      Text(
-                        '100.000.000đ',
-                        style: TextStyle(fontSize: 28.sp, fontWeight: FontWeight.w700),
-                      ),
-                    ],
-                  ),
                   Text(
                     "Số tiền hiện có",
                     style: TextStyle(fontWeight: FontWeight.w700, fontSize: 16.sp),
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Obx(
+                        () => Text(
+                          _formatCurrency(_c.mainBalance),
+                          style: TextStyle(fontSize: 28.sp, fontWeight: FontWeight.w700),
+                        ),
+                      ),
+                    ],
                   ),
                   SizedBox(
                     height: 24.sp,
@@ -120,7 +94,7 @@ class WalletPage extends StatelessWidget {
             //draggable sheet
             DraggableScrollableSheet(
               initialChildSize: 0.65,
-              minChildSize: 0.25,
+              minChildSize: 0.45,
               maxChildSize: 1,
               builder: (context, scrollController) {
                 return Container(
@@ -231,7 +205,7 @@ class WalletPage extends StatelessWidget {
                                     crossAxisAlignment: CrossAxisAlignment.end,
                                     children: <Widget>[
                                       Text(
-                                        "+\$500.5",
+                                        '200.000đ',
                                         style: TextStyle(fontSize: 15.sp, fontWeight: FontWeight.w700, color: AppColors.primary),
                                       ),
                                       Text(

@@ -341,4 +341,6 @@ abstract class Utils {
     );
     return paymentUrl;
   }
+
+  static String formatNumber(String s) => NumberFormat.decimalPattern('vi-VN').format(double.parse(s));
 }

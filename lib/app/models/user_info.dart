@@ -100,8 +100,8 @@ class UserInfo2 {
       dob: map['dob'] != null ? map['dob'] as String : null,
       gender: map['gender'] != null ? map['gender'] as String : null,
       avatar: map['avatar'] != null ? map['avatar'] as String : null,
-      tempBalance: map['tempBalance'] != null ? map['tempBalance'] as double : null,
-      mainBalance: map['mainBalance'] != null ? map['mainBalance'] as double : null,
+      tempBalance: map['tempBalance'] != null ? map['tempBalance'] as double : 0,
+      mainBalance: map['mainBalance'] != null ? map['mainBalance'] as double : 0,
     );
   }
 

@@ -20,7 +20,8 @@ class BookingController extends GetxController {
   RxInt rxSelectedTimeId = 0.obs;
 
   // selected service
-  Rx<Service> rxService = Service().obs;
+  final Rx<Service> _rxService = Service().obs;
+  Service get selectedService => _rxService.value;
   String _selectedTime = '';
 
   // payment status
@@ -64,7 +65,7 @@ class BookingController extends GetxController {
 
   void setServiceId(int serviceId) {
     rxServiceId.value = serviceId;
-    rxService.value = packageList!.firstWhere((service) => service.id == serviceId);
+    _rxService.value = packageList!.firstWhere((service) => service.id == serviceId);
     update();
   }
 
@@ -89,9 +90,7 @@ class BookingController extends GetxController {
   }
 
   Future<List<dynamic>?> getSuggestHours() async {
-    final response = await _apiBookAppointment
-        .getSuggestHours(_doctor.id!, DateFormat('yyyy-MM-dd').format(selectedDate))
-        .futureValue();
+    final response = await _apiBookAppointment.getSuggestHours(_doctor.id!, DateFormat('yyyy-MM-dd').format(selectedDate)).futureValue();
     if (response != null && response.isSuccess == true && response.statusCode == Constants.successGetStatusCode) {
       final data = response.data;
       // if (data is Map) {
@@ -152,7 +151,7 @@ class BookingController extends GetxController {
 
     // select service package
     rxServiceId.close();
-    rxService.close();
+    _rxService.close();
 
     // patient detail
     problemController.dispose();

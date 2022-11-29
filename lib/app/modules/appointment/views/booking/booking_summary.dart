@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:hi_doctor_v2/app/common/storage/box.dart';
 import 'package:hi_doctor_v2/app/common/storage/storage.dart';
 import 'package:hi_doctor_v2/app/common/util/dialogs.dart';
 import 'package:hi_doctor_v2/app/common/util/extensions.dart';
 import 'package:hi_doctor_v2/app/common/util/transformation.dart';
 import 'package:hi_doctor_v2/app/common/util/utils.dart';
+import 'package:hi_doctor_v2/app/models/service.dart';
 import 'package:hi_doctor_v2/app/models/user_info.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/image_container.dart';
 import 'package:hi_doctor_v2/app/routes/app_pages.dart';
@@ -31,7 +33,7 @@ import 'package:vnpay_flutter/vnpay_flutter.dart';
 // ignore: must_be_immutable
 class BookingSummary extends StatelessWidget {
   final _cBooking = Get.find<BookingController>();
-
+  UserInfo2 userInfo = Box.getCacheUser();
   final _imageSize = Get.width / 4;
 
   BookingSummary({Key? key}) : super(key: key);
@@ -55,26 +57,26 @@ class BookingSummary extends StatelessWidget {
       "${DateFormat('yyyy-MM-dd').format(_cBooking.selectedDate)} ${_cBooking.selectedTime}",
       _cBooking.problemController.text.trim(),
     );
+    Service selectedService = _cBooking.selectedService;
+    if (userInfo.mainBalance! > selectedService.price!) {
+      Dialogs.statusDialog(
+        ctx: ctx,
+        isSuccess: false,
+        successMsg: '',
+        failMsg: 'Bạn bạn không đủ tiền, vui lòng nạp thêm',
+        successAction: () {},
+      );
+      return;
+    }
 
     var isSuccess = await _cBooking.createAppointment(reqModel);
-    // if (isSuccess != null) {
-    //   Dialogs.statusDialog(
-    //     ctx: ctx,
-    //     isSuccess: isSuccess,
-    //     successMsg: 'Lịch hẹn khám đã được đặt thành công. Bạn sẽ được nhận thông báo để theo dõi lịch hẹn với bác sĩ.',
-    //     failMsg: 'Có vẻ như có ai đó đã đặt lịch trước bạn. Bạn hãy chọn một ca thời gian khác và thử lại xem.',
-    //     successAction: () => Get.offAllNamed(Routes.NAVBAR),
-    //   );
-    // }
     if (isSuccess == null) {
       Utils.showAlertDialog('Phát sinh lỗi hệ thống');
       return;
     }
-    // else if (isSuccess) {
-    //   final paymentUrl = Utils.getPaymentUrl(amount: _cBooking.rxService.value.price!, orderInfo: 'Thanh toan lich hen');
-    //   paymentUrl.debugLog('Payment Url');
-    //   // processPayment(ctx, paymentUrl);
-    // }
+
+    if (isSuccess) {}
+
     Dialogs.statusDialog(
       ctx: ctx,
       isSuccess: isSuccess,
@@ -215,13 +217,26 @@ class BookingSummary extends StatelessWidget {
                   SizedBox(
                     width: 15.sp,
                   ),
-                  const Expanded(
-                    child: Text('1.200.000 đ'),
+                  Expanded(
+                    child: Text('${Utils.formatNumber(userInfo.mainBalance!.toStringAsFixed(0))}đ'),
                   ),
                   // TextButton(
                   //   onPressed: () {},
                   //   child: Text(Strings.change),
                   // ),
+                  const Spacer(),
+                  GestureDetector(
+                    onTap: () {
+                      Get.toNamed(Routes.WALLET);
+                    },
+                    child: Text(
+                      'Nạp thêm',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: AppColors.primary,
+                      ),
+                    ),
+                  ),
                 ],
               ),
             ),

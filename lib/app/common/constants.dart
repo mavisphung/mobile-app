@@ -56,3 +56,11 @@ abstract class CancelReason {
 
   static List<String> reasons = [item1, item2, item3, item4, itemOther];
 }
+
+abstract class PaymentInfo {
+  static const String accountNo = '9704198526191432198';
+  static const String name = 'NGUYEN VAN A';
+  static const String otp = '123456';
+  static const String expiry = '07/15';
+  static const String bankName = 'NCB';
+}

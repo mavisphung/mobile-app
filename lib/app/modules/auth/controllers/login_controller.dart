@@ -30,17 +30,7 @@ class LoginController extends GetxController {
       await Storage.saveValue(CacheKey.TOKEN.name, response.data['accessToken']);
       await Storage.saveValue(CacheKey.IS_LOGGED.name, true);
 
-      final userInfo = UserInfo2(
-        id: response.data['id'],
-        email: response.data['email'],
-        firstName: response.data['firstName'],
-        lastName: response.data['lastName'],
-        address: response.data['address'],
-        phoneNumber: response.data['phoneNumber'],
-        gender: response.data['gender'],
-        avatar: response.data['avatar'],
-        dob: response.data['dob'],
-      );
+      final userInfo = UserInfo2.fromMap(response.data);
       await Storage.saveValue(CacheKey.USER_INFO.name, userInfo);
 
       Get.offNamed(Routes.NAVBAR);
@@ -58,16 +48,7 @@ class LoginController extends GetxController {
 
     if (response != null) {
       if (response.isSuccess == true && response.statusCode == Constants.successGetStatusCode) {
-        final userInfo = UserInfo2(
-          id: response.data['id'],
-          email: response.data['email'],
-          firstName: response.data['firstName'],
-          lastName: response.data['lastName'],
-          address: response.data['address'],
-          phoneNumber: response.data['phoneNumber'],
-          gender: response.data['gender'],
-          avatar: response.data['avatar'],
-        );
+        final userInfo = UserInfo2.fromMap(response.data);
         await Storage.saveValue(CacheKey.USER_INFO.name, userInfo);
         return true;
       } else {
@@ -105,17 +86,7 @@ class LoginController extends GetxController {
       await Storage.saveValue(CacheKey.TOKEN.name, response.data['accessToken']);
       await Storage.saveValue(CacheKey.IS_LOGGED.name, true);
 
-      final userInfo = UserInfo2(
-        id: response.data['id'],
-        email: response.data['email'],
-        firstName: response.data['firstName'],
-        lastName: response.data['lastName'],
-        address: response.data['address'],
-        phoneNumber: response.data['phoneNumber'],
-        gender: response.data['gender'],
-        avatar: response.data['avatar'],
-        dob: response.data['dob'],
-      );
+      final userInfo = UserInfo2.fromMap(response.data);
       await Storage.saveValue(CacheKey.USER_INFO.name, userInfo);
 
       Get.offNamed(Routes.NAVBAR);

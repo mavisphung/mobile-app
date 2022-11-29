@@ -226,3 +226,7 @@ extension DateTimeConverter on DateTime {
     return weekdays[weekday]!;
   }
 }
+
+extension StringExt on String {
+  List<String> splitByLength(int length) => [substring(0, length), substring(length)];
+}
