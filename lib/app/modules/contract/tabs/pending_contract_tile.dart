@@ -23,7 +23,7 @@ class PendingContractTile extends StatelessWidget {
   final Contract data;
   // final ContractPendingController _ic = Get.find<ContractPendingController>();
 
-  PendingContractTile({
+  const PendingContractTile({
     Key? key,
     required this.data,
   }) : super(key: key);
