@@ -3,7 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import 'package:hi_doctor_v2/app/common/values/colors.dart';
-import 'package:hi_doctor_v2/app/modules/appointment/controllers/tab_controller.dart';
+import 'package:hi_doctor_v2/app/modules/contract/controllers/contract_tab_controller.dart';
 import 'package:hi_doctor_v2/app/modules/contract/tabs/contract_history_tab.dart';
 import 'package:hi_doctor_v2/app/modules/contract/tabs/contract_in_progress_tab.dart';
 import 'package:hi_doctor_v2/app/modules/contract/tabs/contract_pending_tab.dart';
@@ -17,7 +17,7 @@ class ContractListPage extends StatefulWidget {
 }
 
 class _ContractListPageState extends State<ContractListPage> with SingleTickerProviderStateMixin {
-  late final MyTabController tabx;
+  late final ContractTabController tabx;
   var tabs = <Tab>[];
 
   @override
@@ -38,7 +38,7 @@ class _ContractListPageState extends State<ContractListPage> with SingleTickerPr
         text: 'Lịch sử',
       ),
     ];
-    tabx = Get.put(MyTabController(length: tabs.length, tabs: tabs));
+    tabx = Get.put(ContractTabController(length: tabs.length, tabs: tabs));
   }
 
   @override

@@ -144,13 +144,15 @@ class _RecommendItemState extends State<RecommendItem> {
                   final dListItem5 = item5?['details'] as List?;
                   if (dListItem5 != null) {
                     for (var d in dListItem5) {
-                      final lPrescriptions = d['prescriptions'] as List;
-                      for (var p in lPrescriptions) {
-                        if (p['isChosen'] == true) {
-                          _c.lPrescription.add(p['id']);
-                          ++prescriptionCount;
-                        } else if (p['isChosen'] == false) {
-                          _c.lPrescription.remove(p['id']);
+                      final lPrescriptions = d['prescriptions'] as List?;
+                      if (lPrescriptions != null) {
+                        for (var p in lPrescriptions) {
+                          if (p['isChosen'] == true) {
+                            _c.lPrescription.add(p['id']);
+                            ++prescriptionCount;
+                          } else if (p['isChosen'] == false) {
+                            _c.lPrescription.remove(p['id']);
+                          }
                         }
                       }
                     }
