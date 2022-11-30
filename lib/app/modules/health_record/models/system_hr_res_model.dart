@@ -29,7 +29,7 @@ class SystemHrResModel {
       map['isPatientProvided'] != null ? map['isPatientProvided'] as bool : null,
       map['prescriptions'] != null ? List<dynamic>.from((map['prescriptions'] as List<dynamic>)) : null,
       map['instructions'] != null ? List<dynamic>.from((map['instructions'] as List<dynamic>)) : null,
-      map['detail'] != null ? Map<String, dynamic>.from((map['doctor'] as Map<String, dynamic>)) : null,
+      map['detail'] != null ? Map<String, dynamic>.from((map['detail'] as Map<String, dynamic>)) : null,
     );
   }
 

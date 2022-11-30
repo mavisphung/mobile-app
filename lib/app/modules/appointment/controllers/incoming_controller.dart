@@ -26,6 +26,7 @@ class IncomingController extends GetxController {
   }
 
   void getUserIncomingAppointments({int page = 1, int limit = 10}) async {
+    loadMore();
     'loading incoming appointments'.debugLog('IncomingTab');
     Response result = await apiAppointment.getUserIncomingAppointments(page: page, limit: limit);
     var response = ApiResponse.getResponse(result); // Map
@@ -54,6 +55,7 @@ class IncomingController extends GetxController {
       );
       return appointment;
     }).toList();
+    complete();
 
     incomingList.length.toString().debugLog('Items in list');
     update();

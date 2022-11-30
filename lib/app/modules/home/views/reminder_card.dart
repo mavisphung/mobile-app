@@ -1,3 +1,5 @@
+import 'package:get/get.dart';
+import 'package:hi_doctor_v2/app/routes/app_pages.dart';
 import 'package:intl/intl.dart';
 
 import 'package:flutter/material.dart';
@@ -35,87 +37,94 @@ class ReminderCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final dateTimeMap = _getDateTimeMap(appointment.bookedAt!);
-    return CustomCard(
-      verticalPadding: 0,
-      horizontalPadding: 0,
-      child: ListTile(
-        dense: true,
-        contentPadding: EdgeInsets.symmetric(vertical: 15.sp, horizontal: 10.sp),
-        title: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            ImageContainer(
-              width: 50,
-              height: 50,
-              imgUrl: appointment.doctor?['avatar'],
-            ).circle(),
-            SizedBox(width: 10.sp),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    Tx.getDoctorName(appointment.doctor?['lastName'], appointment.doctor?['firstName']),
-                    maxLines: 2,
-                    style: TextStyle(
-                      fontSize: 14.sp,
-                      fontWeight: FontWeight.w600,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                  ),
-                  const Text(
-                    // '${appointment.doctor?["specialist"]}',
-                    'Chuyên khoa da liễu',
-                  ),
-                ],
-              ),
-            ),
-            const Icon(
-              Icons.more_vert,
-              color: Colors.black54,
-            ),
-          ],
-        ),
-        subtitle: Padding(
-          padding: EdgeInsets.only(top: 15.sp),
-          child: Row(
+    return GestureDetector(
+      onTap: () {
+        appointment.id != null
+            ? Get.toNamed(Routes.MEETING_DETAIL, arguments: appointment.id)
+            : Utils.showAlertDialog('Error to get appointment information');
+      },
+      child: CustomCard(
+        verticalPadding: 0,
+        horizontalPadding: 0,
+        child: ListTile(
+          dense: true,
+          contentPadding: EdgeInsets.symmetric(vertical: 15.sp, horizontal: 10.sp),
+          title: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Container(
-                padding: EdgeInsets.symmetric(
-                  horizontal: 12.sp,
-                  vertical: 10.sp,
-                ),
-                decoration: BoxDecoration(
-                  color: const Color(0xFFDAFFEF),
-                  borderRadius: BorderRadius.circular(10.sp),
-                ),
-                child: Text(
-                  '${dateTimeMap?['date']}',
-                  style: TextStyle(
-                    color: Colors.green.shade800,
-                    fontSize: 13.2.sp,
-                  ),
+              ImageContainer(
+                width: 50,
+                height: 50,
+                imgUrl: appointment.doctor?['avatar'],
+              ).circle(),
+              SizedBox(width: 10.sp),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      Tx.getDoctorName(appointment.doctor?['lastName'], appointment.doctor?['firstName']),
+                      maxLines: 2,
+                      style: TextStyle(
+                        fontSize: 14.sp,
+                        fontWeight: FontWeight.w600,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
+                    const Text(
+                      // '${appointment.doctor?["specialist"]}',
+                      'Chuyên khoa da liễu',
+                    ),
+                  ],
                 ),
               ),
-              SizedBox(width: 10.sp),
-              Container(
-                padding: EdgeInsets.symmetric(
-                  horizontal: 12.sp,
-                  vertical: 10.sp,
-                ),
-                decoration: BoxDecoration(
-                  color: const Color(0xFFFFE4E4),
-                  borderRadius: BorderRadius.circular(10.sp),
-                ),
-                child: Text(
-                  '${dateTimeMap?['time']}',
-                  style: TextStyle(
-                    color: Colors.pink.shade700,
-                    fontSize: 13.2.sp,
-                  ),
-                ),
+              const Icon(
+                Icons.more_vert,
+                color: Colors.black54,
               ),
             ],
+          ),
+          subtitle: Padding(
+            padding: EdgeInsets.only(top: 15.sp),
+            child: Row(
+              children: [
+                Container(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 12.sp,
+                    vertical: 10.sp,
+                  ),
+                  decoration: BoxDecoration(
+                    color: const Color(0xFFDAFFEF),
+                    borderRadius: BorderRadius.circular(10.sp),
+                  ),
+                  child: Text(
+                    '${dateTimeMap?['date']}',
+                    style: TextStyle(
+                      color: Colors.green.shade800,
+                      fontSize: 13.2.sp,
+                    ),
+                  ),
+                ),
+                SizedBox(width: 10.sp),
+                Container(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 12.sp,
+                    vertical: 10.sp,
+                  ),
+                  decoration: BoxDecoration(
+                    color: const Color(0xFFFFE4E4),
+                    borderRadius: BorderRadius.circular(10.sp),
+                  ),
+                  child: Text(
+                    '${dateTimeMap?['time']}',
+                    style: TextStyle(
+                      color: Colors.pink.shade700,
+                      fontSize: 13.2.sp,
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),

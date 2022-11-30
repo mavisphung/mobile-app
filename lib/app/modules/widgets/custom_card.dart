@@ -24,7 +24,7 @@ class CustomCard extends StatelessWidget {
       color: Colors.white,
       shape: OutlineInputBorder(
         borderSide: BorderSide.none,
-        borderRadius: BorderRadius.circular(Constants.borderRadius.sp),
+        borderRadius: BorderRadius.circular(Constants.textFieldRadius.sp),
       ),
       child: Padding(
         padding: EdgeInsets.symmetric(
