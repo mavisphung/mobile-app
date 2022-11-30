@@ -22,6 +22,7 @@ class NotificationController extends GetxController {
   }
 
   Future<void> fetchNotifications({int page = 1, int limit = 10}) async {
+    notifications.clear();
     setStatus(Status.loading);
     final result = await apiNotification.getUserNotifications(page: page, limit: limit);
     final Map<String, dynamic> response = ApiResponse.getResponse(result);
@@ -46,6 +47,7 @@ class NotificationController extends GetxController {
     super.onInit();
     scrollController = ScrollController();
     apiNotification = Get.put(ApiNotificationImpl());
+    fetchNotifications();
   }
 
   @override

@@ -23,47 +23,41 @@ class _AllTabState extends State<AllTab> with AutomaticKeepAliveClientMixin {
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    return RefreshIndicator(
-      onRefresh: () async {
-        _cHealthRecord.reset();
-        _cHealthRecord.getAllHealthRecords();
-      },
-      child: Column(
-        children: [
-          const InfoContainer(info: 'Danh sách bao gồm tất cả các hồ sơ sức khỏe của bệnh nhân đã chọn.'),
-          Expanded(
-            child: ObxValue<RxList<HrResModel>>(
-              (data) {
-                if (data.isNotEmpty) {
-                  return ListView.builder(
-                    shrinkWrap: true,
-                    controller: _cHealthRecord.allScroll,
-                    physics: const BouncingScrollPhysics(),
-                    itemBuilder: (_, index) {
-                      if (data[index].record?['isPatientProvided'] == false) {
-                        return SystemHealthRecordItem(hr: data[index]);
-                      } else if (data[index].record?['isPatientProvided'] == true) {
-                        return OtherHealthRecordItem(hr: data[index]);
-                      }
-                      return const SizedBox.shrink();
-                    },
-                    itemCount: data.length,
-                  );
-                } else if (data.isEmpty && _cHealthRecord.status != Status.loading) {
-                  return const Center(
-                    child: NoDataWidget(
-                      message:
-                          'Danh sách hồ sơ trống. Hãy đặt lịch hẹn với bác sĩ hoặc tạo hồ sơ sức khỏe ngoài hệ thống của bạn.',
-                    ),
-                  );
-                }
-                return const HealthRecordsSkeleton();
-              },
-              _cHealthRecord.allList,
-            ),
+    return Column(
+      children: [
+        const InfoContainer(info: 'Danh sách bao gồm tất cả các hồ sơ sức khỏe của bệnh nhân đã chọn.'),
+        Expanded(
+          child: ObxValue<RxList<HrResModel>>(
+            (data) {
+              if (data.isNotEmpty) {
+                return ListView.builder(
+                  shrinkWrap: true,
+                  controller: _cHealthRecord.allScroll,
+                  physics: const BouncingScrollPhysics(),
+                  itemBuilder: (_, index) {
+                    if (data[index].record?['isPatientProvided'] == false) {
+                      return SystemHealthRecordItem(hr: data[index]);
+                    } else if (data[index].record?['isPatientProvided'] == true) {
+                      return OtherHealthRecordItem(hr: data[index]);
+                    }
+                    return const SizedBox.shrink();
+                  },
+                  itemCount: data.length,
+                );
+              } else if (data.isEmpty && _cHealthRecord.status == Status.success) {
+                return const Center(
+                  child: NoDataWidget(
+                    message:
+                        'Danh sách hồ sơ trống. Hãy đặt lịch hẹn với bác sĩ hoặc tạo hồ sơ sức khỏe ngoài hệ thống của bạn.',
+                  ),
+                );
+              }
+              return const HealthRecordsSkeleton();
+            },
+            _cHealthRecord.allList,
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 

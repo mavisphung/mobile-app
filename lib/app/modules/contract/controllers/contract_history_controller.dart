@@ -6,77 +6,58 @@ import 'package:hi_doctor_v2/app/common/util/extensions.dart';
 import 'package:hi_doctor_v2/app/common/util/enum.dart';
 import 'package:hi_doctor_v2/app/data/api_response.dart';
 import 'package:hi_doctor_v2/app/data/response_model.dart';
-import 'package:hi_doctor_v2/app/models/appointment.dart';
+import 'package:hi_doctor_v2/app/models/contract.dart';
 import 'package:hi_doctor_v2/app/models/paging.dart';
-import 'package:hi_doctor_v2/app/modules/appointment/providers/api_appointment.dart';
+import 'package:hi_doctor_v2/app/modules/contract/providers/api_contract.dart';
 
-class IncomingController extends GetxController {
+class ContractHistoryController extends GetxController {
   late final ScrollController scrollController;
-  RxList<Appointment> incomingList = <Appointment>[].obs;
+  RxList<Contract> historyList = <Contract>[].obs;
   Rx<Status> loadingStatus = Status.init.obs;
   RxInt currentPage = 1.obs;
+  int totalItems = 0;
 
-  late ApiAppointmentImpl apiAppointment;
+  late ApiContract _apiContract;
   TextEditingController textController = TextEditingController();
   RxString rxReason = CancelReason.item1.obs;
 
-  void clearIncomingList() {
-    incomingList.clear();
-    update();
+  void clearHistoryList() {
+    totalItems = 0;
+    currentPage.value = 1;
+    historyList.clear();
   }
 
-  void getUserIncomingAppointments({int page = 1, int limit = 10}) async {
-    'loading incoming appointments'.debugLog('IncomingTab');
-    Response result = await apiAppointment.getUserIncomingAppointments(page: page, limit: limit);
+  void getHistoryContracts({int page = 1, int limit = 10}) async {
+    loadMore();
+    'loading history contracts'.debugLog('HistoryTab');
+    Response result = await _apiContract.getFilterContract(CONTRACT_STATUS.CANCELLED.name, page: page, limit: limit);
     var response = ApiResponse.getResponse(result); // Map
     PagingModel pageModel = PagingModel.fromMap(response);
 
-    // Check if fetch full of the list
-    if (incomingList.length >= pageModel.totalItems!) {
-      return;
-    }
-    // check is the last page or not
+    totalItems = pageModel.totalItems ?? 0;
+
     if (pageModel.nextPage != null) {
       currentPage.value = pageModel.nextPage!;
     }
     response[Constants.currentPage].toString().debugLog('Current Page');
     ResponseModel2 model = ResponseModel2.fromMap(response);
     var data = model.data as List<dynamic>;
-    incomingList.value += data.map((e) {
-      final appointment = Appointment(
-        beginAt: e['beginAt'],
-        id: e['id'],
-        status: e['status'],
-        category: e['category'],
-        doctor: e['doctor'],
-        checkInCode: e['checkInCode'],
-        bookedAt: e['bookedAt'],
-      );
-      return appointment;
-    }).toList();
-
-    incomingList.length.toString().debugLog('Items in list');
-    update();
-  }
-
-  Future<bool> cancelAppointment(int appId, String reason) async {
-    var response = await apiAppointment.cancelAppointment(appId, reason);
-    response.body.toString().debugLog('IncomingController#cancelAppointment: ');
-    if (response.isOk) {
-      incomingList.removeWhere((element) => element.id == appId);
-      update();
-    }
-    return response.isOk == true;
+    final tmp = historyList.toList();
+    tmp.addAll(data.map((e) {
+      final contract = Contract.fromMap(e);
+      return contract;
+    }).toList());
+    historyList.value = tmp;
+    complete();
+    historyList.length.toString().debugLog('Items in list');
   }
 
   void loadMore() {
     loadingStatus.value = Status.loading;
-    update();
   }
 
   void complete() {
     loadingStatus.value = Status.success;
-    update();
   }
 
   bool validateCancelReason() {
@@ -87,25 +68,26 @@ class IncomingController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    apiAppointment = Get.put(ApiAppointmentImpl());
+    _apiContract = Get.find<ApiContract>();
     scrollController = ScrollController();
     scrollController.addListener(
       () async {
         if (scrollController.position.maxScrollExtent == scrollController.offset) {
+          if (historyList.length >= totalItems) return;
           loadMore();
           loadingStatus.value.toString().debugLog('loading status');
-          getUserIncomingAppointments(page: currentPage.value);
+          getHistoryContracts(page: currentPage.value);
           complete();
         }
       },
     );
-    getUserIncomingAppointments(page: 1, limit: 10);
+    getHistoryContracts(page: 1, limit: 10);
   }
 
   @override
   void dispose() {
-    incomingList.close();
-    apiAppointment.dispose();
+    historyList.close();
+    _apiContract.dispose();
     scrollController.dispose();
     textController.dispose();
     rxReason.close();

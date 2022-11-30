@@ -5,9 +5,11 @@ import 'package:get/get.dart';
 
 import 'package:hi_doctor_v2/app/common/constants.dart';
 import 'package:hi_doctor_v2/app/common/values/colors.dart';
+import 'package:hi_doctor_v2/app/modules/contract/controllers/create_contract_controller.dart';
 import 'package:hi_doctor_v2/app/modules/contract/models/monitored_pathology.dart';
 import 'package:hi_doctor_v2/app/modules/contract/widgets/recommend_hr_extendable_row.dart';
 import 'package:hi_doctor_v2/app/modules/contract/widgets/recommend_other_widget.dart';
+import 'package:hi_doctor_v2/app/modules/health_record/widgets/record_dropdown.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/custom_container.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/custom_elevate_btn_widget.dart';
 
@@ -21,7 +23,9 @@ class RecommendItem extends StatefulWidget {
 }
 
 class _RecommendItemState extends State<RecommendItem> {
+  final _c = Get.find<CreateContractController>();
   final List<Map<String, dynamic>> _lType = [];
+  int prescriptionCount = 0;
 
   Widget _getDivider() {
     return Divider(
@@ -65,8 +69,8 @@ class _RecommendItemState extends State<RecommendItem> {
       final typeItem = _lType.firstWhere((e) => e['typeId'] == 5, orElse: () {
         isGenerated = true;
         return {
-          'typeId': 5,
-          'typeName': 'Đơn thuốc',
+          'typeId': recordTypes[5]['value'],
+          'typeName': recordTypes[5]['label'],
           'details': [],
         };
       });
@@ -78,7 +82,7 @@ class _RecommendItemState extends State<RecommendItem> {
             'isPatientProvided': p['record']['isPatientProvided'],
           },
           'recordName': p['recordName'],
-          'prescription': (p['detail'] as List).map((e) => {'info': e, 'isChosen': false}).toList(),
+          'prescriptions': [],
         },
       );
       if (isGenerated) _lType.add(typeItem);
@@ -86,6 +90,7 @@ class _RecommendItemState extends State<RecommendItem> {
   }
 
   void _showModalSheet(BuildContext ctx, Map<String, dynamic> map) {
+    prescriptionCount = 0;
     final details = map['details'] as List;
     showModalBottomSheet(
       isScrollControlled: true,
@@ -123,15 +128,34 @@ class _RecommendItemState extends State<RecommendItem> {
 
                     final dList = item['details'] as List;
                     for (var d in dList) {
-                      final tList = d['tickets'] as List;
-                      for (var t in tList) {
-                        if (t['isChosen'] == true) {
-                          (data['details'] as List).add(t['info']);
+                      final tList = d['tickets'] as List?;
+                      if (tList?.isNotEmpty == true) {
+                        for (var t in tList!) {
+                          if (t['isChosen'] == true) {
+                            (data['details'] as List).add(t['info']);
+                          }
                         }
                       }
                     }
-                    sharedTickets.add(data);
+                    sharedTickets.addIf((data['details'] as List).isNotEmpty, data);
                   }
+
+                  final item5 = _lType.firstWhereOrNull((e) => e['typeId'] == 5);
+                  final dListItem5 = item5?['details'] as List?;
+                  if (dListItem5 != null) {
+                    for (var d in dListItem5) {
+                      final lPrescriptions = d['prescriptions'] as List;
+                      for (var p in lPrescriptions) {
+                        if (p['isChosen'] == true) {
+                          _c.lPrescription.add(p['id']);
+                          ++prescriptionCount;
+                        } else if (p['isChosen'] == false) {
+                          _c.lPrescription.remove(p['id']);
+                        }
+                      }
+                    }
+                  }
+
                   widget.data.sharedRecord = sharedTickets;
                   setState(() {});
                   Get.back();
@@ -196,15 +220,13 @@ class _RecommendItemState extends State<RecommendItem> {
                       ),
                       SizedBox(height: 5.sp),
                       Container(
-                        padding: EdgeInsets.symmetric(vertical: 5.sp, horizontal: 8.sp),
-                        decoration: BoxDecoration(
-                          color: AppColors.blue100,
-                          borderRadius: BorderRadius.circular(Constants.textFieldRadius.sp),
-                        ),
-                        child: tickets != null
-                            ? Text('${(tickets["details"] as List).length} phiếu đã chọn')
-                            : const Text('0 phieu da chon'),
-                      ),
+                          padding: EdgeInsets.symmetric(vertical: 5.sp, horizontal: 8.sp),
+                          decoration: BoxDecoration(
+                            color: AppColors.blue100,
+                            borderRadius: BorderRadius.circular(Constants.textFieldRadius.sp),
+                          ),
+                          child: Text(
+                              '${((tickets?["details"] as List?)?.length) ?? 0 + prescriptionCount} phiếu đã chọn')),
                     ],
                   );
                 }).toList(),

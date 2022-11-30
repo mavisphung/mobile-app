@@ -13,6 +13,7 @@ class CreateContractController extends GetxController {
   final _apiContract = Get.put(ApiContract());
   final lMonitoredPathology = <MonitoredPathology>[].obs;
   final lOtherSharedRecord = <Map<String, dynamic>>[].obs;
+  final lPrescription = <int>[].obs;
 
   final status = Status.init.obs;
   final rxAgreedStatus = false.obs;
@@ -37,13 +38,17 @@ class CreateContractController extends GetxController {
             })
         .toList();
     final startDate = DateFormat('yyyy-MM-dd').format(rxSelectedDate.value);
+    final endDate = DateFormat('yyyy-MM-dd').format(rxSelectedDate.value.add(const Duration(days: 7)));
+
+    final intSet = <int>{};
+    List<int> tmp3 = lPrescription.where((e) => intSet.add(e)).toList();
     final reqModel = {
       "doctor": doctor.id,
       "patient": rxPatient.value!.id,
-      "package": 1,
+      // "package": 1,
       "startedAt": "$startDate 00:00:00",
-      "endedAt": "2024-02-01 00:00:00",
-      "prescription": [],
+      "endedAt": "$endDate 00:00:00",
+      "prescription": tmp3,
       "instruction": [],
       "detail": {
         "monitoredPathology": tmp1,
@@ -70,10 +75,12 @@ class CreateContractController extends GetxController {
   void dispose() {
     lMonitoredPathology.clear();
     lMonitoredPathology.close();
-    status.close();
-    rxAgreedStatus.close();
     lOtherSharedRecord.clear();
     lOtherSharedRecord.close();
+    lPrescription.clear();
+    lPrescription.close();
+    status.close();
+    rxAgreedStatus.close();
     rxPatient.close();
     rxRecordId.close();
     rxPTmpListLength.close();

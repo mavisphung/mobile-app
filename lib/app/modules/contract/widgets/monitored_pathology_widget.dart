@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import 'package:hi_doctor_v2/app/common/constants.dart';
+import 'package:hi_doctor_v2/app/common/util/transformation.dart';
 import 'package:hi_doctor_v2/app/common/values/colors.dart';
 import 'package:hi_doctor_v2/app/modules/contract/controllers/create_contract_controller.dart';
 import 'package:hi_doctor_v2/app/modules/contract/models/monitored_pathology.dart';
@@ -48,7 +49,7 @@ class MonitoredPathologyWidget extends StatelessWidget {
       final prescription = (hr.detail!['prescription'] as List?)?.isNotEmpty == true
           ? {
               'record': hr.record,
-              'recordName': hr.detail?['name'],
+              'recordName': 'từ ${Tx.getDoctorName(hr.doctor?['lastName'], hr.doctor?['firstName'])}',
               'detail': hr.detail!['prescription'],
             }
           : null;
@@ -141,6 +142,13 @@ class MonitoredPathologyWidget extends StatelessWidget {
                       height: 60,
                       hasLabel: false,
                       onChoose: (result) {
+                        dynamic cate;
+                        for (var c in _lCategory) {
+                          cate = (c['diseases'] as List).firstWhereOrNull((e) => e['id'] == result.id);
+                          if (cate != null) break;
+                        }
+                        final records = cate?['records'] ?? [];
+                        final prescriptions = cate?['prescriptions'] ?? [];
                         _pTmpList.add(
                           MonitoredPathology(
                               null,
@@ -150,7 +158,8 @@ class MonitoredPathologyWidget extends StatelessWidget {
                                 'otherCode': result.otherCode,
                                 'generalName': result.generalName,
                                 'diseaseName': result.diseaseName,
-                                'records': [],
+                                'records': records,
+                                'prescriptions': prescriptions,
                               },
                               null),
                         );

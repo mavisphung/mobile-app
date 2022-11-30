@@ -13,7 +13,6 @@ import 'package:hi_doctor_v2/app/models/doctor.dart';
 import 'package:hi_doctor_v2/app/models/patient.dart';
 import 'package:hi_doctor_v2/app/modules/appointment/providers/api_book_appointment.dart';
 import 'package:hi_doctor_v2/app/modules/appointment/providers/req_appointment_model.dart';
-import 'package:hi_doctor_v2/app/modules/appointment/widgets/package_item.dart';
 
 class BookingController extends GetxController {
   // select booking date time
@@ -114,14 +113,13 @@ class BookingController extends GetxController {
     final Map<String, dynamic> response = ApiResponse.getResponse(result);
     final ResponseModel2 model = ResponseModel2.fromMap(response);
     if (model.success == true && model.status == Constants.successGetStatusCode) {
-      final data = model.data as List<dynamic>?;
+      var data = model.data as List<dynamic>?;
       if (data == null || data.isEmpty) return true;
       packageList = data.map((e) {
         dynamic data = e['service'] as Map<String, dynamic>;
         return Service.fromMap(data);
       }).toList();
-      setServiceId(data[0]['service']['id']);
-      // setServiceId(0);
+      setServiceId(packageList![0].id!);
       return true;
     } else if (model.success == false) {
       packageList = null;

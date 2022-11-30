@@ -22,7 +22,8 @@ class ContractStep1 extends StatelessWidget {
     final patientOption = PatientOption(context, (p) {
       _c.rxPatient.value = p;
       _cHealthRecord.rxPatient.value = p;
-      _cHealthRecord.getAllHealthRecords(limit: 15);
+      _cHealthRecord.reset();
+      _cHealthRecord.getAllHealthRecords(limit: 50);
     });
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,

@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:hi_doctor_v2/app/common/storage/box.dart';
+import 'package:intl/intl.dart';
 import 'package:hi_doctor_v2/app/common/storage/storage.dart';
 import 'package:hi_doctor_v2/app/common/util/dialogs.dart';
 import 'package:hi_doctor_v2/app/common/util/extensions.dart';
@@ -12,13 +13,7 @@ import 'package:hi_doctor_v2/app/models/service.dart';
 import 'package:hi_doctor_v2/app/models/user_info.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/image_container.dart';
 import 'package:hi_doctor_v2/app/routes/app_pages.dart';
-import 'package:intl/intl.dart';
-
-import 'package:hi_doctor_v2/app/common/util/dialogs.dart';
-import 'package:hi_doctor_v2/app/common/util/transformation.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/content_container.dart';
-import 'package:hi_doctor_v2/app/modules/widgets/image_container.dart';
-import 'package:hi_doctor_v2/app/routes/app_pages.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/custom_container.dart';
 import 'package:hi_doctor_v2/app/common/constants.dart';
 import 'package:hi_doctor_v2/app/common/values/colors.dart';
@@ -28,7 +23,6 @@ import 'package:hi_doctor_v2/app/modules/appointment/providers/req_appointment_m
 import 'package:hi_doctor_v2/app/modules/widgets/base_page.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/custom_bottom_sheet.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/my_appbar.dart';
-import 'package:vnpay_flutter/vnpay_flutter.dart';
 
 // ignore: must_be_immutable
 class BookingSummary extends StatelessWidget {
@@ -41,11 +35,6 @@ class BookingSummary extends StatelessWidget {
   final _spacing = SizedBox(
     height: 15.sp,
   );
-
-  String getFormatedPhone() {
-    final supervisor = Storage.getValue<UserInfo2>(CacheKey.USER_INFO.name);
-    return supervisor!.phoneNumber!.replaceRange(0, 6, '******');
-  }
 
   void createAppointment(BuildContext ctx) async {
     // Booking trước, payment sau

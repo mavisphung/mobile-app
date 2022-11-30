@@ -3,6 +3,7 @@ import 'dart:convert';
 
 class Doctor {
   final int? id;
+  final int? accountId;
   final String? email;
   final String? firstName;
   final String? lastName;
@@ -23,6 +24,7 @@ class Doctor {
 
   Doctor({
     this.id,
+    this.accountId,
     this.email,
     this.firstName,
     this.lastName,
@@ -44,6 +46,7 @@ class Doctor {
 
   Doctor copyWith({
     int? id,
+    int? accountId,
     String? email,
     String? firstName,
     String? lastName,
@@ -64,6 +67,7 @@ class Doctor {
   }) {
     return Doctor(
       id: id ?? this.id,
+      accountId: accountId ?? this.accountId,
       email: email ?? this.email,
       firstName: firstName ?? this.firstName,
       lastName: lastName ?? this.lastName,
@@ -87,6 +91,7 @@ class Doctor {
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
       'id': id,
+      'accountId': accountId,
       'email': email,
       'firstName': firstName,
       'lastName': lastName,
@@ -110,6 +115,7 @@ class Doctor {
   factory Doctor.fromMap(Map<String, dynamic> map) {
     return Doctor(
       id: map['id'] != null ? map['id'] as int : null,
+      accountId: map['accountId'] != null ? map['accountId'] as int : null,
       email: map['email'] != null ? map['email'] as String : null,
       firstName: map['firstName'] != null ? map['firstName'] as String : null,
       lastName: map['lastName'] != null ? map['lastName'] as String : null,
@@ -136,6 +142,6 @@ class Doctor {
 
   @override
   String toString() {
-    return 'Doctor(id: $id, email: $email, firstName: $firstName, lastName: $lastName, age: $age, dob: $dob, phoneNumber: $phoneNumber, isApproved: $isApproved, avatar: $avatar, experienceYears: $experienceYears, gender: $gender, ratingPoints: $ratingPoints, ratingTurns: $ratingTurns, address: $address, shifts: $shifts, specialists: $specialists, distance: $distance, duration: $duration)';
+    return 'Doctor(id: $id, accountId: $accountId, email: $email, firstName: $firstName, lastName: $lastName, age: $age, dob: $dob, phoneNumber: $phoneNumber, isApproved: $isApproved, avatar: $avatar, experienceYears: $experienceYears, gender: $gender, ratingPoints: $ratingPoints, ratingTurns: $ratingTurns, address: $address, shifts: $shifts, specialists: $specialists, distance: $distance, duration: $duration)';
   }
 }

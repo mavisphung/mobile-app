@@ -45,7 +45,7 @@ class NoInternetWidget2 extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: Padding(
-        padding: const EdgeInsets.only(top: 150),
+        padding: EdgeInsets.symmetric(vertical: 0.25.sh),
         child: Column(
           children: [
             SvgPicture.asset(
@@ -79,7 +79,7 @@ class NoDataWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: Padding(
-        padding: const EdgeInsets.only(top: 150),
+        padding: EdgeInsets.symmetric(vertical: 0.25.sh),
         child: Column(
           children: [
             SvgPicture.asset(

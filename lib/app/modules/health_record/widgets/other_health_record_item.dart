@@ -104,19 +104,9 @@ class OtherHealthRecordItem extends StatelessWidget {
                 ),
               ),
             ),
-            if (list != null)
-              SizedBox(
-                height: 80.sp,
-                child: ListView.builder(
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  itemBuilder: (_, index) {
-                    if (index >= list.length) return const SizedBox.shrink();
-                    final e = list[index];
-                    return _getPathologyRow('${e['code']}', '${e['diseaseName']}');
-                  },
-                  itemCount: 3,
-                ),
+            if (list?.isNotEmpty ?? false)
+              Column(
+                children: list!.map((e) => _getPathologyRow(e['code'], e['diseaseName'])).toList(),
               ),
           ],
         ),

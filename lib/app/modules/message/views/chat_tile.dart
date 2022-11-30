@@ -52,6 +52,7 @@ class ChatTile extends StatelessWidget {
                   peerId: chatPeer.doctorId,
                   peerName: doctorName,
                   peerAvatar: doctor.avatar ?? Constants.defaultAvatar,
+                  hasInputWidget: false,
                 ),
               ),
               child: Padding(

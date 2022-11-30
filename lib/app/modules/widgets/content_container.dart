@@ -54,7 +54,7 @@ class ContentContainer extends StatelessWidget {
       ),
       decoration: BoxDecoration(
         color: color ?? AppColors.grey200,
-        borderRadius: BorderRadius.circular(Constants.borderRadius.sp),
+        borderRadius: BorderRadius.circular(5.sp),
       ),
       child: Column(
         children: content.entries.map((e) => _getRow(e.key, e.value)).toList(),
