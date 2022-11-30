@@ -15,24 +15,25 @@ class HistoryController extends GetxController {
   RxList<Appointment> historyList = <Appointment>[].obs;
   Rx<Status> loadingStatus = Status.init.obs;
   RxInt currentPage = 1.obs;
+  int totalItems = 0;
 
   late ApiAppointmentImpl apiAppointment;
 
   void clearHistoryList() {
+    currentPage.value = 1;
+    totalItems = 0;
     historyList.clear();
     update();
   }
 
   void getUserHistoricalAppointments({int page = 1, int limit = 10}) async {
+    loadMore();
     'loading historical appointments'.debugLog('HistoryTab');
     Response result = await apiAppointment.getUserHistoricalAppointments(page: page, limit: limit);
     var response = ApiResponse.getResponse(result); // Map
     PagingModel pageModel = PagingModel.fromMap(response);
 
-    // Check if fetch full of the list
-    if (historyList.length >= pageModel.totalItems!) {
-      return;
-    }
+    totalItems = pageModel.totalItems ?? 0;
     // check is the last page or not
     if (pageModel.nextPage != null) {
       currentPage.value = pageModel.nextPage!;
@@ -52,6 +53,7 @@ class HistoryController extends GetxController {
         bookedAt: e['bookedAt'],
       );
     }).toList();
+    complete();
     historyList.length.toString().debugLog('Items in list');
     update();
   }
@@ -74,6 +76,7 @@ class HistoryController extends GetxController {
     scrollController.addListener(
       () async {
         if (scrollController.position.maxScrollExtent == scrollController.offset) {
+          if (historyList.length >= totalItems) return;
           loadMore();
           loadingStatus.value.toString().debugLog('loading status');
           getUserHistoricalAppointments(page: currentPage.value);

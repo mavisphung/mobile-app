@@ -15,12 +15,15 @@ class IncomingController extends GetxController {
   RxList<Appointment> incomingList = <Appointment>[].obs;
   Rx<Status> loadingStatus = Status.init.obs;
   RxInt currentPage = 1.obs;
+  int totalItems = 0;
 
   late ApiAppointmentImpl apiAppointment;
   TextEditingController textController = TextEditingController();
   RxString rxReason = CancelReason.item1.obs;
 
   void clearIncomingList() {
+    currentPage.value = 1;
+    totalItems = 0;
     incomingList.clear();
     update();
   }
@@ -32,11 +35,7 @@ class IncomingController extends GetxController {
     var response = ApiResponse.getResponse(result); // Map
     PagingModel pageModel = PagingModel.fromMap(response);
 
-    // Check if fetch full of the list
-    if (incomingList.length >= pageModel.totalItems!) {
-      return;
-    }
-    // check is the last page or not
+    totalItems = pageModel.totalItems ?? 0;
     if (pageModel.nextPage != null) {
       currentPage.value = pageModel.nextPage!;
     }
@@ -94,6 +93,7 @@ class IncomingController extends GetxController {
     scrollController.addListener(
       () async {
         if (scrollController.position.maxScrollExtent == scrollController.offset) {
+          if (incomingList.length >= totalItems) return;
           loadMore();
           loadingStatus.value.toString().debugLog('loading status');
           getUserIncomingAppointments(page: currentPage.value);

@@ -55,7 +55,7 @@ class AppointmentController extends GetxController {
   }
 
   void getUserHistoricalAppointments({int page = 1, int limit = 10}) async {
-    'loading historical appointments'.debugLog('HistoryTab');
+    'loh my god oading historical appointments'.debugLog('HistoryTab');
     historyTabStatus.value = Status.loading;
     update();
     Response result = await apiAppointment.getUserHistoricalAppointments(page: page, limit: limit);
