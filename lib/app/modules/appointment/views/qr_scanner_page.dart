@@ -1,14 +1,9 @@
-import 'dart:io';
-
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:hi_doctor_v2/app/common/util/extensions.dart';
-import 'package:hi_doctor_v2/app/common/values/colors.dart';
-import 'package:hi_doctor_v2/app/modules/widgets/my_appbar.dart';
-
 import 'package:mobile_scanner/mobile_scanner.dart';
+
+import 'package:hi_doctor_v2/app/common/values/colors.dart';
 
 // ignore: must_be_immutable
 class QrScannerPage extends StatelessWidget {

@@ -25,7 +25,7 @@ class NavBar extends StatelessWidget {
       case 1:
         return const AppoinmentPage();
       case 2:
-        return ContractListPage();
+        return const ContractListPage();
       case 3:
         return MessagePage();
       case 4:

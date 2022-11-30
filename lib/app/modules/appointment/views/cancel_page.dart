@@ -13,8 +13,7 @@ import 'package:hi_doctor_v2/app/modules/appointment/widgets/cancel_dropdown.dar
 import 'package:hi_doctor_v2/app/modules/widgets/custom_elevate_btn_widget.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/custom_title_section.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/my_appbar.dart';
-
-import '../../../routes/app_pages.dart';
+import 'package:hi_doctor_v2/app/routes/app_pages.dart';
 
 class CancelPage extends StatelessWidget {
   final _ic = Get.find<IncomingController>();

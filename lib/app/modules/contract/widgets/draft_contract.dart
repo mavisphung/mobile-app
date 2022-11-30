@@ -6,7 +6,6 @@ import 'package:hi_doctor_v2/app/common/util/utils.dart';
 
 import 'package:hi_doctor_v2/app/common/values/colors.dart';
 import 'package:hi_doctor_v2/app/common/values/terms.dart';
-import 'package:hi_doctor_v2/app/models/user_info.dart';
 import 'package:hi_doctor_v2/app/modules/contract/controllers/create_contract_controller.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/content_container.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/custom_container.dart';

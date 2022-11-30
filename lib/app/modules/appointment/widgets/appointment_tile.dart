@@ -218,7 +218,6 @@ class HistoryAppointmentTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final fullName = '${data.doctor!["firstName"]} ${data.doctor!["lastName"]}';
     return Container(
       height: 180.sp,
       margin: EdgeInsets.symmetric(vertical: 10.sp),

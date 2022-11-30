@@ -68,6 +68,7 @@ dependencies:
   mobile_scanner: ^2.1.0
   # qr_code_scanner: ^1.0.1
   flutter_masked_text2: ^0.9.1
+  flutter_launcher_icons: ^0.11.0
 
 dev_dependencies:
   flutter_test:

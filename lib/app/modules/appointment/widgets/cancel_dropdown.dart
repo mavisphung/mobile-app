@@ -4,13 +4,12 @@ import 'package:get/get.dart';
 import 'package:hi_doctor_v2/app/common/constants.dart';
 import 'package:hi_doctor_v2/app/common/values/colors.dart';
 import 'package:hi_doctor_v2/app/common/values/strings.dart';
-import 'package:hi_doctor_v2/app/modules/widgets/custom_elevate_btn_widget.dart';
 
 class CancelDropdown extends StatelessWidget {
   final RxString rxReason;
   final List<String> reasonTemplates;
 
-  CancelDropdown({
+  const CancelDropdown({
     Key? key,
     required this.rxReason,
     required this.reasonTemplates,
