@@ -54,6 +54,7 @@ class IncomingController extends GetxController {
       );
       return appointment;
     }).toList();
+
     incomingList.length.toString().debugLog('Items in list');
     update();
   }

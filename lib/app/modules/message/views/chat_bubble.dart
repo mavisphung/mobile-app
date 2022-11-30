@@ -124,7 +124,7 @@ class ChatBubble extends StatelessWidget {
                     ),
                   if (messageChat.type == TypeMessage.IMAGE.index)
                     Padding(
-                      padding: EdgeInsets.symmetric(vertical: 10.sp, horizontal: 15.sp),
+                      padding: EdgeInsets.symmetric(vertical: 5.sp, horizontal: 10.sp),
                       child: _getImageWidget(messageChat.content),
                     ),
                 ],
@@ -171,7 +171,7 @@ class ChatBubble extends StatelessWidget {
                   ),
                 if (messageChat.type == TypeMessage.IMAGE.index)
                   Padding(
-                    padding: EdgeInsets.symmetric(vertical: 10.sp, horizontal: 15.sp),
+                    padding: EdgeInsets.symmetric(vertical: 2.5.sp, horizontal: 15.sp),
                     child: _getImageWidget(messageChat.content),
                   )
               ],

@@ -106,6 +106,7 @@ class MeetingDetailPage extends StatelessWidget {
                 const InfoContainer(info: 'Dịch vụ chỉ được mở trong thời gian cuộc hẹn.', hasInfoIcon: true),
                 if (_cMeeting.appointment.category == CategoryType.ONLINE.name)
                   ServiceTile(
+                    bookedAt: _cMeeting.appointment.bookedAt!,
                     chatPageargs: ChatPageArguments(
                       peerId: doctor?['id'],
                       peerName: Tx.getDoctorName(doctor?['lastName'], doctor?['firstName']),
