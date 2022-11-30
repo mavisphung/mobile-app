@@ -21,7 +21,7 @@ final Map<CONTRACT_STATUS, Color> statusColors = {
 
 class PendingContractTile extends StatelessWidget {
   final Contract data;
-  final ContractPendingController _ic = Get.find<ContractPendingController>();
+  // final ContractPendingController _ic = Get.find<ContractPendingController>();
 
   PendingContractTile({
     Key? key,
