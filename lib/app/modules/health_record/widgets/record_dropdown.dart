@@ -37,8 +37,12 @@ List<Map<String, dynamic>> recordTypes = [
     'value': 6,
   },
   {
-    'label': 'Khác',
+    'label': 'Phiếu chẩn đoán',
     'value': 7,
+  },
+  {
+    'label': 'Khác',
+    'value': 8,
   },
 ];
 
@@ -94,7 +98,7 @@ class RecordDropDown extends StatelessWidget {
                 );
               }).toList(),
               onChanged: (value) {
-                data.value = value ?? 7;
+                data.value = value ?? 8;
               },
               iconSize: 29.sp,
               iconEnabledColor: Colors.blueGrey,
