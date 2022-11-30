@@ -58,7 +58,7 @@ class BookingSummary extends StatelessWidget {
       _cBooking.problemController.text.trim(),
     );
     Service selectedService = _cBooking.selectedService;
-    if (userInfo.mainBalance! > selectedService.price!) {
+    if (userInfo.mainBalance! < selectedService.price!) {
       Dialogs.statusDialog(
         ctx: ctx,
         isSuccess: false,
@@ -75,7 +75,10 @@ class BookingSummary extends StatelessWidget {
       return;
     }
 
-    if (isSuccess) {}
+    if (isSuccess) {
+      // TODO: Thêm api withdraw vào đây
+      await _cBooking.withdraw(selectedService.price!);
+    }
 
     Dialogs.statusDialog(
       ctx: ctx,

@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:get/get.dart';
 
 import 'package:hi_doctor_v2/app/common/constants.dart';
@@ -34,10 +36,17 @@ class ApiBookAppointmentImpl extends GetConnect {
   }
 
   Future<Response> postAppointment(ReqAppointmentModel reqModel) {
-    reqModel.toString().debugLog('Req Appointment Body');
     return post(
       '/appointments/',
       reqModel.toJson(),
+      headers: _headers,
+    );
+  }
+
+  Future<Response> withdraw(double amount) {
+    return post(
+      '/user/me/withdraw/',
+      json.encode({'amount': amount}),
       headers: _headers,
     );
   }

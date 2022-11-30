@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:hi_doctor_v2/app/common/storage/storage.dart';
 import 'package:hi_doctor_v2/app/models/service.dart';
+import 'package:hi_doctor_v2/app/models/user_info.dart';
 import 'package:intl/intl.dart';
 
 import 'package:hi_doctor_v2/app/common/constants.dart';
@@ -102,7 +104,7 @@ class BookingController extends GetxController {
         return List.empty();
       }
 
-      return data as List<dynamic>;
+      return data;
     }
     return null;
   }
@@ -114,7 +116,7 @@ class BookingController extends GetxController {
     if (model.success == true && model.status == Constants.successGetStatusCode) {
       final data = model.data as List<dynamic>?;
       if (data == null || data.isEmpty) return true;
-      packageList = data.where((e) => e['isActive'] == true).map((e) {
+      packageList = data.map((e) {
         dynamic data = e['service'] as Map<String, dynamic>;
         return Service.fromMap(data);
       }).toList();
@@ -140,6 +142,20 @@ class BookingController extends GetxController {
       }
     }
     return null;
+  }
+
+  Future<bool> withdraw(double amount) async {
+    final response = await _apiBookAppointment.withdraw(amount).futureValue();
+    if (response == null) {
+      return false;
+    }
+
+    if (response.statusCode < 200 || response.statusCode > 299) {
+      return false;
+    }
+    UserInfo2 newInfo = UserInfo2.fromMap(response.data);
+    await Storage.saveValue(CacheKey.USER_INFO.name, newInfo);
+    return true;
   }
 
   @override
