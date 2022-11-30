@@ -44,9 +44,7 @@ class PendingContractTile extends StatelessWidget {
     final fullName = '${data.doctor!["firstName"]} ${data.doctor!["lastName"]}';
     return GestureDetector(
       onTap: () {
-        data.id != null
-            ? Get.toNamed(Routes.MEETING_DETAIL, arguments: data.id)
-            : Utils.showAlertDialog('Error to get appointment information');
+        data.id != null ? Get.toNamed(Routes.MEETING_DETAIL, arguments: data.id) : Utils.showAlertDialog('Error to get appointment information');
       },
       child: Container(
         width: double.infinity,
