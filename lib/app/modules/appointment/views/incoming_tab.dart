@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:hi_doctor_v2/app/models/appointment.dart';
 import 'package:hi_doctor_v2/app/modules/appointment/controllers/incoming_controller.dart';
 import 'package:hi_doctor_v2/app/modules/appointment/widgets/appointment_tile.dart';
+import 'package:hi_doctor_v2/app/modules/widgets/response_status_widget.dart';
 
 class IncomingTab extends StatefulWidget {
   IncomingTab({
@@ -45,35 +46,8 @@ class _IncomingTabState extends State<IncomingTab> with AutomaticKeepAliveClient
                   SizedBox(
                     height: 18.sp,
                   ),
-                  // Row(
-                  //   children: [
-                  //     ElevatedButton(
-                  //       onPressed: () {
-                  //         widget.incController.clearIncomingList();
-                  //       },
-                  //       child: const Text('Clear'),
-                  //     ),
-                  //     const Spacer(),
-                  //   ],
-                  // ),
-                  //--------------------------------------------------------
                   if (widget.incController.incomingList.isEmpty) ...[
-                    Center(
-                      heightFactor: 0.06.sw,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            'Hiện tại chưa có cuộc hẹn nào!',
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              fontSize: 18.sp,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ],
-                      ),
-                    )
+                    const NoDataWidget(message: 'Bạn không có cuộc hẹn đang chờ nào.'),
                   ] else
                     ...widget.incController.incomingList
                         .map((e) => AppointmentTile(

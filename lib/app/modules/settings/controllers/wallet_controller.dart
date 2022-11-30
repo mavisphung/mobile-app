@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_masked_text2/flutter_masked_text2.dart';
 import 'package:get/get.dart';
 import 'package:hi_doctor_v2/app/common/storage/box.dart';
@@ -16,7 +15,7 @@ class WalletController extends GetxController {
   // late final MaskedTextController amountController;
   final Rx<Status> _rxStatus = Status.init.obs;
   late final ApiWalletImpl api;
-  UserInfo2 _userInfo = Box.getCacheUser();
+  final UserInfo2 _userInfo = Box.getCacheUser();
   late final RxDouble _rxMainBalance = _userInfo.mainBalance!.obs;
 
   double get mainBalance => _rxMainBalance.value;

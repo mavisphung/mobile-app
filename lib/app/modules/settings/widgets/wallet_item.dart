@@ -5,11 +5,11 @@ import 'package:get/get.dart';
 import 'package:hi_doctor_v2/app/common/values/colors.dart';
 
 class WalletItem extends StatelessWidget {
-  String? title;
+  final String? title;
   final String imageUrl;
-  void Function()? onTap;
+  final void Function()? onTap;
 
-  WalletItem({
+  const WalletItem({
     Key? key,
     this.title,
     required this.imageUrl,

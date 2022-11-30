@@ -41,6 +41,24 @@ class MeetingDetailPage extends StatelessWidget {
     return NumberFormat.decimalPattern('vi,VN').format(price);
   }
 
+  Map<String, String>? _getDateTimeMap(String str) {
+    final dateTime = str.split(' ');
+    final date = DateFormat('yyyy-MM-dd').parse(dateTime[0]);
+    final now = DateTime.now();
+    bool isToday = false;
+    if (date.year == now.year && date.month == now.month && date.day == now.day) isToday = true;
+    final time = Utils.parseStrToTime(dateTime[1]);
+    if (time != null) {
+      final formattedDate = Utils.formatDate(date);
+      final endTime = time.add(const Duration(minutes: 30));
+      return {
+        'date': isToday ? 'Hôm nay' : formattedDate,
+        'time': '${Utils.formatAMPM(time)} - ${Utils.formatAMPM(endTime)}',
+      };
+    }
+    return null;
+  }
+
   @override
   Widget build(BuildContext context) {
     print('APP ID: $_appointmentId');
@@ -55,7 +73,7 @@ class MeetingDetailPage extends StatelessWidget {
             final doctor = _cMeeting.appointment.doctor;
             final patient = _cMeeting.appointment.patient;
             final package = _cMeeting.appointment.package;
-            final dateTimeMap = Utils.getDateTimeMap(_cMeeting.appointment.bookedAt!);
+            final dateTimeMap = _getDateTimeMap(_cMeeting.appointment.bookedAt!);
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -71,8 +89,8 @@ class MeetingDetailPage extends StatelessWidget {
                   labelWidth: 100,
                   hozPadding: 5,
                   content: {
-                    'Ngày': '${dateTimeMap?["date"]}',
-                    'Giờ': '${dateTimeMap?["time"]}',
+                    'Ngày hẹn': '${dateTimeMap?["date"]}',
+                    'Giờ hẹn': '${dateTimeMap?["time"]}',
                   },
                 ),
                 CustomTitleSection(

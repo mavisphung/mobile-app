@@ -1,8 +1,4 @@
-// ignore_for_file: prefer_const_constructors
-
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:hi_doctor_v2/app/common/util/extensions.dart';
 import 'package:hi_doctor_v2/app/common/util/enum.dart';
@@ -49,7 +45,7 @@ class NotificationPage extends StatelessWidget {
         );
       case Status.init:
       default:
-        return LoadingWidget();
+        return const LoadingWidget();
     }
   }
 

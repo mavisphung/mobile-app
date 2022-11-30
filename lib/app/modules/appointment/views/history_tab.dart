@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:hi_doctor_v2/app/modules/appointment/controllers/history_controller.dart';
 import 'package:hi_doctor_v2/app/modules/appointment/widgets/appointment_tile.dart';
 import 'package:hi_doctor_v2/app/modules/appointment/widgets/filter_button.dart';
+import 'package:hi_doctor_v2/app/modules/widgets/response_status_widget.dart';
 
 class HistoryTab extends StatefulWidget {
   HistoryTab({
@@ -45,36 +46,14 @@ class _HistoryTabState extends State<HistoryTab> with AutomaticKeepAliveClientMi
                       height: 18.sp,
                     ),
                     Row(
-                      children: [
-                        // ElevatedButton(
-                        //   onPressed: () {
-                        //     widget.histController.clearHistoryList();
-                        //     'Cleared history list'.debugLog('Clear button');
-                        //   },
-                        //   child: const Text('Clear'),
-                        // ),
-                        const Spacer(),
-                        const FilterButton(),
+                      children: const [
+                        Spacer(),
+                        FilterButton(),
                       ],
                     ),
                     //--------------------------------------------------------
                     if (widget.histController.historyList.isEmpty) ...[
-                      Center(
-                        heightFactor: 0.06.sw,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              'Bạn chưa đặt bất kỳ cuộc hẹn nào!',
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                fontSize: 18.sp,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ],
-                        ),
-                      )
+                      const NoDataWidget(message: 'Bạn không có cuộc hẹn nào trong lịch sử.'),
                     ] else
                       ...widget.histController.historyList
                           .map((e) => HistoryAppointmentTile(

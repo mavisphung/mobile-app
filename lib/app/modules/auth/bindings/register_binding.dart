@@ -1,6 +1,5 @@
 import 'package:get/get.dart';
-
-import '../controllers/register_controller.dart';
+import 'package:hi_doctor_v2/app/modules/auth/controllers/register_controller.dart';
 
 class RegisterBinding extends Bindings {
   @override

@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 
 import 'package:hi_doctor_v2/app/common/constants.dart';
 import 'package:hi_doctor_v2/app/common/storage/box.dart';
+import 'package:hi_doctor_v2/app/common/util/enum.dart';
 import 'package:hi_doctor_v2/app/common/values/colors.dart';
 import 'package:hi_doctor_v2/app/common/values/strings.dart';
 import 'package:hi_doctor_v2/app/models/appointment.dart';
@@ -21,11 +22,13 @@ import 'package:hi_doctor_v2/app/modules/home/views/reminder_card.dart';
 import 'package:hi_doctor_v2/app/modules/home/views/welcome_item.dart';
 import 'package:hi_doctor_v2/app/modules/search/doctor_search_delegate.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/base_page.dart';
+import 'package:hi_doctor_v2/app/modules/widgets/custom_card.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/custom_container.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/custom_icon_button.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/custom_title_section.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/image_container.dart';
 import 'package:hi_doctor_v2/app/routes/app_pages.dart';
+import 'package:skeletons/skeletons.dart';
 
 class HomePage extends StatelessWidget {
   final _homeController = Get.put(HomeController());
@@ -105,8 +108,18 @@ class HomePage extends StatelessWidget {
                 },
               ),
               ObxValue<RxList<Appointment>>(
-                (data) =>
-                    data.isNotEmpty ? ReminderCard(appointment: data[data.length - 1]) : const NoAppointmentCard(),
+                (data) {
+                  if (data.isNotEmpty) {
+                    return ReminderCard(appointment: data[data.length - 1]);
+                  } else if (data.isEmpty && _cIncoming.loadingStatus.value == Status.success) {
+                    return const NoAppointmentCard();
+                  }
+                  return CustomCard(
+                    child: SkeletonListTile(
+                      hasSubtitle: true,
+                    ),
+                  );
+                },
                 _cIncoming.incomingList,
               ),
               CustomTitleSection(title: Strings.category),

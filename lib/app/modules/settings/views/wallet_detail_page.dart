@@ -11,10 +11,9 @@ import 'package:hi_doctor_v2/app/modules/widgets/custom_elevate_btn_widget.dart'
 import 'package:hi_doctor_v2/app/modules/widgets/custom_textfield_widget.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/custom_title_section.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/my_appbar.dart';
-import 'package:hi_doctor_v2/app/routes/app_pages.dart';
-import 'package:intl/intl.dart';
 import 'package:vnpay_flutter/vnpay_flutter.dart';
 
+// ignore: must_be_immutable
 class WalletDetailPage extends StatelessWidget {
   final WalletController _c = Get.find<WalletController>();
   Map<String, dynamic>? attachments = Get.arguments;
@@ -120,20 +119,21 @@ class WalletDetailPage extends StatelessWidget {
                           ),
                           Text(
                             PaymentInfo.bankName.toUpperCase(),
-                            style: TextStyle(fontStyle: FontStyle.italic, fontSize: 28.sp, color: Colors.white, fontWeight: FontWeight.w900),
+                            style: TextStyle(
+                                fontStyle: FontStyle.italic,
+                                fontSize: 28.sp,
+                                color: Colors.white,
+                                fontWeight: FontWeight.w900),
                           )
                         ],
                       ),
-                      SizedBox(
-                        height: 32,
-                      ),
+                      const SizedBox(height: 32),
                       Text(
                         '${splitedAccountNo[0].replaceAll(RegExp('.'), '*')}${splitedAccountNo[1]}',
-                        style: TextStyle(fontSize: 20.sp, color: Colors.white, fontWeight: FontWeight.w700, letterSpacing: 2.0),
+                        style: TextStyle(
+                            fontSize: 20.sp, color: Colors.white, fontWeight: FontWeight.w700, letterSpacing: 2.0),
                       ),
-                      SizedBox(
-                        height: 32,
-                      ),
+                      const SizedBox(height: 32),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
@@ -142,11 +142,19 @@ class WalletDetailPage extends StatelessWidget {
                             children: <Widget>[
                               Text(
                                 "CHỦ THẺ",
-                                style: TextStyle(fontSize: 12, color: Colors.blue[100], fontWeight: FontWeight.w700, letterSpacing: 2.0),
+                                style: TextStyle(
+                                    fontSize: 12,
+                                    color: Colors.blue[100],
+                                    fontWeight: FontWeight.w700,
+                                    letterSpacing: 2.0),
                               ),
                               Text(
                                 PaymentInfo.name,
-                                style: TextStyle(fontSize: 16, color: Colors.grey[100], fontWeight: FontWeight.w700, letterSpacing: 2.0),
+                                style: TextStyle(
+                                    fontSize: 16,
+                                    color: Colors.grey[100],
+                                    fontWeight: FontWeight.w700,
+                                    letterSpacing: 2.0),
                               ),
                             ],
                           ),
@@ -155,11 +163,19 @@ class WalletDetailPage extends StatelessWidget {
                             children: <Widget>[
                               Text(
                                 "NGÀY",
-                                style: TextStyle(fontSize: 12, color: Colors.blue[100], fontWeight: FontWeight.w700, letterSpacing: 2.0),
+                                style: TextStyle(
+                                    fontSize: 12,
+                                    color: Colors.blue[100],
+                                    fontWeight: FontWeight.w700,
+                                    letterSpacing: 2.0),
                               ),
                               Text(
                                 PaymentInfo.expiry,
-                                style: TextStyle(fontSize: 16, color: Colors.grey[100], fontWeight: FontWeight.w700, letterSpacing: 2.0),
+                                style: TextStyle(
+                                    fontSize: 16,
+                                    color: Colors.grey[100],
+                                    fontWeight: FontWeight.w700,
+                                    letterSpacing: 2.0),
                               ),
                             ],
                           ),
@@ -168,11 +184,19 @@ class WalletDetailPage extends StatelessWidget {
                             children: <Widget>[
                               Text(
                                 "CVV",
-                                style: TextStyle(fontSize: 12, color: Colors.blue[100], fontWeight: FontWeight.w700, letterSpacing: 2.0),
+                                style: TextStyle(
+                                    fontSize: 12,
+                                    color: Colors.blue[100],
+                                    fontWeight: FontWeight.w700,
+                                    letterSpacing: 2.0),
                               ),
                               Text(
                                 "***",
-                                style: TextStyle(fontSize: 16, color: Colors.grey[100], fontWeight: FontWeight.w700, letterSpacing: 2.0),
+                                style: TextStyle(
+                                    fontSize: 16,
+                                    color: Colors.grey[100],
+                                    fontWeight: FontWeight.w700,
+                                    letterSpacing: 2.0),
                               ),
                             ],
                           )
@@ -181,7 +205,7 @@ class WalletDetailPage extends StatelessWidget {
                     ],
                   ),
                 ),
-                CustomTitleSection(title: ''),
+                const CustomTitleSection(title: ''),
                 CustomTextFieldWidget(
                   labelText: 'Nhập số tiền muốn nạp',
                   textStyle: TextStyle(fontSize: 23.sp),
@@ -206,7 +230,8 @@ class WalletDetailPage extends StatelessWidget {
                       );
                       return;
                     }
-                    String paymentUrl = Utils.getPaymentUrl(orderInfo: 'NAP TIEN VAO VI HIDOCTOR', amount: _c.amountController.numberValue);
+                    String paymentUrl = Utils.getPaymentUrl(
+                        orderInfo: 'NAP TIEN VAO VI HIDOCTOR', amount: _c.amountController.numberValue);
                     processPayment(context, paymentUrl);
                   },
                   textChild: 'Nạp tiền',

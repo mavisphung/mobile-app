@@ -9,7 +9,6 @@ import 'package:hi_doctor_v2/app/modules/appointment/views/booking/booking_patie
 import 'package:hi_doctor_v2/app/modules/appointment/views/booking/booking_summary.dart';
 import 'package:hi_doctor_v2/app/modules/appointment/views/cancel_page.dart';
 import 'package:hi_doctor_v2/app/modules/appointment/views/qr_scanner_page.dart';
-import 'package:hi_doctor_v2/app/modules/appointment/views/qr_scanner_page2.dart';
 import 'package:hi_doctor_v2/app/modules/auth/bindings/register_binding.dart';
 import 'package:hi_doctor_v2/app/modules/auth/login_page.dart';
 import 'package:hi_doctor_v2/app/modules/auth/register_page.dart';

@@ -59,7 +59,6 @@ class DoctorItem extends StatelessWidget {
             width: 100,
             height: 100,
             imgUrl: doctor.avatar,
-            borderRadius: 17,
           ),
           Expanded(
             child: Padding(

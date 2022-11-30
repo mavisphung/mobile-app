@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:hi_doctor_v2/app/common/util/transformation.dart';
 
 import 'package:hi_doctor_v2/app/common/util/utils.dart';
 import 'package:hi_doctor_v2/app/modules/health_record/models/hr_res_model.dart';
@@ -74,7 +75,7 @@ class SystemHealthRecordItem extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Hồ sơ ${hr.detail?['name']}',
+                      'Hồ sơ từ ${Tx.getDoctorName(hr.doctor?['lastName'], hr.doctor?['firstName'])}',
                       style: TextStyle(
                         fontSize: 15.sp,
                         fontWeight: FontWeight.w500,
@@ -82,7 +83,7 @@ class SystemHealthRecordItem extends StatelessWidget {
                     ),
                     SizedBox(height: 2.sp),
                     Text(
-                      'Tạo lúc ${Utils.formatDate(DateTime.tryParse(hr.record?['createdAt'])!)}',
+                      'Tạo ngày ${Utils.formatDate(DateTime.tryParse(hr.record?['createdAt'])!)}',
                       style: TextStyle(
                         color: Colors.black54,
                         fontSize: 10.5.sp,

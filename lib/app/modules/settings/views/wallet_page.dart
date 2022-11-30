@@ -2,9 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:hi_doctor_v2/app/common/storage/box.dart';
-import 'package:hi_doctor_v2/app/common/util/dialogs.dart';
-import 'package:hi_doctor_v2/app/common/util/extensions.dart';
-import 'package:hi_doctor_v2/app/common/util/utils.dart';
 import 'package:hi_doctor_v2/app/common/values/colors.dart';
 import 'package:hi_doctor_v2/app/models/user_info.dart';
 import 'package:hi_doctor_v2/app/modules/settings/controllers/wallet_controller.dart';
@@ -13,11 +10,10 @@ import 'package:hi_doctor_v2/app/modules/widgets/custom_title_section.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/my_appbar.dart';
 import 'package:hi_doctor_v2/app/routes/app_pages.dart';
 import 'package:intl/intl.dart';
-import 'package:vnpay_flutter/vnpay_flutter.dart';
 
 class WalletPage extends StatelessWidget {
   final WalletController _c = Get.put(WalletController());
-  UserInfo2 userInfo = Box.getCacheUser();
+  final UserInfo2 userInfo = Box.getCacheUser();
 
   WalletPage({Key? key}) : super(key: key);
 
@@ -32,7 +28,7 @@ class WalletPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const MyAppBar(title: 'Ví của bạn'),
-      body: Container(
+      body: SizedBox(
         height: Get.height.sp,
         width: double.infinity,
         child: Stack(
@@ -143,7 +139,8 @@ class WalletPage extends StatelessWidget {
                                 ),
                                 child: Text(
                                   "Tất cả",
-                                  style: TextStyle(fontWeight: FontWeight.w700, fontSize: 14.sp, color: Colors.grey[900]),
+                                  style:
+                                      TextStyle(fontWeight: FontWeight.w700, fontSize: 14.sp, color: Colors.grey[900]),
                                 ),
                               ),
                             ],
@@ -192,11 +189,13 @@ class WalletPage extends StatelessWidget {
                                       children: <Widget>[
                                         Text(
                                           "Thanh toán cuộc hẹn",
-                                          style: TextStyle(fontSize: 15.sp, fontWeight: FontWeight.w700, color: Colors.grey[900]),
+                                          style: TextStyle(
+                                              fontSize: 15.sp, fontWeight: FontWeight.w700, color: Colors.grey[900]),
                                         ),
                                         Text(
                                           'từ ${userInfo.firstName}',
-                                          style: TextStyle(fontSize: 12.sp, fontWeight: FontWeight.w700, color: Colors.grey[500]),
+                                          style: TextStyle(
+                                              fontSize: 12.sp, fontWeight: FontWeight.w700, color: Colors.grey[500]),
                                         ),
                                       ],
                                     ),
@@ -206,11 +205,13 @@ class WalletPage extends StatelessWidget {
                                     children: <Widget>[
                                       Text(
                                         '200.000đ',
-                                        style: TextStyle(fontSize: 15.sp, fontWeight: FontWeight.w700, color: AppColors.primary),
+                                        style: TextStyle(
+                                            fontSize: 15.sp, fontWeight: FontWeight.w700, color: AppColors.primary),
                                       ),
                                       Text(
                                         "26 Tháng 1",
-                                        style: TextStyle(fontSize: 11.sp, fontWeight: FontWeight.w700, color: Colors.grey[500]),
+                                        style: TextStyle(
+                                            fontSize: 11.sp, fontWeight: FontWeight.w700, color: Colors.grey[500]),
                                       ),
                                     ],
                                   ),

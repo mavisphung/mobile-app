@@ -80,7 +80,7 @@ class OtherHealthRecordItem extends StatelessWidget {
                     ),
                     SizedBox(height: 2.sp),
                     Text(
-                      'Tạo lúc ${Utils.formatDateTime(DateTime.tryParse(hr.record?['createdAt'])!)}',
+                      'Tạo ngày ${Utils.formatDate(DateTime.tryParse(hr.record?['createdAt'])!)}',
                       style: TextStyle(
                         color: Colors.black54,
                         fontSize: 10.5.sp,

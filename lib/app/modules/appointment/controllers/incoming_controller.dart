@@ -15,27 +15,27 @@ class IncomingController extends GetxController {
   RxList<Appointment> incomingList = <Appointment>[].obs;
   Rx<Status> loadingStatus = Status.init.obs;
   RxInt currentPage = 1.obs;
+  int totalItems = 0;
 
   late ApiAppointmentImpl apiAppointment;
   TextEditingController textController = TextEditingController();
   RxString rxReason = CancelReason.item1.obs;
 
   void clearIncomingList() {
+    currentPage.value = 1;
+    totalItems = 0;
     incomingList.clear();
     update();
   }
 
   void getUserIncomingAppointments({int page = 1, int limit = 10}) async {
+    loadMore();
     'loading incoming appointments'.debugLog('IncomingTab');
     Response result = await apiAppointment.getUserIncomingAppointments(page: page, limit: limit);
     var response = ApiResponse.getResponse(result); // Map
     PagingModel pageModel = PagingModel.fromMap(response);
 
-    // Check if fetch full of the list
-    if (incomingList.length >= pageModel.totalItems!) {
-      return;
-    }
-    // check is the last page or not
+    totalItems = pageModel.totalItems ?? 0;
     if (pageModel.nextPage != null) {
       currentPage.value = pageModel.nextPage!;
     }
@@ -54,6 +54,7 @@ class IncomingController extends GetxController {
       );
       return appointment;
     }).toList();
+    complete();
 
     incomingList.length.toString().debugLog('Items in list');
     update();
@@ -92,6 +93,7 @@ class IncomingController extends GetxController {
     scrollController.addListener(
       () async {
         if (scrollController.position.maxScrollExtent == scrollController.offset) {
+          if (incomingList.length >= totalItems) return;
           loadMore();
           loadingStatus.value.toString().debugLog('loading status');
           getUserIncomingAppointments(page: currentPage.value);

@@ -51,5 +51,6 @@ Map<int, String> recordType = {
   4: 'Phiếu xét nghiệm huyết học',
   5: 'Đơn thuốc',
   6: 'Sinh hiệu',
-  7: 'Khác',
+  7: 'Phiếu chẩn đoán',
+  8: 'Khác',
 };

@@ -4,7 +4,6 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:hi_doctor_v2/app/common/storage/box.dart';
 import 'package:intl/intl.dart';
-import 'package:hi_doctor_v2/app/common/storage/storage.dart';
 import 'package:hi_doctor_v2/app/common/util/dialogs.dart';
 import 'package:hi_doctor_v2/app/common/util/extensions.dart';
 import 'package:hi_doctor_v2/app/common/util/transformation.dart';
@@ -186,7 +185,8 @@ class BookingSummary extends StatelessWidget {
                 hozPadding: 0,
                 verPadding: 0,
                 content: {
-                  Strings.bookAt: "${DateFormat('yyyy-MM-dd').format(_cBooking.selectedDate)} ${_cBooking.selectedTime}",
+                  Strings.bookAt:
+                      "${DateFormat('yyyy-MM-dd').format(_cBooking.selectedDate)} ${_cBooking.selectedTime}",
                   Strings.duration: '30 phút',
                   Strings.package: servicePackage.name!,
                   'Mô tả': servicePackage.description!,
