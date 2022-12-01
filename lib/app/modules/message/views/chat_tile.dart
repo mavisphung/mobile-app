@@ -44,7 +44,7 @@ class ChatTile extends StatelessWidget {
         if (snapshot.hasData) {
           if (snapshot.data == true) {
             final doctor = _cDoctor.doctor;
-            final doctorName = Tx.getDoctorName(doctor.lastName, doctor.firstName);
+            final doctorName = Tx.getDoctorName(doctor.firstName, doctor.lastName);
             return InkWell(
               onTap: () => Get.toNamed(
                 Routes.CHAT,

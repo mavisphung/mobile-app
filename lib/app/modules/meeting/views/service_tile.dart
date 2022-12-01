@@ -20,10 +20,7 @@ class ServiceTile extends StatelessWidget {
     final now = DateTime.now();
     final bookAtDateTime = Utils.parseStrToDateTime(bookedAt.replaceRange(16, null, ''));
     if (bookAtDateTime != null) {
-      if (bookAtDateTime.year == now.year &&
-          bookAtDateTime.month == now.month &&
-          bookAtDateTime.day == now.day &&
-          bookAtDateTime.hour == now.hour) {
+      if (bookAtDateTime.year == now.year && bookAtDateTime.month == now.month && bookAtDateTime.day == now.day && bookAtDateTime.hour == now.hour) {
         return true;
       }
     }

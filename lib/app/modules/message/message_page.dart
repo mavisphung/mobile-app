@@ -35,7 +35,7 @@ class MessagePage extends StatelessWidget {
                     );
                   } else {
                     return const Center(
-                      child: Text("No users"),
+                      child: Text("Bạn chưa có tin nhắn nào!"),
                     );
                   }
                 }

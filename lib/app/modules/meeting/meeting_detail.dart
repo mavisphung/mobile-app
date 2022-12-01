@@ -99,8 +99,7 @@ class MeetingDetailPage extends StatelessWidget {
                   paddingBottom: 0,
                   title: 'Thông tin bệnh nhân',
                   suffixText: 'Xem ảnh',
-                  suffixAction: () =>
-                      Get.toNamed(Routes.IMAGE, arguments: patient?['avatar'] ?? Constants.defaultAvatar),
+                  suffixAction: () => Get.toNamed(Routes.IMAGE, arguments: patient?['avatar'] ?? Constants.defaultAvatar),
                 ),
                 ContentRow(
                   labelWidth: 100,
