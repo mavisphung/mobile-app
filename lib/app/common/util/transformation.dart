@@ -50,4 +50,11 @@ class Tx {
     }
     return '';
   }
+
+  static String getParsedDateString(String? date) {
+    if (date == null) return '';
+    final parsedDate = DateTime.tryParse(date);
+    if (parsedDate == null) return '';
+    return DateFormat('dd-MM-yyyy').format(parsedDate);
+  }
 }

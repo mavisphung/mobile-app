@@ -68,6 +68,9 @@ class ContentRow extends StatelessWidget {
   final double? verPadding;
   final double? hozPadding;
   final double labelWidth;
+  final TextStyle? labelStyle;
+  final TextStyle? valueStyle;
+  final int? maxLines;
 
   const ContentRow({
     super.key,
@@ -75,6 +78,9 @@ class ContentRow extends StatelessWidget {
     this.verPadding,
     this.hozPadding,
     required this.labelWidth,
+    this.labelStyle,
+    this.valueStyle,
+    this.maxLines,
   });
 
   Widget _getRow(String key, String value) {
@@ -87,19 +93,21 @@ class ContentRow extends StatelessWidget {
             width: labelWidth.sp,
             child: Text(
               key,
-              style: const TextStyle(
-                fontWeight: FontWeight.w300,
-              ),
+              style: labelStyle ??
+                  const TextStyle(
+                    fontWeight: FontWeight.w300,
+                  ),
             ),
           ),
           Expanded(
             child: Text(
               value,
-              maxLines: 2,
+              maxLines: maxLines ?? 2,
               overflow: TextOverflow.ellipsis,
-              style: const TextStyle(
-                fontWeight: FontWeight.w300,
-              ),
+              style: valueStyle ??
+                  const TextStyle(
+                    fontWeight: FontWeight.w300,
+                  ),
             ),
           ),
         ],

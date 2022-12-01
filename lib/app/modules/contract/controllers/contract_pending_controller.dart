@@ -76,7 +76,7 @@ class ContractPendingController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    _apiContract = Get.find<ApiContract>();
+    _apiContract = Get.put(ApiContract());
     scrollController = ScrollController();
     scrollController.addListener(
       () async {

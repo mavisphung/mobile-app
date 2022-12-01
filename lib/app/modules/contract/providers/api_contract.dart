@@ -24,6 +24,13 @@ class ApiContract extends GetConnect {
     super.onInit();
   }
 
+  Future<Response> getContractWithId(int contractId) {
+    return get(
+      '/contract/supervisor/$contractId',
+      headers: headers,
+    );
+  }
+
   Future<Response> postContract(Map<String, dynamic> map) {
     return post(
       '/contract/',
