@@ -12,12 +12,14 @@ class CustomElevatedButtonWidget extends StatelessWidget {
   final Status? status;
   final VoidCallback onPressed;
   final bool hasShadow;
+  final Color? buttonColor;
   const CustomElevatedButtonWidget({
     Key? key,
     required this.textChild,
     required this.onPressed,
     this.status = Status.init,
     this.hasShadow = true,
+    this.buttonColor,
   }) : super(key: key);
 
   @override
@@ -31,7 +33,7 @@ class CustomElevatedButtonWidget extends StatelessWidget {
         alignment: Alignment.center,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(Constants.borderRadius.sp),
-          color: AppColors.primary,
+          color: buttonColor ?? AppColors.primary,
           boxShadow: hasShadow
               ? [
                   BoxShadow(
@@ -40,7 +42,7 @@ class CustomElevatedButtonWidget extends StatelessWidget {
                     blurRadius: 7,
                   ),
                   BoxShadow(
-                    color: AppColors.primary.withOpacity(0.5),
+                    color: buttonColor?.withOpacity(0.5) ?? AppColors.primary.withOpacity(0.5),
                     spreadRadius: 0.4,
                     blurRadius: 7,
                   ),

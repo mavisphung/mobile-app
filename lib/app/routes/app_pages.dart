@@ -15,6 +15,7 @@ import 'package:hi_doctor_v2/app/modules/auth/register_page.dart';
 import 'package:hi_doctor_v2/app/modules/auth/splash_page.dart';
 import 'package:hi_doctor_v2/app/modules/bottom_navbar/nav_bar.dart';
 import 'package:hi_doctor_v2/app/modules/contract/create_contract_page.dart';
+import 'package:hi_doctor_v2/app/modules/contract/tabs/contract_detail_page.dart';
 import 'package:hi_doctor_v2/app/modules/health_record/edit_health_record_page.dart';
 import 'package:hi_doctor_v2/app/modules/health_record/edit_pathology_record_page.dart';
 import 'package:hi_doctor_v2/app/modules/health_record/health_record_page.dart';
@@ -150,6 +151,10 @@ abstract class AppPages {
     GetPage(
       name: Routes.WALLET_DETAIL,
       page: () => WalletDetailPage(),
+    ).custom(),
+    GetPage(
+      name: Routes.CONTRACT_DETAIL,
+      page: () => ContractDetailPage(),
     ).custom(),
   ];
 }

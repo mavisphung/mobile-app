@@ -5,11 +5,13 @@ import 'package:hi_doctor_v2/app/modules/widgets/custom_elevate_btn_widget.dart'
 class CustomBottomSheet extends StatelessWidget {
   final String buttonText;
   final void Function() onPressed;
+  final Color? buttonColor;
 
   const CustomBottomSheet({
     Key? key,
     required this.buttonText,
     required this.onPressed,
+    this.buttonColor,
   }) : super(key: key);
 
   @override
@@ -26,6 +28,7 @@ class CustomBottomSheet extends StatelessWidget {
       child: CustomElevatedButtonWidget(
         textChild: buttonText,
         onPressed: onPressed,
+        buttonColor: buttonColor,
       ),
     );
   }
