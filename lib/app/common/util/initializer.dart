@@ -5,10 +5,6 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 
-import '../../data/api_retry_controller.dart';
-import '../../data/auth/api_auth.dart';
-import '../../data/auth/api_auth_impl.dart';
-
 abstract class Initializer {
   static void init(VoidCallback runApp) {
     // ErrorWidget.builder = (errorDetails) {
@@ -28,8 +24,7 @@ abstract class Initializer {
       await _initServices();
       runApp();
     }, (error, stack) {
-      Get.printInfo(
-          info: 'INITIALIZER_ERROR runZonedGuarded: ${error.toString()}');
+      Get.printInfo(info: 'INITIALIZER_ERROR runZonedGuarded: ${error.toString()}');
     });
   }
 
@@ -52,18 +47,5 @@ abstract class Initializer {
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown,
     ]);
-  }
-}
-
-class InitialBindings extends Bindings {
-  @override
-  void dependencies() {
-    Get.lazyPut<ApiAuth>(
-      () => ApiAuthImpl(),
-    );
-
-    Get.lazyPut<ApiRetryController>(
-      () => ApiRetryController(),
-    );
   }
 }
