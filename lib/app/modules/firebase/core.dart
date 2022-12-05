@@ -2,8 +2,12 @@ import 'dart:convert';
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:get/get.dart';
+import 'package:hi_doctor_v2/app/common/constants.dart';
 import 'package:hi_doctor_v2/app/common/util/extensions.dart';
 import 'package:hi_doctor_v2/app/common/util/utils.dart';
+import 'package:hi_doctor_v2/app/modules/meeting/controllers/meeting_controller.dart';
+import 'package:hi_doctor_v2/app/routes/app_pages.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 enum NotificationType { info, warn }
@@ -38,6 +42,28 @@ class FirebaseHandler {
     // );
   }
 
+  static Map<String, Function> processFunctions = {
+    NotificationResponse.checkInOnlineSucceeded: navigateToChannel,
+  };
+
+  static void navigateToChannel() async {
+    'Navigate to entry'.debugLog('Firebase.core');
+    MeetingController controller;
+    if (!Get.isRegistered<MeetingController>()) {
+      controller = Get.put(MeetingController());
+    } else {
+      controller = Get.find<MeetingController>();
+    }
+
+    bool? isAccepted = await Utils.showConfirmDialog('Bác sĩ đã vào phòng họp. Bạn tham gia luôn chứ?');
+    if (isAccepted == null || !isAccepted) return;
+
+    final channelEntry = await controller.getChannelEntry();
+    if (channelEntry != null) {
+      Get.toNamed(Routes.CHANNEL, arguments: channelEntry);
+    }
+  }
+
   static void registerNotification() async {
     // 1. Initialize the Firebase app
     // 2. Instantiate Firebase Messaging
@@ -59,18 +85,23 @@ class FirebaseHandler {
       'User granted permission'.debugLog('FirebaseHandler');
 
       // TODO: handle the received notifications
-      FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+      FirebaseMessaging.onMessage.listen((RemoteMessage message) async {
         print('From message opened app');
         // Get.snackbar(
         //   message.notification!.title!.toString(),
         //   message.data['payload'],
         //   backgroundColor: Colors.redAccent,
         // );
-        Map<String, dynamic> converted = jsonDecode(message.data['payload']);
-        if (converted['type'] == NotificationType.info.value) {
+        message.data['type'].toString().debugLog('Message type');
+        message.data['model'].toString().debugLog('Message model');
+        Map<String, dynamic> payload = jsonDecode(message.data['payload']);
+        if (message.data['type'] == NotificationType.info.value) {
           // TODO: Perform infomative notification
-          performInfoNotification(converted);
-        } else if (converted['type'] == NotificationType.warn.value) {
+          await processFunctions[NotificationResponse.checkInOnlineSucceeded]!();
+          // payload.toString().debugLog('Payload');
+          // performInfoNotification(payload);
+
+        } else if (message.data['type'] == NotificationType.warn.value) {
           // TODO: Perform warning notification
         }
       });

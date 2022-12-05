@@ -122,9 +122,7 @@ class PendingContractTile extends StatelessWidget {
                 Expanded(
                   child: AppointmentButton(
                     onTap: () {
-                      data.id != null
-                          ? Get.toNamed(Routes.CONTRACT_DETAIL, arguments: data.id)
-                          : Utils.showAlertDialog('Error to get contract information');
+                      data.id != null ? Get.toNamed(Routes.CONTRACT_DETAIL, arguments: data.id) : Utils.showAlertDialog('Error to get contract information');
                     },
                     textColor: Colors.white,
                     backgroundColor: AppColors.primary,

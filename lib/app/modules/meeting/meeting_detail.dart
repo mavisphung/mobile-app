@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:hi_doctor_v2/app/common/util/extensions.dart';
 import 'package:hi_doctor_v2/app/modules/appointment/widgets/package_item.dart';
 import 'package:intl/intl.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -99,8 +100,7 @@ class MeetingDetailPage extends StatelessWidget {
                   paddingBottom: 0,
                   title: 'Thông tin bệnh nhân',
                   suffixText: 'Xem ảnh',
-                  suffixAction: () =>
-                      Get.toNamed(Routes.IMAGE, arguments: patient?['avatar'] ?? Constants.defaultAvatar),
+                  suffixAction: () => Get.toNamed(Routes.IMAGE, arguments: patient?['avatar'] ?? Constants.defaultAvatar),
                 ),
                 ContentRow(
                   labelWidth: 100,
@@ -119,6 +119,7 @@ class MeetingDetailPage extends StatelessWidget {
                     'Tên dịch vụ': package?['name'],
                     'Mô tả': package?['description'],
                     'Giá dịch vụ': '${_getPrice(package?['price'])} VNĐ',
+                    'Nơi khám': _cMeeting.appointment.category!.toString().enumType.label,
                   },
                 ),
                 const InfoContainer(info: 'Dịch vụ chỉ được mở trong thời gian cuộc hẹn.', hasInfoIcon: true),
