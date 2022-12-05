@@ -127,6 +127,8 @@ class UserProfileController extends GetxController {
       final userInfo = info.copyWith(
         id: oldData.id,
         email: oldData.email,
+        tempBalance: oldData.tempBalance,
+        mainBalance: oldData.mainBalance,
       );
 
       await Storage.saveValue(CacheKey.USER_INFO.name, userInfo);

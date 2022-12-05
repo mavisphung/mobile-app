@@ -64,3 +64,7 @@ abstract class PaymentInfo {
   static const String expiry = '07/15';
   static const String bankName = 'NCB';
 }
+
+abstract class NotificationResponse {
+  static const String checkInOnlineSucceeded = 'APPOINTMENT_ONLINE_CHECK_IN';
+}

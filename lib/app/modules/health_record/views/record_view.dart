@@ -20,8 +20,7 @@ class RecordsView extends StatelessWidget {
   final void Function(int, String) removeRecordFunc;
   final void Function(int, int) removeTicketFunc;
 
-  const RecordsView(
-      {super.key, required this.rxRecords, required this.removeRecordFunc, required this.removeTicketFunc});
+  const RecordsView({super.key, required this.rxRecords, required this.removeRecordFunc, required this.removeTicketFunc});
 
   @override
   Widget build(BuildContext context) {
@@ -110,7 +109,7 @@ class ImagePreviewGrid extends StatelessWidget {
                       const Icon(Icons.add_a_photo_rounded),
                       SizedBox(height: 5.sp),
                       Text(
-                        'Add new image',
+                        'Thêm ảnh',
                         maxLines: 2,
                         textAlign: TextAlign.center,
                         overflow: TextOverflow.ellipsis,

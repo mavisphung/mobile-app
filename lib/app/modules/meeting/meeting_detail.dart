@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:hi_doctor_v2/app/common/util/extensions.dart';
 import 'package:hi_doctor_v2/app/modules/appointment/widgets/package_item.dart';
 import 'package:intl/intl.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -118,6 +119,7 @@ class MeetingDetailPage extends StatelessWidget {
                     'Tên dịch vụ': package?['name'],
                     'Mô tả': package?['description'],
                     'Giá dịch vụ': '${_getPrice(package?['price'])} VNĐ',
+                    'Nơi khám': _cMeeting.appointment.category!.toString().enumType.label,
                   },
                 ),
                 const InfoContainer(info: 'Dịch vụ chỉ được mở trong thời gian cuộc hẹn.', hasInfoIcon: true),
