@@ -25,6 +25,7 @@ abstract class Constants {
   static const pathMessageCollection = 'messages';
   static const supervisorId = 'supervisorId';
   static const doctorId = 'doctorId';
+  static const doctorAccountId = 'doctorAccountId';
   static const lastMessage = 'lastMessage';
   static const lastTimeStamp = 'lastTimeStamp';
   static const senderId = 'senderId';

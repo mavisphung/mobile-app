@@ -5,7 +5,7 @@ import 'package:hi_doctor_v2/app/common/util/enum.dart';
 import 'package:hi_doctor_v2/app/models/contract.dart';
 
 import 'package:hi_doctor_v2/app/modules/contract/controllers/contract_inprogress_controller.dart';
-import 'package:hi_doctor_v2/app/modules/contract/tabs/pending_contract_tile.dart';
+import 'package:hi_doctor_v2/app/modules/contract/tabs/in_progress_contract_tile.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/loading_widget.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/response_status_widget.dart';
 
@@ -58,7 +58,7 @@ class _ContractInProgressTabState extends State<ContractInProgressTab> with Auto
                 (data) {
                   if (data.isNotEmpty) {
                     return Column(
-                      children: data.map((e) => PendingContractTile(data: e)).toList(),
+                      children: data.map((e) => InProgressContractTile(data: e)).toList(),
                     );
                   } else if (data.isEmpty && _cContractInProgress.loadingStatus.value == Status.success) {
                     return const NoDataWidget(message: 'Bạn không có hợp đồng nào đang diễn ra.');

@@ -7,6 +7,8 @@ class StatusRawButton extends StatelessWidget {
   final IconData iconDataOn;
   final IconData iconDataOff;
   final RxBool rxBool;
+  final double? size;
+  final Color? fillColor;
 
   const StatusRawButton({
     super.key,
@@ -15,6 +17,8 @@ class StatusRawButton extends StatelessWidget {
     required this.rxBool,
     required this.iconDataOn,
     required this.iconDataOff,
+    this.size,
+    this.fillColor = Colors.redAccent,
   });
 
   @override
@@ -24,12 +28,12 @@ class StatusRawButton extends StatelessWidget {
         onPressed: onPressed,
         shape: const CircleBorder(),
         elevation: 2.0,
-        fillColor: data.value ? Colors.redAccent : Colors.white60,
+        fillColor: data.value ? fillColor : Colors.white60,
         padding: EdgeInsets.all(padding),
         child: Icon(
           data.value ? iconDataOn : iconDataOff,
           color: Colors.white,
-          size: 20.0,
+          size: size ?? 20.0,
         ),
       ),
       rxBool,

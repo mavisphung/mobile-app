@@ -110,7 +110,7 @@ class HomePage extends StatelessWidget {
               ObxValue<RxList<Appointment>>(
                 (data) {
                   if (data.isNotEmpty) {
-                    return ReminderCard(appointment: data[data.length - 1]);
+                    return ReminderCard(appointment: data[0]);
                   } else if (data.isEmpty && _cIncoming.loadingStatus.value == Status.success) {
                     return const NoAppointmentCard();
                   }

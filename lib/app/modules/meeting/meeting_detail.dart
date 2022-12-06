@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:hi_doctor_v2/app/common/util/extensions.dart';
-import 'package:hi_doctor_v2/app/modules/appointment/widgets/package_item.dart';
 import 'package:intl/intl.dart';
 import 'package:permission_handler/permission_handler.dart';
 
+import 'package:hi_doctor_v2/app/common/util/extensions.dart';
+import 'package:hi_doctor_v2/app/common/values/strings.dart';
+import 'package:hi_doctor_v2/app/modules/appointment/widgets/package_item.dart';
+import 'package:hi_doctor_v2/app/modules/widgets/custom_bottom_sheet.dart';
 import 'package:hi_doctor_v2/app/modules/meeting/views/service_tile.dart';
 import 'package:hi_doctor_v2/app/modules/message/chat_page.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/info_container.dart';
@@ -100,7 +102,8 @@ class MeetingDetailPage extends StatelessWidget {
                   paddingBottom: 0,
                   title: 'Thông tin bệnh nhân',
                   suffixText: 'Xem ảnh',
-                  suffixAction: () => Get.toNamed(Routes.IMAGE, arguments: patient?['avatar'] ?? Constants.defaultAvatar),
+                  suffixAction: () =>
+                      Get.toNamed(Routes.IMAGE, arguments: patient?['avatar'] ?? Constants.defaultAvatar),
                 ),
                 ContentRow(
                   labelWidth: 100,
@@ -128,6 +131,7 @@ class MeetingDetailPage extends StatelessWidget {
                     bookedAt: _cMeeting.appointment.bookedAt!,
                     chatPageargs: ChatPageArguments(
                       peerId: doctor?['id'],
+                      peerAccountId: doctor?['accountId'],
                       peerName: Tx.getDoctorName(doctor?['lastName'], doctor?['firstName']),
                       peerAvatar: doctor?['avatar'] ?? Constants.defaultAvatar,
                       hasInputWidget: true,
@@ -144,10 +148,10 @@ class MeetingDetailPage extends StatelessWidget {
           return const LoadingWidget(topPadding: 200);
         },
       ),
-      // bottomSheet: CustomBottomSheet(
-      //   buttonText: 'Video Call',
-      //   onPressed: _onJoin,
-      // ),
+      bottomSheet: CustomBottomSheet(
+        buttonText: Strings.checkIn,
+        onPressed: () => Get.toNamed(Routes.QR_SCANNER),
+      ),
     );
   }
 }

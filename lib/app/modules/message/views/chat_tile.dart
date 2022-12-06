@@ -50,6 +50,7 @@ class ChatTile extends StatelessWidget {
                 Routes.CHAT,
                 arguments: ChatPageArguments(
                   peerId: chatPeer.doctorId,
+                  peerAccountId: chatPeer.doctorAccountId,
                   peerName: doctorName,
                   peerAvatar: doctor.avatar ?? Constants.defaultAvatar,
                   hasInputWidget: false,

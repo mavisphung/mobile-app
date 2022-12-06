@@ -43,6 +43,7 @@ abstract class Strings {
   static String get exitAppAlert => 'Bấm quay lại 2 lần để thoát ứng dụng';
   static String get seeAll => 'Xem thêm';
   static String get reload => 'Thử lại';
+  static String get checkIn => 'Điểm danh';
 
   // Information Message
   static String get registerSuccessMsg => 'Bạn đã đăng ký tài khoản thành công.';

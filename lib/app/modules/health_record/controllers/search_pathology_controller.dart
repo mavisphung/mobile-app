@@ -15,7 +15,6 @@ class SearchPathologyController extends GetxController {
   late String _keyword;
 
   void reset() {
-    print('RESET');
     searchList.clear();
     _nextPage = 1;
     _totalItems = 0;
@@ -31,9 +30,6 @@ class SearchPathologyController extends GetxController {
 
     if (model.nextPage != null) _nextPage = model.nextPage!;
     if (model.totalItems != null) _totalItems = model.totalItems!;
-
-    print('KEYWORD $_keyword, $page');
-    print('RESP ${model.toString()}');
 
     final data = model.data as List<dynamic>;
     if (data.isEmpty) return false;

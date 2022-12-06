@@ -1,29 +1,49 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:hi_doctor_v2/app/common/values/colors.dart';
 import 'package:hi_doctor_v2/app/models/contract.dart';
-
 import 'package:hi_doctor_v2/app/modules/contract/controllers/contract_controller.dart';
-import 'package:hi_doctor_v2/app/modules/widgets/custom_bottom_sheet.dart';
 import 'package:hi_doctor_v2/app/common/util/transformation.dart';
-import 'package:hi_doctor_v2/app/common/util/utils.dart';
+import 'package:hi_doctor_v2/app/modules/settings/widgets/setting_item.dart';
+import 'package:hi_doctor_v2/app/modules/treatment/controllers/treatment_controller.dart';
+import 'package:hi_doctor_v2/app/modules/widgets/base_page.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/content_container.dart';
+import 'package:hi_doctor_v2/app/modules/widgets/custom_container.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/loading_widget.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/response_status_widget.dart';
-import 'package:hi_doctor_v2/app/modules/widgets/base_page.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/my_appbar.dart';
+import 'package:hi_doctor_v2/app/routes/app_pages.dart';
 
 class ContractDetailPage extends StatelessWidget {
   final _cContract = Get.put(ContractController());
   final _contractId = Get.arguments as int;
+  final TreatmentController _cTreatment = Get.put(TreatmentController());
 
   ContractDetailPage({super.key});
 
   @override
   Widget build(BuildContext context) {
     return BasePage(
-      appBar: const MyAppBar(
+      appBar: MyAppBar(
         title: 'Chi tiết hợp đồng',
+        actions: [
+          PopupMenuButton<int>(
+            padding: EdgeInsets.zero,
+            onSelected: (value) {},
+            itemBuilder: (context) => <PopupMenuEntry<int>>[
+              const PopupMenuItem<int>(
+                value: 1,
+                child: Text('Hủy hợp đồng'),
+              ),
+              const PopupMenuItem<int>(
+                value: 2,
+                child: Text('Báo cáo hợp đồng'),
+              ),
+            ],
+          ),
+        ],
       ),
       body: FutureBuilder(
         future: _cContract.getContractWithId(_contractId),
@@ -114,6 +134,27 @@ class ContractDetailPage extends StatelessWidget {
                   labelStyle: const TextStyle(),
                   valueStyle: const TextStyle(fontWeight: FontWeight.w500),
                 ),
+                CustomContainer(
+                  child: Column(
+                    children: [
+                      SettingItem1(
+                        title: 'Bản hợp đồng chính thức',
+                        icon: Icon(PhosphorIcons.file_text_thin, color: AppColors.primary),
+                        function: () {},
+                      ),
+                      SettingItem1(
+                        title: 'Lịch hẹn',
+                        icon: Icon(PhosphorIcons.calendar_thin, color: AppColors.primary),
+                        function: () => Get.toNamed(Routes.CONTRACT_SCHEDULE),
+                      ),
+                      SettingItem1(
+                        title: 'Hồ sơ sức khỏe',
+                        icon: Icon(PhosphorIcons.folders_thin, color: AppColors.primary),
+                        function: () => Get.toNamed(Routes.CONTRACT_RECORDS),
+                      ),
+                    ],
+                  ),
+                ),
               ],
             );
           } else if (snapshot.hasData && snapshot.data == false) {
@@ -122,27 +163,6 @@ class ContractDetailPage extends StatelessWidget {
             return const NoInternetWidget2();
           }
           return const LoadingWidget(topPadding: 200);
-        },
-      ),
-      bottomSheet: CustomBottomSheet(
-        buttonColor: Colors.redAccent,
-        buttonText: 'Hủy yêu cầu',
-        onPressed: () async {
-          final isOk = await Utils.showConfirmDialog('Bạn có chắc là muốn hủy yêu cầu hợp đồng này không?');
-          if (isOk == null || !isOk) {
-            return;
-          }
-          // bool result = await _ic.cancelAppointment(data.id!);
-          // Dialogs.statusDialog(
-          //   ctx: context,
-          //   isSuccess: result,
-          //   successMsg: 'Hủy lịch hẹn thành công',
-          //   failMsg: 'Lỗi xảy ra khi hủy cuộc hẹn',
-          //   successAction: () {},
-          // );
-          // Get.toNamed(Routes.CANCEL, arguments: {
-          //   'appId': data.id,
-          // });
         },
       ),
     );

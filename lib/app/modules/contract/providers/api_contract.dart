@@ -44,9 +44,9 @@ class ApiContract extends GetConnect {
       '/contract/supervisor/list',
       headers: headers,
       query: {
+        'status': status,
         'page': page.toString(),
         'limit': limit.toString(),
-        'status': status,
       },
     );
   }

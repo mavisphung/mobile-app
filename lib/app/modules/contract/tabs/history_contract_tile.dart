@@ -2,21 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
-import 'package:hi_doctor_v2/app/common/util/extensions.dart';
 import 'package:hi_doctor_v2/app/common/util/transformation.dart';
 import 'package:hi_doctor_v2/app/common/util/utils.dart';
 import 'package:hi_doctor_v2/app/common/values/colors.dart';
 import 'package:hi_doctor_v2/app/models/contract.dart';
+import 'package:hi_doctor_v2/app/models/doctor.dart';
 import 'package:hi_doctor_v2/app/modules/appointment/widgets/appointment_tile_button.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/content_container.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/custom_card.dart';
 import 'package:hi_doctor_v2/app/routes/app_pages.dart';
 
-class PendingContractTile extends StatelessWidget {
+class HistoryContractTile extends StatelessWidget {
   final Contract data;
-  // final ContractPendingController _ic = Get.find<ContractPendingController>();
-
-  const PendingContractTile({Key? key, required this.data}) : super(key: key);
+  const HistoryContractTile({Key? key, required this.data}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -83,6 +81,7 @@ class PendingContractTile extends StatelessWidget {
                   ),
                 ),
                 Text('Ngày bắt đầu: ${Tx.getParsedDateString(data.startedTime)}'),
+                Text('Ngày kết thúc: ${Tx.getParsedDateString(data.endedAt)}'),
               ],
             ),
             const Divider(),
@@ -90,27 +89,13 @@ class PendingContractTile extends StatelessWidget {
               children: [
                 Expanded(
                   child: AppointmentButton(
-                    onTap: () async {
-                      'Cancelling appointment'.debugLog('Cancellation');
-                      final isOk = await Utils.showConfirmDialog('Bạn có chắc là muốn hủy yêu cầu hợp đồng này không?');
-                      if (isOk == null || !isOk) {
-                        return;
-                      }
-                      // bool result = await _ic.cancelAppointment(data.id!);
-                      // Dialogs.statusDialog(
-                      //   ctx: context,
-                      //   isSuccess: result,
-                      //   successMsg: 'Hủy lịch hẹn thành công',
-                      //   failMsg: 'Lỗi xảy ra khi hủy cuộc hẹn',
-                      //   successAction: () {},
-                      // );
-                      Get.toNamed(Routes.CANCEL, arguments: {
-                        'appId': data.id,
-                      });
-                    },
-                    textColor: Colors.red,
-                    borderColor: Colors.red,
-                    label: 'Hủy yêu cầu',
+                    onTap: () => Get.toNamed(
+                      Routes.CREATE_CONTRACT,
+                      arguments: Doctor.fromMap(data.doctor!),
+                    ),
+                    textColor: AppColors.primary,
+                    borderColor: AppColors.primary,
+                    label: 'Yêu cầu hợp đồng',
                   ),
                 ),
                 SizedBox(
@@ -126,7 +111,7 @@ class PendingContractTile extends StatelessWidget {
                     textColor: Colors.white,
                     backgroundColor: AppColors.primary,
                     borderColor: AppColors.primary,
-                    label: 'Xem chi tiết',
+                    label: 'Đánh giá',
                   ),
                 ),
               ],

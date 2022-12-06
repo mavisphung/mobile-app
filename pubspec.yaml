@@ -3,7 +3,7 @@ description: A new Flutter project.
 
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
-publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+publish_to: "none" # Remove this line if you wish to publish to pub.dev
 
 # The following defines the version and build number for your application.
 # A version number is three numbers separated by dots, like 1.2.43
@@ -65,8 +65,7 @@ dependencies:
   vnpay_flutter: ^1.0.1
   network_info_plus: ^3.0.1
   # QR Code Scanner
-  mobile_scanner: ^2.1.0
-  # qr_code_scanner: ^1.0.1
+  qr_code_scanner: ^1.0.1
   flutter_masked_text2: ^0.9.1
   flutter_launcher_icons: ^0.11.0
 
@@ -86,7 +85,6 @@ dev_dependencies:
 
 # The following section is specific to Flutter packages.
 flutter:
-
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.
@@ -132,6 +130,6 @@ flutter:
         - asset: assets/fonts/NotoSerif-BoldItalic.ttf
         - asset: assets/fonts/NotoSerif-Italic.ttf
         - asset: assets/fonts/NotoSerif-Regular.ttf
-  
+
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages

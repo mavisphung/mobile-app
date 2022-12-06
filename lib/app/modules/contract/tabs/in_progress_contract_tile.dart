@@ -12,11 +12,11 @@ import 'package:hi_doctor_v2/app/modules/widgets/content_container.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/custom_card.dart';
 import 'package:hi_doctor_v2/app/routes/app_pages.dart';
 
-class PendingContractTile extends StatelessWidget {
+class InProgressContractTile extends StatelessWidget {
   final Contract data;
   // final ContractPendingController _ic = Get.find<ContractPendingController>();
 
-  const PendingContractTile({Key? key, required this.data}) : super(key: key);
+  const InProgressContractTile({Key? key, required this.data}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -92,7 +92,7 @@ class PendingContractTile extends StatelessWidget {
                   child: AppointmentButton(
                     onTap: () async {
                       'Cancelling appointment'.debugLog('Cancellation');
-                      final isOk = await Utils.showConfirmDialog('Bạn có chắc là muốn hủy yêu cầu hợp đồng này không?');
+                      final isOk = await Utils.showConfirmDialog('Bạn có chắc là muốn hủy hợp đồng này không?');
                       if (isOk == null || !isOk) {
                         return;
                       }
@@ -110,7 +110,7 @@ class PendingContractTile extends StatelessWidget {
                     },
                     textColor: Colors.red,
                     borderColor: Colors.red,
-                    label: 'Hủy yêu cầu',
+                    label: 'Hủy hợp đồng',
                   ),
                 ),
                 SizedBox(

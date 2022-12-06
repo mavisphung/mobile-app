@@ -33,9 +33,6 @@ class SearchController extends GetxController {
     if (model.nextPage != null) _nextPage = model.nextPage!;
     if (model.totalItems != null) _totalItems = model.totalItems!;
 
-    print('KEYWORD $_keyword, $page');
-    print('RESP ${model.toString()}');
-
     final data = model.data as List<dynamic>;
     if (data.isEmpty) return false;
     searchList.value += data.map((e) => ResultDoctor.fromMap(e)).toList();

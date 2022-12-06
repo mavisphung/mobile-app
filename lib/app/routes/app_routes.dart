@@ -32,4 +32,7 @@ abstract class Routes {
   static const CANCEL = '/cancel';
   static const QR_SCANNER = '/qr-scanner';
   static const CONTRACT_DETAIL = '/contractDetail';
+  static const CHECK_IN = '/checkIn';
+  static const CONTRACT_SCHEDULE = '/contractSchedule';
+  static const CONTRACT_RECORDS = '/contractRecords';
 }

@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:hi_doctor_v2/app/common/values/strings.dart';
 import 'package:hi_doctor_v2/app/routes/app_pages.dart';
 import 'package:intl/intl.dart';
 
@@ -78,10 +79,6 @@ class ReminderCard extends StatelessWidget {
                   ],
                 ),
               ),
-              const Icon(
-                Icons.more_vert,
-                color: Colors.black54,
-              ),
             ],
           ),
           subtitle: Padding(
@@ -122,6 +119,29 @@ class ReminderCard extends StatelessWidget {
                       fontSize: 13.2.sp,
                     ),
                   ),
+                ),
+              ],
+            ),
+          ),
+          trailing: Padding(
+            padding: EdgeInsets.only(bottom: 25.sp),
+            child: PopupMenuButton<int>(
+              tooltip: '',
+              padding: EdgeInsets.zero,
+              onSelected: (value) {},
+              itemBuilder: (context) => <PopupMenuEntry<int>>[
+                PopupMenuItem<int>(
+                  value: 0,
+                  child: Text(Strings.checkIn),
+                ),
+                const PopupMenuItem<int>(
+                  value: 1,
+                  child: Text('Dời cuộc hẹn'),
+                ),
+                const PopupMenuDivider(),
+                const PopupMenuItem<int>(
+                  value: 2,
+                  child: Text('Hủy cuộc hẹn'),
                 ),
               ],
             ),

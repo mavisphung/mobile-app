@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:get/get.dart';
 
 import 'package:hi_doctor_v2/app/common/values/colors.dart';
-import 'package:hi_doctor_v2/app/modules/contract/controllers/contract_tab_controller.dart';
 import 'package:hi_doctor_v2/app/modules/contract/tabs/contract_history_tab.dart';
 import 'package:hi_doctor_v2/app/modules/contract/tabs/contract_in_progress_tab.dart';
 import 'package:hi_doctor_v2/app/modules/contract/tabs/contract_pending_tab.dart';
@@ -17,14 +15,14 @@ class ContractListPage extends StatefulWidget {
 }
 
 class _ContractListPageState extends State<ContractListPage> with SingleTickerProviderStateMixin {
-  late final ContractTabController tabx;
-  var tabs = <Tab>[];
+  late final TabController _tabController;
+  var _tabs = <Tab>[];
 
   @override
   void initState() {
     super.initState();
 
-    tabs = <Tab>[
+    _tabs = <Tab>[
       Tab(
         height: 29.sp,
         text: 'Đang diễn ra',
@@ -38,7 +36,13 @@ class _ContractListPageState extends State<ContractListPage> with SingleTickerPr
         text: 'Lịch sử',
       ),
     ];
-    tabx = Get.put(ContractTabController(length: tabs.length, tabs: tabs));
+    _tabController = TabController(vsync: this, length: _tabs.length);
+  }
+
+  @override
+  void dispose() {
+    _tabController.dispose();
+    super.dispose();
   }
 
   @override
@@ -67,13 +71,13 @@ class _ContractListPageState extends State<ContractListPage> with SingleTickerPr
                 fontSize: 12.sp,
                 fontWeight: FontWeight.w500,
               ),
-              controller: tabx.controller,
-              tabs: tabx.tabs,
+              controller: _tabController,
+              tabs: _tabs,
             ),
           ),
           Expanded(
             child: TabBarView(
-              controller: tabx.controller,
+              controller: _tabController,
               children: const [
                 ContractInProgressTab(),
                 ContractPendingTab(),

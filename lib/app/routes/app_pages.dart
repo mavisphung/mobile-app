@@ -8,6 +8,7 @@ import 'package:hi_doctor_v2/app/modules/appointment/views/booking/booking_datet
 import 'package:hi_doctor_v2/app/modules/appointment/views/booking/booking_patient_detail.dart';
 import 'package:hi_doctor_v2/app/modules/appointment/views/booking/booking_summary.dart';
 import 'package:hi_doctor_v2/app/modules/appointment/views/cancel_page.dart';
+import 'package:hi_doctor_v2/app/modules/appointment/views/check_in_page.dart';
 import 'package:hi_doctor_v2/app/modules/appointment/views/qr_scanner_page.dart';
 import 'package:hi_doctor_v2/app/modules/auth/bindings/register_binding.dart';
 import 'package:hi_doctor_v2/app/modules/auth/login_page.dart';
@@ -31,6 +32,8 @@ import 'package:hi_doctor_v2/app/modules/settings/views/patient_profile_detail.d
 import 'package:hi_doctor_v2/app/modules/settings/views/user_profile_detail.dart';
 import 'package:hi_doctor_v2/app/modules/settings/views/wallet_detail_page.dart';
 import 'package:hi_doctor_v2/app/modules/settings/views/wallet_page.dart';
+import 'package:hi_doctor_v2/app/modules/treatment/views/records_tab.dart';
+import 'package:hi_doctor_v2/app/modules/treatment/views/schedule_tab.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/image_page.dart';
 
 part 'package:hi_doctor_v2/app/routes/app_routes.dart';
@@ -146,7 +149,7 @@ abstract class AppPages {
     ).custom(),
     GetPage(
       name: Routes.QR_SCANNER,
-      page: () => QrScannerPage(),
+      page: () => const QRScannerPage(),
     ).custom(),
     GetPage(
       name: Routes.WALLET_DETAIL,
@@ -155,6 +158,18 @@ abstract class AppPages {
     GetPage(
       name: Routes.CONTRACT_DETAIL,
       page: () => ContractDetailPage(),
+    ).custom(),
+    GetPage(
+      name: Routes.CHECK_IN,
+      page: () => CheckInPage(),
+    ).custom(),
+    GetPage(
+      name: Routes.CONTRACT_SCHEDULE,
+      page: () => SchedulePage(),
+    ).custom(),
+    GetPage(
+      name: Routes.CONTRACT_RECORDS,
+      page: () => RecordsPage(),
     ).custom(),
   ];
 }

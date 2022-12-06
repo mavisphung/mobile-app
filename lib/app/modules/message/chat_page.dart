@@ -16,12 +16,14 @@ enum TypeMessage { TEXT, IMAGE, FILE, VIDEO }
 
 class ChatPageArguments {
   final int peerId;
+  final int peerAccountId;
   final String peerAvatar;
   final String peerName;
   final bool hasInputWidget;
 
   ChatPageArguments({
     required this.peerId,
+    required this.peerAccountId,
     required this.peerAvatar,
     required this.peerName,
     required this.hasInputWidget,
@@ -40,7 +42,7 @@ class ChatPage extends StatefulWidget {
 class ChatPageState extends State<ChatPage> {
   late final MessageController _cMessage;
   late final int _userId;
-  late final int _peerId;
+  late final int _peerAccountId;
 
   List<QueryDocumentSnapshot> listMessage = [];
   int _limit = 20;
@@ -65,8 +67,8 @@ class ChatPageState extends State<ChatPage> {
     super.initState();
     _cMessage = Get.put(MessageController());
     _userId = _cMessage.userId;
-    _peerId = widget.arguments.peerId;
-    _groupChatId = '$_userId-$_peerId';
+    _peerAccountId = widget.arguments.peerAccountId;
+    _groupChatId = '$_userId-$_peerAccountId';
 
     _listScrollController.addListener(_scrollListener);
   }
@@ -81,9 +83,9 @@ class ChatPageState extends State<ChatPage> {
     final content = _cMessage.inputController.text.trim();
     if (type == TypeMessage.TEXT.index) {
       if (content.isEmpty) return;
-      await _cMessage.sendMessage(content, type, _groupChatId, _userId, _peerId);
+      await _cMessage.sendMessage(content, type, _groupChatId, _userId, _peerAccountId);
     } else if (type == TypeMessage.IMAGE.index) {
-      await _cMessage.sendMessage(imgUrl!, type, _groupChatId, _userId, _peerId);
+      await _cMessage.sendMessage(imgUrl!, type, _groupChatId, _userId, _peerAccountId);
     }
     _cMessage.inputController.clear();
 
@@ -92,7 +94,8 @@ class ChatPageState extends State<ChatPage> {
       _groupChatId,
       {
         Constants.supervisorId: _userId,
-        Constants.doctorId: _peerId,
+        Constants.doctorId: widget.arguments.peerId,
+        Constants.doctorAccountId: _peerAccountId,
         Constants.lastMessage: type == TypeMessage.TEXT.index ? content : '[hình ảnh]',
         Constants.lastTimeStamp: DateTime.now().millisecondsSinceEpoch.toString(),
       },

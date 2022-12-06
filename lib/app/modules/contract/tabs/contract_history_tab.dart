@@ -6,7 +6,7 @@ import 'package:hi_doctor_v2/app/common/util/enum.dart';
 import 'package:hi_doctor_v2/app/models/contract.dart';
 import 'package:hi_doctor_v2/app/modules/appointment/widgets/filter_button.dart';
 import 'package:hi_doctor_v2/app/modules/contract/controllers/contract_history_controller.dart';
-import 'package:hi_doctor_v2/app/modules/contract/tabs/pending_contract_tile.dart';
+import 'package:hi_doctor_v2/app/modules/contract/tabs/history_contract_tile.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/loading_widget.dart';
 import 'package:hi_doctor_v2/app/modules/widgets/response_status_widget.dart';
 
@@ -60,7 +60,7 @@ class _ContractHistoryTabState extends State<ContractHistoryTab> with AutomaticK
                 (data) {
                   if (data.isNotEmpty) {
                     return Column(
-                      children: data.map((e) => PendingContractTile(data: e)).toList(),
+                      children: data.map((e) => HistoryContractTile(data: e)).toList(),
                     );
                   } else if (data.isEmpty && _cContractHistory.loadingStatus.value == Status.success) {
                     return const NoDataWidget(message: 'Bạn không có hợp đồng nào trong lịch sử');

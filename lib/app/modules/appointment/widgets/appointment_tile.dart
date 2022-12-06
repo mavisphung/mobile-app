@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+
 import 'package:hi_doctor_v2/app/common/constants.dart';
 import 'package:hi_doctor_v2/app/common/util/extensions.dart';
 import 'package:hi_doctor_v2/app/common/util/utils.dart';
@@ -12,7 +13,7 @@ import 'package:hi_doctor_v2/app/modules/appointment/widgets/appointment_tile_bu
 import 'package:hi_doctor_v2/app/modules/widgets/image_container.dart';
 import 'package:hi_doctor_v2/app/routes/app_pages.dart';
 
-final Map<AppointmentStatus, Color> statusColors = {
+final Map<AppointmentStatus, Color> appointmentStatusColors = {
   AppointmentStatus.pending: AppColors.primary,
   AppointmentStatus.cancelled: Colors.red,
   AppointmentStatus.completed: Colors.green[600]!,
@@ -116,7 +117,7 @@ class AppointmentTile extends StatelessWidget {
                                 padding: EdgeInsets.symmetric(horizontal: 12.sp, vertical: 4.sp),
                                 decoration: BoxDecoration(
                                   border: Border.all(
-                                    color: statusColors[data.status.toString().enumStatus]!,
+                                    color: appointmentStatusColors[data.status.toString().enumStatus]!,
                                     width: 1.sp,
                                   ),
                                   borderRadius: BorderRadius.circular(5.sp),
@@ -125,7 +126,7 @@ class AppointmentTile extends StatelessWidget {
                                   data.status.toString().enumStatus.label,
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
-                                    color: statusColors[data.status.toString().enumStatus]!,
+                                    color: appointmentStatusColors[data.status.toString().enumStatus]!,
                                     fontSize: 12.sp,
                                     fontWeight: FontWeight.w500,
                                   ),
@@ -176,14 +177,11 @@ class AppointmentTile extends StatelessWidget {
                 ),
                 Expanded(
                   child: AppointmentButton(
-                    onTap: () {
-                      'Rescheduling appointment'.debugLog('Reschedule');
-                      Get.toNamed(Routes.QR_SCANNER);
-                    },
+                    onTap: () => Get.toNamed(Routes.QR_SCANNER),
                     textColor: Colors.white,
                     backgroundColor: AppColors.primary,
                     borderColor: AppColors.primary,
-                    label: 'Check in',
+                    label: Strings.checkIn,
                   ),
                 ),
               ],
@@ -275,7 +273,7 @@ class HistoryAppointmentTile extends StatelessWidget {
                               padding: EdgeInsets.symmetric(horizontal: 12.sp, vertical: 4.sp),
                               decoration: BoxDecoration(
                                 border: Border.all(
-                                  color: statusColors[data.status.toString().enumStatus]!,
+                                  color: appointmentStatusColors[data.status.toString().enumStatus]!,
                                   width: 1.6.sp,
                                 ),
                                 borderRadius: BorderRadius.circular(7.sp),
@@ -284,7 +282,7 @@ class HistoryAppointmentTile extends StatelessWidget {
                                 data.status.toString().enumStatus.label,
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
-                                  color: statusColors[data.status.toString().enumStatus]!,
+                                  color: appointmentStatusColors[data.status.toString().enumStatus]!,
                                   fontSize: 12.sp,
                                   fontWeight: FontWeight.w500,
                                 ),
