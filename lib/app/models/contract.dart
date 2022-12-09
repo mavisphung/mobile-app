@@ -3,11 +3,13 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 
 // ignore: camel_case_types, constant_identifier_names
-enum CONTRACT_STATUS { APPROVED, IN_PROGRESS, EXPIRED, PENDING, CANCELLED, POSTPONE }
+enum CONTRACT_STATUS { SIGNED, APPROVED, IN_PROGRESS, EXPIRED, PENDING, CANCELLED, POSTPONE }
 
 extension ContractStatusExt on CONTRACT_STATUS {
   String get label {
     switch (this) {
+      case CONTRACT_STATUS.SIGNED:
+        return 'Đã ký';
       case CONTRACT_STATUS.APPROVED:
         return 'Hợp lệ';
       case CONTRACT_STATUS.IN_PROGRESS:
@@ -29,6 +31,8 @@ extension ContractStatusExt on CONTRACT_STATUS {
 extension ContractEnum on String {
   CONTRACT_STATUS get contractStatus {
     switch (this) {
+      case 'SIGNED':
+        return CONTRACT_STATUS.SIGNED;
       case 'APPROVED':
         return CONTRACT_STATUS.APPROVED;
       case 'IN_PROGRESS':
@@ -50,7 +54,10 @@ extension ContractEnum on String {
 final Map<CONTRACT_STATUS, Color> contractStatusColors = {
   CONTRACT_STATUS.PENDING: Colors.orangeAccent,
   CONTRACT_STATUS.CANCELLED: Colors.red,
+  CONTRACT_STATUS.POSTPONE: Colors.red,
+  CONTRACT_STATUS.EXPIRED: Colors.red,
   CONTRACT_STATUS.APPROVED: Colors.green[600]!,
+  CONTRACT_STATUS.SIGNED: Colors.green[600]!,
   CONTRACT_STATUS.IN_PROGRESS: Colors.cyan,
 };
 

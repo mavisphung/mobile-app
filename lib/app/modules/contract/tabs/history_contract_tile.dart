@@ -80,7 +80,6 @@ class HistoryContractTile extends StatelessWidget {
                     ],
                   ),
                 ),
-                Text('Ngày bắt đầu: ${Tx.getParsedDateString(data.startedTime)}'),
                 Text('Ngày kết thúc: ${Tx.getParsedDateString(data.endedAt)}'),
               ],
             ),

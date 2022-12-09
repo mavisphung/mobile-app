@@ -20,7 +20,10 @@ class ServiceTile extends StatelessWidget {
     final now = DateTime.now();
     final bookAtDateTime = Utils.parseStrToDateTime(bookedAt.replaceRange(16, null, ''));
     if (bookAtDateTime != null) {
-      if (bookAtDateTime.year == now.year && bookAtDateTime.month == now.month && bookAtDateTime.day == now.day && bookAtDateTime.hour == now.hour) {
+      if (bookAtDateTime.year == now.year &&
+          bookAtDateTime.month == now.month &&
+          bookAtDateTime.day == now.day &&
+          bookAtDateTime.hour == now.hour) {
         return true;
       }
     }
@@ -33,7 +36,8 @@ class ServiceTile extends StatelessWidget {
       children: [
         GestureDetector(
           onTap: () {
-            final isValidTime = checkTime();
+            // final isValidTime = checkTime();
+            const isValidTime = true;
             if (isValidTime) {
               Get.toNamed(
                 Routes.CHAT,
@@ -82,7 +86,8 @@ class ServiceTile extends StatelessWidget {
         ),
         GestureDetector(
           onTap: () {
-            final isValidTime = checkTime();
+            // final isValidTime = checkTime();
+            const isValidTime = true;
             if (isValidTime) {
               onJoin();
             } else {

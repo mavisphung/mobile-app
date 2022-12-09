@@ -27,8 +27,7 @@ class ContractPendingController extends GetxController {
     pendingList.clear();
   }
 
-  void getPendingContracts({int page = 1, int limit = 10}) async {
-    loadMore();
+  Future<void> getPendingContracts({int page = 1, int limit = 10}) async {
     'loading pending contract'.debugLog('Pending Tab');
     Response result = await _apiContract.getFilterContract(CONTRACT_STATUS.PENDING.name, page: page, limit: limit);
     var response = ApiResponse.getResponse(result); // Map
@@ -41,14 +40,51 @@ class ContractPendingController extends GetxController {
     response[Constants.currentPage].toString().debugLog('Current Page');
     ResponseModel2 model = ResponseModel2.fromMap(response);
     var data = model.data as List<dynamic>;
-    final tmp = pendingList.toList();
-    tmp.addAll(data.map((e) {
+    pendingList.value += data.map((e) {
       final contract = Contract.fromMap(e);
       return contract;
-    }).toList());
-    pendingList.value = tmp;
-    complete();
-    pendingList.length.toString().debugLog('Items in list');
+    }).toList();
+    data.length.toString().debugLog('Items in PENDING list');
+  }
+
+  Future<void> getApprovedContracts({int page = 1, int limit = 10}) async {
+    'loading approved contract'.debugLog('Pending Tab');
+    Response result = await _apiContract.getFilterContract(CONTRACT_STATUS.APPROVED.name, page: page, limit: limit);
+    var response = ApiResponse.getResponse(result); // Map
+    PagingModel pageModel = PagingModel.fromMap(response);
+
+    totalItems = pageModel.totalItems ?? 0;
+    if (pageModel.nextPage != null) {
+      currentPage.value = pageModel.nextPage!;
+    }
+    response[Constants.currentPage].toString().debugLog('Current Page');
+    ResponseModel2 model = ResponseModel2.fromMap(response);
+    var data = model.data as List<dynamic>;
+    pendingList.value += data.map((e) {
+      final contract = Contract.fromMap(e);
+      return contract;
+    }).toList();
+    data.length.toString().debugLog('Items in APPROVED list');
+  }
+
+  Future<void> getSignedContracts({int page = 1, int limit = 10}) async {
+    'loading signed contract'.debugLog('Pending Tab');
+    Response result = await _apiContract.getFilterContract(CONTRACT_STATUS.SIGNED.name, page: page, limit: limit);
+    var response = ApiResponse.getResponse(result); // Map
+    PagingModel pageModel = PagingModel.fromMap(response);
+
+    totalItems = pageModel.totalItems ?? 0;
+    if (pageModel.nextPage != null) {
+      currentPage.value = pageModel.nextPage!;
+    }
+    response[Constants.currentPage].toString().debugLog('Current Page');
+    ResponseModel2 model = ResponseModel2.fromMap(response);
+    var data = model.data as List<dynamic>;
+    pendingList.value += data.map((e) {
+      final contract = Contract.fromMap(e);
+      return contract;
+    }).toList();
+    data.length.toString().debugLog('Items in SIGNED list');
   }
 
   // Future<bool> cancelAppointment(int appId, String reason) async {
@@ -73,23 +109,33 @@ class ContractPendingController extends GetxController {
     return textController.text.isNotEmpty;
   }
 
+  void init() async {
+    loadMore();
+    await getPendingContracts(page: 1, limit: 10);
+    await getApprovedContracts(page: 1, limit: 10);
+    await getSignedContracts(page: 1, limit: 10);
+    complete();
+  }
+
   @override
   void onInit() {
     super.onInit();
     _apiContract = Get.put(ApiContract());
     scrollController = ScrollController();
-    scrollController.addListener(
-      () async {
-        if (scrollController.position.maxScrollExtent == scrollController.offset) {
-          if (pendingList.length >= totalItems) return;
-          loadMore();
-          loadingStatus.value.toString().debugLog('loading status');
-          getPendingContracts(page: currentPage.value);
-          complete();
-        }
-      },
-    );
-    getPendingContracts(page: 1, limit: 10);
+    // scrollController.addListener(
+    //   () async {
+    //     if (scrollController.position.maxScrollExtent == scrollController.offset) {
+    //       if (pendingList.length >= totalItems) return;
+    //       loadMore();
+    //       loadingStatus.value.toString().debugLog('loading status');
+    //       getPendingContracts(page: currentPage.value);
+    //       getApprovedContracts(page: currentPage.value);
+    //       getSignedContracts(page: currentPage.value);
+    //       complete();
+    //     }
+    //   },
+    // );
+    init();
   }
 
   @override

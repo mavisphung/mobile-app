@@ -29,7 +29,7 @@ class _ContractPendingTabState extends State<ContractPendingTab> with AutomaticK
     return RefreshIndicator(
       onRefresh: () async {
         _cContractPending.clearPendingList();
-        _cContractPending.getPendingContracts();
+        _cContractPending.init();
       },
       child: SingleChildScrollView(
         controller: _cContractPending.scrollController,

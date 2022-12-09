@@ -147,7 +147,8 @@ class ChatPageState extends State<ChatPage> {
       body: Column(
         children: <Widget>[
           buildListMessage(),
-          if (widget.arguments.hasInputWidget) ChatInput(onMessageSend: _onMessageSend),
+          // if (widget.arguments.hasInputWidget) ChatInput(onMessageSend: _onMessageSend),
+          if (true) ChatInput(onMessageSend: _onMessageSend),
         ],
       ),
     );
